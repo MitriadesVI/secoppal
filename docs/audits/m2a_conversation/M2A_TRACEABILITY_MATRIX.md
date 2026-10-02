@@ -57,7 +57,7 @@ verificará.
 | P08 | Rechazo citado + fragmento ⇒ cancela y aplica sobre el marco (§8.3.2, §17.3) | F23, A7 (base = marco) | SF191 (y SF063 con búsqueda nueva) | directiva `CANCEL_PENDING` | M2A-4: INV-M2A-08, -23 |
 | P09 | Ambigüedad con dos lecturas ⇒ CLARIFY con 2 `candidate_patches` (§6 H5/H6) | F12, F30 | SF163 (BUYER/lugar); SF123, SF155 (territorio) | `CandidatePatch` (pueden tocar varias ranuras) | M2A-4 |
 | P10 | Sin pregunta respondida ni rechazo ⇒ REASK (§8.3.8) | F29 | — (sin caso en Gold; regla de protocolo) | regla de §8.3 | M2A-4 |
-| P11 | Respuesta que fija con valor una ranura de `answer_slots` que ningún candidato fija con valor es compatible (§8.3.4); retirar el ORDER con top-N deja un candidato «quitar orden y límite» y «déjalo como estaba» = `CANCEL_PENDING` (§6.7, §8.1) | usuario 2026-10-02 (D-1) | SF192–SF195 se asignan en B4, tras la adjudicación ciega | `CandidatePatch` + `answer_slots = {ORDER, CARDINALITY}` | M2A-4: INV-M2A-08, -25 |
+| P11 | Retirar el ORDER con top-N ⇒ pendiente con C1 «quitar orden y límite» + un `SET_ORDER` por cada criterio de orden alternativo del dataset (resueltos al preguntar, sin el vigente), `answer_slots = {ORDER, CARDINALITY}`; «por fecha» selecciona su candidato (§8.3 fila 4, texto sellado), «dame 20» ⇒ `REASK ANSWER_UNRESOLVED`, «déjalo como estaba» = `CANCEL_PENDING`; sin E-ORDER, sólo C1 (§6.7, §19) | usuario 2026-10-02 (D-1, opción 1 del orquestador) | SF192–SF195 se asignan en B4, tras la adjudicación ciega | `CandidatePatch` (C1 + `SET_ORDER`) | M2A-4: INV-M2A-08, -25 |
 
 ## 4. Referentes, vigencia y fallo de fuente
 

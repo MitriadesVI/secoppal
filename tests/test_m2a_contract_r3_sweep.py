@@ -151,10 +151,29 @@ ORDER_SLOT, CARDINALITY_SLOT = fa.Slot(D.ORDER), fa.Slot(D.CARDINALITY)
 
 
 def r31_candidate() -> fa.CandidatePatch:
-    """Contract §6.7 (R3-1, D-1): the one candidate «quitar orden y límite»."""
+    """Contract §6.7 (R3-1, D-1 option 1): C1 «quitar orden y límite»."""
     ops = (fa.PatchOp(fa.PatchOpKind.CLEAR, ORDER_SLOT, None, None, _origin(0)),
            fa.PatchOp(fa.PatchOpKind.CLEAR, CARDINALITY_SLOT, None, None, _origin(2)))
     return fa.CandidatePatch("k1", "remove_order_and_limit", fa.SemanticPatch(ops, fa.PatchOriginKind.TEXT))
+
+
+def r31_set_order_candidate(value: OrderValue, cid: str = "k2") -> fa.CandidatePatch:
+    """Contract §6.7 (R3-1, D-1 option 1): one ``SET_ORDER`` per alternative order criterion (resolved at ask time)."""
+    condition = cond(f"o-{cid}", D.ORDER, value)
+    op = fa.PatchOp(fa.PatchOpKind.SET_ORDER, ORDER_SLOT, condition, None, condition.origin)
+    return fa.CandidatePatch(cid, f"order_{value.key.value}", fa.SemanticPatch((op,), fa.PatchOriginKind.TEXT))
+
+
+def r31_candidates(*, provisional: bool = False) -> tuple[fa.CandidatePatch, ...]:
+    """Anchor ordered by VALUE desc on CONTRACTS: the alternative key is DATE (desc, as the authority defaults it).
+    Without E-ORDER (provisional, §6.7/§19) the pending carries C1 only."""
+    return (r31_candidate(),) if provisional else (r31_candidate(), r31_set_order_candidate(SAMPLE[D.ORDER][1]))
+
+
+def selects(candidates: tuple[fa.CandidatePatch, ...], answer: fa.AcceptedCondition) -> int:
+    """§8.3 row 4 (sealed text): how many candidates the answer selects, comparing by encoded value."""
+    return sum(any(op.condition is not None and op.slot == answer.slot and op.condition.value == answer.value
+                   for op in candidate.patch.ops) for candidate in candidates)
 
 
 # ---- generated inventory -------------------------------------------------------------------------------------------
@@ -398,12 +417,11 @@ SWEEP = (
         "OUT_UNSUPPORTED_PROPOSAL → INFORM UNSUPPORTED_PROPOSAL:<motivo>", "CUBIERTO",
         "§7.1 fila 4b, lista cerrada con dueño por motivo (D-6, marcada para revisión: Anexo D.2)", "D-6",
         ("SCOPE-OUT_UNSUPPORTED_PROPOSAL", "SCOPE-RESOLUTION-INFORM", *(f"A3-UNSUPPORTED_PROPOSAL:{m}" for m in MOTIVES))),
-    Row("S08", (), "pendiente de R3-1: un candidato «quitar orden y límite» + answer_slots",
-        "— (pendiente)", "SÍ (consecuencia de T08)",
-        "candidato CLEAR(ORDER)+CLEAR(CARDINALITY); answer_slots = {ORDER, CARDINALITY}; «déjalo como estaba» = "
-        "CANCEL_PENDING", "CUBIERTO",
-        "D-1 literal (answer_slots = {ORDER}) sería CANDIDATE_OUTSIDE_ANSWER_SLOTS (sonda P-d1-literal); §8.3 fila 4 "
-        "hace compatible otro criterio (Anexo D.2)", "R3-1",
+    Row("S08", (), "pendiente de R3-1 (D-1 opción 1)", "— (pendiente)", "SÍ (consecuencia de T08)",
+        "C1 «quitar orden y límite» + un SET_ORDER por criterio alternativo (sin el vigente); answer_slots = "
+        "{ORDER, CARDINALITY}; «déjalo como estaba» = CANCEL_PENDING; sin E-ORDER, sólo C1", "CUBIERTO",
+        "§6.7 y §19; §8.3 fila 4 sellada: «por fecha» selecciona uno, «dame 20» ninguno (fila 7); sondas "
+        "P-d1-option1/P-d1-provisional; {ORDER} literal = CANDIDATE_OUTSIDE_ANSWER_SLOTS (P-d1-literal)", "R3-1",
         ("PENDING-R3-1",)),
     Row("R01", (), "rechazo DELTA_SLOT_CONFLICT (dos SET en una ranura; KEEP+CLEAR; dos REPLACE_UNIVERSE)",
         "SET×2, KEEP+CLEAR, REPLACE_UNIVERSE×2", "SÍ", "→ CLARIFY DELTA_SLOT_CONFLICT", "CUBIERTO",
@@ -433,7 +451,7 @@ PROBE_EXPECTED = {
     "P-dual-set": "DUAL_ANCHOR_CONDITIONS_DIFFER", "P-dual-replace": "FOREIGN_CONDITION_REQUEST",
     "P-dual-replace-narrowed": None, "P-order-or": "NONCONJUNCTIVE_ORDER", "P-order-and": None,
     "P-c": None, "P-c-target": None, "P-f16": None, "P-keep": None, "P-clear-order": None,
-    "P-d1-literal": "CANDIDATE_OUTSIDE_ANSWER_SLOTS", "P-d1-amended-slots": None,
+    "P-d1-literal": "CANDIDATE_OUTSIDE_ANSWER_SLOTS", "P-d1-option1": None, "P-d1-provisional": None,
     "P-d6-multi-wire": None, "P-d6-unsupported-wire": None,
 }
 
@@ -479,8 +497,10 @@ def probes() -> dict[str, str | None]:
                                                                D.ORDER)),
         # D-1: the answer_slots check is isolated with a reason the type already admits.
         "P-d1-literal": refusal(lambda: pending("TARGET_NOT_ADDRESSABLE", (r31_candidate(),), {ORDER_SLOT})),
-        "P-d1-amended-slots": refusal(lambda: pending("TARGET_NOT_ADDRESSABLE", (r31_candidate(),),
-                                                      {ORDER_SLOT, CARDINALITY_SLOT})),
+        "P-d1-option1": refusal(lambda: pending("TARGET_NOT_ADDRESSABLE", r31_candidates(),
+                                                {ORDER_SLOT, CARDINALITY_SLOT})),
+        "P-d1-provisional": refusal(lambda: pending("TARGET_NOT_ADDRESSABLE", r31_candidates(provisional=True),
+                                                    {ORDER_SLOT, CARDINALITY_SLOT})),
         # D-6: the non-admitted proposals are valid wire records, so they reach M2a with an anchor.
         "P-d6-multi-wire": refusal(lambda: proposal(raw_m, Operation.FOLLOWUP_DELTA, (
             wire("t1", D.TOPIC, "contains", "aseo", raw_m, rid="r1"),
@@ -515,9 +535,9 @@ TYPE_GAPS = {
         lambda: representable("DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER")),
     "DIM-UNIVERSE": ("reason_code_allowed: <DIM> sin UNIVERSE (R3-3)",
                      lambda: representable("UNRESOLVED_VALUE:UNIVERSE")),
-    "PENDING-R3-1": ("la pendiente de R3-1 (candidato + answer_slots {ORDER, CARDINALITY}) no se construye "
-                     "sin su código (R3-1, D-1)",
-                     lambda: refusal(lambda: pending("DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER", (r31_candidate(),),
+    "PENDING-R3-1": ("la pendiente de R3-1 (C1 + SET_ORDER alternativos, answer_slots {ORDER, CARDINALITY}) no se "
+                     "construye sin su código (R3-1, D-1 opción 1)",
+                     lambda: refusal(lambda: pending("DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER", r31_candidates(),
                                                      {ORDER_SLOT, CARDINALITY_SLOT})) is None),
     "SCOPE-OUT_UNSUPPORTED_PROPOSAL": ("TurnScope sin OUT_UNSUPPORTED_PROPOSAL (D-6)",
                                        lambda: "OUT_UNSUPPORTED_PROPOSAL" in {s.value for s in fa.TurnScope}),
@@ -611,6 +631,36 @@ def test_type_facts_that_hold_before_and_after_m2a3_1c():
     assert {code: representable(code) for code in TYPE_ADMITS} == TYPE_ADMITS
     # every <DIM> the contract allows, except UNIVERSE (a TYPE_GAPS item), is already admitted by the type
     assert all(representable(f"UNRESOLVED_VALUE:{dim}") for dim in dim_domain() - {"UNIVERSE"})
+
+
+ROW4_SEALED = ("| 4 | Todas las condiciones de P caen en `answer_slots` y su valor selecciona **exactamente un** candidato "
+               "(comparado por valor codificado), o no hay candidatos | `PENDING_ANSWER`: `compose(frame, patch)` |")
+RETIRED_CLAUSE = "que ningún candidato fija con valor (R3, D-1)"  # B1 draft, retired by D-1 option 1 (Anexo D.2)
+
+
+def test_d1_option1_is_in_the_contract_and_section_8_3_is_untouched():
+    text = _contract()
+    assert ROW4_SEALED in text.splitlines() and RETIRED_CLAUSE not in text
+    section = text.split("**CARDINALITY sin ORDER (R3-1).**", 1)[1].split("Códigos de rechazo", 1)[0]
+    for clause in ("**C1** «quitar orden y límite»: `CLEAR(ORDER)` + `CLEAR(CARDINALITY)`",
+                   "un `SET_ORDER` por cada criterio de orden alternativo", "**salvo la vigente**",
+                   "`answer_slots = {ORDER, CARDINALITY}`", "`REASK ANSWER_UNRESOLVED`", "`CANCEL_PENDING`",
+                   "**sólo C1**"):
+        assert clause in section, clause
+    e_order = next(line for line in text.splitlines() if line.startswith("| follow-ups con ORDER/CARDINALITY"))
+    assert "**sólo C1**" in e_order
+    assert "### D.2 Puntos de revisión del usuario: RESUELTOS (2026-10-02)" in text
+
+
+def test_d1_option1_answers_select_by_encoded_value():
+    candidates = r31_candidates()
+    by_date = cond("a1", D.ORDER, SAMPLE[D.ORDER][1])  # «por fecha»: the authority resolves date (desc)
+    twenty = cond("a2", D.CARDINALITY, CardinalityValue(20, CardinalityBasis.FIGURE, 20))  # «dame 20»
+    current = cond("a3", D.ORDER, SAMPLE[D.ORDER][0])  # the criterion in force is never a candidate
+    assert selects(candidates, by_date) == 1  # row 4: exactly one ⇒ PENDING_ANSWER
+    assert selects(candidates, twenty) == 0  # row 7: REASK ANSWER_UNRESOLVED, never «top 20 by the old order»
+    assert selects(candidates, current) == 0
+    assert selects(r31_candidates(provisional=True), by_date) == 0  # without E-ORDER: C1 only
 
 
 # ---- the type side: declared red until M2A-3 phase 1c (strict xfail; never a false green) -------------------------

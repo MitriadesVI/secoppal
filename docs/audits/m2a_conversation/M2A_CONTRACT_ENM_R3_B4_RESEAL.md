@@ -14,8 +14,8 @@ después del re-sellado, y el barrido lo marca como xfail estricto.
    2.1. Los etiquetadores no vieron la propuesta (`M2A_CONTRACT_ENM_R3_PROPOSAL.md`), la matriz ni el test del barrido.
 2. **Adjudicación del usuario** de toda discrepancia entre A y B: disposición, código, `ops`, `resulting_ir` y
    `alternatives`. Una adjudicación puede sacar un caso; si lo hace, actualiza los conteos en B4.2.
-3. **Revisión del usuario del Anexo D.2** del contrato: los ajustes de D-1 y los nombres, la disposición y la lista de
-   D-6. Lo que decida se aplica en B4.2.
+3. **Anexo D.2 resuelto** (2026-10-02; B1-fix): D-1 con la opción 1 y D-6 aprobado. Si después de etiquetar surge otra
+   decisión de producto que toque el contrato, se aplica en B4.1.
 4. **Árbol limpio.** `git status` vacío y `git log` revisado (otro agente puede haber commiteado en la rama).
 5. **Directorio REAL privado:**
    `~/Documents/secoppal-asesoria-2026-10-01/privado_no_git/gold_followups_real/GOLD_CANDIDATE/` (en adelante `$PRIV`).
@@ -24,11 +24,10 @@ después del re-sellado, y el barrido lo marca como xfail estricto.
 
 ### B4.1 Cerrar el texto del contrato (antes de cualquier hash)
 
-- Aplica el resultado de la revisión del Anexo D.2. Después, marca D.2 como resuelto con fecha, o elimínalo: es una
-  nota de revisión, no una regla.
+- D.2 ya está resuelto. Aplica aquí sólo lo que decida la adjudicación.
 - Si la adjudicación sacó algún caso, ajusta la cabecera (`154` / `203`), §20.1 gate 1 y el Anexo B.
 - Desde aquí el contrato **no se toca**: su sha256 entra en el sello en B4.6.
-- Re-ejecuta `tests/test_m2a_contract_r3_sweep.py`. Los pines leen el texto: si D.2 cambió D-1 o D-6, ajusta los pines
+- Re-ejecuta `tests/test_m2a_contract_r3_sweep.py`. Los pines leen el texto: si cambió el contrato, ajusta los pines
   del lado del contrato (nunca los xfail del lado del tipo).
 
 ### B4.2 Registrar la adjudicación
@@ -74,7 +73,14 @@ Cambios mínimos:
    - `prior.ir` tiene `order` y `cardinality`;
    - las ops retiran ORDER sin `CLEAR(CARDINALITY)` ni `SET_ORDER`;
    - `resulting_ir` es `null`;
-   - hay exactamente una `alternative`, sin `order` ni `cardinality` (el candidato de D-1).
+   - las `alternatives` son las de D-1 (opción 1):
+     - exactamente una sin `order` ni `cardinality` (C1);
+     - las demás conservan la `cardinality` del preestado y tienen un `order` de **otra** clave que la vigente, una
+       por clave;
+     - ninguna conserva el `order` vigente.
+
+     El verificador no conoce las claves que la autoridad ofrece por dataset, así que no exige completitud por clave;
+     la completitud la fija la adjudicación. El Gold etiqueta lo normativo, no el provisional sin E-ORDER.
 4. Corre `check_m2a_gold_contract.py --real-dir $PRIV --json docs/audits/m2a_conversation/gold/REPRESENTABILITY_REPORT.json`:
    `"violations": 0`.
 
@@ -87,7 +93,8 @@ Añade mutantes sobre los casos nuevos, cada uno muerto por **su** regla:
 | `R3_SF192_executed_keeps_cardinality`: EXECUTE con `resulting_ir` sin `order` y con `cardinality` | `check_ir` «cardinality without order» |
 | `R3_SF192_executed_drops_cardinality`: EXECUTE sin las dos y sin `CLEAR(CARDINALITY)` | G3 «cardinality changed without an op» |
 | `R3_SF192_reason_outside_A3`: un código que no está en A.3 | G1 |
-| `R3_SF192_two_alternatives` | G9 nuevo (B4.4.3) |
+| `R3_SF192_alternative_keeps_current_order`: una alternativa con el `order` vigente | G9 nuevo (B4.4.3) |
+| `R3_SF192_alternative_drops_cardinality_with_new_order`: una alternativa `SET_ORDER` sin la `cardinality` del preestado | G9 nuevo (B4.4.3) |
 | uno por cada caso SF193–SF195, según la disposición adjudicada (p. ej., si SF195 ejecuta: «pierde la CARDINALITY sin op») | la regla que corresponda |
 
 `mutate_check_m2a_gold_contract.py --scratch-dir <fuera del repo>` ⇒ `ALL_KILLED True`.
@@ -155,11 +162,16 @@ Añade mutantes sobre los casos nuevos, cada uno muerto por **su** regla:
 Commit por rutas explícitas y árbol limpio. Después: candidato congelado y ZEUS fresco, sin la narrativa de la
 implementación. Lo decide el orquestador.
 
-## 2. Después de B4 (fuera de este carril)
+## 2. Después de B4: secuencia de la ola (usuario, 2026-10-02; `M2A_WAVE1_DECISIONS.md` U17)
 
-- **M2A-8a0:** regenera el oráculo. Su manifiesto fija el `gold_seal_sha256` r2, y valida el vocabulario con los
-  `REASONS` del verificador sellado (B4.4.1). Si 8a0 ya estaba congelado, hay que re-congelarlo.
+R3 → etiquetado ciego A/B → adjudicación → **re-sellado único (B4)** → ZEUS → **M2A-3 fase 1c** → regenerar el
+oráculo M2A-8a0 → ZEUS del oráculo (**GO requerido**) → congelar el oráculo → `compose`. `compose` queda bloqueado hasta
+ese GO.
+
 - **M2A-3, fase 1c:** el tipo (`CLARIFY_CODES`, `<DIM>` con `UNIVERSE`, `TurnScope.OUT_UNSUPPORTED_PROPOSAL` →
   `INFORM`, `UNSUPPORTED_PROPOSAL:<motivo>`), con el test de A.3 de `tests/test_foundation_accepted_contract.py`. Cada
-  ítem convierte su xfail del barrido en XPASS estricto (rojo), y se quita su marca en el mismo commit. Después, la
-  fase 2 implementa R3-1 en `compose` contra DEV.
+  ítem convierte su xfail del barrido en XPASS estricto (rojo), y se quita su marca en el mismo commit. El gate
+  `CONTRACT_COMPLETE_FOR_M2A3` (INV-M2A-25 satisfecho por el barrido: sin filas sin respuesta y sin xfail) se cumple
+  al cerrar 1c.
+- **M2A-8a0:** el oráculo se regenera **después** de 1c. Su manifiesto fija el `gold_seal_sha256` r2, y valida el
+  vocabulario con los `REASONS` del verificador sellado (B4.4.1).

@@ -348,11 +348,23 @@ seleccionado o completado (§8). No hay más operaciones; un parche que necesite
    se inventa un ORDER. `CLEAR(ORDER)` + `CLEAR(CARDINALITY)` en el mismo parche, o `CLEAR(ORDER)` + `SET_ORDER` (F10),
    no dejan ese estado y se componen.
    - Vía alcanzable hoy: `CLEAR(ORDER)` con la CARDINALITY arrastrada y sin `CLEAR(CARDINALITY)` en el parche. Su
-     pendiente (§8.1) lleva `ambiguous_span` = la cita que retira el ORDER (`None` si viene de un evento), `frame` = la
-     base con el resto del parche compuesto, **un** candidato «quitar orden y límite» con el parche
-     `CLEAR(ORDER)` + `CLEAR(CARDINALITY)`, y `answer_slots = {ORDER, CARDINALITY}` (⊇ las ranuras del candidato,
-     §8.1). Dar otro criterio de orden es una respuesta compatible (§8.3 fila 4): se compone sobre `frame` y la
-     CARDINALITY se conserva (F10). «Déjalo como estaba» es `CANCEL_PENDING` (§17): base intacta.
+     pendiente (§8.1, D-1 opción 1) lleva:
+     - `ambiguous_span` = la cita que retira el ORDER (`None` si viene de un evento);
+     - `frame` = la base con el resto del parche compuesto;
+     - `candidate_patches`, resueltos al preguntar (§8.2):
+       - **C1** «quitar orden y límite»: `CLEAR(ORDER)` + `CLEAR(CARDINALITY)`;
+       - **un `SET_ORDER` por cada criterio de orden alternativo**: cada clave de orden de la lista cerrada que la
+         autoridad ORDER ofrece para el dataset de la petición, **salvo la vigente**. La dirección la da la autoridad
+         (con `order.direction_defaulted` si aplica). La CARDINALITY se conserva (F10);
+     - `answer_slots = {ORDER, CARDINALITY}` (⊇ las ranuras de los candidatos).
+
+     Las respuestas siguen §8.3 sin cambios. Un criterio escrito («por fecha») selecciona su candidato por valor
+     codificado (fila 4, exactamente uno). Una respuesta que no selecciona ninguno («dame 20») es la fila 7:
+     `REASK ANSWER_UNRESOLVED`; nunca se compone sobre el ORDER de la base. «Déjalo como estaba» es `CANCEL_PENDING`
+     (§17): base intacta.
+
+     **Provisional fail-closed mientras no exista la autoridad ORDER** (E-ORDER, §19): la pendiente lleva **sólo C1**
+     y la cancelación; no hay candidatos `SET_ORDER`.
    - Por cualquier otra vía (hoy inalcanzable: la propuesta IR v2 rechaza una CARDINALITY sin ORDER, salvo en
      `RANK_SUPPLIERS`), la pendiente sigue §8.2.
 
@@ -484,9 +496,10 @@ CandidatePatch:
 ambigüedad de dimensión (F12) son dos `CandidatePatch` (`SET BUYER=X` / `SET GEOGRAPHY=X`); una de territorio (F30)
 son dos parches (cambiar de comprador / buscar con ambos); una pregunta por el año son cero candidatos y
 `answer_slots = {TIME}`; una confirmación de vigencia (F11) es un candidato con el parche del turno sobre el ancla
-vencida («continuar»), y «reset» es `CANCEL_PENDING`; retirar el ORDER con una CARDINALITY vigente (§6.7) es un
-candidato «quitar orden y límite» con `answer_slots = {ORDER, CARDINALITY}`, y «déjalo como estaba» es `CANCEL_PENDING`
-(R3-1). Un candidato puede tocar varias ranuras (el Gold tiene alternativas GEOGRAPHY+TIME).
+vencida («continuar»), y «reset» es `CANCEL_PENDING`. Retirar el ORDER con una CARDINALITY vigente (§6.7, R3-1) da
+un candidato «quitar orden y límite» más un `SET_ORDER` por cada criterio de orden alternativo, con
+`answer_slots = {ORDER, CARDINALITY}`; «déjalo como estaba» es `CANCEL_PENDING`. Un candidato puede tocar varias
+ranuras (el Gold tiene alternativas GEOGRAPHY+TIME).
 
 ### 8.2 Creación
 
@@ -501,7 +514,7 @@ LLM ni releer texto. Un turno que pregunta no consume el ancla (§10.2).
 | 1 | Evento de opción (`pending_id`, `candidate_id`) | `PENDING_ANSWER`: `compose(frame, candidate.patch)`; sin LLM |
 | 2 | P trae directiva `CANCEL_PENDING` (rechazo citado, F23) | `control = CANCEL_PENDING`; el resto de P se resuelve como `NEW_SEARCH` si ¬Continuación(P) ∧ Marco(P) ∧ Admisible sola(P), si no como delta **sobre `frame`** (A7) |
 | 3 | ¬Continuación(P) ∧ Marco(P) ∧ Admisible sola(P), **salvo** que todas las condiciones de P caigan en `answer_slots` (respuesta compatible, A7: pasa a la fila 4) | `NEW_SEARCH`, `control = CANCEL_PENDING` (A7/A9; la marca de continuación gana, así que una respuesta con anáfora o conector nunca llega aquí); si la nueva búsqueda pregunta, deja su propia pendiente |
-| 4 | Todas las condiciones de P caen en `answer_slots` y su valor selecciona **exactamente un** candidato (comparado por valor codificado), o no hay candidatos, o sólo fijan con valor ranuras de `answer_slots` que ningún candidato fija con valor (R3, D-1) | `PENDING_ANSWER`: `compose(frame, patch)` |
+| 4 | Todas las condiciones de P caen en `answer_slots` y su valor selecciona **exactamente un** candidato (comparado por valor codificado), o no hay candidatos | `PENDING_ANSWER`: `compose(frame, patch)` |
 | 5 | P responde sobre `answer_slots` **y además** edita otra ranura (F25) | `REASK ANSWER_EDITS_OTHER_SLOT`, nombrando la salida; 0 llamadas |
 | 6 | P declara no elegir (condición `UNSUPPORTED` con etiqueta cerrada `no_selection`, F24) | `REASK OPTION_NOT_CHOSEN`; el producto no elige |
 | 7 | La respuesta no resuelve (autoridad no RESOLVED, o selecciona 0 o ≥2 candidatos) | `REASK ANSWER_UNRESOLVED` |
@@ -769,7 +782,7 @@ unidad única ⇒ `CLARIFY UNIT_AMBIGUOUS`. La herencia sí puede ir seguida de 
 | INV-M2A-22 | **Referentes separados**: nada que necesite filas se resuelve con `semantic_ref`; nada se compone con `result_set_ref` | mutantes |
 | INV-M2A-23 | **Cancelación explícita**: toda pendiente que deja de existir tiene un registro con `control = CANCEL_PENDING` | propiedad sobre secuencias |
 | INV-M2A-24 | **Sin léxico nuevo en el host**: A8.1 y A9.1 se deciden sobre valores tipados, origen de cotas y dimensiones de P; el host no lee texto para decidirlos | pin AST: los módulos de M2a no importan léxicos ni usan regex sobre el turno |
-| INV-M2A-25 | **Invariante mayor (R3-5). Toda respuesta alcanzable es representable**: cada `DeltaRefusal` de §6, cada fila de §7.1 y cada `CLARIFY`/`REASK`/`INFORM` que prescribe este contrato tiene un código de A.3 que el tipo admite (`PendingClarification.reason` para `CLARIFY`/`REASK`); ningún estado que los tipos permiten alcanzar queda sin respuesta | barrido generado de los tipos (`tests/test_m2a_contract_r3_sweep.py`): invariantes del AST, op × ranura construido, §6, §7.1, A.1 y A.3 parseados del contrato; un invariante nuevo falla hasta barrerse, y lo que falte en el tipo es un rojo declarado (xfail estricto), nunca un verde |
+| INV-M2A-25 | **Invariante mayor (R3-5). Toda respuesta alcanzable es representable**: cada `DeltaRefusal` de §6, cada fila de §7.1 y cada `CLARIFY`/`REASK`/`INFORM` que prescribe este contrato tiene un código de A.3 que el tipo admite (`PendingClarification.reason` para `CLARIFY`/`REASK`); ningún estado que los tipos permiten alcanzar queda sin respuesta | barrido generado de los tipos (`tests/test_m2a_contract_r3_sweep.py`): invariantes del AST, op × ranura construido, §6, §7.1, A.1 y A.3 parseados del contrato; un invariante nuevo falla hasta barrerse, y lo que falte en el tipo es un rojo declarado (xfail estricto), nunca un verde. Gate `CONTRACT_COMPLETE_FOR_M2A3` ⇔ INV-M2A-25 satisfecho por ese barrido (usuario, 2026-10-02) |
 
 ---
 
@@ -817,7 +830,7 @@ contrato (un gate de M2a no puede pasar sin resolverlo), se registra `BLOCKER` y
 | F30 | `buyer.territory.<código>` / `buyer.national` | D-BUYER |
 | vista derivada | `HostViewDecision`, `decide_view` | ola F |
 | 1 (SF075: `REPLACE_UNIVERSE` a oportunidades con TIME arrastrado; R3-3) | re-decidir O1B / `opportunity-explicit-state` sobre la efectiva (su representación es de M2A-1b) y TIME explícito sobre oportunidades (`foundation_projection.py:235-237`). Mientras falte, `compose` rechaza con `OP_NOT_ACCREDITED:UNIVERSE` ⇒ `CLARIFY UNRESOLVED_VALUE:UNIVERSE` y el caso es rojo declarado (§20.2) | `FOUNDATION_O1B_EXPLICIT_TIME_PARITY` (+ M2A-1b) |
-| follow-ups con ORDER/CARDINALITY (matriz T07; R3, D-5) | autoridad ORDER/CARDINALITY (`order@1`, `cardinality@2`, `order.direction_defaulted`, `topn.capped`); `main` aún no las admite en el primer turno (`UNRESOLVED_HOST_DIMENSION:ORDER`) | E-ORDER (núcleo, plan M2A-3c) |
+| follow-ups con ORDER/CARDINALITY (matriz T07; R3, D-5) | autoridad ORDER/CARDINALITY (`order@1`, `cardinality@2`, `order.direction_defaulted`, `topn.capped`); `main` aún no las admite en el primer turno (`UNRESOLVED_HOST_DIMENSION:ORDER`). Mientras falte, la pendiente de §6.7 (R3-1) es provisional fail-closed: **sólo C1** «quitar orden y límite» y la cancelación, sin candidatos `SET_ORDER` | E-ORDER (núcleo, plan M2A-3c) |
 
 ---
 
@@ -992,22 +1005,28 @@ archivo.
 y `UNSUPPORTED_PROPOSAL:<motivo>` faltan en `app/core/foundation_accepted.py`. Son de M2A-3 (fase 1c, tras el
 re-sellado). El barrido los marca como rojo declarado (xfail estricto).
 
-### D.2 Puntos marcados para revisión del usuario (antes del re-sellado B4)
+### D.2 Puntos de revisión del usuario: RESUELTOS (2026-10-02)
 
-1. **D-1, ajustes de representabilidad.**
-   - El usuario decidió `answer_slots = {ORDER}`. Pero §8.1 y el tipo (`CANDIDATE_OUTSIDE_ANSWER_SLOTS`) exigen
-     `answer_slots ⊇` las ranuras del candidato `{ORDER, CARDINALITY}`; con `{ORDER}` la pendiente no se podría
-     representar (INV-M2A-25). Se escribió `{ORDER, CARDINALITY}`.
-   - Para que «dar otro criterio» sea compatible con un candidato presente, §8.3 fila 4 necesitó una cláusula
-     genérica. Sin ella, esa respuesta selecciona 0 candidatos y cae en la fila 7 (`REASK ANSWER_UNRESOLVED`). La
-     cláusula: «sólo fijan con valor ranuras de `answer_slots` que ningún candidato fija con valor». No cambia ningún
-     caso sellado: en el Gold, todo candidato fija su ranura con un valor.
-2. **D-6, nombres, disposición y lista.**
-   - Nombres: `OUT_UNSUPPORTED_PROPOSAL` / `UNSUPPORTED_PROPOSAL:<motivo>`, con los motivos tomados de los estados y
-     las razones de admisión de M1.
-   - Disposición `INFORM`, en vez de `CLARIFY`: no hay ranura que preguntar, y M1 trata esos estados como mensajes
-     terminales.
-   - Inclusión de `INVALID_PROPOSAL` y `NO_ACTION` (este último, sólo sin pendiente).
-   - Exclusión de un universo no dicho (Q-R8-3 de M2A-3 sigue abierta) y de `UNACCREDITED_MODALITY_FAMILY` (va por
-     §6.1).
-   - Dueños de `UNSUPPORTED_CONDITION`, `UNSUPPORTED_SOURCE` y `NO_ACTION`.
+1. **D-1: RESUELTO con la opción 1** (propuesta del orquestador, aprobada por el usuario el 2026-10-02).
+   - La pendiente de R3-1 lleva C1 «quitar orden y límite» (`CLEAR(ORDER)` + `CLEAR(CARDINALITY)`) y un `SET_ORDER`
+     por cada criterio de orden alternativo del dataset, resueltos por la autoridad ORDER al preguntar, sin el criterio
+     vigente, con `answer_slots = {ORDER, CARDINALITY}` (§6.7). Mientras no exista E-ORDER, sólo C1 y la cancelación
+     (§6.7, §19).
+   - §8.3 fila 4 conserva su texto sellado: el protocolo general de pendientes no cambia (es terreno de M2A-4).
+   - **Antecedente (cláusula retirada).** El borrador de B1 (`cb32361a`) había escrito `answer_slots = {ORDER,
+     CARDINALITY}`, porque §8.1 y el tipo exigen ⊇ y la decisión original `{ORDER}` no se podía representar. Para que
+     «dar otro criterio» fuera compatible con un candidato presente, añadió a §8.3 fila 4 la cláusula «sólo fijan con
+     valor ranuras de `answer_slots` que ningún candidato fija con valor».
+   - **Por qué se retiró.** Esa cláusula dejaba pasar «dame 20» como respuesta compatible, y
+     `compose(frame, SET CARDINALITY 20)` conserva el ORDER de la base: se ejecutaría «top 20 por mayor valor» justo
+     después de que el usuario pidió quitar el orden. Era una fuga semántica silenciosa. Con candidatos `SET_ORDER`
+     explícitos, la fila 4 sellada basta: «por fecha» selecciona su candidato y «dame 20» no selecciona ninguno
+     (fila 7, `REASK ANSWER_UNRESOLVED`).
+2. **D-6: RESUELTO, aprobado tal como se propuso** (usuario, 2026-10-02).
+   - Fila y código: `OUT_UNSUPPORTED_PROPOSAL` / `INFORM UNSUPPORTED_PROPOSAL:<motivo>`; 0 llamadas, ancla y pendiente
+     intactas.
+   - Motivos y dueños: `MULTI_REQUEST` → M2b; `UNSUPPORTED_CONDITION` → extensión o versionado del lenguaje;
+     `UNSUPPORTED_SOURCE` → contrato M1; `INVALID_PROPOSAL` → productor (M2A-5); `NO_ACTION` → contrato M2a (sólo sin
+     pendiente).
+   - Exclusiones: un universo no dicho (Q-R8-3 de M2A-3 sigue abierta) y `UNACCREDITED_MODALITY_FAMILY` (va por §6.1).
+   - Por qué `INFORM` y no `CLARIFY`: no hay ranura que preguntar, y M1 trata esos estados como mensajes terminales.

@@ -17,7 +17,10 @@ Etiquetan dos etiquetadores (A y B), cada uno por separado y sin ver el trabajo 
      `resulting_ir`, `effects`, `expected_echo`, `alternatives`, `ambiguity`, `confidence`, `gap_codes` y `notes`.
 3. **Varias lecturas.** Si un caso admite más de una lectura bajo el contrato, no la fuerces: márcala en `ambiguity` y
    `confidence` y explica en `notes` qué regla lleva a cada una.
-4. **Entrega.** Un JSONL, una etiqueta por línea, en la ruta que indique el orquestador. No modifiques el repositorio.
+4. **Normativo, no provisional.** Etiqueta lo que el contrato prescribe con las autoridades y capacidades que nombra
+   disponibles. Un comportamiento provisional fail-closed mientras falta una dependencia declarada en §19 no es la
+   etiqueta: el caso cuenta como rojo declarado hasta que la dependencia exista (§19, §20.2).
+5. **Entrega.** Un JSONL, una etiqueta por línea, en la ruta que indique el orquestador. No modifiques el repositorio.
 
 ## Casos
 
