@@ -392,8 +392,9 @@ seleccionado o completado (§8). No hay más operaciones; un parche que necesite
      - `answer_slots = {ORDER, CARDINALITY}` (⊇ las ranuras de los candidatos).
 
      Las respuestas siguen §8.3. Un criterio escrito («por fecha») selecciona su candidato por identidad semántica
-     (fila 4, exactamente uno; «Selección», §8.3). «Quítales también el límite» selecciona C1: «también» retoma la
-     retirada del orden, y la respuesta trae el parche completo `CLEAR(ORDER)` + `CLEAR(CARDINALITY)`. «Déjalo como estaba» es
+     (fila 4, exactamente uno; «Selección», §8.3). «Quítales también el límite» selecciona C1 porque el **productor**
+     emite las operaciones completas de C1, `CLEAR(ORDER)` + `CLEAR(CARDINALITY)`. El host nunca lee la palabra
+     «también» (sin léxico en el host, INV-M2A-24): sólo compara operaciones. «Déjalo como estaba» es
      `CANCEL_PENDING` (§17): base intacta. Una respuesta que no selecciona ninguno es la fila 7
      (`REASK ANSWER_UNRESOLVED`); nunca se compone sobre el ORDER de la base.
 
@@ -615,8 +616,10 @@ Las fuentes de pendiente, revisadas contra la ley:
 
 La propiedad universal sobre el `compose` real, con permutaciones de las operaciones y `check_transition` del
 oráculo, es gate de M2A-3 fase 2. En este contrato la comprueba el gate multi-op de INV-M2A-25 sobre un modelo
-simbólico (§18). Barrer las respuestas a todas las pendientes es gate de M2A-4; las propiedades de varios turnos
-(vencimiento pegajoso, plazo de la pendiente) son gate de M2A-6/8b por replay (R3c, U26).
+simbólico (§18). Barrer las respuestas a todas las pendientes es gate de M2A-4, incluido que una respuesta se compone
+sobre `frame` y nunca sobre la base (el modelo simbólico no lo distingue: sus pendientes previas tienen `frame` = la
+base). Las propiedades de varios turnos (vencimiento pegajoso, plazo de la pendiente) son gate de M2A-6/8b por
+replay (R3c, U26).
 
 ---
 

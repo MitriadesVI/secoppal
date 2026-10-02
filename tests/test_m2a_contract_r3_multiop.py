@@ -828,6 +828,28 @@ def test_the_r3b_controls_answer_as_the_contract_says():
     assert respond(r31, (Op("SET_ORDER", "ORDER", OrderKey.VALUE.value),)).code == "ANSWER_UNRESOLVED"
 
 
+def test_each_fail_closed_rule_is_pinned_by_a_concrete_combination():
+    """ZEUS model mutants (zeus_r3b/model_mut.py) that the sweep alone let live: each rule answers as §6 says."""
+    pick = {(c.profile, c.dual, c.expired, c.wire, c.pending is None): c for c in configs()}
+    minimal, full, multi = (pick[(name, False, False, "current", True)] for name in ("MIN", "FULL", "MULTI"))
+    # F16 fail-closed (§6.5, R3-4): negating a value among several carried positives is not accredited
+    f16 = (Op("SET", "TOPIC/NEGATIVE", "x"),)
+    assert [c.code for c in causes(multi.base, f16)] == ["UNRESOLVED_VALUE:TOPIC"]
+    assert (respond(multi, f16).kind, respond(multi, f16).code) == ("CLARIFY", "UNRESOLVED_VALUE:TOPIC")
+    # P-3: +X and −X created by the same patch, nothing carried: never resolved by F16
+    p3 = (Op("SET", "BUYER/POSITIVE", "x"), Op("SET", "BUYER/NEGATIVE", "x"))
+    assert [c.code for c in causes(minimal.base, p3)] == ["UNRESOLVED_VALUE:BUYER"]
+    assert (respond(minimal, p3).kind, respond(minimal, p3).code) == ("CLARIFY", "UNRESOLVED_VALUE:BUYER")
+    # A8.1 with non-comparable units (§15.2): against a carried opposite bound, fail-closed
+    a81 = (Op("SET", "VALUE/lower", "v", "noncomparable"),)
+    assert [c.code for c in causes(full.base, a81)] == ["UNRESOLVED_VALUE:VALUE"]
+    assert (respond(full, a81).kind, respond(full, a81).code) == ("CLARIFY", "UNRESOLVED_VALUE:VALUE")
+    # two non-accredited operations are two causes (D.3 c): INFORM with the first in §4.2 slot order
+    two = (Op("SET", "TIME/POSITIVE", "x", "unresolved"), Op("SET", "BUYER/POSITIVE", "x", "unresolved"))
+    assert [c.code for c in causes(minimal.base, two)] == ["UNRESOLVED_VALUE:BUYER", "UNRESOLVED_VALUE:TIME"]
+    assert respond(minimal, two) == Response("INFORM", "UNRESOLVED_VALUE:BUYER", clause="§6 3b")
+
+
 def test_r3c_zeus_witnesses():
     """ZEUS on 7b30b221 (zeus_r3b/h6.py, tna.py, vwc.py): each answer reaches its candidate; no dead pending."""
     base = _state({"TOPIC/POSITIVE": ("x",), "BUYER/POSITIVE": ("x",), "TIME/POSITIVE": ("x",)})
@@ -868,6 +890,8 @@ def test_the_u25_closures_answer_as_the_contract_says():
     assert respond(expired, (no_selection,)) == Response("INFORM", NO_SELECTION_CODE, clause="§7.1 4b")
     assert respond(r31, (no_selection,)) == Response("REASK", "OPTION_NOT_CHOSEN", pending=r31.pending,
                                                      clause="§8.3 6")
+    assert respond(r31, (no_selection, Op("CLEAR", "CARDINALITY"), Op("SET", "TIME/POSITIVE", "w"))).code == (
+        "ANSWER_EDITS_OTHER_SLOT")  # §8.3: row 5 comes before row 6
 
 
 # ---- (b) Hypothesis: N-operation patches, same property, plus permutation invariance ---------------------------------

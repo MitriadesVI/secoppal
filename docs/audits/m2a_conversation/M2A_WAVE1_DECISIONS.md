@@ -430,4 +430,5 @@ Los marcados «a completar» los completa el orquestador al integrar.
 | `4cf1cad3` | B4: U18, U19 y casos adjudicados en la matriz |
 | `4636a73a`, `b8372757` | R3b-1: reparación del NO_GO de ZEUS (U20–U24), sin re-sellar: contrato, herramientas y gates; después, entrada de etiquetado, registro y matriz |
 | `7b30b221` | R3b-2: cierre y re-sellado único (U25), sello `3693d19f…` |
-| commit siguiente a `7b30b221` | R3c: último arreglo (U26) y re-sellado |
+| `55571ec5` | R3c: último arreglo (U26) y re-sellado |
+| commit siguiente a `55571ec5` | remate de forma de R3c (barandilla): pins de F16, P-3, A8.1 no comparable y dos causas no acreditadas; «componer sobre `frame`» declarado gate de M2A-4; §6.7: C1 lo emite el productor; re-sellado |
