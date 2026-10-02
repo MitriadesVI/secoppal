@@ -14,6 +14,11 @@ Reader contract, for every type: unknown or missing key, unknown schema, wrong J
 list or wrong digest ⇒ ``ContractError``. ``from_dict(x.to_dict()) == x`` and ``to_dict(from_dict(d)) == d`` hold for
 every accepted value, and ``to_dict`` is plain JSON (``json.dumps`` without ``default``).
 
+Canonicality: one meaning, one persisted form. Set-like lists (``request_ids``, ``receipt_rules``, a condition's
+``policies``, a persisted policy's ``condition_ids``, ``answer_slots``) are sorted and unique; a list in any other
+order is REJECTED, never reordered on read. Every persisted datetime is ``timezone.utc`` and every integer is a real
+``int`` (``bool`` is not).
+
 Barriers (INV-M2A-04, INV-M2A-24): nothing here translates to ``parsed_params`` or to any legacy input, imports a
 legacy reader or a lexicon, or reads the turn's text. Values exist only as ``ExecutableValue.encode()`` tuples.
 """
@@ -596,10 +601,19 @@ def policy_to_dict(policy: HostPolicy) -> dict:
             "condition_ids": list(policy.condition_ids), "effect": policy.effect.value}
 
 
+def _canonical_policy(policy: HostPolicy) -> HostPolicy:
+    """A ``HostPolicy`` persisted here names its conditions as a set: sorted (``HostPolicy`` already forbids
+    duplicates). The IR v2 type itself is not narrowed; only its persisted form inside M2a is."""
+    if list(policy.condition_ids) != sorted(policy.condition_ids):
+        _fail("UNSORTED_POLICY_CONDITION_IDS")
+    return policy
+
+
 def policy_from_dict(data) -> HostPolicy:
     data = _keys(data, ("policy_id", "version", "condition_ids", "effect"), "POLICY")
-    return HostPolicy(data["policy_id"], data["version"], _read_texts(data["condition_ids"], "POLICY_CONDITION_IDS"),
-                      _enum_of(Effect, data["effect"], "POLICY_EFFECT"))
+    return _canonical_policy(HostPolicy(
+        data["policy_id"], data["version"], _read_texts(data["condition_ids"], "POLICY_CONDITION_IDS"),
+        _enum_of(Effect, data["effect"], "POLICY_EFFECT")))
 
 
 # ---- AcceptedRequest / AcceptedCondition / AcceptedInterpretation (contract §3.2, §4) ----------------------------
@@ -646,6 +660,11 @@ class AcceptedRequest:
                    _opt(data["universe_origin"], ConditionOrigin.from_dict), data["view"], data["dataset"])
 
 
+# VALUE: the comparator of the ``MoneyValue`` already carries the executable direction (and absorbs any negation:
+# «no más de X» is ``<= X``), so the condition's operator must name that same comparator and its polarity is POSITIVE.
+VALUE_OPERATOR_OF = {_Comparator.GT: "greater_than", _Comparator.GTE: "greater_or_equal",
+                     _Comparator.LT: "less_than", _Comparator.LTE: "less_or_equal"}
+
 _CONDITION_FIELDS = ("condition_id", "request_ids", "slot", "dimension", "operator", "polarity", "level", "value",
                      "authority", "receipt_rules", "policies", "origin", "provenance")
 
@@ -668,7 +687,7 @@ class AcceptedCondition:
 
     def __post_init__(self) -> None:
         _text(self.condition_id, "CONDITION_ID")
-        _texts(self.request_ids, "CONDITION_REQUEST_IDS", empty=False)
+        _texts(self.request_ids, "CONDITION_REQUEST_IDS", sorted_unique=True, empty=False)
         _instance(self.slot, Slot, "CONDITION_SLOT")
         _instance(self.dimension, SemanticDimension, "CONDITION_DIMENSION")
         if self.dimension not in SLOT_DIMENSIONS:
@@ -687,6 +706,11 @@ class AcceptedCondition:
         if self.dimension in (SemanticDimension.ORDER, SemanticDimension.CARDINALITY) and (
                 self.polarity is not Polarity.POSITIVE):
             _fail("NEGATED_ORDER_OR_CARDINALITY")  # ORDER and CARDINALITY admit no negation
+        if self.dimension is SemanticDimension.VALUE:
+            if self.polarity is not Polarity.POSITIVE:
+                _fail("NEGATED_VALUE")  # the comparator already absorbed the negation
+            if self.operator != VALUE_OPERATOR_OF[decode_value(self.value).comparator]:
+                _fail("OPERATOR_DISAGREES_WITH_COMPARATOR")
         _text(self.authority, "CONDITION_AUTHORITY")
         _texts(self.receipt_rules, "RECEIPT_RULES", sorted_unique=True)
         if not all(receipt_rule_allowed(rule) for rule in self.receipt_rules):
@@ -738,6 +762,8 @@ class AcceptedInterpretation:
         _records(self.requests, AcceptedRequest, "REQUESTS", empty=False)
         _records(self.conditions, AcceptedCondition, "CONDITIONS")
         _records(self.policies, HostPolicy, "POLICIES")
+        for policy in self.policies:
+            _canonical_policy(policy)
         _opt_text(self.base_trace_id, "BASE_TRACE_ID")
         _text(self.root_trace_id, "ROOT_TRACE_ID")
         request_ids = [request.request_id for request in self.requests]

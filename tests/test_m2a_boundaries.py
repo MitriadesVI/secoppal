@@ -7,6 +7,9 @@
 * NO BRIDGE: no M2a module names ``parsed_params`` or a legacy input type (``QueryFrame``, ``ConversationContext``,
   ``FollowupEngine``, ``QueryRouter``) in code: no function, attribute, argument, keyword or string key.
 * NO LEXICON: no M2a module imports a regex engine or a lexicon module (A8.1 and A9.1 decide on typed values).
+* NO DYNAMIC IMPORT: no M2a module uses ``__import__``, ``importlib`` or ``import_module``, whatever the argument
+  (literal or variable): the static closure above is complete only because nothing in M2a imports at run time.
+  These are not resolved, they are forbidden; and an unresolvable dynamic import inside the closure fails the pin.
 * NO CONSUMER: M2A-1a has no productive consumer. No ``app``/``scripts``/``streamlit_app`` module imports an M2a
   module, so neither the legacy closure nor the Foundation runtime can observe it (no runtime change).
 
@@ -52,6 +55,10 @@ FORBIDDEN_SUFFIXES = ("_authority", "_resolver", "_authorities")
 FORBIDDEN_IDENTIFIERS = ("parsed_params", "queryframe", "conversationcontext", "followupengine", "queryrouter",
                          "followup_engine", "query_router", "query_frame", "conversation_context")
 REGEX_MODULES = frozenset({"re", "regex", "fnmatch", "sre_compile", "sre_parse"})
+# Any name, attribute, alias or string literal equal to one of these is a dynamic import (``getattr(builtins,
+# "__import__")`` included); ``importlib`` may not be imported at all.
+DYNAMIC_IMPORT_NAMES = frozenset({"__import__", "import_module"})
+DYNAMIC_IMPORT_MODULES = frozenset({"importlib"})
 LEXICON_MARKERS = ("lexic", "lexeme", "vocab", "stopword", "keyword", "trigger", "synonym", "_terms", "phrases",
                    "text_predicates", "normaliz", "grammar")
 
@@ -60,18 +67,15 @@ def _source(module: str) -> str:
     return (ROOT / (module.replace(".", "/") + ".py")).read_text(encoding="utf-8")
 
 
-def _m2a_closure(overrides: dict[str, str] | None = None) -> dict:
-    _, graph, _ = build_graph(overrides)
-    return closure(graph, entrypoints=M2A_MODULES, cut=())
-
-
 def closure_problems(overrides: dict[str, str] | None = None) -> list[str]:
-    reached = set(_m2a_closure(overrides))
+    _, graph, flagged = build_graph(overrides)
+    reached = set(closure(graph, entrypoints=M2A_MODULES, cut=()))
     out = [f"M2a closure reaches {name}" for name in sorted(reached - M2A_ALLOWED_CLOSURE)]
     out += [f"M2a closure lost {name} (update the allowlist on purpose)"
             for name in sorted(M2A_ALLOWED_CLOSURE - reached)]
     out += [f"forbidden {name}" for name in sorted(reached)
             if name in FORBIDDEN_MODULES or name.startswith(FORBIDDEN_PREFIXES) or name.endswith(FORBIDDEN_SUFFIXES)]
+    out += [f"unresolvable dynamic import in {name}" for name in sorted(flagged & reached)]
     return out
 
 
@@ -111,6 +115,8 @@ def source_problems(source: str) -> list[str]:
                 or (isinstance(node.func, ast.Name) and node.func.id == "resolve")):
             out.append(f"authority call resolve() (line {node.lineno})")
         for name in names:
+            if name in DYNAMIC_IMPORT_NAMES:
+                out.append(f"dynamic import {name!r} (line {getattr(node, 'lineno', '?')})")
             folded = name.lower()
             hit = next((ident for ident in FORBIDDEN_IDENTIFIERS if ident in folded), None)
             if hit:
@@ -122,6 +128,8 @@ def source_problems(source: str) -> list[str]:
         else:
             continue
         for module in modules:
+            if module.split(".")[0] in DYNAMIC_IMPORT_MODULES:
+                out.append(f"dynamic import machinery {module!r}")
             if module.split(".")[0] in REGEX_MODULES:
                 out.append(f"regex engine import {module!r}")
             if any(marker in module.lower() for marker in LEXICON_MARKERS):
@@ -186,6 +194,28 @@ def test_mutant_legacy_import_is_caught(extra):
 ])
 def test_mutant_bridge_or_lexicon_is_caught(extra):
     assert source_problems(_source(MODULE) + extra)
+
+
+@pytest.mark.parametrize("extra", [
+    "\n\ndef _late(name):\n    return __import__(name)\n",
+    "\n\ndef _late():\n    return __import__('app.core.semantic_dimensions')\n",
+    "\n\ndef _late(name):\n    import importlib\n    return importlib.import_module(name)\n",
+    "\n\ndef _late():\n    import importlib\n    return importlib.import_module('app.core.semantic_dimensions')\n",
+    "\n\nfrom importlib import import_module as _load\n",
+    "\n\nimport importlib as _il\n",
+    "\n\ndef _late(name, loader):\n    return loader.import_module(name)\n",
+    "\n\ndef _late(name):\n    import builtins\n    return getattr(builtins, '__import__')(name)\n",
+    "\n\ndef _late(name):\n    import builtins\n    return builtins.__import__(name)\n",
+    "\n\nfrom importlib.util import find_spec\n",
+])
+def test_mutant_dynamic_import_is_caught(extra):
+    """Forbidden whatever the argument: an ALLOWED literal target and a variable target are caught alike."""
+    assert any("dynamic import" in problem for problem in source_problems(_source(MODULE) + extra))
+
+
+def test_mutant_unresolved_dynamic_import_fails_the_closure_pin():
+    extra = "\n\ndef _late(name):\n    import importlib\n    return importlib.import_module(name)\n"
+    assert any("unresolvable dynamic import" in p for p in closure_problems({MODULE: _source(MODULE) + extra}))
 
 
 @pytest.mark.parametrize("consumer, extra", [
