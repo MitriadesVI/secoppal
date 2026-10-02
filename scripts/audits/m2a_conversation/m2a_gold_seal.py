@@ -30,11 +30,13 @@ REPORT = "docs/audits/m2a_conversation/gold/REPRESENTABILITY_REPORT.json"
 CHECKER = "scripts/audits/m2a_conversation/check_m2a_gold_contract.py"
 S19_EXTRACTOR = "scripts/audits/m2a_conversation/extract_contract_dependencies.py"  # U19: §19 -> one sealed extraction
 LABELING_R3 = "docs/audits/m2a_conversation/labeling_r3"
+LABELING_R3B = "docs/audits/m2a_conversation/labeling_r3b"
 PARTITION_SALT = "m2a-gold-partition/1"
 # DEV/TEST frozen at seal 3aac2a20 (also pinned in tests/test_m2a_gold_seal.py). The seal is sticky, so without this pin
 # ``verify`` would only compare the partition with itself. Change it only after checking that no existing id moved.
 # r3 (2026-10-02): 0 moves, 4 additions (SF192/SF193/SF194 TEST, SF195 DEV); r2 pin was 04197bbd….
-PARTITION_SHA256 = "a73d77c94d46d425ec271414d15f8d6fdf5a42f27e8f94d1d4bdaf1353e6831f"
+# r3b (2026-10-02): 0 moves, 6 additions (SF197/SF198/SF200/SF201 TEST, SF196/SF199 DEV); r3 pin was a73d77c9….
+PARTITION_SHA256 = "3b72566e2c7fe534db9af3068f1221282034f1d89a63dbff19caa11ec7d69fa5"
 REAL_LOCATION = "~/Documents/secoppal-asesoria-2026-10-01/privado_no_git/gold_followups_real/GOLD_CANDIDATE/"
 
 PUBLIC_FILES = (
@@ -65,6 +67,9 @@ RULE_FILES = (
     f"{LABELING_R3}/labels_A.jsonl",
     f"{LABELING_R3}/labels_B.jsonl",
     f"{LABELING_R3}/R3_LABELER_INPUT.md",
+    f"{LABELING_R3B}/labels_A.jsonl",
+    f"{LABELING_R3B}/labels_B.jsonl",
+    f"{LABELING_R3B}/R3B_LABELER_INPUT.md",
     "scripts/audits/m2a_conversation/m2a_contract_text.py",
     S19_EXTRACTOR,
 )
@@ -85,6 +90,8 @@ ADJUDICATIONS = {
     "U2": "SF063: preestado normalizado a alcanzable (asks 3 -> 2)",
     "D1": "SF168: declarado prueba de estado persistido inválido",
     "U3": "R3: SF192–SF195 añadidos; etiquetado ciego A/B y adjudicación del usuario (gold/ADJUDICATION_R3.md)",
+    "U25": "R3b: SF196–SF201 añadidos (SF199 = lectura de B; SF202 etiquetado y retirado); SF195 SET_ORDER POSITIVE "
+           "(gold/ADJUDICATION_R3.md, sección R3b)",
 }
 
 
@@ -200,7 +207,8 @@ def body(real_dir: Path | None, previous: dict | None) -> dict:
                           "orchestrator_classification": dict(sorted(classified.items())),
                           "note": "R0205 entra en M2A_GOLD por A8.1 + money_comparators («en adelante» = GTE) sin re-etiquetado. "
                 "Única re-etiqueta: SF166 (U1, usuario 2026-10-02); SF063 sólo normaliza el preestado (U2); "
-                "SF168 se declara (D1). r3: U3 añade SF192–SF195 desde las etiquetas ciegas A/B + adjudicación."},
+                "SF168 se declara (D1). r3: U3 añade SF192–SF195 desde las etiquetas ciegas A/B + adjudicación. "
+                "r3b: U25 añade SF196–SF201 del mismo modo y adjudica la polaridad de SET_ORDER en SF195."},
         "partition": {"rule": "por slice y disposición; orden sha256(salt:id); posiciones pares → TEST, impares → DEV; "
                               "fija desde el sello r2: un id conserva su lado en re-sellados posteriores",
                       "salt": PARTITION_SALT, **part},

@@ -13,6 +13,10 @@ candidate only by the patches below (``ADJUDICATION_2026-10-02.md``):
   U3  release r3 (contract amendment R3) — ADDS SF192–SF195. The records are built from the two blind labels kept
       verbatim in ``docs/audits/m2a_conversation/labeling_r3/labels_{A,B}.jsonl``, plus only the user's adjudication
       of their differences (``gold/ADJUDICATION_R3.md``). A disagreement on a primary field stops the build.
+  U25 release r3b (amendment R3b, repair of the ZEUS NO_GO) — ADDS SF196–SF201 from the blind labels kept verbatim in
+      ``docs/audits/m2a_conversation/labeling_r3b/labels_{A,B}.jsonl`` plus only the user's adjudication (section R3b
+      of ``gold/ADJUDICATION_R3.md``): SF199 takes B's primary reading, SF202 is retired (labelled, not sealed), and
+      SF195's SET_ORDER polarity is POSITIVE. A primary disagreement that is not adjudicated stops the build.
 
 REAL records are not touched (the REAL Gold never enters git). Usage:
   python scripts/audits/m2a_conversation/build_sealed_gold.py          # write
@@ -35,6 +39,7 @@ DST = ROOT / "docs/audits/m2a_conversation/gold"
 ADJ_DOC = "docs/audits/m2a_conversation/gold/ADJUDICATION_2026-10-02.md"
 ADJ_DOC_R3 = "docs/audits/m2a_conversation/gold/ADJUDICATION_R3.md"
 LABELS_R3 = ROOT / "docs/audits/m2a_conversation/labeling_r3"
+LABELS_R3B = ROOT / "docs/audits/m2a_conversation/labeling_r3b"
 
 
 def load(path: Path) -> list[dict]:
@@ -142,9 +147,14 @@ def u3_sf195(L: dict, _other: dict) -> None:
     if L["gap_codes"] != canonical:
         L["gap_codes"] = canonical
         _u3_note(L, "gap_codes en el orden canónico del Gold (alfabético); mismo conjunto en A y B.")
+    for o in L["ops"]:  # U25 (R3b-2): the open point of R3, adjudicated
+        if o["op"] == "SET_ORDER" and o["polarity"] != "POSITIVE":
+            o["polarity"] = "POSITIVE"
+            L["notes"] = L["notes"] + _U25 + "polaridad de SET_ORDER = POSITIVE (el tipo prohíbe negar ORDER)."
 
 
 U3_RULES = {"SF192": u3_sf192, "SF193": u3_sf193, "SF194": u3_sf194, "SF195": u3_sf195}
+U3_ALSO_ADJUDICATED_BY = {"SF195": "U25"}  # a later decision on an r3 record, applied by the same rule
 # Record-level declarations (R3b, U22/U23): what is sealed is NOT the whole normative answer. SF192 seals only C1; the
 # SET_ORDER candidates belong to E-ORDER (§19 DEP-E-ORDER-CANDIDATES, COMPOSICION). The §19 extraction checks the pair.
 U3_RECORD_FIELDS = {
@@ -178,11 +188,107 @@ def u3_additions() -> list[dict]:
             if changed:
                 _u3_note(L, "forma de las ops, como B (" + "; ".join(changed) + ").")
             U3_RULES[gid](L, other)
-        out.append({"adjudicated_by": ["U3"],
+        out.append({"adjudicated_by": sorted({"U3", *([U3_ALSO_ADJUDICATED_BY[gid]] if gid in U3_ALSO_ADJUDICATED_BY else [])}),
                     "ambiguous_by": sorted(s for s, L in (("A", A), ("B", B)) if L["ambiguity"] != "CLEAR"),
                     "expected_disposition": A["expected_disposition"], "gold_id": gid, "label_A": A, "label_B": B,
                     "m2a_scope": A["m2a_scope"], "primary_agreement": True, "slice": "SYNTHETIC_FOLLOWUP",
                     **copy.deepcopy(U3_RECORD_FIELDS.get(gid, {}))})
+    return out
+
+
+# ---- U25 (release r3b): SF196–SF201 from the blind labels A/B + the user's adjudication (ADJUDICATION_R3.md, R3b) --
+U25_LABELED = ("SF196", "SF197", "SF198", "SF199", "SF200", "SF201", "SF202")
+U25_RETIRED = {  # labelled blind, not sealed
+    "SF202": "los dos etiquetadores la marcan AMBIGUOUS (la aposición puede leerse como un único KEEP); la ley «KEEP + "
+             "SET = conflicto aunque coincidan los valores» es mecánica y la cubren el barrido y el verificador",
+}
+U25_IDS = tuple(g for g in U25_LABELED if g not in U25_RETIRED)
+U25_PRIMARY_FROM = {"SF199": "B"}  # adjudicated primary disagreement: the other label takes this side's reading
+_U25 = " | U25 (usuario, 2026-10-02; R3b): "
+
+
+def _u25_note(L: dict, text: str) -> None:
+    L["notes"] = L["notes"] + _U25 + text
+
+
+def _u25_op_form(L: dict, prior_ir: dict) -> list[str]:
+    """Forma de las ops, como en R3: CLEAR y ANSWER sin polaridad; CLEAR sin value_hint; KEEP con polaridad POSITIVE,
+    sin operator y, sobre una ranura vacía, sin value_hint. Lo demás de cada op queda tal cual."""
+    present = {c["dimension"] for c in prior_ir["conditions"]}
+    changed = []
+    for o in L["ops"]:
+        if o["op"] in ("CLEAR", "ANSWER") and o["polarity"] is not None:
+            o["polarity"] = None
+            changed.append(f"{o['op']} {o['slot']}: polarity null")
+        if o["op"] == "CLEAR" and o["value_hint"] is not None:
+            o["value_hint"] = None
+            changed.append(f"CLEAR {o['slot']}: value_hint null")
+        if o["op"] == "KEEP":
+            if (o["polarity"], o["operator"]) != ("POSITIVE", None):
+                o["polarity"], o["operator"] = "POSITIVE", None
+                changed.append(f"KEEP {o['slot']}: polarity POSITIVE, operator null")
+            if o["slot"] not in present and o["value_hint"] is not None:
+                o["value_hint"] = None
+                changed.append(f"KEEP {o['slot']} (ranura vacía): value_hint null")
+    return changed
+
+
+def u25_sf198(L: dict) -> None:
+    for o in L["ops"]:
+        if o["op"] == "SET" and o["slot"] == "TIME" and not o["refers_to_result_set"]:
+            o["refers_to_result_set"] = True
+            _u25_note(L, "refers_to_result_set = true en «los de 2024», la convención adjudicada en SF193.")
+    if L["gap_codes"] != ["TTL"]:
+        L["gap_codes"] = ["TTL"]
+        _u25_note(L, "gap_codes = [\"TTL\"] (convención mayoritaria: refers_to_result_set true sin SET).")
+
+
+U25_RULES = {"SF198": u25_sf198}
+
+
+def _adopt_primary(L: dict, source: dict) -> None:
+    """U25 adjudication of a primary disagreement: ``L`` takes ``source``'s primary reading; its notes are marked."""
+    for k in U3_PRIMARY:
+        L[k] = copy.deepcopy(source[k])
+    L["notes"] = (f"[SUSTITUIDA por U25: se adjudica la lectura de {source['labeler']}] " + L["notes"] + _U25
+                  + "«dame 20» con la pendiente de R3-1: mientras IR v2 rechace un FOLLOWUP_DELTA sólo con "
+                  "CARDINALITY, §7.1 fila 4b, INFORM UNSUPPORTED_PROPOSAL:INVALID_PROPOSAL con la pendiente intacta "
+                  "(§6.7, P1-2). La restricción del wire es autoridad por §0 y no es una dependencia de §19.")
+
+
+def u25_additions() -> list[dict]:
+    """The r3b records: the blind labels verbatim, plus only the adjudicated differences; SF202 is retired."""
+    labels = {side: load(LABELS_R3B / f"labels_{side}.jsonl") for side in ("A", "B")}
+    for side in ("A", "B"):
+        if [r["gold_id"] for r in labels[side]] != list(U25_LABELED) or {r["labeler"] for r in labels[side]} != {side}:
+            raise SystemExit(f"U25: labels {side} do not cover exactly SF196–SF202 in order, by labeler {side}")
+    out = []
+    for a, b in zip(labels["A"], labels["B"]):
+        gid = a["gold_id"]
+        if any(a[k] != b[k] for k in U3_INPUT):
+            raise SystemExit(f"U25: {gid} labels A and B were not given the same input")
+        if sha(a["followup_text"]) != a["followup_sha256"]:
+            raise SystemExit(f"U25: {gid} followup_sha256 does not match its text")
+        if gid in U25_RETIRED:
+            continue
+        disagreement = [k for k in U3_PRIMARY if a[k] != b[k]]
+        if disagreement and gid not in U25_PRIMARY_FROM:
+            raise SystemExit(f"U25: {gid} primary disagreement {disagreement}: needs a new adjudication")
+        A, B = copy.deepcopy(a), copy.deepcopy(b)
+        if disagreement:
+            source = {"A": A, "B": B}[U25_PRIMARY_FROM[gid]]
+            _adopt_primary(B if source is A else A, source)
+        for L in (A, B):
+            changed = _u25_op_form(L, L["prior"]["ir"])
+            if changed:
+                _u25_note(L, "forma de las ops, como en R3 (" + "; ".join(changed) + ").")
+            U25_RULES.get(gid, lambda _L: None)(L)
+        if any(A[k] != B[k] for k in U3_PRIMARY):
+            raise SystemExit(f"U25: {gid} labels still disagree after the adjudication")
+        out.append({"adjudicated_by": ["U25"],
+                    "ambiguous_by": sorted(s for s, L in (("A", A), ("B", B)) if L["ambiguity"] != "CLEAR"),
+                    "expected_disposition": A["expected_disposition"], "gold_id": gid, "label_A": A, "label_B": B,
+                    "m2a_scope": A["m2a_scope"], "primary_agreement": not disagreement, "slice": "SYNTHETIC_FOLLOWUP"})
     return out
 
 
@@ -199,18 +305,19 @@ def build() -> dict[str, str]:
     if {r["gold_id"] for r in gold} & set(PATCHES) != set(PATCHES):
         raise SystemExit("a patched id is missing from the candidate")
     after = {r["gold_id"]: sha(json.dumps(r, ensure_ascii=False, sort_keys=True)) for r in out if r["gold_id"] in PATCHES}
-    additions = u3_additions()
+    additions = u3_additions() + u25_additions()
     taken = {r["gold_id"] for r in gold + front}
-    if taken & set(U3_IDS):
-        raise SystemExit(f"U3: added ids already exist in the candidate: {sorted(taken & set(U3_IDS))}")
+    if taken & (set(U3_IDS) | set(U25_LABELED)):
+        raise SystemExit(f"added ids already exist in the candidate: {sorted(taken & (set(U3_IDS) | set(U25_LABELED)))}")
     out = sorted(out + additions, key=lambda r: r["gold_id"])
     gold_body, front_body = dump(out), dump(front)
     idx = json.loads((SRC / "M2A_GOLD_AND_FRONTIER_INDEX.json").read_text(encoding="utf-8"))
     idx["sealed"] = True
-    idx["release"] = "M2A_GOLD r3 (2026-10-02)"
-    idx["rules"] = idx["rules"] + " + U1/U2 (usuario, 2026-10-02) + D1 + U3 (enmienda R3)"
+    idx["release"] = "M2A_GOLD r3b (2026-10-02)"
+    idx["rules"] = idx["rules"] + " + U1/U2 (usuario, 2026-10-02) + D1 + U3 (enmienda R3) + U25 (enmienda R3b)"
     idx["note"] = ("Copia sellada. Difiere del candidato asesor por U1 (SF166), U2 (SF063) y D1 (SF168), ver "
-                   + ADJ_DOC + ", y por las adiciones U3 (SF192–SF195), ver " + ADJ_DOC_R3 + ". REAL sin cambios.")
+                   + ADJ_DOC + ", y por las adiciones U3 (SF192–SF195) y U25 (SF196–SF201; SF202 etiquetado y "
+                   "retirado), ver " + ADJ_DOC_R3 + ". REAL sin cambios.")
     syn = idx["slices"]["SYNTHETIC"]["M2A_GOLD"]
     syn["ids"] = sorted(r["gold_id"] for r in out)
     syn["n"] = len(out)

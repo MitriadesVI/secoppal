@@ -1,15 +1,16 @@
 # M2A_CONVERSATION_CONTRACT_V1 — contrato conversacional mínimo de Foundation (M2a)
 
-**Fecha:** 2026-10-01. **Enmienda R3:** 2026-10-02 (representabilidad; registro y motivo en el Anexo D).
+**Fecha:** 2026-10-01. **Enmienda R3:** 2026-10-02 (representabilidad; R3b repara el NO_GO de ZEUS; registro y motivo
+en el Anexo D).
 **Estado:** normativo. Es la **única autoridad normativa de M2a**, reconocida por ADR-103 Enmienda 5. Sin efecto en
 runtime hasta que cada paso M2A-n se integre con autorización expresa. Tras R3 rige la congelación de §20.4.
 **Base de código verificada:** `main` = `8c1f8c54` (IR v2 / C1.2 integrado; STATE y MODALITY integradas); la enmienda
 R3 se verificó sobre `fa0b6de8` (Paso 0 de la ola M2a).
-**Gold que lo interpreta:** `docs/audits/m2a_conversation/gold/M2A_GOLD_SEAL.json` (`M2A_GOLD` = 49 REAL + 154 SYNTHETIC = 203;
-`FOLLOWUP_FRONTIER` = 16 + 41 = 57; release r3: copia sellada en `docs/audits/m2a_conversation/gold/`, que difiere del
-candidato asesor por las adjudicaciones U1/U2/D1 del 2026-10-02, `gold/ADJUDICATION_2026-10-02.md`, y por las cuatro
-adiciones de U3, `gold/ADJUDICATION_R3.md`; sellado en el paso B4 y re-sellado una sola vez en R3b-2 tras el NO_GO
-de ZEUS, Anexo D.3). El sello lleva el
+**Gold que lo interpreta:** `docs/audits/m2a_conversation/gold/M2A_GOLD_SEAL.json` (`M2A_GOLD` = 49 REAL + 160 SYNTHETIC = 209;
+`FOLLOWUP_FRONTIER` = 16 + 41 = 57; release r3b: copia sellada en `docs/audits/m2a_conversation/gold/`, que difiere del
+candidato asesor por las adjudicaciones U1/U2/D1 del 2026-10-02, `gold/ADJUDICATION_2026-10-02.md`, por las cuatro
+adiciones de U3 y por las seis de U25, `gold/ADJUDICATION_R3.md`; sellado en el paso B4 y re-sellado una sola vez en
+R3b-2 tras el NO_GO de ZEUS, Anexo D.3). El sello lleva el
 sha256 de este archivo: cambiar una línea de este contrato rompe el sello y exige re-sellar con motivo.
 **Evidencia de origen (no normativa):** `docs/audits/m2a_advisory_2026-10-01/` (carril asesor B, importado).
 **Trazabilidad:** `docs/audits/m2a_conversation/M2A_TRACEABILITY_MATRIX.md`. **Plan:** `docs/audits/m2a_conversation/M2A_IMPLEMENTATION_PLAN.md`.
@@ -49,7 +50,8 @@ OQ-1…OQ-6 de ADR-103 Enm. 4. Cuando dos reglas de origen chocan, manda la post
    `CLARIFY`, nunca legacy, nunca la fuente) (§19).
 
 El alcance medible es exactamente el slice `M2A_GOLD` del sello (todos sus casos tienen `m2a_scope ∈ {IN,
-IN_NEW_SEARCH, IN_PROTOCOL}`).
+IN_NEW_SEARCH, IN_PROTOCOL}`, salvo `OUT_UNSUPPORTED_PROPOSAL`: la fila 4b de §7.1 con ancla o pendiente la responde M2a
+misma, `INFORM` con la pendiente intacta; SF199, U25).
 
 ### 1.2 Fuera (non-goals)
 
@@ -414,9 +416,13 @@ Códigos de rechazo (`DeltaRefusal`, cerrados): `DELTA_SLOT_CONFLICT`, `TARGET_N
 
 | `DeltaRefusal` | `CLARIFY` (A.3) |
 |---|---|
-| `OP_NOT_ACCREDITED:<DIM>` | `UNRESOLVED_VALUE:<DIM>` (el código de la autoridad; `<DIM>` según A.3) |
+| `OP_NOT_ACCREDITED:<DIM>` | `UNRESOLVED_VALUE:<DIM>` (el código de la autoridad; `<DIM>` según A.3); `VALUE_WITHOUT_COMPARATOR` cuando la autoridad VALUE lee una cota sin comparador |
 | `BASE_INVALID` | `NO_ANCHOR` o `ANCHOR_UNREADABLE` (§3.8, §7.1 fila 1) |
 | cualquier otro (estructural, sin autoridad) | el mismo código: `DELTA_SLOT_CONFLICT`, `TARGET_NOT_ADDRESSABLE`, `KEEP_ON_EMPTY_SLOT`, `DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER` |
+
+**`VALUE_WITHOUT_COMPARATOR` (R3b-2, U25).** Es el código de la autoridad VALUE para una cota sin comparador (A.6,
+`value_without_comparator`) y pasa tal cual por esta tabla: `OP_NOT_ACCREDITED:VALUE` ⇒ `CLARIFY
+VALUE_WITHOUT_COMPARATOR`, o `INFORM` con el mismo código cuando el paso 3b o §8.4 lo piden.
 
 ---
 
@@ -442,7 +448,8 @@ Un alcance `OUT_*` o `INFORM` hace **0 llamadas** a la fuente y no cambia el anc
 propiedad de P sola, que ninguna composición repara. No están aquí los motivos que otra fila o regla ya decide:
 
 - operación distinta de SEARCH o FOLLOWUP_DELTA: fila 4;
-- etiquetas reservadas de A.6: fila 6, §8.3 fila 6 y `VALUE_WITHOUT_COMPARATOR`;
+- etiquetas reservadas de A.6: `relative_to_previous` (fila 6), `no_selection` con pendiente vigente (§8.3 fila 6) y
+  `value_without_comparator` (§6: `OP_NOT_ACCREDITED:VALUE` ⇒ `CLARIFY VALUE_WITHOUT_COMPARATOR`);
 - una condición que su autoridad no acredita (p. ej. una familia de modalidad sin política): §6.1,
   `OP_NOT_ACCREDITED:<DIM>`;
 - un universo no dicho: en un delta lo aporta el ancla;
@@ -454,7 +461,7 @@ ni se cancelan: §10.2, §17). Un ancla vencida también cuenta: confirmar no re
 | Motivo (cerrado) | P… | Dueño |
 |---|---|---|
 | `MULTI_REQUEST` | trae varias peticiones que no forman un ancla dual admitida (`processes` + `contracts` con `SHARES_SCOPE`), o varios jobs | M2b |
-| `UNSUPPORTED_CONDITION` | trae una condición `UNSUPPORTED` cuya etiqueta no está en A.6 | extensión o versionado del lenguaje (IR; §20.4) |
+| `UNSUPPORTED_CONDITION` | trae una condición `UNSUPPORTED` cuya etiqueta no está en A.6, o `no_selection` sin pendiente vigente (no elige entre nada; U25) | extensión o versionado del lenguaje (IR; §20.4) |
 | `UNSUPPORTED_SOURCE` | atribuye la consulta a una fuente distinta de SECOP II | contrato M1 (fuente única; definitivo) |
 | `INVALID_PROPOSAL` | no pasa el contrato del wire (p. ej. una cita que no liga con el texto del turno) | productor (M2A-5) |
 | `NO_ACTION` | no trae petición, condición ni directiva; con pendiente vigente no aplica esta fila sino §8.3 fila 8 (F29) | contrato M2a (definitivo) |
@@ -898,6 +905,8 @@ tabla (fail-closed, sin legacy y sin fuente salvo donde se dice).
 | G-FU-18 | formas de superficie VALUE (comparador desordenado/negado, cota sin comparador en rango) | [R0187, R0192, R0375, SF013, SF170] | 5 | mejor lectura de la autoridad, marcada | contrato M1 / E-VALUE | enmienda del contrato Gold M1 |
 | G-FU-19 | vista y universo | [R0081, R0276, SF084, SF132] | 4 | recalcular la vista sólo si era derivada (F9) y anunciar; ante un sustantivo coloquial que podría pedir otra vista (SF132), conservar el universo vigente y anunciarlo | ola F | tabla PV adjudicada para follow-ups |
 
+La tabla de huecos no lleva `impacto_m2a3`: la frontera no entra en ningún gate de M2a (U25).
+
 Además, sin casos: G-FU-10 (`observed_executor = LEGACY_SEARCH`, esquema de observación), G-FU-20 (deshacer, sin
 decidir), G-FU-21 (desempate de previos en replay, método del Gold). G-FU-01/01b/02/02b/03 están **cerrados** por A8,
 A8.1, A9, A9.1 y §8 y sus casos están en `M2A_GOLD`. El conteo por gap suma más de 57 porque un caso puede tocar
@@ -1073,6 +1082,13 @@ Retirados: `SMMLV_UNSUPPORTED` (A2), `INHERITED_UNIT_IMPLAUSIBLE` (A1), `TOPN_CA
   - En SF192 se sella sólo C1: los candidatos `SET_ORDER` los determina E-ORDER (§19, `DEP-E-ORDER`).
   - Ningún registro existente cambia y ningún id existente cambia de lado DEV/TEST. Sus preestados son alcanzables
     (G11).
+- Release r3b (usuario, 2026-10-02; enmienda R3b, Anexo D.3): **U25** añade seis casos sintéticos, SF196–SF201.
+  - Son los controles mínimos de R3b, etiquetados a ciegas por A y B contra este contrato enmendado. Las etiquetas se
+    conservan literales en `docs/audits/m2a_conversation/labeling_r3b/labels_{A,B}.jsonl`.
+  - El usuario adjudicó sus diferencias (`gold/ADJUDICATION_R3.md`, sección R3b): SF199 toma la lectura de B, §7.1
+    fila 4b; SF202 se etiquetó y se retira; la forma de las ops sigue la de R3.
+  - Cambia un solo registro existente: SF195, cuya polaridad de `SET_ORDER` se adjudica `POSITIVE`.
+  - Ningún id existente cambia de lado DEV/TEST.
 
 ## Anexo C — Cláusulas sustituidas
 
@@ -1174,8 +1190,9 @@ Sigue siendo R3 y aún no está en `main`; queda un único re-sellado final (R3b
 | U22 | P2: selección de candidatos | §8.3 «Selección» | por identidad semántica (op, ranura, valor canónico / destino); se compone el parche completo; una edición de otra ranura ⇒ fila 5 |
 | U22 | P2 / P3: alcance de `REASK` | §6, códigos de rechazo | vuelve a «`REASK` si había pendiente» (R3-2) |
 | U21 | gate multi-op | §18 INV-M2A-25 | barrido exhaustivo por parejas + Hypothesis con N operaciones e invariancia a la permutación, sobre un modelo simbólico; sobre el `compose` real, gate de M2A-3 fase 2 |
-| U21 | precisiones que forzó el barrido multi-op (fail-closed; a confirmar por el usuario antes de R3b-2) | §6 pasos 2 y 3b, H1; §7.1 fila 4b; §8.3 «Selección»; §8.4; §10.1 | `KEEP` + `REPLACE_UNIVERSE` del universo ⇒ conflicto; un `CLEAR` de la dimensión entera cubre sus ranuras; dos operaciones no acreditadas son dos causas; la rama de A8.1 con unidades no comparables entra en la precedencia 4; H1 mira H3–H12 y las dependencias de §19; §7.1 fila 6: `frame` = ancla + resto del turno, y con pendiente vigente o ancla vencida ⇒ `INFORM`; con una pendiente vigente no nace otra; la fila 4b aplica también con el ancla vencida; H11: `frame` = la base; la selección no aplica a la fila 1 (evento) |
-| U24 | controles mínimos del Gold | Anexo B (en R3b-2) | dos causas a la vez ⇒ `INFORM`; `KEEP` + `SET` ⇒ `DELTA_SLOT_CONFLICT`, también con el mismo valor; ancla vencida con causa ⇒ `INFORM` sin bucle; «dame 20» con pendiente; selección por clave semántica y edición de otra ranura. SF196–SF202 en `docs/audits/m2a_conversation/labeling_r3b/R3B_LABELER_INPUT.md`, para etiquetado ciego A/B |
+| U21 | precisiones que forzó el barrido multi-op: **DECIDIDAS** (usuario, 2026-10-02, U25) | §6 pasos 2 y 3b, H1; §7.1 fila 4b; §8.3 «Selección»; §8.4; §10.1 | (a) `KEEP` + `REPLACE_UNIVERSE` del universo es conflicto; (b) el `CLEAR` de una dimensión entera cubre cada una de sus ranuras; (c) dos operaciones no acreditadas son dos causas ⇒ `INFORM`; (d) la rama de A8.1 con unidades no comparables va en la precedencia 4; (e) H1 exige que «continuar» pase H3–H12 y las dependencias de §19; (f) §7.1 fila 6 con pendiente vigente o ancla vencida ⇒ `INFORM` sin nueva pendiente (`frame` = ancla + resto del turno); (g) la fila 4b aplica también con el ancla vencida; (h) en H11 el `frame` es la base; (i) la selección semántica no aplica a la fila 1 (evento) |
+| U25 | cierre de R3b (usuario, 2026-10-02) | §6 (tabla de rechazos), §7.1 fila 4b, §19, §1.1, Anexo B | `VALUE_WITHOUT_COMPARATOR` pasa tal cual por la tabla rechazo→A.3 (`OP_NOT_ACCREDITED:VALUE` ⇒ `CLARIFY VALUE_WITHOUT_COMPARATOR`); `no_selection` sin pendiente ⇒ 4b `UNSUPPORTED_PROPOSAL:UNSUPPORTED_CONDITION`; la tabla de huecos G-FU queda sin `impacto_m2a3`; SF195 `SET_ORDER` = `POSITIVE`; SF196–SF201 adjudicados y sellados (SF199 = lectura de B; SF202 retirado); `M2A_GOLD` = 209 |
+| U24 | controles mínimos del Gold | Anexo B (release r3b) | dos causas a la vez ⇒ `INFORM`; `KEEP` + `SET` ⇒ `DELTA_SLOT_CONFLICT`; ancla vencida con causa ⇒ `INFORM` sin bucle; «dame 20» con pendiente; selección por clave semántica y edición de otra ranura. SF196–SF202 etiquetados a ciegas (A/B) desde `docs/audits/m2a_conversation/labeling_r3b/R3B_LABELER_INPUT.md`; SF196–SF201 sellados y SF202 retirado (U25) |
 
-**Estado del sello.** Este texto rompe el sello r3 de `4cf1cad3` a propósito. Se re-sella una sola vez en R3b-2, tras
-el etiquetado ciego de los controles.
+**Estado del sello.** R3b rompió el sello r3 de `4cf1cad3` a propósito. Se re-selló una sola vez en R3b-2 (U25),
+tras el etiquetado ciego y la adjudicación de los controles; el `seal_sha256` está en el sello.

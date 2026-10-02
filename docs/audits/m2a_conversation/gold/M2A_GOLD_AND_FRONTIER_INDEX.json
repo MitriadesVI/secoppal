@@ -1,8 +1,8 @@
 {
  "sealed": true,
  "schema": "m2a-followup-gold/2.1",
- "rules": "contrato M1 v1.4 + F1-F30 + A1-A9 + A8.1 + A9.1 + U1/U2 (usuario, 2026-10-02) + D1 + U3 (enmienda R3)",
- "note": "Copia sellada. Difiere del candidato asesor por U1 (SF166), U2 (SF063) y D1 (SF168), ver docs/audits/m2a_conversation/gold/ADJUDICATION_2026-10-02.md, y por las adiciones U3 (SF192–SF195), ver docs/audits/m2a_conversation/gold/ADJUDICATION_R3.md. REAL sin cambios.",
+ "rules": "contrato M1 v1.4 + F1-F30 + A1-A9 + A8.1 + A9.1 + U1/U2 (usuario, 2026-10-02) + D1 + U3 (enmienda R3) + U25 (enmienda R3b)",
+ "note": "Copia sellada. Difiere del candidato asesor por U1 (SF166), U2 (SF063) y D1 (SF168), ver docs/audits/m2a_conversation/gold/ADJUDICATION_2026-10-02.md, y por las adiciones U3 (SF192–SF195) y U25 (SF196–SF201; SF202 etiquetado y retirado), ver docs/audits/m2a_conversation/gold/ADJUDICATION_R3.md. REAL sin cambios.",
  "slices": {
   "REAL": {
    "M2A_GOLD": {
@@ -225,8 +225,8 @@
   },
   "SYNTHETIC": {
    "M2A_GOLD": {
-    "n": 154,
-    "sha256": "e47b35e207db9becd2af2728cadff9980705ff5bd6d7700b17fec75ebe3a1f03",
+    "n": 160,
+    "sha256": "d278619d09ca3a5a519933ecf888d8e3b8f573d350a1825d36c4dae2e46b9dab",
     "ids": [
      "SF001",
      "SF002",
@@ -381,14 +381,20 @@
      "SF192",
      "SF193",
      "SF194",
-     "SF195"
+     "SF195",
+     "SF196",
+     "SF197",
+     "SF198",
+     "SF199",
+     "SF200",
+     "SF201"
     ],
     "by_disposition": {
-     "EXECUTE": 118,
-     "CLARIFY": 15,
+     "EXECUTE": 119,
+     "CLARIFY": 16,
      "NEW_SEARCH": 16,
-     "REASK": 4,
-     "INFORM": 1
+     "REASK": 5,
+     "INFORM": 4
     }
    },
    "FOLLOWUP_FRONTIER": {
@@ -786,7 +792,7 @@
    }
   }
  },
- "release": "M2A_GOLD r3 (2026-10-02)",
+ "release": "M2A_GOLD r3b (2026-10-02)",
  "patches": {
   "SF063": {
    "before_sha256": "42c84f7d9b8798f6d10a7b9d18a57ae702c507edad507c4d2ae3824188c5f684",
@@ -812,7 +818,25 @@
    "sha256": "207f1dc2269e6ef073b404a21e5fb6726bdbbeaadcc524adefe8c7701ddc4624"
   },
   "SF195": {
-   "sha256": "b767eb83d05e8bac72da134daf198a8e36aa51e28a1e48e797b99bfc5995e83c"
+   "sha256": "90123057ae4b312226a80e5fd39b35d288a40e509a47d7319e7896bcde6e6a68"
+  },
+  "SF196": {
+   "sha256": "9802d3a17535d67347410d58dd28c534e6ff65eab62f3994d53959acd61bfd42"
+  },
+  "SF197": {
+   "sha256": "dc211bc4f7ccc682985afff0ede80c621cd6cdb410a446834ca3451c5943ca71"
+  },
+  "SF198": {
+   "sha256": "f52448ecf7d0b52a3f3c15b2b7c958d36b44f4270b22ade918743eda832b9fec"
+  },
+  "SF199": {
+   "sha256": "4618a49d2755b76bbc18201e3279c4ba2fe44768b2d06c5041c33671c8355432"
+  },
+  "SF200": {
+   "sha256": "7a5e705a60b0d0b3b22179406c991be41ee2a958b6572bd9cd98555173a13a90"
+  },
+  "SF201": {
+   "sha256": "3460bbac8bacfe2b75956ea64fe38014bf6a4c8209bd5cc86dd9923d5d127dd6"
   }
  }
 }

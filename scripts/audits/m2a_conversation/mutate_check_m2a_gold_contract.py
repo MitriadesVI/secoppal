@@ -204,8 +204,40 @@ def mutants(rows: list[dict]) -> dict:
                                 "refers_to_result_set": False, "depends_on_prior_value": True,
                                 "inherited": {"year_source": None, "unit_source": None}}]
 
-    return {
+    # ---- U25 (R3b-2): two causes, 4b scope, KEEP + SET executed, schema O5, answer attribution -------------------
+    def sf196_two_causes_clarify(L):  # §6 3b: two causes never ask
+        L["expected_disposition"] = "CLARIFY"
 
+    def sf196_two_causes_lower_code(L):  # §6 3b: the top code of the closed precedence, not another one
+        L["disposition_reason"] = "DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER"
+
+    def sf199_out_scope_reask(L):  # §7.1 4b is INFORM UNSUPPORTED_PROPOSAL:<motivo>, never REASK
+        L.update(expected_disposition="REASK", disposition_reason="ANSWER_UNRESOLVED")
+
+    def sf199_unsupported_in_scope_in(L):  # UNSUPPORTED_PROPOSAL:<motivo> lives in its own scope
+        L["m2a_scope"] = "IN"
+
+    def sf197_conflict_executed(L):  # KEEP + SET of one slot never executes (U22)
+        res = copy.deepcopy(L["prior"]["ir"])
+        res["conditions"] = [{**c, "value_hint": "Alcaldía de Villavicencio"} if c["dimension"] == "BUYER" else c
+                             for c in res["conditions"]]
+        L.update(expected_disposition="EXECUTE", disposition_reason=None, resulting_ir=res)
+
+    def sf198_null_inherited_on_set(L):  # schema 2.1 O5: only a KEEP inherits nothing (null)
+        next(o for o in L["ops"] if o["op"] == "SET")["inherited"] = None
+
+    def sf200_answer_loses_other_slot(L):  # the selected candidate's slots only (§8.3 «Selección»), never TIME
+        L["resulting_ir"] = {**L["resulting_ir"], "conditions": [
+            c for c in L["resulting_ir"]["conditions"] if c["dimension"] != "TIME"]}
+
+    return {
+        "U25_SF196_two_causes_clarify": ("SF196", sf196_two_causes_clarify),
+        "U25_SF196_two_causes_lower_code": ("SF196", sf196_two_causes_lower_code),
+        "U25_SF199_out_scope_reask": ("SF199", sf199_out_scope_reask),
+        "U25_SF199_unsupported_in_scope_IN": ("SF199", sf199_unsupported_in_scope_in),
+        "U25_SF197_conflict_executed": ("SF197", sf197_conflict_executed),
+        "U25_SF198_null_inherited_on_set": ("SF198", sf198_null_inherited_on_set),
+        "U25_SF200_answer_loses_other_slot": ("SF200", sf200_answer_loses_other_slot),
         "R3b_ZEUS_SF193_CLARIFY_with_REASK_code": ("SF193", reason_is("PENDING_UNANSWERED")),
         "R3b_ZEUS_SF193_CLARIFY_with_INFORM_only_code": ("SF193", reason_is("REFERENT_EXTENSIONAL")),
         "R3b_ZEUS_SF193_CLARIFY_with_UNSUPPORTED_PROPOSAL": ("SF193", reason_is("UNSUPPORTED_PROPOSAL:NO_ACTION")),

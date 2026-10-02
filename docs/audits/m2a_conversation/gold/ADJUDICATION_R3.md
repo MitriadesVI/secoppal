@@ -67,3 +67,94 @@ TEST, impar → DEV; pegajosa. Calculada con los cuatro ids dentro y **0 movimie
 
 `M2A_GOLD` = 49 REAL + 154 SYNTHETIC = 203. `FOLLOWUP_FRONTIER` = 16 + 41 = 57, sin cambios. Disposiciones del
 sintético: EXECUTE 118, CLARIFY 15, NEW_SEARCH 16, REASK 4, INFORM 1.
+
+---
+
+# Sección R3b: adjudicación U25 (enmienda R3b, 2026-10-02)
+
+**Autor de la decisión:** el usuario (2026-10-02), transmitida por el orquestador. **Registro:** ARES, paso R3b-2.
+**Mecanismo:** el de U3. `build_sealed_gold.py` (`u25_additions`) construye los registros desde las etiquetas literales
+más esta adjudicación, y el sello comprueba que se reproducen byte a byte. U25 **añade** seis casos (SF196–SF201) y
+cambia un registro existente (SF195).
+
+## Procedencia
+
+| Pieza | Ruta | sha256 |
+|---|---|---|
+| Etiquetas del etiquetador A (Sonnet, ciego) | `docs/audits/m2a_conversation/labeling_r3b/labels_A.jsonl` | `cfa473734c7bd6e9d8993a47c4e7926891738c7b198234f72bd1c9e3da409e7c` |
+| Etiquetas del etiquetador B (Opus, ciego) | `docs/audits/m2a_conversation/labeling_r3b/labels_B.jsonl` | `67da48076ed01c6e6d31e1d1952587ea55463262abfc468674f027be7240ce37` |
+| Contrato contra el que etiquetaron | `docs/decisions/M2A_CONVERSATION_CONTRACT_V1.md` en `b8372757` | `fe3ff6d6ffdad382…` |
+| Entrada que recibieron | `labeling_r3b/R3B_LABELER_INPUT.md` en `b8372757` | `9208876dde678697…` |
+| Esquema | `docs/audits/m2a_advisory_2026-10-01/02_gold_followups/kit_v2_2/SCHEMA_v2_1.md` | `0e96ada47d513a92…` |
+
+Las etiquetas cubren SF196–SF202. A y B recibieron la misma entrada; el constructor lo comprueba caso por caso.
+
+**Acuerdo primario.** En SF196, SF197, SF198, SF200, SF201 y SF202, A y B coinciden en `turn_kind`, `m2a_scope`,
+`expected_disposition`, `disposition_reason`, `resulting_ir`, `effects` y `expected_echo`. En SF199 discrepan.
+
+## Decisiones
+
+| Caso | Disposición sellada | Diferencia A/B | Adjudicación U25 | Digest del registro sellado |
+|---|---|---|---|---|
+| SF196 | `INFORM KEEP_ON_EMPTY_SLOT` | forma de las ops | forma de R3 | `9802d3a17535d673…` |
+| SF197 | `CLARIFY DELTA_SLOT_CONFLICT` | `quote` del `SET`; `inherited` del `KEEP` (A objeto, B `null`) | forma de R3; lo demás tal cual | `dc211bc4f7ccc682…` |
+| SF198 | `INFORM KEEP_ON_EMPTY_SLOT` | `refers_to_result_set` de «los de 2024» (A `true`, B `false`); `gap_codes` (A `["TTL", "SET"]`, B `["TTL"]`) | `refers_to_result_set = true`, la convención adjudicada en SF193; `gap_codes = ["TTL"]`, la convención mayoritaria (`refers` verdadero sin `SET`); forma de R3 | `f52448ecf7d0b52a…` |
+| SF199 | `INFORM UNSUPPORTED_PROPOSAL:INVALID_PROPOSAL`, alcance `OUT_UNSUPPORTED_PROPOSAL` | **primaria**: A = `REASK ANSWER_UNRESOLVED` (`IN`); B = `INFORM UNSUPPORTED_PROPOSAL:INVALID_PROPOSAL` (`OUT_UNSUPPORTED_PROPOSAL`) | **se adjudica B** (motivo abajo). A toma la lectura primaria de B; sus notas quedan marcadas `[SUSTITUIDA por U25]`. `primary_agreement = false`; `ambiguous_by = ["A"]`, la ambigüedad que A declaró | `4618a49d2755b76b…` |
+| SF200 | `EXECUTE` (selecciona C1: sin ORDER ni CARDINALITY) | `quote` y `value_hint` de la respuesta | forma de R3 | `7a5e705a60b0d0b3…` |
+| SF201 | `REASK ANSWER_EDITS_OTHER_SLOT` | `quote` y `value_hint` | forma de R3 | `3460bbac8bacfe2b…` |
+| SF202 | — (**se retira**) | ninguna primaria; A y B la marcan `AMBIGUOUS` | no se sella (motivo abajo) | — |
+| SF195 (r3) | `EXECUTE`, sin cambios | `polarity` de `SET_ORDER` (A `POSITIVE`, B `null`): el punto abierto de R3 | `POSITIVE`: el tipo prohíbe negar ORDER. Es el único registro existente que cambia | `90123057ae4b3122…` |
+
+**Motivo de SF199.** Es una decisión expresa del usuario (U21/P1-2): mientras IR v2 rechace un `FOLLOWUP_DELTA` que
+sólo trae CARDINALITY, «dame 20» termina en `INFORM UNSUPPORTED_PROPOSAL:INVALID_PROPOSAL` (§6.7, §7.1 fila 4b). La
+restricción del wire es autoridad por §0 y no es una dependencia de §19. Por eso no le aplica la instrucción
+«normativo, no provisional» de la entrada.
+
+**Motivo de SF202.** Los dos etiquetadores la marcan `AMBIGUOUS`: la aposición puede leerse como un único `KEEP`. La
+ley «`KEEP` + `SET` = conflicto aunque coincidan los valores» es mecánica y ya la cubren el barrido y el verificador.
+El usuario pidió doble etiquetado sólo donde hay interpretación humana real. Los controles mínimos siguen cubiertos:
+dos rechazos (SF196), `KEEP` + `SET` (SF197) y ancla vencida (SF198). **Nota para M2A-5 (productor):** una aposición
+que nombra el valor vigente se emite como un único `KEEP`, no como `KEEP` + `SET`.
+
+**Forma de las ops, como en R3.**
+- `CLEAR` y `ANSWER` llevan `polarity` nula, y `CLEAR` además `value_hint` nulo.
+- `KEEP` lleva `polarity` `POSITIVE` y `operator` nulo. Sobre una ranura vacía también lleva `value_hint` nulo (SF196,
+  SF198).
+- En SF197 el `KEEP` nombra una ranura ocupada: su `value_hint`, en el que A y B coinciden, se conserva, como en
+  SF024 y SF041.
+- `unresolved` queda como lo marcan ambos, que coinciden en todas las ops.
+
+Cada cambio deja su rastro en las notas de la etiqueta afectada (`| U25 (usuario, 2026-10-02; R3b): …`).
+
+## Precisiones del registro (para la revisión)
+
+1. **`ANSWER` con `polarity` nula.** Se aplica como se decidió. Las 18 `ANSWER` del Gold anterior llevan `POSITIVE`,
+   pero todas sobre ranuras polarizadas. Las de SF199–SF201 responden sobre CARDINALITY, que no tiene polaridad (§4.2).
+   Ninguna regla del verificador lee esa polaridad.
+2. **`inherited = null` en un `KEEP` (B).** Es la forma del esquema 2.1 (O5: «un KEEP no hereda nada»), así que queda
+   literal. El verificador fallaba con una excepción ante ese `null`. Ahora lo admite sólo en `KEEP` y lo exige objeto
+   en lo demás; un mutante lo prueba.
+3. **SF199 fuera de `IN*`.** El alcance `OUT_UNSUPPORTED_PROPOSAL` es parte de la adjudicación. Para sellarlo, el
+   alcance medible (§1.1) y la regla G8 del verificador admiten ahora `OUT_UNSUPPORTED_PROPOSAL`, sólo como fila 4b:
+   `INFORM UNSUPPORTED_PROPOSAL:<motivo>` sobre un ancla o una pendiente, y en ambas direcciones.
+4. **Respuesta ejecutada (SF200).** La regla de arrastre G3 atribuye a una respuesta ejecutada las ranuras de la
+   pendiente (`candidate_slots`). El candidato seleccionado compone su parche completo (§8.3 «Selección»), y C1 retira
+   ORDER aunque la respuesta sólo nombre el límite. Un mutante comprueba que no se atribuye otra ranura (TIME).
+
+## Partición DEV/TEST (r3b)
+
+Misma regla fija y pegajosa. **0 movimientos** de ids existentes (el sello lo comprueba contra el de `4cf1cad3`):
+
+| Id | Disposición | Lado |
+|---|---|---|
+| SF196 | INFORM | DEV |
+| SF197 | CLARIFY | TEST |
+| SF198 | INFORM | TEST |
+| SF199 | INFORM | DEV |
+| SF200 | EXECUTE | TEST |
+| SF201 | REASK | TEST |
+
+## Totales tras r3b
+
+`M2A_GOLD` = 49 REAL + 160 SYNTHETIC = 209. `FOLLOWUP_FRONTIER` = 16 + 41 = 57, sin cambios. Disposiciones del
+sintético: EXECUTE 119, CLARIFY 16, NEW_SEARCH 16, REASK 5, INFORM 4.

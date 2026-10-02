@@ -448,6 +448,12 @@ SWEEP = (
         "KEEP + escritor", "SÍ", "→ DELTA_SLOT_CONFLICT (CLARIFY o, con otra causa, INFORM)", "CUBIERTO",
         "§6 paso 2; el desenlace no depende del orden de las operaciones (barrido multi-op)", "U22",
         ("A3-DELTA_SLOT_CONFLICT",)),
+    Row("S14", (), "etiquetas reservadas de A.6 fuera de su fila: cota sin comparador; `no_selection` sin pendiente "
+        "(R3b-2, U25)", "— (condición UNSUPPORTED con etiqueta reservada)", "SÍ",
+        "OP_NOT_ACCREDITED:VALUE ⇒ CLARIFY VALUE_WITHOUT_COMPARATOR (o INFORM, paso 3b); sin pendiente, §7.1 fila 4b "
+        "INFORM UNSUPPORTED_PROPOSAL:UNSUPPORTED_CONDITION", "CUBIERTO",
+        "tabla de rechazos de §6 (el código de la autoridad VALUE pasa tal cual); motivo de 4b; barrido multi-op",
+        "U25", ("A3-UNSUPPORTED_PROPOSAL:UNSUPPORTED_CONDITION", "A3-INFORM:VALUE_WITHOUT_COMPARATOR")),
     Row("R01", (), "rechazo DELTA_SLOT_CONFLICT (dos SET en una ranura; KEEP+CLEAR; dos REPLACE_UNIVERSE)",
         "SET×2, KEEP+CLEAR, REPLACE_UNIVERSE×2", "SÍ", "→ CLARIFY DELTA_SLOT_CONFLICT", "CUBIERTO",
         "tabla de §6; incluye la unión de valores de G-FU-09 (§19)", "R3-2", ("A3-DELTA_SLOT_CONFLICT",)),
@@ -633,7 +639,7 @@ def test_every_refusal_publishes_an_a3_code_in_the_contract():
     assert set(table) == set(refusals)
     for code, targets in table.items():
         assert targets and set(targets) <= clarify, (code, targets)
-    assert table["OP_NOT_ACCREDITED:<DIM>"] == ["UNRESOLVED_VALUE:<DIM>"]
+    assert table["OP_NOT_ACCREDITED:<DIM>"] == ["UNRESOLVED_VALUE:<DIM>", "VALUE_WITHOUT_COMPARATOR"]  # U25
     assert table["BASE_INVALID"] == ["NO_ANCHOR", "ANCHOR_UNREADABLE"]
     assert all(table[c] == [c] for c in ("DELTA_SLOT_CONFLICT", "TARGET_NOT_ADDRESSABLE", "KEEP_ON_EMPTY_SLOT",
                                          "DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER"))
@@ -765,6 +771,18 @@ def test_r3b_inform_capable_codes_are_a_closed_list_of_clarify_codes():
     host = {code for _, disposition, code in CT.host_rules(text) if disposition == "CLARIFY"} - {"CONTEXT_EXPIRED_CONFIRM"}
     refusals = {code for codes in refusal_table().values() for code in codes} - {"NO_ANCHOR", "ANCHOR_UNREADABLE"}
     assert host | refusals <= set(capable)
+
+
+def test_u25_closures_are_in_the_contract():
+    text = _contract()
+    closure = _flat(CT.section(text, "**`VALUE_WITHOUT_COMPARATOR` (R3b-2, U25).**", "---"))
+    assert "`OP_NOT_ACCREDITED:VALUE` ⇒ `CLARIFY VALUE_WITHOUT_COMPARATOR`" in closure
+    assert "`no_selection` sin pendiente vigente" in next(r for r in CT.table(
+        text, "| Motivo (cerrado) | P… | Dueño |") if r[0] == "`UNSUPPORTED_CONDITION`")[1]
+    decided = next(line for line in text.splitlines() if line.startswith("| U21 | precisiones"))
+    assert "**DECIDIDAS**" in decided and "a confirmar" not in decided
+    assert all(f"({x})" in decided for x in "abcdefghi")
+    assert "La tabla de huecos no lleva `impacto_m2a3`" in text
 
 
 def test_r3b_p2_keep_conflict_and_semantic_selection_are_in_the_contract():

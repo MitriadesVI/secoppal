@@ -295,6 +295,45 @@ Los marcados «a completar» los completa el orquestador al integrar.
   R3b-2.
 - **Si cambia, tocar.** Entrada de etiquetado; `ADJUDICATION_R3.md`; `build_sealed_gold.py` (U3); sello.
 
+### U25. Cierre de R3b y re-sellado único (R3b-2, 2026-10-02)
+- **Decisión.**
+  - Las nueve precisiones que forzó el barrido multi-op quedan **decididas** tal cual (Anexo D.3):
+    1. `KEEP` + `REPLACE_UNIVERSE` del universo es conflicto.
+    2. El `CLEAR` de una dimensión entera cubre cada una de sus ranuras.
+    3. Dos operaciones no acreditadas son dos causas, y por tanto `INFORM`.
+    4. La rama de A8.1 con unidades no comparables va en la precedencia 4.
+    5. H1 exige que «continuar» pase H3–H12 y las dependencias de §19.
+    6. §7.1 fila 6 con pendiente vigente o ancla vencida da `INFORM`, sin pendiente nueva.
+    7. La fila 4b aplica también con el ancla vencida.
+    8. En H11 el `frame` es la base.
+    9. La selección semántica no aplica a la fila 1 (evento).
+  - Cierres de INV-M2A-25:
+    - `VALUE_WITHOUT_COMPARATOR` es el código de la autoridad VALUE y pasa tal cual por la tabla rechazo→A.3
+      (`OP_NOT_ACCREDITED:VALUE` ⇒ `CLARIFY VALUE_WITHOUT_COMPARATOR`).
+    - `no_selection` sin pendiente es la fila 4b, `UNSUPPORTED_PROPOSAL:UNSUPPORTED_CONDITION`.
+
+    Los dos están en el modelo multi-op y en el barrido (fila S14).
+  - Adjudicaciones:
+    - SF195: `SET_ORDER` con polaridad `POSITIVE`.
+    - La tabla de huecos G-FU de §19 se queda sin `impacto_m2a3`.
+    - La premisa de SF193 queda registrada como ya está en `ADJUDICATION_R3.md`.
+    - SF196–SF201 se sellan desde las etiquetas ciegas A (Sonnet) y B (Opus), literales, con la forma de R3. SF199 toma
+      la lectura de B (§7.1 fila 4b; la restricción del wire es autoridad por §0, no una dependencia de §19).
+    - SF202 se etiquetó y se **retira**: los dos la marcan `AMBIGUOUS`, y la ley es mecánica (barrido y verificador).
+  - `M2A_GOLD` = 209. Re-sellado único: `seal_sha256 = 3693d19f1dc9dc43d49f778ac0e7fde430846450b37909cdbe59d742fd6ae459`.
+    Hay 0 movimientos DEV/TEST de ids existentes.
+- **Nota para M2A-5 (productor).** Una aposición que nombra el valor vigente («con la misma entidad contratante, la
+  Gobernación del Meta») se emite como un único `KEEP`, no como `KEEP` + `SET`.
+- **Quién.** Usuario.
+- **Motivo.** Cerrar R3 con un solo re-sellado tras la reparación del NO_GO de ZEUS.
+- **Dónde.**
+  - Contrato: §1.1, §6 (tabla de rechazos), §7.1 fila 4b, §19, Anexo B y Anexo D.3.
+  - `build_sealed_gold.py` (`u25_additions`); `check_m2a_gold_contract.py` (G8 con `OUT_UNSUPPORTED_PROPOSAL` sólo como
+    4b, dos causas ⇒ `INFORM`, `inherited` nulo sólo en `KEEP`) y sus mutantes `U25_*`.
+  - `gold/ADJUDICATION_R3.md` (sección R3b); `labeling_r3b/labels_{A,B}.jsonl`; el sello.
+- **Si cambia, tocar.** Contrato D.3 y Anexo B; `ADJUDICATION_R3.md`; `build_sealed_gold.py`; el sello (re-sellar con
+  motivo).
+
 ## Estado
 
 - **M2A-3 LANGUAGE R3 = FROZEN.** Se activa con el GO de ZEUS sobre el re-sellado de R3b-2 (contrato §20.4). Hasta
@@ -351,4 +390,5 @@ Los marcados «a completar» los completa el orquestador al integrar.
 | `76303e02` | B1-fix: este registro (U1–U17, O1–O5) |
 | `379ca3db` | B4: re-sellado único r3 (sello `3fdd81df…`), U3, P-3 (U18) y §19 sellado (U19) |
 | `4cf1cad3` | B4: U18, U19 y casos adjudicados en la matriz |
-| los dos commits siguientes a `4cf1cad3` | R3b-1: reparación del NO_GO de ZEUS (U20–U24), sin re-sellar: contrato, herramientas y gates; después, entrada de etiquetado, registro y matriz |
+| `4636a73a`, `b8372757` | R3b-1: reparación del NO_GO de ZEUS (U20–U24), sin re-sellar: contrato, herramientas y gates; después, entrada de etiquetado, registro y matriz |
+| commit siguiente a `b8372757` | R3b-2: cierre y re-sellado único (U25), sello `3693d19f…` |

@@ -11,7 +11,8 @@ What it proves, per label (A and B) of every Gold record:
   G5  A8.1 is numeric over typed bounds (no lexicon) and A9.1 is structural over the turn's dimensions;
   G6  every CLARIFY with alternatives is a list of generic candidate patches;
   G7  rows/page need a result set: no protocol turn executes over a prior that never reached the source;
-  G8  partition: GOLD ∩ FRONTIER = ∅, GOLD scopes ⊆ IN*, deferred ledger gaps never reach GOLD;
+  G8  partition: GOLD ∩ FRONTIER = ∅, GOLD scopes ⊆ IN* ∪ {OUT_UNSUPPORTED_PROPOSAL} (§7.1 row 4b with an anchor or a
+      pending is answered by M2a itself: U25), deferred ledger gaps never reach GOLD;
   G9  structural coherence of each disposition (host floor, window, pending answers, F25, two candidates);
   G10 no hybrid over a pending, unit inherited from exactly one unit, SMMLV executed over one year at most;
   G11 reachable pre-states: asks ≤ 2; SMMLV executed only over one year of the D10 catalog (or a declared invalid
@@ -21,6 +22,9 @@ contract parser (``m2a_contract_text``), and a parameterised code's tail is boun
 ``<motivo>``: §7.1 row 4b). G9 also checks ``DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER`` (§6.7; only C1 is sealed, the
 SET_ORDER candidates are E-ORDER's, §19) and ``KEEP_ON_EMPTY_SLOT`` (§6.1); G10 also checks the F16 fail-closed branch
 (§6.5, R3-4) and P-3 (a negation never inverts a positive created by the same patch).
+R3b (U20/U25): two or more structural refusal causes visible in the Gold fields (slot conflict, KEEP of an empty slot,
+CARDINALITY left without ORDER) give INFORM with the top code of the contract's closed precedence (§6 step 3b);
+``inherited`` may be null only on a KEEP (schema 2.1, O5).
 Not checkable from Gold fields (needs the producer's evidence): the continuation guard of §7.2/§8.3 itself — a
 NEW_SEARCH relabel of a pending answer that keeps its conditions is representable; M2A-8 gates it.
 It proves the Gold is REPRESENTABLE by the contract; it does not DERIVE each disposition from §7.2/§8.3, which needs
@@ -64,7 +68,7 @@ GOLD_OP_TO_CONTRACT = {
 SLOTS = {"TIME", "VALUE.lower", "VALUE.upper", "VALUE", "GEOGRAPHY", "BUYER", "ACTOR", "TOPIC", "STATE",
          "MODALITY", "CONTRACT_TYPE_OR_NATURE", "ORDER", "CARDINALITY", "UNIVERSE"}
 TURN_KINDS = {"DELTA", "NEW_SEARCH", "ANSWER_TO_CLARIFICATION", "PROTOCOL"}
-GOLD_SCOPES = {"IN", "IN_NEW_SEARCH", "IN_PROTOCOL"}
+GOLD_SCOPES = {"IN", "IN_NEW_SEARCH", "IN_PROTOCOL", "OUT_UNSUPPORTED_PROPOSAL"}  # 4b: answered by M2a (U25)
 DISPOSITIONS = {"EXECUTE", "NEW_SEARCH", "CLARIFY", "REASK", "INFORM"}
 # The vocabulary of reasons is the contract's annex A.3, read through the one contract parser (U19); never a copy.
 _SPEC = importlib.util.spec_from_file_location("m2a_contract_text", Path(__file__).with_name("m2a_contract_text.py"))
@@ -81,6 +85,7 @@ _DIM_NAMED, _DIM_EXCLUDED = contract_text.dim_parameter(_CONTRACT)
 _INFORM_CAPABLE = set(contract_text.inform_capable_codes(_CONTRACT))
 PAIRS = {d: set(c) for d, c in _A3.items()}
 PAIRS["INFORM"] = PAIRS["INFORM"] | _INFORM_CAPABLE
+PRECEDENCE = contract_text.refusal_precedence(_CONTRACT)  # §6 step 3b (R3b, U20), highest first
 REASON_TAILS = {  # the domain the contract declares for each parameter (A.3 «Parámetros (R3)»)
     "UNRESOLVED_VALUE:": {d.value for d in SemanticDimension} - _DIM_EXCLUDED | _DIM_NAMED,
     "OPERATION_CHANGE:": {op.value for op in Operation},
@@ -223,6 +228,25 @@ def check_ir(r: Report, gid: str, lab: str, ir: dict | None, where: str) -> None
         r.bad(gid, lab, f"{where}: more than one bound per VALUE side")
 
 
+def structural_causes(pir: dict | None, ops: list[dict]) -> list[str]:
+    """§6 step 3b causes readable from Gold fields alone, sorted by the contract's closed precedence."""
+    p_ir = pir or {"conditions": []}
+    present = ({slot_of(c) for c in p_ir["conditions"]} | {c["dimension"] for c in p_ir["conditions"]}
+               | ({"ORDER"} if p_ir.get("order") else set()) | ({"CARDINALITY"} if p_ir.get("cardinality") else set())
+               | {"UNIVERSE"})
+    writes = collections.Counter(o["slot"] for o in ops if o["op"] in ("SET", "SET_ORDER", "SET_UNIVERSE"))
+    keeps = {o["slot"] for o in ops if o["op"] == "KEEP"}
+    clears = {o["slot"] for o in ops if o["op"] == "CLEAR"}
+    found = ["DELTA_SLOT_CONFLICT" for s in set(writes) | keeps
+             if writes[s] > 1 or (s in keeps and (writes[s] or s in clears))]
+    found += ["KEEP_ON_EMPTY_SLOT" for s in keeps if s not in present]
+    if (p_ir.get("order") and p_ir.get("cardinality") and "ORDER" in clears and "CARDINALITY" not in clears
+            and not writes["ORDER"]):
+        found.append("DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER")
+    rank = {code: n for n, code in enumerate(PRECEDENCE)}
+    return sorted(found, key=rank.__getitem__)
+
+
 def check_label(r: Report, rec: dict, lab: str, L: dict) -> None:
     gid = rec["gold_id"]
     prior, res, ops = L["prior"], L["resulting_ir"], L["ops"]
@@ -274,6 +298,8 @@ def check_label(r: Report, rec: dict, lab: str, L: dict) -> None:
             r.bad(gid, lab, f"slot {o['slot']}")
         if (o["slot"] is None) != (o["op"] == "CANCEL_PENDING"):
             r.bad(gid, lab, "slot null iff CANCEL_PENDING")
+        if not isinstance(o["inherited"], dict) and not (o["inherited"] is None and o["op"] == "KEEP"):
+            r.bad(gid, lab, "inherited is an object; null only on a KEEP (schema 2.1, O5)")
         r.counts["op:" + GOLD_OP_TO_CONTRACT.get(o["op"], "?")] += 1
     gaps = set(L.get("gap_codes") or [])
     for g in gaps & LIVE_GAPS:
@@ -290,7 +316,8 @@ def check_label(r: Report, rec: dict, lab: str, L: dict) -> None:
         times = [c for c in pir0["conditions"] if c["dimension"] == "TIME" and c["polarity"] == "POSITIVE"]
         rel = [o for o in ops if o["slot"] == "TIME" and o["depends_on_prior_value"]]
         if disp == "EXECUTE" and not (len(times) == 1 and rel and
-                                      all(o["inherited"]["year_source"] == "PREVIOUS_ACCEPTED_TIME" for o in rel)):
+                                      all((o["inherited"] or {}).get("year_source") == "PREVIOUS_ACCEPTED_TIME"
+                                          for o in rel)):
             r.bad(gid, lab, "relative temporal executed without a unique active referent (A5)")
         else:
             r.note("A5_unique_temporal_referent", gid)
@@ -359,6 +386,8 @@ def check_label(r: Report, rec: dict, lab: str, L: dict) -> None:
     # G3 carry identity / attribution, only where an executed effective exists over an anchor
     if res is not None and pir is not None and tk in ("DELTA", "ANSWER_TO_CLARIFICATION") and disp == "EXECUTE":
         t = touched(ops)
+        if tk == "ANSWER_TO_CLARIFICATION" and prior.get("pending"):  # §8.3 «Selección»: the selected candidate's
+            t |= set(prior["pending"]["candidate_slots"])  # whole patch composes; its slots lie in answer_slots (§8.1)
         rk = collections.Counter(key(c) for c in res["conditions"])
         for c in pir["conditions"]:
             s = slot_of(c)
@@ -485,7 +514,7 @@ def check_label(r: Report, rec: dict, lab: str, L: dict) -> None:
         if not any(o["op"] == "CLEAR" and o["slot"] == "ORDER" for o in ops) or any(
                 (o["op"] == "CLEAR" and o["slot"] == "CARDINALITY") or o["op"] == "SET_ORDER" for o in ops):
             r.bad(gid, lab, "DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER: the ops do not leave CARDINALITY without ORDER")
-        if res is not None or (L.get("alternatives") or []) != [c1]:
+        if res is not None or (disp == "CLARIFY" and (L.get("alternatives") or []) != [c1]):  # INFORM: none (§8.4)
             r.bad(gid, lab, "DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER: sealed alternatives must be exactly C1 (§6.7, §19)")
     if reason == "DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER" and disp == "CLARIFY" and not (
             rec.get("partial_alternatives") or {}).get("dependency"):
@@ -510,6 +539,17 @@ def check_label(r: Report, rec: dict, lab: str, L: dict) -> None:
                    | {"UNIVERSE"})
         if res is not None or not any(o["op"] == "KEEP" and o["slot"] not in present for o in ops):
             r.bad(gid, lab, "KEEP_ON_EMPTY_SLOT without a KEEP of a slot absent from the anchor")
+    causes = structural_causes(pir, ops) if tk == "DELTA" and prior["state"] != "PENDING" else []
+    if len(causes) > 1 and (disp, reason) != ("INFORM", causes[0]):  # §6 step 3b (R3b, U20)
+        r.bad(gid, lab, f"{len(causes)} refusal causes {causes} must give INFORM {causes[0]} (§6 3b)")
+    if causes and disp == "EXECUTE":
+        r.bad(gid, lab, f"refusal cause {causes[0]} executed")
+    if L["m2a_scope"] == "OUT_UNSUPPORTED_PROPOSAL" and (disp != "INFORM" or not str(reason).startswith(
+            "UNSUPPORTED_PROPOSAL:") or prior["state"] not in ("EXECUTED", "PENDING")):
+        r.bad(gid, lab, "OUT_UNSUPPORTED_PROPOSAL is §7.1 row 4b: INFORM UNSUPPORTED_PROPOSAL:<motivo> over an anchor "
+                        "or a pending")
+    if str(reason).startswith("UNSUPPORTED_PROPOSAL:") and L["m2a_scope"] != "OUT_UNSUPPORTED_PROPOSAL":
+        r.bad(gid, lab, "UNSUPPORTED_PROPOSAL:<motivo> outside its scope OUT_UNSUPPORTED_PROPOSAL (§7.1 row 4b)")
 
     # G10 F16 fail-closed branch (§6.5, R3-4) and P-3: a negation over several carried positives, over a value
     # contained in a positive, or against a positive created by the same patch never executes; it clarifies with
@@ -530,7 +570,7 @@ def check_label(r: Report, rec: dict, lab: str, L: dict) -> None:
     # G10 pending, inheritance and SMMLV invariants (INV-M2A-08/-23, F5/A1, A2)
     if prior["state"] == "PENDING" and tk == "DELTA" and disp == "EXECUTE" and not ctrl:
         r.bad(gid, lab, "delta executed over a pending without CANCEL_PENDING (hybrid)")
-    if pir is not None and any(o["inherited"].get("unit_source") == "PREVIOUS_ACCEPTED_VALUE" for o in ops):
+    if pir is not None and any((o["inherited"] or {}).get("unit_source") == "PREVIOUS_ACCEPTED_VALUE" for o in ops):
         units = {c["unit"] for c in pir["conditions"] if c["dimension"] == "VALUE"}
         if len(units) != 1:
             r.bad(gid, lab, f"unit inherited from {len(units)} active units (F5/A1 needs exactly one)")

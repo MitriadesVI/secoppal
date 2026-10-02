@@ -1187,7 +1187,7 @@
  "schema": "m2a-contract-s19/2",
  "source": {
   "contract": "docs/decisions/M2A_CONVERSATION_CONTRACT_V1.md",
-  "contract_sha256": "fe3ff6d6ffdad3827b78eff81b0ebca4fd910e5840c84d2a6c9153f3687bc800",
+  "contract_sha256": "ced59fd427c5e7075f76ed2b33decc0f43a477095599994da757729dffd0af9c",
   "section": "§19"
  }
 }

@@ -28,7 +28,9 @@ What the model abstracts, declared:
 * Value arithmetic is outside: SMMLV recalculation, territory containment.
 * Events, NEW_SEARCH and the pending-control labels are outside: ``CANCEL_PENDING``, ``no_selection``,
   ``value_without_comparator``. Every patch is a delta, Continuación(P).
-* The only item that is not a ``PatchOp`` is a relative-to-previous condition (§7.1 row 6, A.6).
+* Three items are not a ``PatchOp``: the A.6 reserved labels. They are a relative-to-previous condition (§7.1 row
+  6), a VALUE bound without comparator (§6: ``OP_NOT_ACCREDITED:VALUE`` ⇒ ``VALUE_WITHOUT_COMPARATOR``) and
+  ``no_selection`` (§8.3 row 6 with a pending; without one, §7.1 row 4b ``UNSUPPORTED_CONDITION``).
 
 The universal property on the REAL ``compose`` (permutations plus ``check_transition``) is a gate of M2A-3 phase 2
 (§8.4). ``python -m tests.test_m2a_contract_r3_multiop`` prints the sweep.
@@ -63,6 +65,9 @@ HOST = {rule: (disposition, code) for rule, disposition, code in CT.host_rules(T
 HOST_RANK = {rule: rank for rank, rule in enumerate(HOST)}
 OPNA, LEAVES = "OP_NOT_ACCREDITED:<DIM>", "DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER"
 WIRE_INVALID = "UNSUPPORTED_PROPOSAL:INVALID_PROPOSAL"  # §7.1 row 4b (D-6)
+NO_COMPARATOR_CODE = next(code for code in REFUSAL_A3[OPNA] if "<DIM>" not in code)  # §6 table (U25)
+NO_SELECTION_CODE = "UNSUPPORTED_PROPOSAL:" + next(  # §7.1 row 4b: the motive whose row names no_selection (U25)
+    motive for motive in CT.row_4b_motives(TEXT) if "`no_selection`" in CT.section(TEXT, f"| `{motive}` |", "\n"))
 
 
 def _expand(codes) -> set[str]:
@@ -118,10 +123,10 @@ RANK = _slot_rank()
 
 # ---- symbolic values ------------------------------------------------------------------------------------------------
 class Op(NamedTuple):
-    kind: str  # PatchOpKind value, or RELATIVE (§7.1 row 6)
+    kind: str  # PatchOpKind value, or an A.6 reserved label: RELATIVE, NO_COMPARATOR, NO_SELECTION
     slot: str
     value: str | None = None
-    status: str = "ok"  # ok | unresolved | crosses | noncomparable | asks:<H> | asks2:<H> | state_missing | relative
+    status: str = "ok"  # ok | unresolved | crosses | noncomparable | asks:<H> | asks2:<H> | state_missing | label
 
 
 class State(NamedTuple):
@@ -191,7 +196,12 @@ def op_variants() -> tuple[Op, ...]:
                     Op(kind, key, "processes", "state_missing"), Op(kind, key, "contracts", "state_missing")]
         else:
             out.append(Op(kind, key))
-    return (*out, Op("RELATIVE", "VALUE/lower", None, "relative"))
+    return (*out, *LABEL_ITEMS)
+
+
+# A.6 reserved labels: not PatchOps. The slot only places the item in §4.2 order (none of them writes a slot).
+LABEL_ITEMS = (Op("RELATIVE", "VALUE/lower", None, "label"), Op("NO_COMPARATOR", "VALUE/lower", None, "label"),
+               Op("NO_SELECTION", "VALUE/lower", None, "label"))
 
 
 OPS = op_variants()
@@ -240,15 +250,18 @@ class Cause(NamedTuple):
     open_ops: tuple[Op, ...]
     refusal: str
     slot: str
+    authority_code: str = ""  # the authority's own code when the table names one (VALUE_WITHOUT_COMPARATOR)
 
     @property
     def code(self) -> str:
+        if self.authority_code:
+            return self.authority_code
         a3 = REFUSAL_A3[self.refusal][0]
         return a3.replace("<DIM>", dim_of(self.slot)) if self.refusal == OPNA else a3
 
 
-def _cause(refusal: str, slot: str, ops) -> Cause:
-    return Cause(PRECEDENCE[refusal], RANK[slot], tuple(sorted(ops)), refusal, slot)
+def _cause(refusal: str, slot: str, ops, authority_code: str = "") -> Cause:
+    return Cause(PRECEDENCE[refusal], RANK[slot], tuple(sorted(ops)), refusal, slot, authority_code)
 
 
 def causes(base: State, ops) -> list[Cause]:
@@ -274,7 +287,9 @@ def causes(base: State, ops) -> list[Cause]:
             out.append(_cause("DELTA_SLOT_CONFLICT", key, (*writers, *keeps, *clears)))
     out += [_cause("KEEP_ON_EMPTY_SLOT", op.slot, (op,)) for op in ops if op.kind == "KEEP" and not occupied(base, op.slot)]
     for op in ops:
-        if op.status == "unresolved" or (op.kind == "REPLACE_UNIVERSE" and op.value == "opportunities"):  # §19 O1B
+        if op.kind == "NO_COMPARATOR":  # §6 table: the VALUE authority's own code passes through (U25)
+            out.append(_cause(OPNA, op.slot, (op,), NO_COMPARATOR_CODE))
+        elif op.status == "unresolved" or (op.kind == "REPLACE_UNIVERSE" and op.value == "opportunities"):  # §19 O1B
             out.append(_cause(OPNA, op.slot, (op,)))
         elif op.kind == "SET" and op.status == "noncomparable" and carried(base, ops, OPPOSITE[op.slot]):  # §15.2
             out.append(_cause(OPNA, op.slot, (op,)))
@@ -377,7 +392,7 @@ def open_operations(base: State, ops) -> list[Op]:
     """Operations that cannot sit in a frame: unresolved, a host question, a relative condition (§8.2, §8.4)."""
     state = apply(base, ops)
     asked = {op for f in findings(base, ops, state) if f.kind == "question" and f.rule != "H11" for op in f.open_ops}
-    return sorted(op for op in ops if op in asked or op.status in ("unresolved", "relative"))
+    return sorted(op for op in ops if op in asked or op.status in ("unresolved", "label"))
 
 
 def law_violations(base: State, frame_ops, candidates, answer_slots) -> list[str]:
@@ -435,6 +450,8 @@ def respond(cfg: Config, ops, *, law: bool = True) -> Response:
     cards = sum(op.kind == "SET" and op.slot == "CARDINALITY" for op in ops)
     if cfg.wire == "current" and wire_error(orders, cards):  # §7.1 row 4b, also on an expired anchor
         return Response("INFORM", WIRE_INVALID, pending=pending, clause="§7.1 4b")
+    if pending is None and any(op.kind == "NO_SELECTION" for op in ops):  # §7.1 4b: nothing to choose from (U25)
+        return Response("INFORM", NO_SELECTION_CODE, clause="§7.1 4b")
     relative = [op for op in ops if op.kind == "RELATIVE"]
     if relative:  # §7.1 row 6 (F15)
         code, rest = HOST["H4"][1], _without(ops, relative)
@@ -490,7 +507,12 @@ def selects(candidate: tuple[Op, ...], ops) -> bool:
 
 def answer(cfg: Config, pending: Pending, ops) -> Response:
     """§8.3 rows 4, 5, 7 and 8 (row 1 is an event; rows 2, 3 and 6 need control labels the model leaves out)."""
-    touched_slots = covered(ops)
+    labels = [op for op in ops if op.kind == "NO_SELECTION"]
+    touched_slots = covered(op for op in ops if op not in labels)
+    if labels:  # §8.3 row 5 before row 6: an answer plus an edit of another slot is re-asked as such
+        if touched_slots & pending.answer_slots and touched_slots - pending.answer_slots:
+            return Response("REASK", "ANSWER_EDITS_OTHER_SLOT", pending=pending, clause="§8.3 5")
+        return Response("REASK", "OPTION_NOT_CHOSEN", pending=pending, clause="§8.3 6")
     if not touched_slots & pending.answer_slots:
         return Response("REASK", "PENDING_UNANSWERED", pending=pending, clause="§8.3 8")
     if touched_slots - pending.answer_slots:
@@ -531,7 +553,7 @@ def frame_defects(base: State, frame_ops) -> list[str]:
         out.append("frame targets an atom inside OR/NOT")
     for op in frame_ops:
         how = op.status.partition(":")[0]
-        if op.status in ("unresolved", "relative") or how == "asks" or op.value == "opportunities":
+        if op.status in ("unresolved", "label") or how == "asks" or op.value == "opportunities":
             out.append(f"frame holds an unresolved or asking operation: {op}")
         elif (op.status == "asks2:H5" and state.slots[IDX["ACTOR/POSITIVE"]]) or (
                 op.status == "asks2:H6" and base.slots[IDX["BUYER/POSITIVE"]]
@@ -670,7 +692,7 @@ def pairwise() -> Sweep:
 def rule_pins(cfg: Config, ops, r: Response) -> list[tuple]:
     """The R3b rules themselves (not only representability), on the turns where no earlier row decides."""
     plain = (not cfg.expired and cfg.pending is None and r.clause.startswith("§6")
-             and not any(op.kind == "RELATIVE" for op in ops))
+             and not any(op.kind in ("RELATIVE", "NO_SELECTION") for op in ops))
     if not plain:
         if cfg.expired and r.kind == "CLARIFY" and r.code != EXPIRED_CODE:
             return [("H1", ops, r.code)]
@@ -688,9 +710,12 @@ def rule_pins(cfg: Config, ops, r: Response) -> list[tuple]:
 
 def test_the_operation_inventory_is_the_constructed_matrix():
     kinds = Counter(op.kind for op in OPS)
-    assert {(op.kind, op.slot) for op in OPS if op.kind != "RELATIVE"} == {
+    assert {(op.kind, op.slot) for op in OPS if op not in LABEL_ITEMS} == {
         k for k, result in op_slot_matrix().items() if result == "OK"}
-    assert kinds == {"SET": 66, "CLEAR": 29, "KEEP": 21, "SET_ORDER": 3, "REPLACE_UNIVERSE": 5, "RELATIVE": 1}
+    assert kinds == {"SET": 66, "CLEAR": 29, "KEEP": 21, "SET_ORDER": 3, "REPLACE_UNIVERSE": 5, "RELATIVE": 1,
+                     "NO_COMPARATOR": 1, "NO_SELECTION": 1}
+    assert NO_COMPARATOR_CODE == "VALUE_WITHOUT_COMPARATOR" and NO_SELECTION_CODE == (
+        "UNSUPPORTED_PROPOSAL:UNSUPPORTED_CONDITION")
     assert len(SINGLE) == 21 and set(RANK) == set(SINGLE)
     assert [code for code in PRECEDENCE] == ["TARGET_NOT_ADDRESSABLE", "DELTA_SLOT_CONFLICT", "KEEP_ON_EMPTY_SLOT",
                                              OPNA, LEAVES]
@@ -773,6 +798,23 @@ def test_the_r3b_controls_answer_as_the_contract_says():
     assert limit.kind == "EXECUTE" and not occupied(limit.state, "ORDER") and not occupied(limit.state, "CARDINALITY")
     assert respond(r31, (Op("CLEAR", "CARDINALITY"), Op("SET", "TIME/POSITIVE", "w"))).code == "ANSWER_EDITS_OTHER_SLOT"
     assert respond(r31, (Op("SET_ORDER", "ORDER", OrderKey.VALUE.value),)).code == "ANSWER_UNRESOLVED"
+
+
+def test_the_u25_closures_answer_as_the_contract_says():
+    """U25: value_without_comparator passes through the refusal table; no_selection without a pending is row 4b."""
+    full = {(c.dual, c.expired, c.wire, c.pending and c.pending.reason): c for c in configs() if c.profile == "FULL"}
+    fresh, expired = full[(False, False, "current", None)], full[(False, True, "current", None)]
+    r31 = full[(False, False, "current", "DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER")]
+    no_comparator, no_selection = LABEL_ITEMS[1], LABEL_ITEMS[2]
+    asked = respond(fresh, (no_comparator, Op("SET", "TIME/POSITIVE", "w")))
+    assert (asked.kind, asked.code, asked.pending.frame_ops) == ("CLARIFY", "VALUE_WITHOUT_COMPARATOR",
+                                                                  (Op("SET", "TIME/POSITIVE", "w"),))
+    assert respond(expired, (no_comparator,)) == Response("INFORM", "VALUE_WITHOUT_COMPARATOR", clause="§6 3b")
+    assert respond(fresh, (no_comparator, Op("CLEAR", "ORDER"))).kind == "INFORM"  # two causes
+    assert respond(fresh, (no_selection,)) == Response("INFORM", NO_SELECTION_CODE, clause="§7.1 4b")
+    assert respond(expired, (no_selection,)) == Response("INFORM", NO_SELECTION_CODE, clause="§7.1 4b")
+    assert respond(r31, (no_selection,)) == Response("REASK", "OPTION_NOT_CHOSEN", pending=r31.pending,
+                                                     clause="§8.3 6")
 
 
 # ---- (b) Hypothesis: N-operation patches, same property, plus permutation invariance ---------------------------------
