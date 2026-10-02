@@ -23,7 +23,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
 ADV = "docs/audits/m2a_advisory_2026-10-01"
-GOLD = f"{ADV}/02_gold_followups/gold_candidato"
+CANDIDATE = f"{ADV}/02_gold_followups/gold_candidato"
+GOLD = "docs/audits/m2a_conversation/gold"  # sealed copy: candidate + U1/U2/D1 (build_sealed_gold.py)
 SEAL = ROOT / "docs/audits/m2a_conversation/gold/M2A_GOLD_SEAL.json"
 REPORT = "docs/audits/m2a_conversation/gold/REPRESENTABILITY_REPORT.json"
 CHECKER = "scripts/audits/m2a_conversation/check_m2a_gold_contract.py"
@@ -34,14 +35,16 @@ PUBLIC_FILES = (
     f"{GOLD}/M2A_GOLD_synthetic.jsonl",
     f"{GOLD}/FOLLOWUP_FRONTIER_synthetic.jsonl",
     f"{GOLD}/M2A_GOLD_AND_FRONTIER_INDEX.json",
-    f"{GOLD}/FOLLOWUP_GAPS_LEDGER.jsonl",
-    f"{GOLD}/FOLLOWUP_GAPS_LEDGER.md",
+    f"{CANDIDATE}/FOLLOWUP_GAPS_LEDGER.jsonl",
+    f"{CANDIDATE}/FOLLOWUP_GAPS_LEDGER.md",
 )
 RULE_FILES = (
     "docs/decisions/M2A_CONVERSATION_CONTRACT_V1.md",
     f"{ADV}/02_gold_followups/kit_v2_2/ADJUDICATED_OVERRIDES.md",
     f"{ADV}/01_diseno_m2a/ADJUDICATION_T3_2026-10-01.md",
-    f"{GOLD}/CLASSIFICATION_UNCLASSIFIED_4.md",
+    f"{CANDIDATE}/CLASSIFICATION_UNCLASSIFIED_4.md",
+    f"{GOLD}/ADJUDICATION_2026-10-02.md",
+    "scripts/audits/m2a_conversation/build_sealed_gold.py",
     f"{ADV}/01_diseno_m2a/PRODUCT_DECISIONS_2026-10-01.md",
     f"{ADV}/02_gold_followups/kit_v2_2/SCHEMA_v2_1.md",
     f"{ADV}/02_gold_followups/kit_v2_2/CONTRACT_ADDENDUM_FOLLOWUPS_v2.md",
@@ -61,6 +64,9 @@ ADJUDICATIONS = {
     "A9": "prueba estructural de autosuficiencia",
     "A9.1": "con SEARCH activa, sólo condiciones/modificadores = DELTA",
     "G-FU-03": "PendingClarification.candidate_patches[]",
+    "U1": "SF166: año 2023 fuera del catálogo D10 ⇒ CLARIFY SMMLV_YEAR_AMBIGUOUS (control de no extrapolación)",
+    "U2": "SF063: preestado normalizado a alcanzable (asks 3 -> 2)",
+    "D1": "SF168: declarado prueba de estado persistido inválido",
 }
 
 
@@ -167,13 +173,24 @@ def body(real_dir: Path | None, previous: dict | None) -> dict:
         "interpreting_rules": {p: sha_bytes((ROOT / p).read_bytes()) for p in RULE_FILES},
         "adjudications": {"rules": ADJUDICATIONS, "records": {k: sorted(v) for k, v in sorted(adjudicated.items())},
                           "orchestrator_classification": dict(sorted(classified.items())),
-                          "note": "Ningún registro se re-etiquetó; R0205 entra en M2A_GOLD por A8.1 + money_comparators («en adelante» = GTE)."},
+                          "note": "R0205 entra en M2A_GOLD por A8.1 + money_comparators («en adelante» = GTE) sin re-etiquetado. "
+                "Única re-etiqueta: SF166 (U1, usuario 2026-10-02); SF063 sólo normaliza el preestado (U2); "
+                "SF168 se declara (D1)."},
         "partition": {"rule": "por slice y disposición; orden sha256(salt:id); posiciones pares → TEST, impares → DEV",
                       "salt": PARTITION_SALT, **part},
-        "gates": {"representability": {"checker": CHECKER, "report": REPORT,
+        "gates": {"sealed_gold_reproduces_from_candidate": _sealed_reproduces(),
+                  "representability": {"checker": CHECKER, "report": REPORT,
                                        "report_sha256": sha_bytes((ROOT / REPORT).read_bytes()),
                                        "violations": len(json.loads((ROOT / REPORT).read_text(encoding="utf-8"))["violations"])}},
     }
+
+
+def _sealed_reproduces() -> bool:
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("bsg", ROOT / "scripts/audits/m2a_conversation/build_sealed_gold.py")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return all((ROOT / GOLD / n).read_text(encoding="utf-8") == body for n, body in mod.build().items())
 
 
 def seal_of(b: dict) -> dict:
@@ -198,6 +215,9 @@ def main() -> int:
     if fresh != stored:
         diff = sorted(k for k in set(fresh) | set(stored) if fresh.get(k) != stored.get(k))
         print("SEAL BROKEN:", diff)
+        return 1
+    if not stored["gates"]["sealed_gold_reproduces_from_candidate"]:
+        print("SEAL BROKEN: sealed gold does not reproduce from the candidate + adjudications")
         return 1
     if stored["gates"]["representability"]["violations"] != 0:
         print("SEAL BROKEN: representability violations")

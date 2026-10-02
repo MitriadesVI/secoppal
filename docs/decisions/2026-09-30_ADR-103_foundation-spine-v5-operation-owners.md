@@ -491,7 +491,7 @@ sólo las falsifica. Si un caso pasa sin una garantía que lo explique, se decla
 | C1.6.0 | La partición del Gold de SEARCH divide TEST en **TEST_A** (evaluación de v5) y **TEST_B** (evaluación de v5.1, que nadie ve antes). Se estratifica por slice y clase y se fija antes de escribir el prompt v5. |
 | C1.6 | El prompt v5 va sin sección de estado. Criterios ACTIVATE_V5 sobre TEST_A (dos pasadas) y DA-6 con custodio. `MODE_FRONTIER` pasa a «modo ∈ perfiles Foundation». |
 | C1.3–C1.5, C1.7, ACTIVATE_V5 | Sin cambio. |
-| M2A-0 (HERA, desde ya) | Gold de follow-ups 2.1 con A1–A7 y las decisiones de OQ-1, OQ-3, OQ-4 y OQ-5. Revisión de los 2 solapes de H7b. Sello y partición DEV/TEST propia. |
+| M2A-0 (HERA, desde ya) | Gold de follow-ups 2.1 con A1–A7 y las decisiones de OQ-1, OQ-3, OQ-4 y OQ-5. Revisión de los 2 solapes de H7b. Sello y partición DEV/TEST propia. **[SUPERSEDED por la Enm. 5: `M2A_GOLD` sellado con A1–A9.1]** |
 | **E-0** (antes del primer ACTIVE) | Hoja `accredited_span` y registro de ocurrencias; fases de admisión; opacidad, anidación y re-anclaje; cobertura en SHADOW. |
 | **L-0** (antes de E-TIME ACTIVE) | Léxico funcional único de la ruta de cita. |
 | E-* | Cada uno con su adaptador (D11) y sus `TRIGGER_TOKENS` (D5). E-VALUE con SMMLV (D10). E-ORDER con el tope y la política ≥ 10⁹ (D9). E-BUYER, E-GEO y E-ACTOR emiten las reglas de exactitud. **E-ACTOR ACTIVE es obligatorio antes del CUTOVER.** |
@@ -507,7 +507,7 @@ sólo las falsifica. Si un caso pasa sin una garantía que lo explique, se decla
 
 | Gate | Exigencia |
 |---|---|
-| M2a (Gold de follow-ups 2.1 con A1–A7 sellado; se mide la efectiva resultante; sólo casos CLEAR) | 0 en: fragmento ejecutado solo; condición arrastrada perdida sin una operación citada; híbrido tras una pendiente, o respuesta elegida por el producto; composición sobre una base inválida; turno con ancla Foundation que llega a legacy; `OUT_*` o `INFORM` que llama a la fuente; relativo no temporal ejecutado; relativo temporal ejecutado sin referente único o sin eco; uso de filas sin referente a resultados; consulta autosuficiente y delta confundidos; follow-up que legacy acierta y M2a no, por clase; **0 discrepancias** de disposición, código y efectiva con la IR oráculo por el host. |
+| M2a (Gold de follow-ups 2.1 con A1–A7 sellado **[SUPERSEDED por la Enm. 5: `M2A_GOLD` sellado con A1–A9.1]**; se mide la efectiva resultante; sólo casos CLEAR) | 0 en: fragmento ejecutado solo; condición arrastrada perdida sin una operación citada; híbrido tras una pendiente, o respuesta elegida por el producto; composición sobre una base inválida; turno con ancla Foundation que llega a legacy; `OUT_*` o `INFORM` que llama a la fuente; relativo no temporal ejecutado; relativo temporal ejecutado sin referente único o sin eco; uso de filas sin referente a resultados; consulta autosuficiente y delta confundidos; follow-up que legacy acierta y M2a no, por clase; **0 discrepancias** de disposición, código y efectiva con la IR oráculo por el host. |
 | Eco | 0 valores heredados, inferidos por reloj, puestos por defecto, recortados o convertidos sin su eco, en el primer turno y en follow-ups. |
 | Opacidad | 0 significados derivados de una superficie anidada en una opaca. 0 descartes de una superficie que reaparece sin cubrir. X020 y X059 (CLEAR) dan su disposición Gold. X038 (AMBIGUOUS, MULTI) queda fuera de los gates de cero y sólo se informa. |
 | Cobertura de vocabulario cerrado (D5) | El gate duro está activo y añade 0 `L-only-OK`. La sobre-aclaración está medida y publicada, sin umbral. |
@@ -604,3 +604,4 @@ F26 y su `INHERITED_UNIT_IMPLAUSIBLE` (A1).
 | Deuda | Dueño | Vence |
 |---|---|---|
 | La exención `data/conversations/` del pin de frontera C1.2 deja 20 JSONL versionados fuera del congelamiento (P3; detalle en `docs/audits/m1_c1/C1_2_FRONTIER_PIN_DEBT.md`) | Núcleo | CUTOVER (decidir) |
+| ADR-103 no tiene entrada en `docs/decisions_log.md` (deuda documental, no bloqueante; la bitácora termina en ADR-102) | HERA | próximo cierre que toque la bitácora |

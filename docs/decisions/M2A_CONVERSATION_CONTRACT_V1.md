@@ -5,8 +5,9 @@
 runtime hasta que cada paso M2A-n se integre con autorización expresa.
 **Base de código verificada:** `main` = `8c1f8c54` (IR v2 / C1.2 integrado; STATE y MODALITY integradas).
 **Gold que lo interpreta:** `docs/audits/m2a_conversation/gold/M2A_GOLD_SEAL.json` (`M2A_GOLD` = 49 REAL + 150 SYNTHETIC = 199;
-`FOLLOWUP_FRONTIER` = 16 + 41 = 57). El sello lleva el sha256 de este archivo: cambiar una línea de este contrato
-rompe el sello y exige re-sellar con motivo.
+`FOLLOWUP_FRONTIER` = 16 + 41 = 57; release r2: copia sellada en `docs/audits/m2a_conversation/gold/`, que difiere del
+candidato asesor sólo por las adjudicaciones U1/U2/D1 del 2026-10-02, `gold/ADJUDICATION_2026-10-02.md`). El sello
+lleva el sha256 de este archivo: cambiar una línea de este contrato rompe el sello y exige re-sellar con motivo.
 **Evidencia de origen (no normativa):** `docs/audits/m2a_advisory_2026-10-01/` (carril asesor B, importado).
 **Trazabilidad:** `docs/audits/m2a_conversation/M2A_TRACEABILITY_MATRIX.md`. **Plan:** `docs/audits/m2a_conversation/M2A_IMPLEMENTATION_PLAN.md`.
 
@@ -350,7 +351,7 @@ Códigos de rechazo (`DeltaRefusal`, cerrados): `DELTA_SLOT_CONFLICT`, `TARGET_N
 | 2 | `OUT_ANCHOR_NOT_SEARCH` | el último turno es de un dueño legacy | `HANDOFF_LEGACY` (fuera de M2a) |
 | 3 | `IN_PROTOCOL` | evento, o paginación sobre un resultado Foundation | `PROTOCOL_PAGE` / `PROTOCOL_EVENT` / `PENDING_ANSWER` por evento |
 | 4 | `OUT_OPERATION_CHANGE` | la propuesta trae un job cuya operación no es SEARCH ni FOLLOWUP_DELTA | `INFORM OPERATION_CHANGE:<op>` |
-| 5 | `OUT_REFERENT_EXTENSIONAL` | el referente es una fila o un subconjunto mostrado | `INFORM REFERENT_EXTENSIONAL` |
+| 5 | `OUT_REFERENT_EXTENSIONAL` | el referente es una fila o un subconjunto mostrado por posición o identidad, según la señal estructural extensional del wire 5.1 (se define en M2A-5; G-FU-14 diferido) | `INFORM REFERENT_EXTENSIONAL` |
 | 6 | `OUT_RELATIVE_TO_PREVIOUS` | condición relativa a un valor previo no temporal (F15) | `CLARIFY RELATIVE_TO_PREVIOUS_VALUE` |
 | 7 | `IN_NEW_SEARCH` | §7.2 dice búsqueda nueva | `NEW_SEARCH` |
 | 8 | `IN` | lo demás: delta o respuesta | §6, §8 |
@@ -370,7 +371,9 @@ Definiciones, todas sobre la **forma** de la interpretación, nunca sobre palabr
 - **Continuación(P)** = P trae evidencia estructural de dependencia: job `FOLLOWUP_DELTA`, `referent_evidence`
   (incluye «los que…», «esos»), directiva `KEEP` o `CLEAR`, o condición que depende de un valor previo
   (`depends_on_prior_value`). Es evidencia que el productor emite como span con dueño; **el host no la detecta con
-  léxico**.
+  léxico**. Hasta que M2A-5 defina en el wire 5.1 la señal que separa un referente **extensional** (una fila, «el
+  segundo», por posición o identidad) de uno **intensional** («los que…», re-consulta F4), todo `referent_evidence` se
+  trata como intensional; distinguirlos es G-FU-14, diferido a M2A-5 (señal) y M2b (ejecución sobre filas).
 - **Nuevo(P, A)** = P trae una condición TOPIC o ACTOR (de cualquier polaridad) cuyo par (polaridad, valor canónico)
   no está en el ancla A, o un job de operación nueva (que el paso 4 de §7.1 ya envió a `INFORM`). Es la lista de A9.1
   leída sin filtro de polaridad.
@@ -642,6 +645,9 @@ unidad única ⇒ `CLARIFY UNIT_AMBIGUOUS`. La herencia sí puede ir seguida de 
 - Un follow-up sobre una base con SMMLV hereda la unidad (§15.4) y, si cambia el año, la cota se **recalcula** sobre la
   nueva vigencia a partir de `Provenance.source_amount` (nunca del COP previo).
 - TIME de varios años, o año fuera del catálogo ⇒ `CLARIFY SMMLV_YEAR_AMBIGUOUS`. Nunca se usa el salario de otro año.
+- El catálogo es el de ADR-103 D10: **2024–2026** (`app/data/smmlv.py`, copiado a `app/host_data/value/` por E-VALUE).
+  SF166 («y en 2023?») es el **control de no extrapolación** del Gold (U1): aclara. Añadir 2023 o cualquier otro año
+  es una decisión de producto separada y futura, que re-adjudica SF166 y re-sella.
 - M2a conserva `unit = SMMLV`, `source_amount`, `year`, `year_source` y el COP convertido (en `money@1`). El catálogo,
   la conversión y su anuncio son de E-VALUE (G-FU-06).
 - Retirados: `SMMLV_UNSUPPORTED`, `INHERITED_UNIT_IMPLAUSIBLE` (A1, A2).
@@ -730,7 +736,7 @@ tabla (fail-closed, sin legacy y sin fuente salvo donde se dice).
 | G-FU-11 | follow-up tras PROFILE/COUNT/RANK | 17 | `HANDOFF_LEGACY` | M3 | misma Conversation IR para todas las capacidades |
 | G-FU-12 | contexto vencido con pendiente | 2 | `CLARIFY CONTEXT_EXPIRED_CONFIRM` (gana F11) | M2b | precedencia F11/F29 |
 | G-FU-13 | qué cuenta como «búsqueda vacía» | 2 | `CLARIFY` | M2b | búsqueda mínima admisible |
-| G-FU-14 | referentes extensionales | 11 | `INFORM` | M2b | `result_set_ref` con identidad de fila |
+| G-FU-14 | referentes extensionales | 11 | `INFORM` cuando la señal extensional exista; hasta entonces todo referente es intensional (re-consulta, F4) | señal: M2A-5 (wire 5.1); ejecución: M2b | señal estructural extensional/intensional en el wire + `result_set_ref` con identidad de fila |
 | G-FU-15 | relativos no temporales | 7 | `CLARIFY` | M2b | operadores relativos sobre `ExecutableValue` |
 | G-FU-16 | otra operación sobre ancla SEARCH | 4 | `INFORM` | M3 | manifiestos de capacidad sobre la efectiva |
 | G-FU-17 | fragmento sin ancla o ancla ilegible | 2 | `CLARIFY` (pedir la búsqueda completa) | protocolo M2a | regresión fail-closed |
@@ -750,7 +756,7 @@ contrato (un gate de M2a no puede pasar sin resolverlo), se registra `BLOCKER` y
 | Casos `M2A_GOLD` | Necesitan | Dueño |
 |---|---|---|
 | 3 (A5: referente temporal único) | entrada separada de TIME con `time.relative_to_previous` | D-TIME (E-TIME) |
-| 5 (SMMLV en follow-ups) | conversión por vigencia de D10 (`unit.smmlv`, `year.*`) | D-MONEY (E-VALUE) |
+| 4 (SMMLV en follow-ups: R0301, R0304, SF165, SF167) | conversión por vigencia de D10 (`unit.smmlv`, `year.*`) dentro del catálogo 2024–2026; SF166 (2023) **no** es dependencia: es control de no extrapolación (CLARIFY) | D-MONEY (E-VALUE) |
 | 8 (formas «entre X y Y», «mayores de», «pasen de») | lectura de la autoridad VALUE del primer turno | D-MONEY (E-VALUE) |
 | 0 (igualdad «exactamente X», §15.2) | lectura como par `>=`/`<=` del mismo turno | D-MONEY (E-VALUE) |
 | herencia de unidad/año (F5–F7) | `unit.inherited`, `year.inherited` por la entrada separada | D-MONEY, D-TIME |
@@ -773,7 +779,7 @@ contrato (un gate de M2a no puede pasar sin resolverlo), se registra `BLOCKER` y
 | 6 | `candidate_patches[]` genérico | §8.1; verificador G6 |
 | 7 | `semantic_ref` y `result_set_ref` no se confunden | §9; verificador G7 |
 | 8 | Material REAL fuera de git | `docs/audits/m2a_conversation/M2A0_CLOSE.md` |
-| 9 | Hashes y manifiestos reproducen los artefactos | `scripts/audits/m2a_conversation/m2a_gold_seal.py verify` |
+| 9 | Hashes y manifiestos reproducen los artefactos | `scripts/audits/m2a_conversation/m2a_gold_seal.py verify`; `build_sealed_gold.py --check` (la copia sellada sale del candidato importado + U1/U2/D1) |
 | 10 | El contrato no contradice IR v2/C1.2 de `main` | §2; el verificador comprueba operadores, dimensiones y tope contra los módulos de `main` |
 
 ### 20.2 Gates de implementación (M2A-1…M2A-9; tolerancia cero, peor de ≥2 pasadas, sólo casos `M2A_GOLD`)
@@ -843,6 +849,10 @@ Retirados: `SMMLV_UNSUPPORTED` (A2), `INHERITED_UNIT_IMPLAUSIBLE` (A1), `TOPN_CA
 - `RELATIVE_ANCHOR` en casos del Gold: sólo con referente único (A5); el resto está en la frontera (G-FU-08).
 - R0205: en `M2A_GOLD` por A8.1 y por el contrato VALUE vigente (`app/core/money_comparators.py`,
   `_QUANTIFIER_SUFFIXES`: «en adelante» ⇒ `GTE`); las dos etiquetas ya leían `>=`; sin re-etiquetado.
+- Release r2 (usuario, 2026-10-02): **U1** re-etiqueta SF166 a `CLARIFY SMMLV_YEAR_AMBIGUOUS` (§15.5, control de no
+  extrapolación); **U2** normaliza el preestado de SF063 a uno alcanzable (`asks = 2`, §8.1); **D1** declara SF168
+  prueba de estado persistido inválido (un ancla SMMLV plurianual no es alcanzable bajo §15.5; §6.6 falla cerrado).
+  Todo preestado del Gold es alcanzable bajo este contrato salvo los declarados así (verificador G11).
 
 ## Anexo C — Cláusulas sustituidas
 

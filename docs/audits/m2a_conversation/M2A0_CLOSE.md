@@ -89,7 +89,7 @@ comprobados: cambiar un registro sintético, un byte del contrato, una adjudicac
 
 | # | Gate | Resultado | Evidencia |
 |---|---|---|---|
-| 1 | 199 representables (no derivados: §20.1) | **PASS** — 0 violaciones (SYNTHETIC 150 + REAL 49, ambas etiquetas) | `gold/REPRESENTABILITY_REPORT.json`; verificador probado con 20 mutantes, 20 muertos |
+| 1 | 199 representables (no derivados: §20.1) | **PASS** — 0 violaciones (SYNTHETIC 150 + REAL 49, ambas etiquetas) | `gold/REPRESENTABILITY_REPORT.json`; verificador probado con 22 mutantes, 22 muertos |
 | 2 | Ninguno requiere `parsed_params` | **PASS** | G2 del verificador; §3.7 |
 | 3 | Cada comportamiento tiene regla | **PASS** | `M2A_TRACEABILITY_MATRIX.md` (49 filas) |
 | 4 | Ningún FRONTIER absorbido | **PASS** — GOLD ∩ FRONTIER = ∅; ningún ejemplo de hueco diferido en GOLD | G8 |
@@ -125,8 +125,25 @@ suite global no se corrió: entrega documental).
 | P3-2 respuesta compatible de dos ranuras tratada como búsqueda nueva | FONDO, A | §8.3 fila 3: si todas las condiciones de P caen en `answer_slots`, es respuesta (A7) |
 | P3-3 descripciones de frontera G-FU-06/08/19 frente al índice y al ledger | FORMA | filas de §19 alineadas con el ledger; la provisional de G-FU-06 se declara más estricta que la mejor lectura de SF170 |
 
+## 7d. Correcciones del usuario antes del freeze (2026-10-02) — release r2 del Gold
+
+| Instrucción | Aplicación |
+|---|---|
+| SF166 no obliga a ampliar SMMLV a 2023 | **U1**: re-etiquetado a `CLARIFY SMMLV_YEAR_AMBIGUOUS` (D10: catálogo 2024–2026); control de no extrapolación; añadir 2023 = decisión de producto futura. Contrato §15.5 y §19 |
+| SF063 no puede partir de `asks = 3` | **U2**: preestado normalizado (`asks = 2`, una `PROTOCOL:reask`); disposición sin cambio |
+| (misma clase, señalada por ZEUS R2) SF168 parte de un ancla SMMLV plurianual inalcanzable | **D1**: declarado expresamente prueba de estado persistido inválido (excepción prevista por la instrucción); sin cambio de etiqueta. **Para revisión del usuario** |
+| Marcador SUPERSEDED en ADR-103 §4.4 | añadido en la fila M2A-0 de §4.4 y en la fila M2a de §4.5 |
+| G-FU-14 diferido a M2A-5 | contrato §7.1 fila 5, §7.2 y §19; plan M2A-5 |
+| `argparse` en el runner de mutantes | `--scratch-dir` explícito, rechazado dentro del repo; argumentos desconocidos fallan |
+| ADR-103 ausente de `decisions_log` | deuda documental no bloqueante en la tabla de deuda de ADR-103 Enm. 5 |
+
+El candidato asesor importado sigue byte-idéntico; la copia sellada (`gold/*.jsonl`, índice) la genera
+`build_sealed_gold.py` y el sello comprueba que se reproduce. Verificador: G11 (preestados alcanzables) marca SF063,
+SF166 y SF168 sobre el candidato sin parchear y 0 sobre la copia sellada; 22/22 mutantes muertos. Disposiciones del
+Gold sintético: EXECUTE 117, CLARIFY 12, NEW_SEARCH 16, REASK 4, INFORM 1.
+
 ## 8. Deuda no bloqueante registrada
 
 - P3 de C1.2: exención `data/conversations/` (`docs/audits/m1_c1/C1_2_FRONTIER_PIN_DEBT.md`; ADR-103 Enm. 5 punto 5).
 - Errata H7b «294» (Enm. 5 punto 4).
-- ADR-103 no figura en `docs/decisions_log.md` (pre-existente; fuera de alcance).
+- ADR-103 no figura en `docs/decisions_log.md`: deuda documental no bloqueante, registrada en ADR-103 Enm. 5 (dueño HERA).

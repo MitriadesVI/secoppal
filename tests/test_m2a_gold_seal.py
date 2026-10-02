@@ -53,3 +53,15 @@ def test_gold_is_representable_by_the_contract():
     out = checker.run(_real_dir())
     assert out["violations"] == []
     assert out["slices"]["SYNTHETIC"] == {"gold": 150, "frontier": 41}
+
+
+def test_sealed_gold_reproduces_from_candidate_and_adjudications():
+    builder = _module("build_sealed_gold")
+    gold_dir = ROOT / "docs/audits/m2a_conversation/gold"
+    for name, body in builder.build().items():
+        assert (gold_dir / name).read_text(encoding="utf-8") == body, name
+    rows = {json.loads(x)["gold_id"]: json.loads(x)
+            for x in (gold_dir / "M2A_GOLD_synthetic.jsonl").read_text(encoding="utf-8").splitlines() if x.strip()}
+    assert rows["SF166"]["expected_disposition"] == "CLARIFY"  # U1: 2023 outside the D10 catalog
+    assert {rows["SF063"][k]["prior"]["pending"]["asks"] for k in ("label_A", "label_B")} == {2}  # U2
+    assert rows["SF168"]["invalid_persisted_state"]  # D1

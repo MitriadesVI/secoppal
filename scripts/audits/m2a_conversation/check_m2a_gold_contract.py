@@ -13,7 +13,9 @@ What it proves, per label (A and B) of every Gold record:
   G7  rows/page need a result set: no protocol turn executes over a prior that never reached the source;
   G8  partition: GOLD ∩ FRONTIER = ∅, GOLD scopes ⊆ IN*, deferred ledger gaps never reach GOLD;
   G9  structural coherence of each disposition (host floor, window, pending answers, F25, two candidates);
-  G10 no hybrid over a pending, unit inherited from exactly one unit, SMMLV executed over one year at most.
+  G10 no hybrid over a pending, unit inherited from exactly one unit, SMMLV executed over one year at most;
+  G11 reachable pre-states: asks ≤ 2; SMMLV executed only over one year of the D10 catalog (or a declared invalid
+      persisted state, D1).
 Not checkable from Gold fields (needs the producer's evidence): the continuation guard of §7.2/§8.3 itself — a
 NEW_SEARCH relabel of a pending answer that keeps its conditions is representable; M2A-8 gates it.
 It proves the Gold is REPRESENTABLE by the contract; it does not DERIVE each disposition from §7.2/§8.3, which needs
@@ -39,8 +41,11 @@ sys.path.insert(0, str(ROOT))
 from app.core.foundation_authority_values import MAX_TOP_N  # noqa: E402
 from app.core.foundation_operator_table import OPERATORS  # noqa: E402
 from app.core.semantic_dimensions import SemanticDimension  # noqa: E402
+from app.data.smmlv import SMMLV_COP_BY_YEAR  # noqa: E402  (D10: the catalog M2a may convert with)
 
-GOLD_DIR = ROOT / "docs/audits/m2a_advisory_2026-10-01/02_gold_followups/gold_candidato"
+# Sealed copy (release r2: advisory candidate + U1/U2/D1, see build_sealed_gold.py); the ledger is the advisory one.
+GOLD_DIR = ROOT / "docs/audits/m2a_conversation/gold"
+LEDGER = ROOT / "docs/audits/m2a_advisory_2026-10-01/02_gold_followups/gold_candidato/FOLLOWUP_GAPS_LEDGER.jsonl"
 
 # --- Contract vocabulary (M2A_CONVERSATION_CONTRACT_V1 §4, §6, §7, §11) -------------------------------------
 GOLD_OP_TO_CONTRACT = {
@@ -456,6 +461,22 @@ def check_label(r: Report, rec: dict, lab: str, L: dict) -> None:
             r.bad(gid, lab, "SMMLV executed over several years (A2: SMMLV_YEAR_AMBIGUOUS)")
         r.note("smmlv_executed_single_year", gid)
 
+    # G11 reachable pre-states (contract §8.1 asks ≤ 2; §15.5 SMMLV only over one catalogued year)
+    pend = prior.get("pending") or {}
+    if pend.get("asks") is not None and not 1 <= pend["asks"] <= 2:
+        r.bad(gid, lab, f"unreachable pending pre-state: asks={pend['asks']}")
+    for where, ir, executed in (("prior", pir, prior["state"] in ("EXECUTED", "EXECUTED_EMPTY")),
+                                ("result", res, disp in ("EXECUTE", "NEW_SEARCH"))):
+        if not executed or ir is None or not any(c.get("unit") == "SMMLV" for c in ir["conditions"]):
+            continue
+        years = {int(y) for c in ir["conditions"] if c["dimension"] == "TIME" and c["polarity"] == "POSITIVE"
+                 for y in re.findall(r"(?<!\d)(?:19|20)\d\d(?!\d)", c["value_hint"] or "")}
+        reachable = len(years) <= 1 and years <= set(SMMLV_COP_BY_YEAR)
+        if not reachable and not (where == "prior" and rec.get("invalid_persisted_state")):
+            r.bad(gid, lab, f"{where}: SMMLV executed over {sorted(years)} (D10 catalog {sorted(SMMLV_COP_BY_YEAR)})")
+        if not reachable:
+            r.note("declared_invalid_persisted_state", gid)
+
     # G7 result-set referent
     if L["m2a_scope"] == "IN_PROTOCOL" and prior["state"] in ("NOT_EXECUTED",) and disp == "EXECUTE" and L["input_kind"] != "EVENT":
         r.bad(gid, lab, "protocol over rows executed without a result set")
@@ -467,7 +488,7 @@ def check_label(r: Report, rec: dict, lab: str, L: dict) -> None:
 
 def run(real_dir: Path | None) -> dict:
     idx = json.loads((GOLD_DIR / "M2A_GOLD_AND_FRONTIER_INDEX.json").read_text(encoding="utf-8"))
-    ledger = load(GOLD_DIR / "FOLLOWUP_GAPS_LEDGER.jsonl")
+    ledger = load(LEDGER)
     out: dict = {"slices": {}}
     r = Report()
     files = {"SYNTHETIC": (GOLD_DIR / "M2A_GOLD_synthetic.jsonl", GOLD_DIR / "FOLLOWUP_FRONTIER_synthetic.jsonl")}

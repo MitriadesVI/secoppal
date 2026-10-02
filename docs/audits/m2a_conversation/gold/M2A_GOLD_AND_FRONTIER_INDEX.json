@@ -1,0 +1,800 @@
+{
+ "sealed": true,
+ "schema": "m2a-followup-gold/2.1",
+ "rules": "contrato M1 v1.4 + F1-F30 + A1-A9 + A8.1 + A9.1 + U1/U2 (usuario, 2026-10-02) + D1",
+ "note": "Copia sellada. Difiere del candidato asesor sólo por U1 (SF166), U2 (SF063) y D1 (SF168); ver docs/audits/m2a_conversation/gold/ADJUDICATION_2026-10-02.md. REAL sin cambios.",
+ "slices": {
+  "REAL": {
+   "M2A_GOLD": {
+    "n": 49,
+    "sha256": "42a05834e92aa5c52f3217ed8315df482fa783ee3a3eace0cbeb87f8b3c17a12",
+    "ids": [
+     "R0075",
+     "R0079",
+     "R0083",
+     "R0087",
+     "R0089",
+     "R0092",
+     "R0093",
+     "R0094",
+     "R0099",
+     "R0106",
+     "R0107",
+     "R0180",
+     "R0197",
+     "R0201",
+     "R0202",
+     "R0205",
+     "R0223",
+     "R0233",
+     "R0274",
+     "R0281",
+     "R0282",
+     "R0286",
+     "R0295",
+     "R0301",
+     "R0303",
+     "R0304",
+     "R0308",
+     "R0309",
+     "R0310",
+     "R0311",
+     "R0312",
+     "R0313",
+     "R0314",
+     "R0336",
+     "R0409",
+     "R0431",
+     "R0432",
+     "R0450",
+     "R0459",
+     "R0464",
+     "R0484",
+     "R0496",
+     "R0497",
+     "R0498",
+     "R0515",
+     "R0529",
+     "R0531",
+     "R0532",
+     "R0556"
+    ],
+    "by_disposition": {
+     "EXECUTE": 46,
+     "CLARIFY": 3
+    }
+   },
+   "FOLLOWUP_FRONTIER": {
+    "n": 16,
+    "sha256": "b77774bcaac00e70c9537bf389ea10322f0a39fd3dfc5deeef953e917a04f304",
+    "by_reason": {
+     "AMBIGUOUS": 12,
+     "DISPUTED_PRIMARY": 4
+    },
+    "records": [
+     {
+      "gold_id": "R0081",
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-14",
+       "G-FU-19"
+      ],
+      "m2a_scope": "IN",
+      "interim_disposition": "EXECUTE"
+     },
+     {
+      "gold_id": "R0187",
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-18"
+      ],
+      "m2a_scope": "IN",
+      "interim_disposition": "EXECUTE"
+     },
+     {
+      "gold_id": "R0189",
+      "frontier_reason": "DISPUTED_PRIMARY",
+      "gap_ids": [
+       "G-FU-11"
+      ],
+      "m2a_scope": "OUT_ANCHOR_NOT_SEARCH",
+      "interim_disposition": "HANDOFF_LEGACY"
+     },
+     {
+      "gold_id": "R0192",
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-14",
+       "G-FU-18"
+      ],
+      "m2a_scope": "IN",
+      "interim_disposition": "EXECUTE"
+     },
+     {
+      "gold_id": "R0276",
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-04",
+       "G-FU-19"
+      ],
+      "m2a_scope": "IN",
+      "interim_disposition": "EXECUTE"
+     },
+     {
+      "gold_id": "R0306",
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-06"
+      ],
+      "m2a_scope": "IN",
+      "interim_disposition": "EXECUTE"
+     },
+     {
+      "gold_id": "R0319",
+      "frontier_reason": "DISPUTED_PRIMARY",
+      "gap_ids": [
+       "G-FU-11"
+      ],
+      "m2a_scope": "OUT_ANCHOR_NOT_SEARCH",
+      "interim_disposition": "HANDOFF_LEGACY"
+     },
+     {
+      "gold_id": "R0320",
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-11"
+      ],
+      "m2a_scope": "OUT_ANCHOR_NOT_SEARCH",
+      "interim_disposition": "HANDOFF_LEGACY"
+     },
+     {
+      "gold_id": "R0321",
+      "frontier_reason": "DISPUTED_PRIMARY",
+      "gap_ids": [
+       "G-FU-11"
+      ],
+      "m2a_scope": "OUT_ANCHOR_NOT_SEARCH",
+      "interim_disposition": "HANDOFF_LEGACY"
+     },
+     {
+      "gold_id": "R0375",
+      "frontier_reason": "DISPUTED_PRIMARY",
+      "gap_ids": [
+       "G-FU-11",
+       "G-FU-18"
+      ],
+      "m2a_scope": "OUT_ANCHOR_NOT_SEARCH",
+      "interim_disposition": "HANDOFF_LEGACY"
+     },
+     {
+      "gold_id": "R0418",
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-11"
+      ],
+      "m2a_scope": "IN",
+      "interim_disposition": "CLARIFY"
+     },
+     {
+      "gold_id": "R0435",
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-11"
+      ],
+      "m2a_scope": "IN",
+      "interim_disposition": "EXECUTE"
+     },
+     {
+      "gold_id": "R0441",
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-11"
+      ],
+      "m2a_scope": "OUT_ANCHOR_NOT_SEARCH",
+      "interim_disposition": "HANDOFF_LEGACY"
+     },
+     {
+      "gold_id": "R0483",
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-11"
+      ],
+      "m2a_scope": "OUT_ANCHOR_NOT_SEARCH",
+      "interim_disposition": "HANDOFF_LEGACY"
+     },
+     {
+      "gold_id": "R0560",
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-11"
+      ],
+      "m2a_scope": "OUT_ANCHOR_NOT_SEARCH",
+      "interim_disposition": "HANDOFF_LEGACY"
+     },
+     {
+      "gold_id": "R0561",
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-11"
+      ],
+      "m2a_scope": "OUT_ANCHOR_NOT_SEARCH",
+      "interim_disposition": "HANDOFF_LEGACY"
+     }
+    ]
+   }
+  },
+  "SYNTHETIC": {
+   "M2A_GOLD": {
+    "n": 150,
+    "sha256": "ca337aaae7d3a2819b2bd4d1e357bfc4852c19e4198317c2bf1c2acd1f3fd8d1",
+    "ids": [
+     "SF001",
+     "SF002",
+     "SF003",
+     "SF004",
+     "SF005",
+     "SF006",
+     "SF007",
+     "SF008",
+     "SF009",
+     "SF010",
+     "SF011",
+     "SF012",
+     "SF014",
+     "SF015",
+     "SF016",
+     "SF017",
+     "SF018",
+     "SF019",
+     "SF020",
+     "SF021",
+     "SF022",
+     "SF023",
+     "SF024",
+     "SF025",
+     "SF026",
+     "SF027",
+     "SF028",
+     "SF029",
+     "SF030",
+     "SF031",
+     "SF032",
+     "SF033",
+     "SF034",
+     "SF035",
+     "SF036",
+     "SF037",
+     "SF041",
+     "SF042",
+     "SF047",
+     "SF048",
+     "SF049",
+     "SF050",
+     "SF051",
+     "SF052",
+     "SF053",
+     "SF054",
+     "SF055",
+     "SF056",
+     "SF057",
+     "SF058",
+     "SF059",
+     "SF060",
+     "SF061",
+     "SF063",
+     "SF073",
+     "SF074",
+     "SF075",
+     "SF076",
+     "SF077",
+     "SF078",
+     "SF079",
+     "SF080",
+     "SF081",
+     "SF082",
+     "SF083",
+     "SF085",
+     "SF086",
+     "SF087",
+     "SF088",
+     "SF089",
+     "SF090",
+     "SF091",
+     "SF092",
+     "SF093",
+     "SF094",
+     "SF095",
+     "SF096",
+     "SF097",
+     "SF098",
+     "SF099",
+     "SF100",
+     "SF101",
+     "SF102",
+     "SF103",
+     "SF104",
+     "SF105",
+     "SF106",
+     "SF107",
+     "SF108",
+     "SF109",
+     "SF110",
+     "SF111",
+     "SF112",
+     "SF113",
+     "SF115",
+     "SF117",
+     "SF118",
+     "SF119",
+     "SF120",
+     "SF121",
+     "SF122",
+     "SF123",
+     "SF124",
+     "SF125",
+     "SF126",
+     "SF127",
+     "SF128",
+     "SF129",
+     "SF130",
+     "SF131",
+     "SF133",
+     "SF134",
+     "SF135",
+     "SF136",
+     "SF138",
+     "SF140",
+     "SF141",
+     "SF145",
+     "SF146",
+     "SF149",
+     "SF150",
+     "SF151",
+     "SF152",
+     "SF155",
+     "SF156",
+     "SF157",
+     "SF158",
+     "SF159",
+     "SF160",
+     "SF161",
+     "SF163",
+     "SF164",
+     "SF165",
+     "SF166",
+     "SF167",
+     "SF168",
+     "SF171",
+     "SF172",
+     "SF174",
+     "SF178",
+     "SF182",
+     "SF183",
+     "SF184",
+     "SF185",
+     "SF186",
+     "SF187",
+     "SF188",
+     "SF189",
+     "SF190",
+     "SF191"
+    ],
+    "by_disposition": {
+     "EXECUTE": 117,
+     "CLARIFY": 12,
+     "NEW_SEARCH": 16,
+     "REASK": 4,
+     "INFORM": 1
+    }
+   },
+   "FOLLOWUP_FRONTIER": {
+    "n": 41,
+    "sha256": "8b4924464380bb974cae5f0e003228f8d5a31b8b3d00c7c110350bdf73a5ea1e",
+    "by_reason": {
+     "AMBIGUOUS": 20,
+     "OUT_OF_M2A_SCOPE": 19,
+     "DISPUTED_PRIMARY": 2
+    },
+    "records": [
+     {
+      "gold_id": "SF013",
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-18"
+      ],
+      "m2a_scope": "IN",
+      "interim_disposition": "EXECUTE"
+     },
+     {
+      "gold_id": "SF038",
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-08"
+      ],
+      "m2a_scope": "IN",
+      "interim_disposition": "EXECUTE"
+     },
+     {
+      "gold_id": "SF039",
+      "frontier_reason": "OUT_OF_M2A_SCOPE",
+      "gap_ids": [
+       "G-FU-15"
+      ],
+      "m2a_scope": "OUT_RELATIVE_TO_PREVIOUS",
+      "interim_disposition": "CLARIFY"
+     },
+     {
+      "gold_id": "SF040",
+      "frontier_reason": "OUT_OF_M2A_SCOPE",
+      "gap_ids": [
+       "G-FU-15"
+      ],
+      "m2a_scope": "OUT_RELATIVE_TO_PREVIOUS",
+      "interim_disposition": "CLARIFY"
+     },
+     {
+      "gold_id": "SF043",
+      "frontier_reason": "OUT_OF_M2A_SCOPE",
+      "gap_ids": [
+       "G-FU-15"
+      ],
+      "m2a_scope": "OUT_RELATIVE_TO_PREVIOUS",
+      "interim_disposition": "CLARIFY"
+     },
+     {
+      "gold_id": "SF044",
+      "frontier_reason": "OUT_OF_M2A_SCOPE",
+      "gap_ids": [
+       "G-FU-15"
+      ],
+      "m2a_scope": "OUT_RELATIVE_TO_PREVIOUS",
+      "interim_disposition": "CLARIFY"
+     },
+     {
+      "gold_id": "SF045",
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-08"
+      ],
+      "m2a_scope": "IN",
+      "interim_disposition": "EXECUTE"
+     },
+     {
+      "gold_id": "SF046",
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-15"
+      ],
+      "m2a_scope": "OUT_RELATIVE_TO_PREVIOUS",
+      "interim_disposition": "CLARIFY"
+     },
+     {
+      "gold_id": "SF062",
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-11",
+       "G-FU-16"
+      ],
+      "m2a_scope": "OUT_OPERATION_CHANGE",
+      "interim_disposition": "INFORM"
+     },
+     {
+      "gold_id": "SF064",
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-12"
+      ],
+      "m2a_scope": "IN",
+      "interim_disposition": "CLARIFY"
+     },
+     {
+      "gold_id": "SF065",
+      "frontier_reason": "OUT_OF_M2A_SCOPE",
+      "gap_ids": [
+       "G-FU-14"
+      ],
+      "m2a_scope": "OUT_REFERENT_EXTENSIONAL",
+      "interim_disposition": "INFORM"
+     },
+     {
+      "gold_id": "SF066",
+      "frontier_reason": "OUT_OF_M2A_SCOPE",
+      "gap_ids": [
+       "G-FU-14"
+      ],
+      "m2a_scope": "OUT_REFERENT_EXTENSIONAL",
+      "interim_disposition": "INFORM"
+     },
+     {
+      "gold_id": "SF067",
+      "frontier_reason": "OUT_OF_M2A_SCOPE",
+      "gap_ids": [
+       "G-FU-14"
+      ],
+      "m2a_scope": "OUT_REFERENT_EXTENSIONAL",
+      "interim_disposition": "INFORM"
+     },
+     {
+      "gold_id": "SF068",
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-07",
+       "G-FU-14"
+      ],
+      "m2a_scope": "IN",
+      "interim_disposition": "EXECUTE"
+     },
+     {
+      "gold_id": "SF069",
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-07",
+       "G-FU-14"
+      ],
+      "m2a_scope": "IN",
+      "interim_disposition": "EXECUTE"
+     },
+     {
+      "gold_id": "SF070",
+      "frontier_reason": "OUT_OF_M2A_SCOPE",
+      "gap_ids": [
+       "G-FU-14"
+      ],
+      "m2a_scope": "OUT_REFERENT_EXTENSIONAL",
+      "interim_disposition": "INFORM"
+     },
+     {
+      "gold_id": "SF071",
+      "frontier_reason": "OUT_OF_M2A_SCOPE",
+      "gap_ids": [
+       "G-FU-14"
+      ],
+      "m2a_scope": "OUT_REFERENT_EXTENSIONAL",
+      "interim_disposition": "INFORM"
+     },
+     {
+      "gold_id": "SF072",
+      "frontier_reason": "OUT_OF_M2A_SCOPE",
+      "gap_ids": [
+       "G-FU-14"
+      ],
+      "m2a_scope": "OUT_REFERENT_EXTENSIONAL",
+      "interim_disposition": "INFORM"
+     },
+     {
+      "gold_id": "SF084",
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-19"
+      ],
+      "m2a_scope": "IN",
+      "interim_disposition": "EXECUTE"
+     },
+     {
+      "gold_id": "SF114",
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-13"
+      ],
+      "m2a_scope": "IN",
+      "interim_disposition": "CLARIFY"
+     },
+     {
+      "gold_id": "SF116",
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-13"
+      ],
+      "m2a_scope": "IN",
+      "interim_disposition": "CLARIFY"
+     },
+     {
+      "gold_id": "SF132",
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-19"
+      ],
+      "m2a_scope": "IN",
+      "interim_disposition": "EXECUTE"
+     },
+     {
+      "gold_id": "SF137",
+      "frontier_reason": "OUT_OF_M2A_SCOPE",
+      "gap_ids": [
+       "G-FU-17"
+      ],
+      "m2a_scope": "OUT_NO_ANCHOR",
+      "interim_disposition": "CLARIFY"
+     },
+     {
+      "gold_id": "SF139",
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-07",
+       "G-FU-12"
+      ],
+      "m2a_scope": "IN",
+      "interim_disposition": "CLARIFY"
+     },
+     {
+      "gold_id": "SF142",
+      "frontier_reason": "OUT_OF_M2A_SCOPE",
+      "gap_ids": [
+       "G-FU-17"
+      ],
+      "m2a_scope": "OUT_NO_ANCHOR",
+      "interim_disposition": "CLARIFY"
+     },
+     {
+      "gold_id": "SF143",
+      "frontier_reason": "OUT_OF_M2A_SCOPE",
+      "gap_ids": [
+       "G-FU-11"
+      ],
+      "m2a_scope": "OUT_ANCHOR_NOT_SEARCH",
+      "interim_disposition": "HANDOFF_LEGACY"
+     },
+     {
+      "gold_id": "SF144",
+      "frontier_reason": "OUT_OF_M2A_SCOPE",
+      "gap_ids": [
+       "G-FU-11"
+      ],
+      "m2a_scope": "OUT_ANCHOR_NOT_SEARCH",
+      "interim_disposition": "HANDOFF_LEGACY"
+     },
+     {
+      "gold_id": "SF147",
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-05"
+      ],
+      "m2a_scope": "IN_PROTOCOL",
+      "interim_disposition": "EXECUTE"
+     },
+     {
+      "gold_id": "SF148",
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-05"
+      ],
+      "m2a_scope": "IN_PROTOCOL",
+      "interim_disposition": "CLARIFY"
+     },
+     {
+      "gold_id": "SF153",
+      "frontier_reason": "OUT_OF_M2A_SCOPE",
+      "gap_ids": [
+       "G-FU-11",
+       "G-FU-16"
+      ],
+      "m2a_scope": "OUT_OPERATION_CHANGE",
+      "interim_disposition": "INFORM"
+     },
+     {
+      "gold_id": "SF154",
+      "frontier_reason": "OUT_OF_M2A_SCOPE",
+      "gap_ids": [
+       "G-FU-11",
+       "G-FU-16"
+      ],
+      "m2a_scope": "OUT_OPERATION_CHANGE",
+      "interim_disposition": "INFORM"
+     },
+     {
+      "gold_id": "SF162",
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-07",
+       "G-FU-09"
+      ],
+      "m2a_scope": "IN",
+      "interim_disposition": "EXECUTE"
+     },
+     {
+      "gold_id": "SF169",
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-06"
+      ],
+      "m2a_scope": "IN",
+      "interim_disposition": "CLARIFY"
+     },
+     {
+      "gold_id": "SF170",
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-06",
+       "G-FU-18"
+      ],
+      "m2a_scope": "IN",
+      "interim_disposition": "EXECUTE"
+     },
+     {
+      "gold_id": "SF173",
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-08"
+      ],
+      "m2a_scope": "IN",
+      "interim_disposition": "EXECUTE"
+     },
+     {
+      "gold_id": "SF175",
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-08",
+       "G-FU-15"
+      ],
+      "m2a_scope": "OUT_RELATIVE_TO_PREVIOUS",
+      "interim_disposition": "CLARIFY"
+     },
+     {
+      "gold_id": "SF176",
+      "frontier_reason": "OUT_OF_M2A_SCOPE",
+      "gap_ids": [
+       "G-FU-08",
+       "G-FU-15"
+      ],
+      "m2a_scope": "OUT_RELATIVE_TO_PREVIOUS",
+      "interim_disposition": "CLARIFY"
+     },
+     {
+      "gold_id": "SF177",
+      "frontier_reason": "DISPUTED_PRIMARY",
+      "gap_ids": [
+       "G-FU-08"
+      ],
+      "m2a_scope": "OUT_RELATIVE_TO_PREVIOUS|IN",
+      "interim_disposition": null
+     },
+     {
+      "gold_id": "SF179",
+      "frontier_reason": "DISPUTED_PRIMARY",
+      "gap_ids": [
+       "G-FU-04"
+      ],
+      "m2a_scope": "IN_PROTOCOL",
+      "interim_disposition": "INFORM"
+     },
+     {
+      "gold_id": "SF180",
+      "frontier_reason": "OUT_OF_M2A_SCOPE",
+      "gap_ids": [
+       "G-FU-04",
+       "G-FU-14"
+      ],
+      "m2a_scope": "OUT_REFERENT_EXTENSIONAL",
+      "interim_disposition": "INFORM"
+     },
+     {
+      "gold_id": "SF181",
+      "frontier_reason": "OUT_OF_M2A_SCOPE",
+      "gap_ids": [
+       "G-FU-04",
+       "G-FU-11",
+       "G-FU-16"
+      ],
+      "m2a_scope": "OUT_OPERATION_CHANGE",
+      "interim_disposition": "INFORM"
+     }
+    ]
+   }
+  }
+ },
+ "release": "M2A_GOLD r2 (2026-10-02)",
+ "patches": {
+  "SF063": {
+   "before_sha256": "42c84f7d9b8798f6d10a7b9d18a57ae702c507edad507c4d2ae3824188c5f684",
+   "after_sha256": "2fdd2688be54b6a6a48df904cc520745ce00b63bb17132f918479e94ba76024e"
+  },
+  "SF166": {
+   "before_sha256": "75c251a4e64a1714aa8f338811e6f5c5ed1456097d4c19d0a774cab66292a3e2",
+   "after_sha256": "eae468f86a3114e7083f8f3fd888c9bbcc2010798d9629b9094cc3b90fba8a5a"
+  },
+  "SF168": {
+   "before_sha256": "996694e4a1fe152cdd93ac34054d211581ec2c8b97692ab45583152ea0d583d2",
+   "after_sha256": "814e3f7c55724b479312625a0c0a6ed6f63e0c4b1d7b11452df650a734a316e7"
+  }
+ }
+}

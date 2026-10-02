@@ -1,11 +1,17 @@
 """Mutation check of ``check_m2a_gold_contract.py``.
 
 Each mutant breaks one contract rule in a copy of the synthetic Gold; the checker must report a violation for that
-record (or for the partition). Usage: ``python <this> [<scratch_dir>]``. Exit 1 if any mutant survives.
+record (or for the partition). Part of the reproducible M2A-0 gate.
+
+  python scripts/audits/m2a_conversation/mutate_check_m2a_gold_contract.py [--scratch-dir DIR]
+
+``--scratch-dir`` defaults to a fresh temporary directory and must lie outside the repository (the copies of the Gold
+must never land in the worktree). Exit 1 if any mutant survives.
 """
 
 from __future__ import annotations
 
+import argparse
 import copy
 import importlib.util
 import json
@@ -35,6 +41,8 @@ def pick(rows: list[dict], pred) -> str:
 
 
 def mutants(rows: list[dict]) -> dict:
+    rows_by_id = {r["gold_id"]: r for r in rows}
+
     def carry_lost(L):
         L["resulting_ir"]["conditions"] = [c for c in L["resulting_ir"]["conditions"] if c["dimension"] != "BUYER"]
 
@@ -113,6 +121,19 @@ def mutants(rows: list[dict]) -> dict:
         L["expected_disposition"] = "EXECUTE"
         L["disposition_reason"] = None
 
+    def smmlv_2023_executed(L):
+        src = rows_by_id["SF167"]["label_B"]  # an executed SMMLV result to reuse
+        L["expected_disposition"] = "EXECUTE"
+        L["disposition_reason"] = None
+        res = copy.deepcopy(src["resulting_ir"])
+        for c in res["conditions"]:
+            if c["dimension"] == "TIME":
+                c["value_hint"] = "2023"
+        L["resulting_ir"] = res
+
+    def asks_three(L):
+        L["prior"]["pending"]["asks"] = 3
+
     def mixed_units_replaced(L):
         for c in L["prior"]["ir"]["conditions"]:
             if c["dimension"] == "VALUE":
@@ -140,6 +161,8 @@ def mutants(rows: list[dict]) -> dict:
         L["resulting_ir"] = copy.deepcopy(L["prior"]["ir"])
 
     return {
+        "U1_SF166_smmlv_2023_executed": ("SF166", smmlv_2023_executed),
+        "U2_SF063_asks_three": ("SF063", asks_three),
         "V3b_SF051_hybrid_over_pending": ("SF051", hybrid_over_pending),
         "V8_SF102_unit_from_two_units": ("SF102", inherit_from_two_units),
         "V9_SF168_smmlv_several_years": ("SF168", smmlv_multiyear_executed),
@@ -182,7 +205,13 @@ def run_on(scratch: Path, name: str, rows: list[dict]) -> dict:
 
 
 def main() -> int:
-    scratch = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(tempfile.mkdtemp(prefix="m2a_mut_"))
+    ap = argparse.ArgumentParser(description="Mutation check of check_m2a_gold_contract.py")
+    ap.add_argument("--scratch-dir", type=Path, help="where mutated copies are written (outside the repository)")
+    a = ap.parse_args()
+    scratch = (a.scratch_dir or Path(tempfile.mkdtemp(prefix="m2a_mut_"))).resolve()
+    if scratch == ROOT or ROOT in scratch.parents:
+        ap.error(f"--scratch-dir must be outside the repository: {scratch}")
+    scratch.mkdir(parents=True, exist_ok=True)
     rows = chk.load(SRC / "M2A_GOLD_synthetic.jsonl")
     ok = True
     for name, (gid, fn) in mutants(rows).items():

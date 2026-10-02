@@ -14,9 +14,10 @@
   "clarify_with_candidate_patches": 6,
   "control:CANCEL_PENDING_by_new_search": 18,
   "control:CANCEL_PENDING_explicit": 3,
-  "delta_executed_carry_checked": 316,
-  "disposition:CLARIFY": 28,
-  "disposition:EXECUTE": 328,
+  "declared_invalid_persisted_state": 2,
+  "delta_executed_carry_checked": 314,
+  "disposition:CLARIFY": 30,
+  "disposition:EXECUTE": 326,
   "disposition:INFORM": 2,
   "disposition:NEW_SEARCH": 32,
   "disposition:REASK": 8,
@@ -43,7 +44,7 @@
   "scope:IN_PROTOCOL": 18,
   "semantic_ref_after_source_failure": 6,
   "shape:NEW_SEARCH_fresh_acceptance": 32,
-  "smmlv_executed_single_year": 10,
+  "smmlv_executed_single_year": 8,
   "surface_form_read_by_VALUE_authority": 8,
   "value_replaced_by_explicit_clear": 4,
   "view_rederived": 4
@@ -274,6 +275,9 @@
    "SF063",
    "SF191"
   ],
+  "declared_invalid_persisted_state": [
+   "SF168"
+  ],
   "delta_executed_carry_checked": [
    "R0075",
    "R0079",
@@ -421,7 +425,6 @@
    "SF161",
    "SF164",
    "SF165",
-   "SF166",
    "SF167",
    "SF171",
    "SF172",
@@ -618,7 +621,6 @@
    "R0301",
    "R0304",
    "SF165",
-   "SF166",
    "SF167"
   ],
   "surface_form_read_by_VALUE_authority": [

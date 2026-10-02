@@ -1,7 +1,8 @@
 # M2A — Matriz de trazabilidad
 
 **Fecha:** 2026-10-01. **Contrato:** `docs/decisions/M2A_CONVERSATION_CONTRACT_V1.md` (§ = sección del contrato).
-**Gold:** `docs/audits/m2a_conversation/gold/M2A_GOLD_SEAL.json` (199 casos; ids `R…` = REAL, texto fuera de git; `SF…` = sintético).
+**Gold:** `docs/audits/m2a_conversation/gold/M2A_GOLD_SEAL.json` (199 casos, release r2 con U1/U2/D1; ids `R…` = REAL, texto
+fuera de git; `SF…` = sintético).
 
 Cada fila responde: *este comportamiento existe porque <decisión> + <casos>, lo representa <estructura> y lo
 comprobará <gate>*. Los ids salen mecánicamente del Gold (unión de las etiquetas A y B) y del informe
@@ -41,7 +42,7 @@ verificará.
 
 | # | Regla (§) | Decisión | Casos Gold | Estructura | Gate futuro |
 |---|---|---|---|---|---|
-| P01 | `PendingClarification{ambiguous_span, candidate_patches[]}` genérico (§8.1) | **G-FU-03**; corrección de diseño (span) | 19 con previo pendiente (SF047–SF061, SF063, SF188–SF191); 2 con dos ranuras candidatas (SF059, SF060) | `PendingClarification`, `CandidatePatch` | M2A-4: INV-M2A-08 |
+| P01 | `PendingClarification{ambiguous_span, candidate_patches[]}` genérico (§8.1) | **G-FU-03**; corrección de diseño (span) | 19 con previo pendiente (SF047–SF061, SF063 con preestado normalizado por U2, SF188–SF191); 2 con dos ranuras candidatas (SF059, SF060) | `PendingClarification`, `CandidatePatch` | M2A-4: INV-M2A-08 |
 | P02 | Respuesta por evento selecciona un candidato, sin LLM (§8.3.1) | A7; O11 | SF058, SF059, SF060 | `PENDING_ANSWER` por evento | M2A-4 |
 | P03 | Respuesta abierta completa el marco (§8.3.4) | A7 | SF056, SF188 | `answer_slots` | M2A-4 |
 | P04 | Respuesta + otra edición ⇒ REASK (§8.3.5) | F25 | SF051, SF053 | regla de §8.3 | M2A-4: mutante «F25 que ejecuta» |
@@ -74,8 +75,8 @@ verificará.
 | V05 | Unidad compartida en un rango (§15.3) | F6 | R0180, R0282, R0311, R0529, SF087, SF098, SF107 | `unit.sibling` | E-VALUE kit; M2A-7 eco |
 | V06 | Herencia de unidad única (incl. SMMLV); puede seguir A8.1 (§15.4) | A1, A2; F5; F26 retirada | R0531, R0532, SF101, SF103, SF104, SF106, SF167, SF183 | `unit.inherited`, `Provenance.unit_source` | M2A-3b/3c: INV-M2A-17 |
 | V07 | Unidad no heredable ⇒ CLARIFY (§6 H9) | F5 | SF102 | regla H9 | M2A-3 |
-| V08 | SMMLV ejecutable con año único; recálculo al cambiar el año (§15.5) | A2; OQ-1; D10 | R0301, R0304, SF165, SF166, SF167 | `Provenance.source_amount/year` | E-VALUE (D10) + M2A-3c |
-| V09 | SMMLV sin año único ⇒ CLARIFY (§6 H3) | A2 | R0303, SF168 | regla H3 | M2A-3 |
+| V08 | SMMLV ejecutable con año único; recálculo al cambiar el año (§15.5) | A2; OQ-1; D10 | R0301, R0304, SF165, SF167 | `Provenance.source_amount/year` | E-VALUE (D10) + M2A-3c |
+| V09 | SMMLV sin año único o fuera del catálogo D10 (2024–2026) ⇒ CLARIFY (§6 H3, §15.5) | A2; D10; **U1** (control de no extrapolación) | R0303, SF168 (D1: estado persistido inválido declarado), SF166 (U1: 2023 fuera del catálogo) | regla H3 + catálogo | M2A-3 |
 | V12 | Cotas no comparables (SMMLV frente a pesos) ⇒ no se aplica A8.1, CLARIFY (§15.2) | A8 («no adjudicado»); G-FU-06 | — (caso en frontera: SF170) | `Provenance.unit` | M2A-3: INV-M2A-18 |
 | V10 | «en adelante» = `>=` (Anexo B) | contrato VALUE vigente (`money_comparators._QUANTIFIER_SUFFIXES`) | R0205 | autoridad VALUE del primer turno | ya en `main` |
 | V11 | Formas de superficie leídas por la autoridad VALUE (§19 dependencias) | contrato M1 v1.4 (O4) | SF087, SF093, SF098, SF106, SF107, SF129, SF136, SF191 | `money@1` | E-VALUE |
@@ -114,4 +115,6 @@ verificará.
 | `CANCEL_PENDING` con búsqueda nueva | — | O12/O13 abierto (A: `[]`, B: `CANCEL_PENDING`) | explícito siempre (`control`), sin re-etiquetar | §17.2, Anexo B |
 | Igualdad explícita «exactamente X» (A8.1) | sin operador EQ en VALUE | A8.1: válida | dependencia de D-MONEY (par `>=`/`<=` del mismo turno); fail-closed hasta entonces | §15.2, §19 |
 | Primer turno con valor ambiguo | M1: `CLARIFY` con su código | — | admisible ≠ ejecutable; M2a no cambia el primer turno | §7.2, INV-M2A-06 |
+| Preestados del Gold | — | SF063 con `asks = 3`; SF168 ancla SMMLV plurianual | U2 normaliza SF063; D1 declara SF168 estado persistido inválido; G11 exige preestados alcanzables | `gold/ADJUDICATION_2026-10-02.md` |
+| Referente extensional/intensional | C0 l.300 (ambigüedad heredada) | G-FU-14 | señal estructural diferida a M2A-5; hasta entonces todo referente es intensional | §7.1 fila 5, §19 |
 | Top-N > 100 | C1.2 (`main`) ya topa y anuncia | A3 | sin conflicto (el mismatch que T3 vio en el worktree c12 ya está corregido en `main`) | §2 |
