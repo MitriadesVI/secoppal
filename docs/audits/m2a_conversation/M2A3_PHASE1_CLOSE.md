@@ -26,7 +26,7 @@ Regla general propuesta para `compose` (fase 2; no reproduce la lógica de admis
 
 | Política | La crea en `main` | Cita | Entradas de su decisión | Autoridad dueña | Comportamiento en M2a |
 |---|---|---|---|---|---|
-| `O1B@1` | `foundation_admission.py:84` | la condición REQUESTED_UNIVERSE (`RETRIEVAL_INTENT`, no es ranura) | lente de oportunidades sin un STATE `family` en la misma petición | política de universo / oportunidades (ADR-101 H7, O1B; contrato §14), con la representación a cargo de M2A-1b | **No representable**: con `⊆` no hay condición que citar (pin `test_the_request_universe_policies_cannot_be_persisted`). Ningún ancla de oportunidades se persiste hasta que M2A-1b decida. En `compose`: un `SET`/`CLEAR` de STATE sobre una petición de oportunidades ⇒ `OP_NOT_ACCREDITED:STATE`; para `REPLACE_UNIVERSE` hacia oportunidades no hay código: ver **STOP-1** |
+| `O1B@1` | `foundation_admission.py:84` | la condición REQUESTED_UNIVERSE (`RETRIEVAL_INTENT`, no es ranura) | lente de oportunidades sin un STATE `family` en la misma petición | política de universo / oportunidades (ADR-101 H7, O1B; contrato §14), con la representación a cargo de M2A-1b | **No representable**: con `⊆` no hay condición que citar (pin `test_the_request_universe_policies_cannot_be_persisted`). Ningún ancla de oportunidades se persiste hasta que M2A-1b decida. En `compose`: un `SET`/`CLEAR` de STATE sobre una petición de oportunidades ⇒ `OP_NOT_ACCREDITED:STATE`; `REPLACE_UNIVERSE` hacia oportunidades queda como **dependencia declarada** de `FOUNDATION_O1B_EXPLICIT_TIME_PARITY` (decisión del usuario; §5) |
 | `opportunity-explicit-state@1` | `foundation_admission.py:84` | ídem | lente de oportunidades con un STATE `family` en la misma petición | ídem | ídem |
 | `modality-lp-family@1`, `modality-direct-family@1` | `foundation_admission.py:141` | la condición MODALITY con operador `family` | la familia de sus ids resueltos (y el dataset, en la proyección) | D-STATE/MOD (`host_authorities/modality.py` emite la ref como veredicto en `AcceptedCondition.policies`) | se arrastra con su condición; se va con ella; un `SET` de MODALITY `family` nueva, o un `REPLACE_UNIVERSE` con la condición arrastrada, ⇒ `OP_NOT_ACCREDITED:MODALITY`. El Gold usa MODALITY `is` (SF008, SF080, SF160), que no necesita política |
 | `ADR-100@1` | `foundation_admission.py:152` | la condición STATE `oferta_abierta` citada con más de un span (embudo) | el número de spans de su evidencia (sólo la política lo registra; la `AcceptedCondition` lleva un origen) | D-STATE (`host_authorities/state.py`, `FUNNEL_POLICY`) | se arrastra con su condición; se va con ella; un embudo nuevo por `SET` ⇒ `OP_NOT_ACCREDITED:STATE` |
@@ -70,8 +70,8 @@ E-STATE y del dueño de la política de universo.
 | §6.5 A8.1 | PURA (cifras, inclusividad, origen; comparabilidad por `Provenance.unit`) | mixto SMMLV/pesos ⇒ `CLARIFY UNRESOLVED_VALUE:VALUE` |
 | §6.5 F16 / F3 / F22 | PURA | varios positivos o valor contenido ⇒ `CLARIFY` (G-FU-09) |
 | §6.5 F9 `VIEW_REDERIVED` | DEPENDE(F) | no representable (R3) |
-| §6.6 políticas de petición | PURA (arrastre) / DEPENDE(dueño de cada política, §1) | STOP-1 |
-| §6.7 nunca ejecutar vacío/degenerado/dos cotas/CARDINALITY sin ORDER | PURA (tipo + A8.1) | STOP-2 (R7) |
+| §6.6 políticas de petición | PURA (arrastre) / DEPENDE(dueño de cada política, §1) | universo hacia oportunidades: DEPENDE(`FOUNDATION_O1B_EXPLICIT_TIME_PARITY`) |
+| §6.7 nunca ejecutar vacío/degenerado/dos cotas/CARDINALITY sin ORDER | PURA (tipo + A8.1) | R7: `DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER` (enmienda en curso; fase 2) |
 | §7.1 filas 1–4, 6 | PURA sobre hechos (filas 1–2 con ancla inyectada por M2A-2/M2A-6) | — |
 | §7.1 fila 5 extensional | DEPENDE(M2A-5) | señal tri-estado; `ABSENT` nunca es intensional |
 | §7.2 a–d | PURA sobre hechos; la producción de la evidencia de continuación es DEPENDE(M2A-5) (garantía limitada) | Q-R8-1…3 |
@@ -87,8 +87,8 @@ Recorrido de los 199 casos de `M2A_GOLD` (sintéticos en git; REAL por la ruta p
 - `CLEAR(ORDER)` **solo** con CARDINALITY arrastrada: **ningún caso**, y el contrato no da código.
 
 El tipo ya rechaza `CARDINALITY_WITHOUT_ORDER`, así que `compose` no puede producir ese estado. Conservar la
-CARDINALITY sería inventarla; quitarla sin cita violaría INV-M2A-16. ⇒ **STOP-2** para la fase 2: hace falta una regla
-del usuario, o un código que no está en la lista cerrada.
+CARDINALITY sería inventarla; quitarla sin cita violaría INV-M2A-16. ⇒ **STOP-2**, resuelto por el usuario (§5): se
+enmienda el contrato.
 
 ## 4. R8: diseño de la entrada cerrada de `classify_turn` (sin implementar)
 
@@ -144,31 +144,49 @@ Dudas que la tabla exhaustiva ya deja a la vista (para decidir antes de implemen
 - **Q-R8-5.** La fila 2 (`OUT_ANCHOR_NOT_SEARCH`) precede a la 7. Hay que confirmar que una P admisible sola tras un
   turno legacy la enruta el dueño de ruta (C1.4) antes de M2a, y no `classify_turn`.
 
-## 5. STOP previstos para la fase 2 (no bloquean la fase 1)
+## 5. STOP de la fase 1 y decisiones del usuario (2026-10-02)
 
-- **STOP-1 (§6.6, R2).** `REPLACE_UNIVERSE` hacia `opportunities` exige re-decidir O1B /
-  `opportunity-explicit-state` sobre la efectiva compuesta. En M2a no hay dueño, y la lista cerrada no tiene código
-  con dimensión de universo: `OP_NOT_ACCREDITED:<DIM>` / `UNRESOLVED_VALUE:<DIM>`, y el tipo sólo admite dimensiones
-  de ranura. Ejemplo: SF075. Opciones para el usuario:
-  - (a) un código con dimensión de universo (cambio de contrato);
-  - (b) usar `STATE` como dimensión, lo que reinterpreta O1B (semántica);
-  - (c) declarar SF075 dependiente y decidir qué devuelve `compose`.
-- **STOP-2 (R7).** `CLEAR(ORDER)` solo con CARDINALITY arrastrada: no está en el Gold ni tiene código (§3).
-- Q-R8-2, Q-R8-3, Q-R8-4: deciden filas de la tabla exhaustiva de §7.2.
-- D-CANON-1 y D-CANON-2 (`M2A3_CANONICAL_FORM.md` §3): residuos de canonicidad, a decidir.
+Principio del usuario: el reducer nunca «arregla» carencias de otras capas inventando semántica. Una capacidad que falta
+aguas abajo (STOP-1) no es un hueco del contrato; un estado alcanzable sin respuesta representable (STOP-2), sí.
 
-## 6. Gates de la fase 1 (resultado literal)
+- **STOP-1 (§6.6, R2) ⇒ DEPENDIENTE.** SF075 («mejor muéstrame las oportunidades») queda como **rojo declarado**,
+  dependiente de `FOUNDATION_O1B_EXPLICIT_TIME_PARITY`. No es del reducer.
+  - O1B **no** se reinterpreta como STATE.
+  - El TIME arrastrado se conserva (F1).
+  - No se re-sella el Gold.
+  - No se copia ni se importa `foundation_admission`.
+  - En la fase 2, `compose` falla cerrado en esa rama, que queda como dependencia declarada **sin código inventado**:
+    hoy no hay `CLARIFY` representable para universo (`reason_code_allowed` sólo admite `UNRESOLVED_VALUE:<dimensión
+    de ranura>`). Un carril de enmienda del contrato evalúa ese hueco; hasta su decisión, no se usa STATE ni se crea
+    código.
+- **STOP-2 (R7) ⇒ ENMIENDA DEL CONTRATO.** Regla `DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER`: `CLEAR(ORDER)` con
+  CARDINALITY vigente y no retirada en el mismo parche ⇒ `CLARIFY`, base intacta. Nunca se borra la CARDINALITY de
+  forma implícita. Se implementa en la fase 2, cuando la enmienda esté sellada; no antes.
+- Q-R8-2, Q-R8-3, Q-R8-4: siguen abiertas; deciden filas de la tabla exhaustiva de §7.2.
+- D-CANON-1, D-CANON-2 y logic: decididos y aplicados en la fase 1b (`M2A3_CANONICAL_FORM.md` §6).
+
+## 6. Gates (resultado literal)
+
+Fase 1 (`30d073a4`, `1d7c282d`):
+
+- pytest sobre los 8 archivos (abajo): **550 passed**.
+- `ruff`: limpio.
+- `olympus-semgrep-delta --base fa0b6de8`: `TOTAL=0 BASELINE=0 NEW_DELTA=0`.
+- `m2a_gold_seal.py verify --real-dir`: OK.
+- `check_m2a_gold_contract.py --real-dir`: `"violations": 0`.
+- `privacy_scan_public_tree.py`: limpio.
+
+Fase 1b:
 
 - `pytest -p no:cacheprovider --hypothesis-seed=0` sobre `tests/test_foundation_accepted_contract.py`,
   `tests/test_foundation_accepted_canonicality.py`, `tests/test_foundation_accepted_m2a3_canonical.py`,
   `tests/test_m2a3_order_observability.py`, `tests/test_m2a_boundaries.py`,
   `tests/test_foundation_authority_contract.py`, `tests/test_m1_wave1_parity_pins.py` y `tests/test_m2a_gold_seal.py`:
-  **550 passed**. La base daba 517 en los seis archivos previos; ahora son 517 + 23 + 10 nuevos.
-- `ruff check` (configuración del repo) sobre los cuatro `.py` tocados: limpio.
+  **556 passed** (517 de base + 28 + 11).
+- `ruff check` (configuración del repo) sobre los cinco `.py` tocados: limpio.
 - `olympus-semgrep-delta --base fa0b6de8` sobre los mismos: `TOTAL=0 BASELINE=0 NEW_DELTA=0`. Cruzado con
   `semgrep --config .semgrep/secoppal-laws.yml`: 0.
 - `m2a_gold_seal.py verify --real-dir <privado>`: `seal OK … REAL recomputed`.
-- `check_m2a_gold_contract.py --real-dir <privado>`: `"violations": 0`.
 - `privacy_scan_public_tree.py <REAL privado> <copia de los archivos del commit>`: limpio.
 
 Corrí esos tests, no la suite global (módulo sin consumidor; la global corresponde a la integración).
