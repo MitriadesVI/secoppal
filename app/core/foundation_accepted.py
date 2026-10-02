@@ -19,6 +19,12 @@ Canonicality: one meaning, one persisted form. Set-like lists (``request_ids``, 
 order is REJECTED, never reordered on read. Every persisted datetime is ``timezone.utc`` and every integer is a real
 ``int`` (``bool`` is not).
 
+M2A-3 (``docs/audits/m2a_conversation/M2A3_CANONICAL_FORM.md``): only a collection PROVEN set-like gets an order. An
+interpretation's ``policies`` and the children of an AND are set-like and sorted; a pure conjunction is ``logic =
+None``. ``conditions`` and ``requests`` keep the order they are given: it is observable (the projection's TOPIC terms,
+the runtime's groups). ``canonical_interpretation`` is the one constructor path of every effective (``compose`` and the
+future ``from_acceptance``); the type itself rejects any other form.
+
 Barriers (INV-M2A-04, INV-M2A-24): nothing here translates to ``parsed_params`` or to any legacy input, imports a
 legacy reader or a lexicon, or reads the turn's text. Values exist only as ``ExecutableValue.encode()`` tuples.
 """
@@ -616,6 +622,70 @@ def policy_from_dict(data) -> HostPolicy:
         _enum_of(Effect, data["effect"], "POLICY_EFFECT")))
 
 
+# ---- canonical form shared by every constructor of an effective (M2A-3; M2A3_CANONICAL_FORM.md) --------------------
+def _policy_key(policy: HostPolicy) -> tuple:
+    return policy.policy_id, policy.version, policy.condition_ids, policy.effect.value
+
+
+def _check_policies(policies: tuple[HostPolicy, ...], condition_ids: set[str]) -> None:
+    """An interpretation's ``HostPolicy`` list (contract §3.2, §6.6), the way the projection reads it.
+
+    Every cited condition exists (a ``CLEAR`` never leaves a dangling policy). A (policy ref, condition) pair is cited
+    once (``(p1, p1)`` included): the projection admits exactly one policy per condition and ref. One ref, one effect:
+    the projection maps ``policy_id@version`` to ONE effect, so two effects would make the persisted order observable
+    in ``plan_hash``. With those, the list is set-like and is sorted.
+    """
+    effects: dict[str, Effect] = {}
+    cited: set[tuple[str, str]] = set()
+    for policy in policies:
+        if not set(policy.condition_ids) <= condition_ids:
+            _fail("FOREIGN_POLICY_CONDITION")
+        ref = f"{policy.policy_id}@{policy.version}"
+        if effects.setdefault(ref, policy.effect) is not policy.effect:
+            _fail("CONFLICTING_POLICY_EFFECT")
+        for condition_id in policy.condition_ids:
+            if (ref, condition_id) in cited:
+                _fail("DUPLICATE_POLICY")
+            cited.add((ref, condition_id))
+    if list(policies) != sorted(policies, key=_policy_key):
+        _fail("UNSORTED_POLICIES")
+
+
+def canonical_policies(policies: tuple[HostPolicy, ...]) -> tuple[HostPolicy, ...]:
+    """The one order of a set-like policy list. Nothing is merged or dropped: a duplicate is refused by the type."""
+    _records(policies, HostPolicy, "POLICIES")
+    return tuple(sorted(policies, key=_policy_key))
+
+
+def _expression_key(node: ConditionExpression) -> str:
+    return json.dumps(expression_to_dict(node), sort_keys=True, ensure_ascii=False)
+
+
+def _canonical_node(node: ConditionExpression) -> ConditionExpression:
+    if node.operator is LogicOperator.ATOM:
+        return node
+    children = tuple(_canonical_node(child) for child in node.children)
+    if node.operator is LogicOperator.AND:  # commutative and associative: flat and sorted
+        flat = (grandchild for child in children
+                for grandchild in (child.children if child.operator is LogicOperator.AND else (child,)))
+        children = tuple(sorted(flat, key=_expression_key))
+    return ConditionExpression(node.operator, None, children)  # OR and NOT keep their children's order
+
+
+def _conjunction_only(node: ConditionExpression) -> bool:
+    return node.operator is LogicOperator.ATOM or (
+        node.operator is LogicOperator.AND and all(_conjunction_only(child) for child in node.children))
+
+
+def canonical_logic(logic: ConditionExpression | None) -> ConditionExpression | None:
+    """The one form of an interpretation's expression: ``None`` for a pure conjunction (contract §3.2: ``None`` is the
+    AND of all); otherwise every AND flattened (no AND child of an AND) with its children sorted."""
+    if logic is None:
+        return None
+    _instance(logic, ConditionExpression, "LOGIC")
+    return None if _conjunction_only(logic) else _canonical_node(logic)
+
+
 # ---- AcceptedRequest / AcceptedCondition / AcceptedInterpretation (contract §3.2, §4) ----------------------------
 _REQUEST_FIELDS = ("request_id", "scope_id", "subject", "universe_kind", "universe_origin", "view", "dataset")
 
@@ -784,6 +854,7 @@ class AcceptedInterpretation:
         for condition in self.conditions:
             if not set(condition.request_ids) <= set(request_ids):
                 _fail("FOREIGN_CONDITION_REQUEST")
+        _check_policies(self.policies, set(condition_ids))
         for request_id in request_ids:
             taken: set[Slot] = set()
             for condition in self.conditions:
@@ -801,6 +872,8 @@ class AcceptedInterpretation:
             if any(self.logic.has_nonconjunctive_atom(c.condition_id)
                    for c in self.conditions if c.dimension is SemanticDimension.ORDER):
                 _fail("NONCONJUNCTIVE_ORDER")
+            if canonical_logic(self.logic) != self.logic:
+                _fail("NONCANONICAL_LOGIC")  # rejected, never rewritten: build it with ``canonical_interpretation``
 
     def to_dict(self) -> dict:
         return {"schema": ACCEPTED_SCHEMA, "requests": [request.to_dict() for request in self.requests],
@@ -820,6 +893,20 @@ class AcceptedInterpretation:
             tuple(policy_from_dict(item) for item in _list(data["policies"], "POLICIES")),
             data["base_trace_id"], data["root_trace_id"],
         )
+
+
+def canonical_interpretation(requests: tuple[AcceptedRequest, ...], conditions: tuple[AcceptedCondition, ...],
+                             logic: ConditionExpression | None, policies: tuple[HostPolicy, ...],
+                             base_trace_id: str | None, root_trace_id: str) -> AcceptedInterpretation:
+    """THE constructor path of every effective (contract §4.1: ``compose`` and ``from_acceptance``).
+
+    It orders only what is proven set-like (``policies``, AND children) and keeps ``requests`` and ``conditions`` in
+    the order given, because that order is observable. It never deduplicates, merges or drops: the type validates
+    the result and refuses anything else. Permuting a set-like collection gives the same bytes and the same
+    ``interpretation_hash``.
+    """
+    return AcceptedInterpretation(requests, conditions, canonical_logic(logic), canonical_policies(policies),
+                                  base_trace_id, root_trace_id)
 
 
 def interpretation_hash(effective: AcceptedInterpretation) -> str:
