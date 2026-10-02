@@ -1,14 +1,13 @@
-"""Generate the legacy-closure sha manifest (ADR-103 enm. 4, D1(b)/D1(d)).
+"""Generate the legacy-closure sha manifest (ADR-103 enm. 4, D1(b)/D1(d), C1_2_FRONTIER_SPEC v3 §3.1).
 
 ``python scripts/audits/m1_search/legacy_closure_manifest.py --base 88653752 [--out PATH]``
 
-The manifest is ``{path: sha256}`` of every ``app/**/*.py``, ``streamlit_app.py``, ``scripts/**/*.py`` and EVERY
-file under ``app/data/**`` as they are at ``--base`` (read with ``git cat-file``; ``__pycache__`` excluded). It is the
-frozen reference of ``tests/test_m1_wave1_parity_pins.py``; the test never calls git. Regenerating the fixture
-needs a declared reason in the commit and a fresh ZEUS review.
-
-``EXTRA_FROZEN_DATA`` adds the versioned non-``.py`` files OUTSIDE ``app/data`` that a module of the legacy closure
-names (``territorial_knowledge.EXPECTED_SOURCES``): every versioned data file the closure names is frozen.
+The manifest is ``{path: sha256}`` of EVERY versioned file at ``--base`` (``git ls-tree -r``; ``__pycache__``
+excluded): the ``.py`` files and everything else, ``app/data/**`` and ``artifacts/**`` included. Blobs are read with
+``git cat-file``; the working tree is never consulted. It is the frozen reference of
+``tests/test_m1_wave1_parity_pins.py``, which never calls git: the pin decides which entries the legacy closure
+reads (code by import graph, data by the literals it names, resolved against this very listing) and compares them.
+Regenerating the fixture needs a declared reason in the commit and a fresh ZEUS review.
 """
 from __future__ import annotations
 
@@ -21,35 +20,44 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
 DEFAULT_OUT = ROOT / "tests" / "fixtures" / "legacy_closure_manifest_88653752.json"
-EXTRA_FROZEN_DATA = (
-    "artifacts/audits/municipal_m2a/logical_units.json",
-    "artifacts/audits/municipal_m2a/physical_profiles.json",
-    "artifacts/audits/municipal_m2b/adjudicated_candidates.json",
-    "artifacts/audits/municipal_m2b/pending_identity_profiles.json",
-    "artifacts/audits/municipal_m2b_1/adjudicated_delta.json",
-    "artifacts/audits/municipal_m2b_1/gates.json",
-    "artifacts/audits/municipal_m2b_1/impact.json",
-)
 
 
 def tracked(path: str) -> bool:
-    """Whether a repository path belongs to the manifest (code roots and the whole ``app/data`` tree)."""
-    parts = path.split("/")
-    if "__pycache__" in parts:
-        return False
-    if path.startswith("app/data/") or path in EXTRA_FROZEN_DATA:
-        return True
-    return path.endswith(".py") and (path == "streamlit_app.py" or parts[0] in {"app", "scripts"})
+    """Whether a repository path belongs to the manifest: every versioned file but compiled caches."""
+    return "__pycache__" not in path.split("/")
+
+
+def _listing(base: str) -> list[tuple[str, str]]:
+    raw = subprocess.run(["git", "-C", str(ROOT), "ls-tree", "-r", "-z", base],
+                         check=True, capture_output=True).stdout.decode("utf-8")
+    out = []
+    for entry in raw.split("\0"):
+        if not entry:
+            continue
+        meta, path = entry.split("\t", 1)
+        mode, kind, blob = meta.split()
+        if kind == "blob" and tracked(path):
+            out.append((path, blob))
+    return sorted(out)
 
 
 def manifest(base: str) -> dict[str, str]:
-    listing = subprocess.run(["git", "-C", str(ROOT), "ls-tree", "-r", "-z", "--name-only", base],
-                             check=True, capture_output=True).stdout.decode("utf-8")
+    listing = _listing(base)
+    proc = subprocess.Popen(["git", "-C", str(ROOT), "cat-file", "--batch"], stdin=subprocess.PIPE,
+                            stdout=subprocess.PIPE)
+    assert proc.stdin is not None and proc.stdout is not None
     out: dict[str, str] = {}
-    for path in sorted(item for item in listing.split("\0") if item and tracked(item)):
-        blob = subprocess.run(["git", "-C", str(ROOT), "cat-file", "blob", f"{base}:{path}"],
-                              check=True, capture_output=True).stdout
-        out[path] = hashlib.sha256(blob).hexdigest()
+    for path, blob in listing:
+        proc.stdin.write(blob.encode("ascii") + b"\n")
+        proc.stdin.flush()
+        _sha, kind, size = proc.stdout.readline().split()
+        if kind != b"blob":
+            raise RuntimeError(f"{path}: unexpected object kind {kind!r}")
+        data = proc.stdout.read(int(size))
+        proc.stdout.read(1)  # the newline that closes each object
+        out[path] = hashlib.sha256(data).hexdigest()
+    proc.stdin.close()
+    proc.wait()
     return out
 
 

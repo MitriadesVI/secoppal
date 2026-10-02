@@ -16,7 +16,7 @@ import re
 import time
 from dataclasses import dataclass, field
 
-from app.core.foundation_lift_v1 import lift_level, lift_operation, lift_subject, v1_job_specs
+from app.core.foundation_lift_v1 import lift_level, lift_operation, lift_subject, v1_dimension, v1_job_specs
 from app.core.foundation_prompts import PRODUCER_ARM, PROMPT_SHA256, PROMPT_VERSION, system_prompt
 from app.core.foundation_universe_kind import expand_universe_kind
 from app.core.interpretation_contract import (
@@ -24,7 +24,6 @@ from app.core.interpretation_contract import (
     InterpretationProposal, LogicOperator, Omission, Polarity, ProposedCondition, ProposedJob,
     ProposedOmission, ProposedRelation, ProposedRequest, RawSpan, RelationKind,
 )
-from app.core.semantic_dimensions import SemanticDimension
 
 
 PRODUCER_VERSION = PROMPT_VERSION
@@ -104,7 +103,7 @@ def decode_proposal(payload: dict, raw: str, *, arm: str, candidates=()) -> Inte
                           "unsupported_label", "candidate_ids" if arm == "B" else "evidence"},
               {"condition_id", "request_ids", "dimension", "operator", "polarity"})
         evidence = spans(condition)
-        dimension = SemanticDimension(condition["dimension"])
+        dimension = v1_dimension(condition["dimension"])
         conditions.append(ProposedCondition(
             condition["condition_id"], tuple(condition["request_ids"]), dimension,
             condition["operator"], Polarity(condition["polarity"]), evidence[0].quote, evidence,
@@ -117,7 +116,7 @@ def decode_proposal(payload: dict, raw: str, *, arm: str, candidates=()) -> Inte
         relations.append(ProposedRelation(RelationKind(relation["kind"]), tuple(relation["members"])))
     for omission in payload.get("omissions", []):
         _keys(omission, {"request_id", "dimension", "state"}, {"request_id", "dimension", "state"})
-        omissions.append(ProposedOmission(omission["request_id"], SemanticDimension(omission["dimension"]),
+        omissions.append(ProposedOmission(omission["request_id"], v1_dimension(omission["dimension"]),
                                          Omission(omission["state"])))
     proposal = InterpretationProposal(hashlib.sha256(raw.encode("utf-8", errors="surrogatepass")).hexdigest(),
                                       f"foundation-{arm}", PRODUCER_VERSION, tuple(requests),

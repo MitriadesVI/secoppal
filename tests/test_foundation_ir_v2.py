@@ -19,11 +19,12 @@ from app.core.entity_resolver import EntityResolver
 from app.core.foundation_acceptance_loader import load_acceptance, load_proposal
 from app.core.foundation_admission import admit_proposal
 from app.core.foundation_geo_level import GeoLevel
-from app.core.foundation_lift_v1 import lift_v1
+from app.core.foundation_lift_v1 import lift_v1, v1_dimension
+from app.core.foundation_messages import user_message
 from app.core.foundation_operations import Aspect, Operation, Subject
 from app.core import foundation_operator_table as table
 from app.core.foundation_operator_table import OPERATORS, operator_allowed
-from app.core.foundation_producers import decode_proposal
+from app.core.foundation_producers import LinguisticProducer, decode_proposal, host_candidates
 from app.core.foundation_projection import project_accepted
 from app.core.interpretation_contract import (
     SCHEMA_VERSION, AcceptanceStatus, ConditionExpression, ConditionRole, ContractError, HostResolution,
@@ -623,3 +624,79 @@ def test_the_regression_corpus_gives_the_outcome_the_ir_v1_gave():
         assert got[case_id] == expected[case_id], case_id
     assert {v["final_status"] for v in got.values()} == {"READY", "NEEDS_CLARIFICATION", "UNSUPPORTED"}
     assert sum(len(v["projection"]["manifest"]) for v in got.values() if "manifest" in v.get("projection", {})) > 0
+
+
+# ── foundation_v3 parity: the v4.2 wire never had ORDER or CARDINALITY ──────────────────────────────
+
+ORDER_RAW = "contratos de aseo los 5 más caros"
+
+
+def _order_payload(*extra):
+    """The v4.2 wire (arm B) of ``ORDER_RAW`` with the given ``(dimension, operator, quote)`` extra conditions."""
+    candidates = host_candidates(ORDER_RAW)
+
+    def ids(quote):
+        return [c["candidate_id"] for c in candidates if c["quote"] == quote]
+
+    conditions = [{"condition_id": "c1", "request_ids": ["r1"], "dimension": "TOPIC", "operator": "contains",
+                   "polarity": "POSITIVE", "role": "FILTER", "candidate_ids": ids("aseo")}]
+    atoms = [{"operator": "ATOM", "condition_id": "c1"}]
+    for at, (dimension, operator, quote) in enumerate(extra):
+        conditions.append({"condition_id": f"x{at}", "request_ids": ["r1"], "dimension": dimension,
+                           "operator": operator, "polarity": "POSITIVE", "role": "FILTER", "candidate_ids": ids(quote)})
+        atoms.append({"operator": "ATOM", "condition_id": f"x{at}"})
+    return {"requests": [{"request_id": "r1", "scope_id": "s1", "operation": "SEARCH", "subject": "contracts",
+                          "universe_kind": "records", "candidate_ids": ids("contratos"),
+                          "universe_evidence_candidate_ids": ids("contratos"),
+                          "condition_expression": atoms[0] if len(atoms) == 1 else {"operator": "AND", "children": atoms}}],
+            "conditions": conditions, "relations": [], "omissions": []}
+
+
+@pytest.mark.parametrize("extra", [
+    (("ORDER", "value_desc", "más caros"),),
+    (("CARDINALITY", "top_n", "5"),),
+    (("ORDER", "value_desc", "más caros"), ("CARDINALITY", "top_n", "5")),
+])
+def test_a_v42_wire_with_order_or_cardinality_is_invalid_exactly_as_in_main(extra):
+    """main raised ``ValueError`` (no such member): ``INVALID_PROPOSAL`` / ``MALFORMED_PROPOSAL:ValueError``, with the
+    same user message. ``foundation_v3`` keeps it: no decision asks the v4.2 wire to carry these dimensions (D3,
+    INV-C0-2, M1_0 §10: they are v5 vocabulary). The IR v2 in memory still holds them."""
+    acceptance = LinguisticProducer(lambda system, prompt: json.dumps(_order_payload(*extra))).produce(ORDER_RAW)
+    assert acceptance.status is AcceptanceStatus.INVALID_PROPOSAL
+    assert acceptance.reason == "MALFORMED_PROPOSAL:ValueError"
+    message = user_message(acceptance.status.value, acceptance.reason, acceptance.proposal)
+    assert message.text.startswith("No pude interpretar tu consulta con seguridad.") and message.choices == ()
+
+
+def test_the_v42_decoder_names_only_the_dimensions_main_had():
+    for member in D:
+        if member in (D.ORDER, D.CARDINALITY):
+            with pytest.raises(ValueError, match="is not a valid SemanticDimension") as caught:
+                v1_dimension(member.value)
+            assert type(caught.value) is ValueError
+        else:
+            assert v1_dimension(member.value) is member
+    assert {m.value for m in D} - {"ORDER", "CARDINALITY"} == {
+        "UNSUPPORTED", "RETRIEVAL_INTENT", "TOPIC", "MODALITY", "CONTRACT_TYPE_OR_NATURE", "ACTOR", "BUYER",
+        "GEOGRAPHY", "TIME", "VALUE", "STATE", "CONTROL_LANGUAGE"}
+    with pytest.raises(ValueError):
+        v1_dimension("NOT_A_DIMENSION")
+    payload = _order_payload()
+    payload["omissions"] = [{"request_id": "r1", "dimension": "TIME", "state": "UNKNOWN"}]
+    assert decode_proposal(payload, ORDER_RAW, arm="B", candidates=host_candidates(ORDER_RAW)).omissions
+    for dimension in ("ORDER", "CARDINALITY"):
+        payload["omissions"] = [{"request_id": "r1", "dimension": dimension, "state": "UNKNOWN"}]
+        with pytest.raises(ValueError) as caught:
+            decode_proposal(payload, ORDER_RAW, arm="B", candidates=host_candidates(ORDER_RAW))
+        assert type(caught.value) is ValueError  # not a ContractError: main's disposition is MALFORMED_PROPOSAL:ValueError
+
+
+def test_a_stored_v1_record_with_order_is_not_lifted_and_a_v2_record_with_it_is_untouched():
+    item = decode(v1_payload(RAW, [("r1", "r1", "SEARCH", "contracts", {"operator": "ATOM", "condition_id": "c1"})],
+                             [("c1", ["r1"], "TOPIC", "contains", "POSITIVE", "aseo")]))
+    record = downgrade(item, {"r1": "SEARCH"})
+    record["conditions"][0]["dimension"] = "ORDER"
+    assert codes(lambda: lift_v1(record)) == "INVALID_DIMENSION"
+    order = ProposedCondition("o1", ("r1",), D.ORDER, "value_desc", Polarity.POSITIVE, "mas grandes",
+                              (RawSpan(RAW.index("mas grandes"), RAW.index("mas grandes") + 11, "mas grandes"),))
+    assert order.dimension is D.ORDER  # the IR v2 in memory is unchanged

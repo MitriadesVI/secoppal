@@ -15,7 +15,7 @@ the closed v4.2 vocabulary (``SEARCH|COUNT|SUM_VALUE`` and ``processes|contracts
 ``ContractError``, not a guess.
 
 ``lift_v1`` works on the stored record (``to_dict`` shape); the wire decoder reuses ``lift_operation``,
-``lift_subject`` and ``v1_job_specs`` so both paths share one rule.
+``lift_subject``, ``v1_dimension`` and ``v1_job_specs`` so both paths share one rule.
 """
 
 from __future__ import annotations
@@ -30,6 +30,8 @@ from app.core.semantic_dimensions import SemanticDimension
 V1_SCHEMA_VERSION = 1
 V1_OPERATIONS = {"SEARCH": Operation.SEARCH, "COUNT": Operation.COUNT, "SUM_VALUE": Operation.SUM_VALUE}
 V1_SUBJECTS = {"processes": Subject.PROCESSES, "contracts": Subject.CONTRACTS}
+# The spine v5 dimensions the v4.2 wire never had: for that wire they are not a dimension at all (parity with ``main``).
+V1_UNAVAILABLE_DIMENSIONS = frozenset({SemanticDimension.ORDER, SemanticDimension.CARDINALITY})
 
 
 def _word(value, code: str) -> str:
@@ -52,6 +54,18 @@ def lift_subject(value) -> Subject:
     if found is None:
         raise ContractError("UNSUPPORTED_V1_SUBJECT")
     return found
+
+
+def v1_dimension(value) -> SemanticDimension:
+    """A dimension as the v4.2 wire names it; ORDER and CARDINALITY are IR v2 only and fail as they always did.
+
+    ``main`` raised ``ValueError`` here (the enum had no such member), which the producer reports as
+    ``MALFORMED_PROPOSAL:ValueError``; ``foundation_v3`` keeps that disposition instead of reaching the host.
+    """
+    dimension = SemanticDimension(value)
+    if dimension in V1_UNAVAILABLE_DIMENSIONS:
+        raise ValueError(f"{value!r} is not a valid SemanticDimension")
+    return dimension
 
 
 def lift_level(dimension: SemanticDimension) -> GeoLevel | None:
@@ -103,7 +117,7 @@ def lift_v1(record: Mapping) -> dict:
         if not isinstance(condition, Mapping):
             raise ContractError("INVALID_STORED_RECORD")
         try:
-            dimension = SemanticDimension(condition.get("dimension"))
+            dimension = v1_dimension(condition.get("dimension"))
         except ValueError as exc:
             raise ContractError("INVALID_DIMENSION") from exc
         level = lift_level(dimension)

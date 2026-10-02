@@ -119,3 +119,68 @@ etiqueta real; pin de `encode` y de `capped`; `@1` falla con `^UNSUPPORTED_VALUE
 - La resolución de literales de datos es por ruta (directorio del módulo y ancestros, o `app/data`); un nombre suelto que no
   resuelve a un archivo del manifiesto es violación.
 - `MODE_FRONTIER` y su comentario no cambian aquí (C1.6).
+
+## 5. Corrección por `C1_2_FRONTIER_SPEC` v3 (aprobada en `45457425`) y paridad de `foundation_v3` para ORDER
+
+Un ZEUS dio NO_GO porque la implementación seguía la v2. Esta sección cierra la brecha con la v3 y la decisión de paridad.
+
+### 5.1 Cambios
+
+| Pin | Qué se añadió |
+|---|---|
+| 7 `test_query_router_use_inside_foundation_is_declared` | F = `foundation_*` salvo la hoja y los dos auxiliares (`foundation_text_predicates`, `foundation_trace_view`), `host_authorities.*` e `interpretation_contract`. Todo `.query_router` (atributo) o la cadena `"query_router"` (`getattr`) en F sólo en `QUERY_ROUTER_USERS_IN_F = {foundation_route_owner, foundation_shadow_hook, foundation_basic_fallback}`. No-vacuidad: los tres usan el atributo, F no está vacío, un override en `foundation_admission` (atributo y `getattr`) es violación. |
+| 6(c) AST de la hoja | `tests/fixtures/foundation_guard_main_88653752.py.txt` (fuente de `88653752`, su sha es el del manifiesto). Las 6 funciones y `_GUARD`/`_RAW_ROWS` tienen el mismo `ast.dump` que en main, sin anotaciones. Diferencias de anotación que existen y se admiten: `_GUARD` (`ContextVar[object \| None]`) y el parámetro `guard: object` de `execution_guard` (la hoja no puede importar `ExecutionGuard`); el cuerpo es idéntico. Una función ausente es violación. |
+| 3(b) completo | El manifiesto pasa a **todo archivo versionado** de `88653752` (6815 entradas, `git ls-tree -r`, sin `__pycache__`; antes 708). El escáner recoge todo literal que termine en una extensión de datos: toda extensión de un archivo versionado no `.py` del manifiesto (`.json .jsonl .yaml .yml .csv .txt .md .gz .log .xml ...`) más `.parquet .sqlite .db .xlsx .tsv`, y todo literal de ruta multisegmento que sea un directorio versionado. Resolución por ruta: relativa a la raíz, relativa al módulo (directorio y ancestros, o `app/data`), sufijo único; más de una coincidencia = ambiguo = violación; sin resolver y sin exención = violación. Cada archivo resuelto (o todo el directorio) conserva el sha del manifiesto. |
+| 3(c) exenciones | `NON_DATA_LITERALS`, con motivo por entrada y probadas como reales (el literal existe en el módulo) y necesarias (no resuelven a un archivo versionado). Las dos de la v3 (`pagination.json`, `/query.json`) más las que el escáner ampliado encontró: estado de runtime no versionado (`history.jsonl`, `.jsonl`, `.envelopes.jsonl`, `.pagination.json`, `data/feedback.jsonl`, `data/secoppal.db`, `secoppal.db`, `data/actor_alias_index.sqlite`, directorio `data/conversations`) y el sufijo `.xlsx` de `export_xlsx`. |
+| Script | `scripts/audits/m1_search/legacy_closure_manifest.py` ya no tiene lista de rutas ni `EXTRA_FROZEN_DATA`: vuelca todo blob. **Motivo de la regeneración del fixture**: v3 exige el listado completo para decidir ambigüedad por sufijo. Las 708 entradas anteriores conservan su sha (comprobado). |
+
+### 5.2 Paridad de `foundation_v3` para ORDER y CARDINALITY
+
+Reproducer `zeus9/orderprobe.py`: un payload wire v4.2 con dimensión `ORDER` pasaba de `INVALID_PROPOSAL MALFORMED_PROPOSAL:ValueError`
+(base) a `NEEDS_CLARIFICATION UNRESOLVED_HOST_DIMENSION:ORDER`. **Causa**: `SemanticDimension` ganó `ORDER` y `CARDINALITY`, de modo que
+`SemanticDimension("ORDER")` dejó de lanzar `ValueError` en el decoder.
+
+**Ninguna decisión vigente exige el cambio.** Lo que hay apunta en sentido contrario: C0 §5.2 «`lift_v1` no pierde nada» e INV-C0-2
+(`C0_SPINE_V5_DESIGN.md:98`, :243 «sin cambio semántico»); `C1_2_CANDIDATE.md` D3 (:49, «lo que el v4.2 no declara no se eleva: se rechaza»);
+`M1_0_SEARCH_CONTRACT.md:209` («ACTOR, ORDER … no existen en [el vocabulario de v4.2]»; son vocabulario del productor v5). La
+única mención de ORDER/CARDINALITY y el wire v4.2 en el candidato (`C1_2_CANDIDATE.md:65`) los describe como «excepciones por dimensiones
+inexistentes» en la base, es decir, como casos que ya eran `INVALID_PROPOSAL`. El ADR-103 (:41, :64-71) decide qué hace el **productor v5**
+con superlativos y cifras, no el v4.2.
+
+**Arreglo**: `foundation_lift_v1.v1_dimension(value)` (única puerta de dimensión del wire v4.2) lanza el mismo `ValueError` que lanzaba
+main para `ORDER` y `CARDINALITY`; lo usan el decoder (condiciones y omisiones) y `lift_v1` de registros v1 guardados (`INVALID_DIMENSION`).
+La IR v2 en memoria no cambia (los tests de IR v2 con ORDER/CARDINALITY siguen verdes). Verificado con el reproducer: ahora
+`INVALID_PROPOSAL MALFORMED_PROPOSAL:ValueError` y el mismo mensaje de usuario que en main, para `ORDER`, `CARDINALITY` y ambas.
+
+### 5.3 Mutantes (aplicados sobre disco, restaurados; todos MUEREN)
+
+| # | Mutación | Murió por |
+|---|---|---|
+| F10(c) | `source_rows_raw` devuelve `True` **y** `LEAF_SHA256` regenerado | `foundation_guard_is_a_source_boundary_leaf`, `the_leaf_functions_are_mains_by_ast…` (el pin 6(b) pasa; lo mata el AST) |
+| F10(b) | igual sin regenerar el sha | pines 2 y 6(b), 6(c) |
+| F12 | `foundation_admission` llama `workflow.deps.query_router.parse` | `query_router_use_inside_foundation_is_declared`, `…pin_is_not_vacuous` |
+| F13 | se quita la exención de `pagination.json` (conversation_store y continuity_staging) | `legacy_data_is_frozen`, `…must_resolve_unambiguously_or_be_exempt`, `removing_an_exemption…` |
+| F13b | se quita la exención `.pagination.json` | los mismos |
+| F11 | un byte de `artifacts/audits/municipal_m2b/adjudicated_candidates.json` | `legacy_data_is_frozen` |
+| F14 | el cierre lee `baseline/B0_corpus.txt` (`.txt` versionado) y cambia | `legacy_data_is_frozen` |
+| F15 | el cierre lee un `.txt` que no existe | `legacy_data_is_frozen` (sin resolver) |
+| F16 | el cierre lee `gates.json` (9 coincidencias) | `legacy_data_is_frozen` (ambiguo) |
+| O1 | `v1_dimension` acepta ORDER/CARDINALITY | 5 tests de `test_foundation_ir_v2.py` |
+| O2 | el decoder de condiciones no usa `v1_dimension` | `a_v42_wire_with_order_or_cardinality_is_invalid_exactly_as_in_main` |
+| O3 | el decoder de omisiones no usa `v1_dimension` | `the_v42_decoder_names_only_the_dimensions_main_had` |
+| O4 | `lift_v1` de registros guardados no usa `v1_dimension` | `a_stored_v1_record_with_order_is_not_lifted…` |
+| O5 | sólo ORDER bloqueado, CARDINALITY pasa | los dos tests de paridad |
+
+Re-corridos los de frontera anteriores (`frontier_mutants.py`, 16 mutantes F1-F9, N1, N1b, N2, N2b, P-trans, P-new, P-new2): los 16 MUEREN.
+Un primer borrador del test de omisiones pasaba por la razón equivocada (`ContractError` es un `ValueError`); se endureció con
+`type(error) is ValueError` y el positivo de control, y O3 pasó de sobrevivir a morir.
+
+### 5.4 Gates ejecutados (literales)
+
+- `pytest tests/test_m1_wave1_parity_pins.py tests/test_m1_wave1_legacy_mode_runs_no_foundation.py tests/test_foundation_*.py tests/test_invariants_lock.py`:
+  **4516 passed, 1 skipped** (144 s). No es la suite global.
+- `pytest tests/test_m1_wave1_parity_pins.py` solo: 85 passed.
+- Paridad legacy: `QueryRouter.parse` sobre `parity_texts.json` (5471 textos), `88653752` exportado vs este árbol: **0 diferencias**
+  (2 errores idénticos en ambos lados).
+- `ruff check` sobre los 5 archivos Python tocados: All checks passed.
+- `olympus-semgrep-delta --base 4a8d2594 --config .semgrep/secoppal-laws.yml`: TOTAL=42 BASELINE=42 NEW_DELTA=0 FIXED=0.
