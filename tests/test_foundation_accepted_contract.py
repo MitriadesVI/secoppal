@@ -358,14 +358,14 @@ def st_interpretation(draw):
     logic = None
     if len(conds) >= 2 and not any(c.dimension is D.ORDER for c in conds) and draw(st.booleans()):
         atoms = tuple(ConditionExpression(LogicOperator.ATOM, c.condition_id) for c in conds)
-        # M2A-3: an AND's children are set-like and persisted sorted (M2A3_CANONICAL_FORM.md); the expression is
-        # drawn in any order and put in its one form by the shared constructor helper.
-        logic = fa.canonical_logic(ConditionExpression(LogicOperator.AND, None, (ConditionExpression(
+        logic = ConditionExpression(LogicOperator.AND, None, (ConditionExpression(
             LogicOperator.OR, None, atoms[:2]), *atoms[2:])) if len(atoms) > 2 else ConditionExpression(
-            LogicOperator.OR, None, atoms))
+            LogicOperator.OR, None, atoms)
     requests = (request(),) if not dual else (request(), request(fa, "r2", Subject.CONTRACTS))
-    return fa.AcceptedInterpretation(requests, tuple(conds), logic, (), draw(st.none() | st.just("t0")),
-                                     draw(st.text(min_size=1, max_size=6).filter(str.strip)))
+    # M2A-3 (M2A3_CANONICAL_FORM.md): conditions are drawn in any slot order; the one constructor path groups them by
+    # slot (``CONDITION_SLOT_ORDER``), as ``compose`` and ``from_acceptance`` will.
+    return fa.canonical_interpretation(requests, tuple(conds), logic, (), draw(st.none() | st.just("t0")),
+                                       draw(st.text(min_size=1, max_size=6).filter(str.strip)))
 
 
 @st.composite

@@ -2,10 +2,11 @@
 
 Invariants proved here (ZEUS P2 of M2A-1a; contract §3, §4.3, §8, §12):
 
-1. Set-like lists are sorted and unique: ``AcceptedCondition.request_ids``, ``receipt_rules`` and ``policies``, the
-   ``condition_ids`` of every ``HostPolicy`` persisted inside an ``AcceptedInterpretation``, and
-   ``PendingClarification.answer_slots``. A list in any other order (or with a repeated item) is REJECTED by the
-   constructor and by the strict reader, never reordered on read; so ``to_dict(from_dict(d)) == d`` holds for every
+1. Set-like lists are sorted and unique: ``AcceptedCondition.request_ids``, ``receipt_rules`` and ``policies``, and
+   ``PendingClarification.answer_slots``. A ``HostPolicy`` persisted inside an ``AcceptedInterpretation`` cites ONE
+   condition (M2A-3 1b, D-CANON-2: the split form ``main`` emits), so its ``condition_ids`` has no order to fix.
+   A list in any other order (or with a repeated item) is REJECTED by the constructor and by the strict reader,
+   never reordered on read; so ``to_dict(from_dict(d)) == d`` holds for every
    accepted document (Hypothesis over permuted documents).
 2. VALUE coherence: polarity is POSITIVE (the ``MoneyValue`` comparator absorbs the negation) and the operator names
    the value's own comparator. No new rule is generalized to other dimensions.
@@ -54,14 +55,15 @@ def rich_interpretation(m=fa):
     value = replace(condition(m, D.VALUE, 0, "c2", rids), receipt_rules=("unit.millones", "unit.sibling"))
     conditions = (topic, value, condition(m, D.ORDER, 0, "c3", rids), condition(m, D.CARDINALITY, 1, "c4", rids))
     return m.AcceptedInterpretation((request(m), request(m, "r2", Subject.CONTRACTS)), conditions, None,
-                                    (HostPolicy("topn", "1", ("c1", "c4"), Effect.NARROWING),), None, UNICODE_ROOT)
+                                    (HostPolicy("topn", "1", ("c1",), Effect.NARROWING),
+                                     HostPolicy("topn", "1", ("c4",), Effect.NARROWING)), None, UNICODE_ROOT)
 
 
 def rich_pending(m=fa):
     return replace(pending(m), frame=rich_interpretation(m))
 
 
-SET_LIKE_KEYS = frozenset({"request_ids", "receipt_rules", "policies", "condition_ids", "answer_slots"})
+SET_LIKE_KEYS = frozenset({"request_ids", "receipt_rules", "policies", "answer_slots"})
 
 
 def set_like_paths(payload) -> list[tuple]:
@@ -125,10 +127,10 @@ def canonicality_failures(m) -> list[str]:
             ("request_ids", lambda: replace(topic, request_ids=("r2", "r1"))),
             ("receipt_rules", lambda: replace(value, receipt_rules=("unit.sibling", "unit.millones"))),
             ("condition policies", lambda: replace(topic, policies=("topn@1", "actor_state@1"))),
-            ("policy condition_ids", lambda: replace(effective, policies=(
-                HostPolicy("topn", "1", ("c4", "c1"), Effect.NARROWING),)))):
+            ("multi-condition policy", lambda: replace(effective, policies=(
+                HostPolicy("topn", "1", ("c1", "c4"), Effect.NARROWING),)))):
         if not _rejects(build):
-            out.append(f"constructor accepts unsorted {label}")
+            out.append(f"constructor accepts a non-canonical {label}")
     return out
 
 
@@ -156,11 +158,13 @@ def test_property_a_permuted_document_is_rejected_or_identical(data):
 
 
 def test_host_policy_itself_is_not_narrowed():
-    """Only the form persisted by M2a is canonical: the IR v2 ``HostPolicy`` keeps its own contract."""
+    """Only the form persisted by M2a is canonical: the IR v2 ``HostPolicy`` keeps its own contract (M2A-3 1b: the
+    persisted form is one application per condition; a joint policy needs its owner's express declaration)."""
     assert HostPolicy("topn", "1", ("c4", "c1"), Effect.NARROWING).condition_ids == ("c4", "c1")
-    with pytest.raises(ContractError, match="UNSORTED_POLICY_CONDITION_IDS"):
-        fa.policy_from_dict({"policy_id": "topn", "version": "1", "condition_ids": ["c4", "c1"],
-                             "effect": Effect.NARROWING.value})
+    for condition_ids in (["c4", "c1"], ["c1", "c4"]):
+        with pytest.raises(ContractError, match="MULTI_CONDITION_POLICY"):
+            fa.policy_from_dict({"policy_id": "topn", "version": "1", "condition_ids": condition_ids,
+                                 "effect": Effect.NARROWING.value})
 
 
 @pytest.mark.parametrize("rules", [("unit.sibling", "unit.millones"), ("year.inferred", "buyer.exact"),
@@ -364,10 +368,8 @@ MUTANTS = {
     "condition_policies_unsorted": (canonicality_failures, (
         '_texts(self.policies, "CONDITION_POLICIES", sorted_unique=True)',
         '_texts(self.policies, "CONDITION_POLICIES")'),),
-    "policy_condition_ids_unsorted": (canonicality_failures, (
-        '    if list(policy.condition_ids) != sorted(policy.condition_ids):\n'
-        '        _fail("UNSORTED_POLICY_CONDITION_IDS")',
-        '    pass'),),
+    "multi_condition_policy_accepted": (canonicality_failures, (
+        '    if len(policy.condition_ids) != 1:\n        _fail("MULTI_CONDITION_POLICY")', '    pass'),),
     "answer_slots_reordered_on_read": (canonicality_failures, (
         '        if list(slot_keys) != sorted(set(slot_keys)):\n            _fail("NONCANONICAL_ANSWER_SLOTS")',
         '        slot_keys = tuple(sorted(set(slot_keys)))'),),

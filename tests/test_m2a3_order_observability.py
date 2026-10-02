@@ -4,13 +4,16 @@
 set-like here may get a canonical order in ``foundation_accepted`` (never «sorted blindly»):
 
 * conditions: the soql and ``plan_hash`` classes are EXACTLY the relative order of the TOPIC/POSITIVE conditions
-  (the projection's ``foundation_topic_terms`` list); the order across slots is never seen.  ⇒ observable, kept.
+  (the projection's ``foundation_topic_terms`` list); the order across slots is never seen.  ⇒ grouped by slot in
+  ``foundation_accepted.CONDITION_SLOT_ORDER``, acceptance order kept inside a slot (user decision D-CANON-1); the
+  grouping itself is pinned not to move soql/plan_hash (INV-M2A-06).
 * requests (dual anchor): per-request ``plan_hash`` is the same, but the manifest — and so the runtime's groups and
   rows — follow the request order.  ⇒ observable, kept.
 * policies: no order is seen, unless one ``policy_id@version`` carries two effects (the projection maps a ref to
   ONE effect: last wins in ``plan_hash``).  ⇒ set-like once that state is refused; sorted.
 * AND children (and AND nesting, and ``None`` vs an explicit AND): never seen; OR is not executed at all.
-  ⇒ set-like; flat and sorted.
+  ⇒ only contract §3.2 is applied (a pure conjunction is ``None``); a tree with OR/NOT is kept as given (limited
+  guarantee: nothing executes it, so no rewrite is proven).
 
 If the projection changes so that one of these verdicts flips, the canonical form must be re-decided: these pins
 fail first. The acceptances are built in memory; nothing is executed against a source.
@@ -23,6 +26,7 @@ from datetime import datetime
 
 import pytest
 
+import app.core.foundation_accepted as fa
 from app.core.contract_universe import POLICY_VERSION
 from app.core.foundation_geo_level import GeoLevel
 from app.core.foundation_operations import Operation, Subject
@@ -126,6 +130,23 @@ def test_condition_order_is_observable_exactly_through_the_topic_positive_terms(
     assert all(len(keys) == 1 for keys in by_plan.values())  # a different TOPIC/POSITIVE order is always seen
 
 
+def _slot(cid: str):
+    """The M2a slot of a proposed condition (VALUE side from its operator, as the typed comparator would say)."""
+    dimension, operator, polarity, _, _ = SPECS[cid]
+    if dimension is D.VALUE:
+        return fa.Slot(dimension, side=fa.ValueSide.LOWER if operator.startswith("greater") else fa.ValueSide.UPPER)
+    return fa.Slot(dimension, polarity)
+
+
+def test_the_canonical_slot_grouping_never_moves_soql_or_plan_hash():
+    """D-CANON-1 against INV-M2A-06: for every order of the acceptance, grouping it by ``CONDITION_SLOT_ORDER``
+    (stable inside a slot, as ``canonical_conditions`` does) projects to the same calls."""
+    rank = {slot: position for position, slot in enumerate(fa.CONDITION_SLOT_ORDER)}
+    for order in itertools.permutations(("c1", "c2", "c3", "c4", "c6", "c7")):
+        grouped = tuple(sorted(order, key=lambda cid: rank[_slot(cid)]))
+        assert plan(acceptance(grouped)) == plan(acceptance(order))
+
+
 def test_cross_slot_order_is_unobservable_with_every_projected_dimension():
     cids = ("c1", "c4", "c5", "c6", "c7", "c8", "c9")
     reference = plan(acceptance(cids))
@@ -170,7 +191,8 @@ def test_one_ref_with_two_effects_makes_policy_order_observable():
 
 
 def test_split_and_merged_forms_of_one_ref_project_alike():
-    """The declared residual freedom (not canonicalized): disjoint citations of one ref, split or merged."""
+    """Evidence behind D-CANON-2: merging independent applications would be projection-equivalent, and still M2a
+    persists the SPLIT form ``main`` emits (one condition per record; a joint policy is refused by the type)."""
     values = {"c2": ("aseo",)}
     split = plan(acceptance(("c1", "c2"), (HostPolicy("topic-aseo-morph", "1", ("c1",), Effect.EQUIVALENT),
                                            HostPolicy("topic-aseo-morph", "1", ("c2",), Effect.EQUIVALENT)),

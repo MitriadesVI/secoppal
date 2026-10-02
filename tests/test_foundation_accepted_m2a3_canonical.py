@@ -1,20 +1,25 @@
-"""M2A-3 phase 1: the interpretation-level invariants and the canonical form shared by every constructor of an
-effective (``app/core/foundation_accepted.py``; ``docs/audits/m2a_conversation/M2A3_CANONICAL_FORM.md``).
+"""M2A-3 phases 1/1b: interpretation-level invariants and the canonical form shared by every constructor of an
+effective (``app/core/foundation_accepted.py``; ``docs/audits/m2a_conversation/M2A3_CANONICAL_FORM.md``; user decisions
+2026-10-02).
 
 Invariants proved here:
 
-1. ``policies``: every cited condition exists (a ``CLEAR`` never leaves a dangling policy); a (policy ref, condition)
-   pair is cited once — ``(p1, p1)`` is REJECTED, never collapsed, whatever the order verdict; one ref has one
-   effect; the list is sorted. O1B / ``opportunity-explicit-state`` cite the REQUESTED_UNIVERSE condition, which is
+1. ``conditions``: grouped by slot in the closed, explicit table ``CONDITION_SLOT_ORDER`` (the order contract §4.2
+   lists the slots; never alphabetical), each §4.2 condition slot exactly once; inside a slot the acceptance order is
+   KEPT (it is observable). The constructor and the reader reject any other order; they never reorder.
+2. ``policies``: the split form ``main`` emits — one application (policy, ONE condition) per record; a joint
+   multi-condition policy is refused; every cited condition exists (a ``CLEAR`` never leaves a dangling policy); an
+   application appears once — ``(p1, p1)`` is REJECTED, never collapsed, whatever the order verdict; one ref has one
+   effect; the records are sorted. O1B / ``opportunity-explicit-state`` cite the REQUESTED_UNIVERSE condition, which is
    not a slot: they cannot be persisted (§6.6 inventory, fail-closed).
-2. ``logic``: a pure conjunction is ``None``; every AND is flat (no AND child of an AND) with sorted children; OR and
-   NOT keep their children's order (not proven set-like).
-3. ``canonical_interpretation`` is the one constructor path: a permutation of a set-like collection gives the same
-   bytes and the same ``interpretation_hash``; ``conditions`` and ``requests`` keep the order given (observable,
-   R4); nothing is deduplicated, merged or dropped.
+3. ``logic``: only what contract §3.2 decides — a pure conjunction is ``None``. Any tree with OR/NOT is kept exactly as
+   given (structure and order): limited guarantee, «same meaning ⇒ same bytes» is NOT promised inside OR/NOT.
+4. ``canonical_interpretation`` is the one constructor path: a cross-slot permutation of the conditions or any
+   permutation of the policies gives the same bytes and ``interpretation_hash``; ``requests`` keep their order;
+   nothing is deduplicated, merged or dropped.
 
 Every battery runs against MUTANTS of the module (the ``exec`` technique of ``test_foundation_accepted_contract.py``):
-a check that does not kill its mutant does not count. The executed evidence for which collections are set-like is
+a check that does not kill its mutant does not count. The executed evidence for which orders are observable is
 ``tests/test_m2a3_order_observability.py`` (the real projection).
 """
 from __future__ import annotations
@@ -32,9 +37,12 @@ from hypothesis import strategies as st
 
 import app.core.foundation_accepted as fa
 from app.core.foundation_operations import Subject
-from app.core.interpretation_contract import ConditionExpression, ContractError, Effect, HostPolicy, LogicOperator
+from app.core.interpretation_contract import (
+    POLARIZED_SLOT_DIMENSIONS, SLOT_DIMENSIONS, ConditionExpression, ContractError, Effect, HostPolicy, LogicOperator,
+    Polarity, ValueSide,
+)
 from app.core.semantic_dimensions import SemanticDimension as D
-from tests.test_foundation_accepted_contract import PROPS, SOURCE, condition, request
+from tests.test_foundation_accepted_contract import PROPS, SOURCE, VALUES, condition, request
 
 AND, OR, NOT, ATOM = LogicOperator.AND, LogicOperator.OR, LogicOperator.NOT, LogicOperator.ATOM
 
@@ -64,6 +72,7 @@ POLICIES = (P_ACTOR, P_ORDER, P_TOPN)  # canonical: sorted by (policy_id, versio
 
 
 def conditions(m, rids=("r1",)):
+    """TOPIC/POSITIVE, VALUE/lower, ORDER, CARDINALITY: already in ``CONDITION_SLOT_ORDER``."""
     return (condition(m, D.TOPIC, 0, "c1", rids), condition(m, D.VALUE, 0, "c2", rids),
             condition(m, D.ORDER, 0, "c3", rids), condition(m, D.CARDINALITY, 1, "c4", rids))
 
@@ -74,15 +83,74 @@ def build(m, policies=POLICIES, conds=None, logic=None, requests=None):
 
 
 def flat_conditions(m):
-    """Four conditions with no single-slot dimension, so any logic tree over them is admissible."""
+    """Four conditions with no single-slot dimension (any logic tree over them is admissible), in table order."""
     return (condition(m, D.TOPIC, 0, "c1"), condition(m, D.BUYER, 0, "c2"), condition(m, D.GEOGRAPHY, 0, "c3"),
             condition(m, D.TIME, 0, "c4"))
 
 
-CANONICAL_LOGIC = node(AND, atom("c3"), atom("c4"), node(OR, atom("c1"), atom("c2")))  # atoms sort before groups
+# ---- 1. the slot table -----------------------------------------------------------------------------------------------
+# Contract §4.2, in the order its table lists the slots (UNIVERSE is the request-level slot: no condition occupies it).
+CONTRACT_4_2_CONDITION_SLOTS = (
+    "TOPIC/POSITIVE", "TOPIC/NEGATIVE", "BUYER/POSITIVE", "BUYER/NEGATIVE", "ACTOR/POSITIVE", "ACTOR/NEGATIVE",
+    "GEOGRAPHY/POSITIVE", "GEOGRAPHY/NEGATIVE", "TIME/POSITIVE", "TIME/NEGATIVE", "STATE/POSITIVE", "STATE/NEGATIVE",
+    "MODALITY/POSITIVE", "MODALITY/NEGATIVE", "CONTRACT_TYPE_OR_NATURE/POSITIVE", "CONTRACT_TYPE_OR_NATURE/NEGATIVE",
+    "VALUE/lower", "VALUE/upper", "ORDER", "CARDINALITY",
+)
 
 
-# ---- 1. policies -----------------------------------------------------------------------------------------------------
+def test_the_slot_table_lists_every_condition_slot_of_4_2_exactly_once():
+    keys = [slot.key for slot in fa.CONDITION_SLOT_ORDER]
+    assert type(fa.CONDITION_SLOT_ORDER) is tuple and len(keys) == len(set(keys))
+    assert tuple(keys) == CONTRACT_4_2_CONDITION_SLOTS  # explicit, in the contract's order (not alphabetical)
+    every = {fa.Slot(d, p).key for d in POLARIZED_SLOT_DIMENSIONS for p in Polarity}
+    every |= {fa.Slot(D.VALUE, side=s).key for s in ValueSide}
+    every |= {fa.Slot(d).key for d in SLOT_DIMENSIONS - POLARIZED_SLOT_DIMENSIONS - {D.VALUE}}
+    assert set(keys) == every
+    assert fa.UNIVERSE_SLOT not in fa.CONDITION_SLOT_ORDER and keys != sorted(keys)
+    # every slot a typed value can occupy has a rank (slot_of never yields a dimension-wide or UNIVERSE slot)
+    for dimension, values in VALUES.items():
+        for value in values:
+            assert fa.slot_of(dimension, value.encode()) in fa.CONDITION_SLOT_ORDER
+
+
+def condition_order_failures(m) -> list[str]:
+    out = []
+    t1, t2 = condition(m, D.TOPIC, 0, "t1"), condition(m, D.TOPIC, 0, "t2")
+    buyer, time, low = condition(m, D.BUYER, 0, "b"), condition(m, D.TIME, 1, "tn"), condition(m, D.VALUE, 0, "lo")
+    up, order, card = condition(m, D.VALUE, 2, "up"), condition(m, D.ORDER, 0, "o"), condition(m, D.CARDINALITY, 1, "n")
+    canonical = (t2, t1, buyer, time, low, up, order, card)  # TOPIC/POSITIVE keeps the given t2, t1
+    shuffled = (card, time, t2, up, order, buyer, t1, low)
+    try:
+        made = m.canonical_interpretation((request(m),), shuffled, None, (), None, "root-1")
+        if made.conditions != canonical:
+            out.append(f"constructor order {[c.condition_id for c in made.conditions]}")
+    except ContractError as error:
+        out.append(f"constructor refuses a valid set: {error}")
+    for label, conds in (("table order", canonical), ("the other in-slot order", (t1, t2, *canonical[2:])),
+                         ("the 1a fixture order", conditions(m))):
+        if (code := _code(lambda: build(m, (), conds))) is not None:
+            out.append(f"type refuses {label}: {code}")
+    for label, conds in (("cross-slot permutation", shuffled), ("CARDINALITY before ORDER", (*canonical[:6], card,
+                                                                                            order)),
+                         ("alphabetical slots", tuple(sorted(canonical, key=lambda c: c.slot.key)))):
+        if conds != canonical and _code(lambda: build(m, (), conds)) != "NONCANONICAL_CONDITION_ORDER":
+            out.append(f"type accepts {label}")
+    try:
+        payload = build(m, (), canonical).to_dict()
+    except ContractError as error:
+        return [*out, f"the canonical document cannot be built: {error}"]
+    tampered = copy.deepcopy(payload)
+    tampered["conditions"] = [payload["conditions"][i] for i in (2, 0, 1, 3, 4, 5, 6, 7)]
+    if _code(lambda: m.AcceptedInterpretation.from_dict(tampered)) is None:
+        out.append("reader accepts a cross-slot permutation")
+    return out
+
+
+def test_conditions_are_grouped_by_slot_and_keep_the_acceptance_order_inside_a_slot():
+    assert condition_order_failures(fa) == []
+
+
+# ---- 2. policies -----------------------------------------------------------------------------------------------------
 def policy_failures(m) -> list[str]:
     out = []
     effective = build(m)
@@ -90,9 +158,6 @@ def policy_failures(m) -> list[str]:
         out.append("the canonical policies do not round-trip")
     refused = {
         "(p1, p1)": ((P_ACTOR, P_ACTOR, P_ORDER, P_TOPN), "DUPLICATE_POLICY"),
-        "one ref citing a condition twice": ((P_ACTOR, P_ORDER, P_TOPN, HostPolicy("topn", "1", ("c1", "c4"),
-                                                                                   Effect.NARROWING)),
-                                             "DUPLICATE_POLICY"),
         "a policy on a missing condition": ((P_ACTOR, HostPolicy("ghost", "1", ("c9",), Effect.EQUIVALENT)),
                                             "FOREIGN_POLICY_CONDITION"),
         "one ref with two effects": ((HostPolicy("x", "1", ("c1",), Effect.EQUIVALENT),
@@ -101,23 +166,24 @@ def policy_failures(m) -> list[str]:
                                                   HostPolicy("a@b", "c", ("c2",), Effect.NARROWING)),
                                                  "CONFLICTING_POLICY_EFFECT"),
         "unsorted policies": ((P_TOPN, P_ORDER, P_ACTOR), "UNSORTED_POLICIES"),
+        "a joint multi-condition policy": ((HostPolicy("x", "1", ("c1", "c2"), Effect.EQUIVALENT),),
+                                           "MULTI_CONDITION_POLICY"),
     }
     for label, (policies, code) in refused.items():
         if _code(lambda: build(m, policies)) != code:
             out.append(f"constructor: {label} not refused as {code}")
-    # a CLEAR that drops the cited condition and keeps its policy leaves it dangling: refused
-    without_c4 = conditions(m)[:3]
-    if _code(lambda: build(m, conds=without_c4)) != "FOREIGN_POLICY_CONDITION":
+    if _code(lambda: build(m, conds=conditions(m)[:3])) != "FOREIGN_POLICY_CONDITION":
         out.append("a policy left dangling by a removed condition is accepted")
     payload = effective.to_dict()
-    for label, change in (("repeated", lambda items: items[:1] + items), ("reversed", lambda items: items[::-1])):
+    for label, change in (("repeated", lambda items: items[:1] + items), ("reversed", lambda items: items[::-1]),
+                          ("merged", lambda items: [dict(items[0], condition_ids=["c1", "c3"])] + items[1:])):
         tampered = copy.deepcopy(payload)
         tampered["policies"] = change(payload["policies"])
         if _code(lambda: m.AcceptedInterpretation.from_dict(tampered)) is None:
             out.append(f"reader accepts {label} policies")
-    # positive controls: what is NOT a duplicate stays representable
+    # positive controls: independent applications stay representable, split
     for label, policies in (("two refs on one condition", (P_ACTOR, HostPolicy("zz", "1", ("c1",), Effect.WIDENING))),
-                            ("one ref split over disjoint conditions",
+                            ("one ref applied to two conditions",
                              (HostPolicy("x", "1", ("c1",), Effect.EQUIVALENT),
                               HostPolicy("x", "1", ("c2",), Effect.EQUIVALENT)))):
         if (code := _code(lambda: build(m, policies))) is not None:
@@ -125,7 +191,7 @@ def policy_failures(m) -> list[str]:
     return out
 
 
-def test_policies_are_set_like_and_never_duplicated_or_dangling():
+def test_policies_are_split_set_like_and_never_duplicated_or_dangling():
     assert policy_failures(fa) == []
 
 
@@ -143,84 +209,75 @@ def test_the_request_universe_policies_cannot_be_persisted():
             build(fa, (HostPolicy(policy_id, "1", ("u1",), Effect.EQUIVALENT),), conds=(topic,))
 
 
-# ---- 2. logic --------------------------------------------------------------------------------------------------------
+# ---- 3. logic --------------------------------------------------------------------------------------------------------
+PURE_SHAPES = (node(AND, atom("c1"), atom("c2"), atom("c3"), atom("c4")),
+               node(AND, atom("c4"), atom("c3"), atom("c2"), atom("c1")),
+               node(AND, node(AND, atom("c1"), atom("c2")), node(AND, atom("c4"), atom("c3"))))
+OR_TREES = (node(AND, node(OR, atom("c1"), atom("c2")), atom("c4"), atom("c3")),
+            node(AND, atom("c3"), atom("c4"), node(OR, atom("c2"), atom("c1"))),
+            node(AND, node(AND, atom("c4"), atom("c3")), node(OR, atom("c1"), atom("c2"))),
+            node(OR, node(AND, atom("c4"), atom("c3")), atom("c2"), atom("c1")),
+            node(AND, node(NOT, node(AND, atom("c2"), atom("c1"))), atom("c4"), atom("c3")))
+
+
 def logic_failures(m) -> list[str]:
     out = []
     conds = flat_conditions(m)
-    canonical = build(m, (), conds, CANONICAL_LOGIC)
-    if m.AcceptedInterpretation.from_dict(json.loads(json.dumps(canonical.to_dict()))) != canonical:
-        out.append("the canonical logic does not round-trip")
-    pure = node(AND, atom("c1"), atom("c2"), atom("c3"), atom("c4"))
-    if m.canonical_logic(pure) is not None or m.canonical_logic(node(AND, node(AND, atom("c1"), atom("c2")),
-                                                                     atom("c3"), atom("c4"))) is not None:
-        out.append("a pure conjunction is not None")
-    if _code(lambda: build(m, (), conds, pure)) != "NONCANONICAL_LOGIC":
-        out.append("the type accepts a pure conjunction written as a tree")
-    group = node(OR, atom("c1"), atom("c2"))
-    variants = [node(AND, *order) for order in itertools.permutations((atom("c3"), atom("c4"), group))]
-    variants += [node(AND, node(AND, atom("c4"), atom("c3")), group),
-                 node(AND, group, node(AND, atom("c3"), atom("c4")))]
-    for variant in variants:
-        if m.canonical_logic(variant) != CANONICAL_LOGIC:
-            out.append(f"canonical_logic does not normalize {m.expression_to_dict(variant)}")
-        if variant != CANONICAL_LOGIC and _code(lambda: build(m, (), conds, variant)) != "NONCANONICAL_LOGIC":
-            out.append(f"the type accepts the non-canonical {m.expression_to_dict(variant)}")
-    # OR and NOT are not proven set-like: their order is kept, while an AND below them is still canonical
-    swapped = node(AND, atom("c3"), atom("c4"), node(OR, atom("c2"), atom("c1")))
-    if m.canonical_logic(swapped) != swapped or _code(lambda: build(m, (), conds, swapped)) is not None:
-        out.append("the order of an OR's children is rewritten or refused")
-    inner = node(OR, node(AND, atom("c4"), atom("c3")), atom("c2"), atom("c1"))
-    if m.canonical_logic(inner) != node(OR, node(AND, atom("c3"), atom("c4")), atom("c2"), atom("c1")):
-        out.append("an AND below an OR is not canonical")
-    negated = node(AND, node(NOT, node(AND, atom("c2"), atom("c1"))), atom("c4"), atom("c3"))
-    if m.canonical_logic(negated) != node(AND, atom("c3"), atom("c4"), node(NOT, node(AND, atom("c1"), atom("c2")))):
-        out.append("an AND below a NOT is not canonical")
-    payload = canonical.to_dict()
-    tampered = copy.deepcopy(payload)
-    tampered["logic"]["children"] = payload["logic"]["children"][::-1]
+    for shape in PURE_SHAPES:
+        if m.canonical_logic(shape) is not None:
+            out.append(f"a pure conjunction is not None: {m.expression_to_dict(shape)}")
+        if _code(lambda: build(m, (), conds, shape)) != "NONCANONICAL_LOGIC":
+            out.append("the type accepts a pure conjunction written as a tree")
+    for tree in OR_TREES:  # kept exactly as given: structure and order (no evidence to rewrite them)
+        if m.canonical_logic(tree) != tree:
+            out.append(f"canonical_logic rewrites the OR/NOT tree {m.expression_to_dict(tree)}")
+        if (code := _code(lambda: build(m, (), conds, tree))) is not None:
+            out.append(f"the type refuses the OR/NOT tree {m.expression_to_dict(tree)}: {code}")
+    try:
+        made = build(m, (), conds, OR_TREES[0])
+        again = m.AcceptedInterpretation.from_dict(json.loads(json.dumps(made.to_dict())))
+        if again != made or again.logic != OR_TREES[0]:
+            out.append("an OR/NOT tree does not round-trip verbatim")
+    except ContractError as error:
+        out.append(f"an OR/NOT tree is refused: {error}")
+    payload = build(m, (), conds, None).to_dict()
+    tampered = dict(payload, logic=m.expression_to_dict(PURE_SHAPES[0]))
     if _code(lambda: m.AcceptedInterpretation.from_dict(tampered)) is None:
-        out.append("reader accepts permuted AND children")
+        out.append("reader accepts a pure conjunction written as a tree")
     return out
 
 
-def test_logic_has_one_form():
+def test_logic_has_one_form_only_where_the_contract_decides_it():
     assert logic_failures(fa) == []
 
 
-# ---- 3. the shared constructor path ----------------------------------------------------------------------------------
+# ---- 4. the shared constructor path ----------------------------------------------------------------------------------
 def constructor_failures(m) -> list[str]:
     out = []
     reference = m.canonical_interpretation((request(m),), conditions(m), None, POLICIES, None, "root-1")
     expected = m.interpretation_hash(reference)
     for order in itertools.permutations(POLICIES):
-        try:
-            made = m.canonical_interpretation((request(m),), conditions(m), None, order, None, "root-1")
-        except ContractError as error:
-            out.append(f"policies {[p.policy_id for p in order]} refused: {error}")
-            continue
-        if made.to_dict() != reference.to_dict() or m.interpretation_hash(made) != expected:
-            out.append(f"policies {[p.policy_id for p in order]} change the bytes")
+        for conds in (conditions(m), conditions(m)[::-1]):
+            try:
+                made = m.canonical_interpretation((request(m),), conds, None, order, None, "root-1")
+            except ContractError as error:
+                out.append(f"policies {[p.policy_id for p in order]} refused: {error}")
+                continue
+            if made.to_dict() != reference.to_dict() or m.interpretation_hash(made) != expected:
+                out.append(f"policies {[p.policy_id for p in order]} / conditions change the bytes")
     if _code(lambda: m.canonical_interpretation((request(m),), conditions(m), None, (P_ACTOR, P_ACTOR), None,
                                                 "root-1")) != "DUPLICATE_POLICY":
         out.append("the constructor collapses (p1, p1) instead of refusing it")
     conds = flat_conditions(m)
     try:
-        if m.canonical_interpretation((request(m),), conds, node(AND, *(atom(c.condition_id) for c in conds)), (),
-                                      None, "root-1").logic is not None:
-            out.append("the constructor keeps a pure conjunction as a tree")
-        made = m.canonical_interpretation((request(m),), conds, node(AND, node(OR, atom("c1"), atom("c2")),
-                                                                     atom("c4"), atom("c3")), (), None, "root-1")
-        if made.logic != CANONICAL_LOGIC:
-            out.append("the constructor does not put the logic in its one form")
+        for shape in PURE_SHAPES:
+            if m.canonical_interpretation((request(m),), conds, shape, (), None, "root-1").logic is not None:
+                out.append("the constructor keeps a pure conjunction as a tree")
+        for tree in OR_TREES:
+            if m.canonical_interpretation((request(m),), conds, tree, (), None, "root-1").logic != tree:
+                out.append("the constructor rewrites an OR/NOT tree")
     except ContractError as error:
         out.append(f"the constructor refuses a valid logic: {error}")
-    # nothing observable is reordered (R4): conditions and requests keep the order they are given
-    for order in (conds[::-1], (conds[2], conds[0], conds[3], conds[1])):
-        try:
-            if m.canonical_interpretation((request(m),), order, None, (), None, "root-1").conditions != order:
-                out.append("the constructor reorders conditions")
-        except ContractError as error:
-            out.append(f"conditions in acceptance order refused: {error}")
     dual = (request(m, "r2", Subject.CONTRACTS), request(m, "r1", Subject.PROCESSES))
     shared = tuple(replace(c, request_ids=("r1", "r2")) for c in conds)
     try:
@@ -231,88 +288,84 @@ def constructor_failures(m) -> list[str]:
     return out
 
 
-def test_one_constructor_path_orders_only_what_is_set_like():
+def test_one_constructor_path_orders_only_what_is_unobservable():
     assert constructor_failures(fa) == []
 
 
-# ---- 4. property: a permutation of a set-like collection never changes the bytes -----------------------------------
-DIMS = (D.TOPIC, D.BUYER, D.ACTOR, D.GEOGRAPHY, D.TIME, D.STATE, D.MODALITY, D.CONTRACT_TYPE_OR_NATURE)
+# ---- 5. property: a cross-slot or policy permutation never changes the bytes ---------------------------------------
+PAIRS = tuple((dimension, index) for dimension in (D.TOPIC, D.BUYER, D.ACTOR, D.GEOGRAPHY, D.TIME, D.STATE,
+                                                    D.MODALITY, D.CONTRACT_TYPE_OR_NATURE)
+              for index in range(len(VALUES[dimension])))
 REFS = (("topn", "1", Effect.NARROWING), ("actor_state", "1", Effect.EQUIVALENT), ("order_default", "2",
                                                                                      Effect.WIDENING))
 
 
 @st.composite
-def st_tree(draw, cids):
+def st_tree(draw, cids, operators):
     if len(cids) == 1:
         return atom(cids[0])
     cut = draw(st.integers(1, len(cids) - 1))
-    left, right = draw(st_tree(cids[:cut])), draw(st_tree(cids[cut:]))
-    if draw(st.booleans()):
+    left, right = draw(st_tree(cids[:cut], operators)), draw(st_tree(cids[cut:], operators))
+    if NOT in operators and draw(st.booleans()):
         left = node(NOT, left)
-    return node(draw(st.sampled_from([AND, OR])), left, right)
-
-
-@st.composite
-def st_and_equivalent(draw, expression):
-    """The same expression up to commutativity and associativity of AND (a set-like rewrite)."""
-    if expression.operator is ATOM:
-        return expression
-    children = [draw(st_and_equivalent(child)) for child in expression.children]
-    if expression.operator is AND:  # flatten, permute, and maybe regroup two children into a nested AND
-        flat = [grandchild for child in children
-                for grandchild in (child.children if child.operator is AND else (child,))]
-        children = draw(st.permutations(flat))
-        if len(children) > 2 and draw(st.booleans()):
-            children = [node(AND, *children[:2]), *children[2:]]
-    return node(expression.operator, *children)
+    return node(draw(st.sampled_from([op for op in operators if op is not NOT])), left, right)
 
 
 @st.composite
 def st_case(draw):
-    """(dimensions, policies, logic, permuted policies, AND-equivalent logic): plain data, materialized per module."""
-    dims = draw(st.lists(st.sampled_from(DIMS), min_size=2, max_size=5))
-    cids = [f"c{index}" for index in range(len(dims))]
-    policies = []
-    for policy_id, version, effect in REFS:
-        cited = sorted(draw(st.sets(st.sampled_from(cids), max_size=len(cids))))
-        if not cited:
-            continue
-        if len(cited) > 1 and draw(st.booleans()):  # the split form of one ref (declared residual freedom)
-            policies += [HostPolicy(policy_id, version, (cid,), effect) for cid in cited]
-        else:
-            policies.append(HostPolicy(policy_id, version, tuple(cited), effect))
-    logic = draw(st.none() | st_tree(draw(st.permutations(cids))))
-    variant = None if logic is None else draw(st_and_equivalent(logic))
-    return tuple(dims), tuple(policies), logic, tuple(draw(st.permutations(policies))), variant
+    """Plain data (materialized per module): slots, a cross-slot interleaving, policies, logic and a variant logic."""
+    pairs = draw(st.lists(st.sampled_from(PAIRS), min_size=2, max_size=6))
+    cids = [f"c{index}" for index in range(len(pairs))]
+    # a random interleaving that keeps the relative order of the conditions of each slot
+    slot_of = [fa.slot_of(d, VALUES[d][i].encode()).key for d, i in pairs]
+    labels = draw(st.permutations(slot_of))
+    queues = {key: [cid for cid, k in zip(cids, slot_of) if k == key] for key in set(slot_of)}
+    interleaved = [queues[key].pop(0) for key in labels]
+    policies = [HostPolicy(policy_id, version, (cid,), effect) for policy_id, version, effect in REFS
+                for cid in sorted(draw(st.sets(st.sampled_from(cids), max_size=len(cids))))]
+    kind = draw(st.sampled_from(["none", "pure", "or"]))
+    if kind == "none":
+        logic = variant = None
+    elif kind == "pure":
+        logic = draw(st_tree(draw(st.permutations(cids)), (AND,)))
+        variant = draw(st_tree(draw(st.permutations(cids)), (AND,)))
+    else:
+        logic = draw(st_tree(draw(st.permutations(cids)), (AND, OR, NOT)).filter(
+            lambda tree: tree.operator is not ATOM and not fa._conjunction_only(tree)))
+        variant = logic  # OR/NOT: limited guarantee, only the identical tree is promised the same bytes
+    return tuple(pairs), tuple(interleaved), tuple(policies), tuple(draw(st.permutations(policies))), logic, variant
 
 
 def canonical_violation(m, case) -> str | None:
-    dims, policies, logic, permuted, variant = case
-    conds = tuple(condition(m, dimension, 0, f"c{index}") for index, dimension in enumerate(dims))
+    pairs, interleaved, policies, permuted, logic, variant = case
+    by_id = {f"c{index}": condition(m, d, i, f"c{index}") for index, (d, i) in enumerate(pairs)}
+    conds = tuple(by_id.values())
+    other = tuple(by_id[cid] for cid in interleaved)
 
-    def make(pol, log):
-        return m.canonical_interpretation((request(m),), conds, log, pol, None, "root-1")
+    def make(cs, pol, log):
+        return m.canonical_interpretation((request(m),), cs, log, pol, None, "root-1")
 
     try:
-        first, second = make(policies, logic), make(permuted, variant)
+        first, second = make(conds, policies, logic), make(other, permuted, variant)
     except ContractError as error:
         return f"refused: {error}"
     if first.to_dict() != second.to_dict() or m.interpretation_hash(first) != m.interpretation_hash(second):
-        return "a set-like permutation changed the bytes"
+        return "a cross-slot / policy permutation changed the bytes"
     if m.AcceptedInterpretation.from_dict(json.loads(json.dumps(first.to_dict()))) != first:
         return "the canonical form does not round-trip"
-    if first.conditions != conds:
-        return "conditions were reordered"
-    rewritten = (tuple(permuted), variant)
-    if rewritten != (first.policies, first.logic) and _code(
-            lambda: m.AcceptedInterpretation((request(m),), conds, variant, permuted, None, "root-1")) is None:
+    rank = {slot: position for position, slot in enumerate(CONTRACT_4_2_CONDITION_SLOTS)}
+    if first.conditions != tuple(sorted(conds, key=lambda c: rank[c.slot.key])):
+        return "conditions are not grouped by slot with the given in-slot order"
+    raw = (other, permuted, variant)
+    if raw != (first.conditions, first.policies, first.logic) and _code(
+            lambda: m.AcceptedInterpretation((request(m),), *raw, None, "root-1")) is None:
         return "the type accepts a non-canonical form"
     return None
 
 
 @PROPS
 @given(st_case())
-def test_property_canonical_form_is_permutation_invariant(case):
+def test_property_canonical_form_is_invariant_to_unobservable_permutations(case):
     assert canonical_violation(fa, case) is None
 
 
@@ -334,8 +387,29 @@ def _mutant(*replacements: tuple[str, str]) -> types.ModuleType:
 
 
 SORT_POLICIES = "    return tuple(sorted(policies, key=_policy_key))"
-BUILD = "    return AcceptedInterpretation(requests, conditions, canonical_logic(logic), canonical_policies(policies),"
+GROUP = "    return tuple(sorted(conditions, key=lambda condition: _slot_rank(condition.slot)))"
+LOGIC = "    return None if _conjunction_only(logic) else logic"
+BUILD = "    return AcceptedInterpretation(requests, canonical_conditions(conditions), canonical_logic(logic),"
 MUTANTS = {
+    # conditions (D-CANON-1)
+    "alphabetical_slot_table": (condition_order_failures, (
+        "_SLOT_RANK = {slot: rank for rank, slot in enumerate(CONDITION_SLOT_ORDER)}",
+        "_SLOT_RANK = {slot: rank for rank, slot in enumerate(sorted(CONDITION_SLOT_ORDER, key=lambda s: s.key))}"),),
+    "sorted_inside_a_slot": (condition_order_failures, (
+        GROUP, "    return tuple(sorted(conditions, key=lambda c: (_slot_rank(c.slot), c.condition_id)))"),),
+    "noncanonical_condition_order_accepted": (condition_order_failures, (
+        '        if ranks != sorted(ranks):\n            _fail("NONCANONICAL_CONDITION_ORDER")', '        if False:\n'
+        '            _fail("NONCANONICAL_CONDITION_ORDER")'),),
+    "type_demands_sorted_ids_inside_a_slot": (condition_order_failures, (
+        "        ranks = [_slot_rank(condition.slot) for condition in self.conditions]",
+        "        ranks = [(_slot_rank(condition.slot), condition.condition_id) for condition in self.conditions]"),),
+    "conditions_kept_in_input_order": (constructor_failures, (GROUP, "    return tuple(conditions)"),),
+    "requests_sorted_blindly_by_the_constructor": (constructor_failures, (
+        BUILD, "    return AcceptedInterpretation(tuple(sorted(requests, key=lambda r: r.request_id)), "
+               "canonical_conditions(conditions), canonical_logic(logic),"),),
+    # policies (D-CANON-2 and the phase-1 invariants)
+    "multi_condition_policy_accepted": (policy_failures, (
+        '    if len(policy.condition_ids) != 1:\n        _fail("MULTI_CONDITION_POLICY")', '    pass'),),
     "duplicate_policy_accepted": (policy_failures, (
         '            if (ref, condition_id) in cited:\n                _fail("DUPLICATE_POLICY")',
         '            pass'),),
@@ -353,29 +427,17 @@ MUTANTS = {
     "policies_kept_in_input_order": (constructor_failures, (SORT_POLICIES, "    return tuple(policies)"),),
     "duplicate_policies_collapsed": (constructor_failures, (
         SORT_POLICIES, "    return tuple(sorted(set(policies), key=_policy_key))"),),
+    # logic (contract §3.2 only)
     "noncanonical_logic_accepted": (logic_failures, (
         '            if canonical_logic(self.logic) != self.logic:', '            if False:'),),
-    "and_children_unsorted": (logic_failures, (
-        '        children = tuple(sorted(flat, key=_expression_key))', '        children = tuple(flat)'),),
-    "nested_and_not_flattened": (logic_failures, (
-        'for grandchild in (child.children if child.operator is LogicOperator.AND else (child,)))',
-        'for grandchild in (child,))'),),
-    "pure_conjunction_kept_as_a_tree": (logic_failures, (
-        '    return None if _conjunction_only(logic) else _canonical_node(logic)',
-        '    return _canonical_node(logic)'),),
-    "or_children_sorted_blindly": (logic_failures, (
-        "    return ConditionExpression(node.operator, None, children)  # OR and NOT keep their children's order",
-        "    return ConditionExpression(node.operator, None, tuple(sorted(children, key=_expression_key)))"),),
-    "conditions_sorted_blindly_by_the_constructor": (constructor_failures, (
-        BUILD, "    return AcceptedInterpretation(requests, tuple(sorted(conditions, key=lambda c: c.condition_id)), "
-               "canonical_logic(logic), canonical_policies(policies),"),),
-    "requests_sorted_blindly_by_the_constructor": (constructor_failures, (
-        BUILD, "    return AcceptedInterpretation(tuple(sorted(requests, key=lambda r: r.request_id)), conditions, "
-               "canonical_logic(logic), canonical_policies(policies),"),),
-    "conditions_order_refused_by_the_type": (constructor_failures, (
-        '        _check_policies(self.policies, set(condition_ids))',
-        '        _check_policies(self.policies, set(condition_ids))\n'
-        '        if condition_ids != sorted(condition_ids):\n            _fail("UNSORTED_CONDITIONS")'),),
+    "pure_conjunction_kept_as_a_tree": (logic_failures, (LOGIC, "    return logic"),),
+    "or_tree_children_sorted_blindly": (logic_failures, (
+        LOGIC, "    return None if _conjunction_only(logic) else ConditionExpression(\n"
+               "        logic.operator, None, tuple(sorted(logic.children, key=repr)))"),),
+    "or_tree_nested_and_flattened": (logic_failures, (
+        LOGIC, "    return None if _conjunction_only(logic) else ConditionExpression(logic.operator, None, tuple(\n"
+               "        g for c in logic.children for g in (c.children if c.operator is LogicOperator.AND "
+               "and logic.operator is LogicOperator.AND else (c,))))"),),
 }
 
 
@@ -385,14 +447,15 @@ def test_every_m2a3_canonical_mutant_is_killed(name):
     assert battery(_mutant(*replacements)), f"mutant {name} survived"
 
 
-PROPERTY_MUTANTS = ("policies_kept_in_input_order", "and_children_unsorted", "nested_and_not_flattened")
+PROPERTY_MUTANTS = ("conditions_kept_in_input_order", "policies_kept_in_input_order",
+                    "pure_conjunction_kept_as_a_tree")
 
 
 @pytest.mark.parametrize("name", PROPERTY_MUTANTS)
 def test_the_permutation_property_kills_its_mutants(name):
-    """The property is not vacuous: Hypothesis finds a case each ordering mutant gets wrong."""
+    """The property is not vacuous: Hypothesis finds a case each mutant gets wrong."""
     mutant = _mutant(*MUTANTS[name][1:])
     found = find(st_case(), lambda case: canonical_violation(mutant, case) is not None,
                  settings=settings(max_examples=2000, database=None, derandomize=True,
-                                   suppress_health_check=[HealthCheck.too_slow]))
+                                   suppress_health_check=[HealthCheck.too_slow, HealthCheck.filter_too_much]))
     assert canonical_violation(mutant, found) is not None

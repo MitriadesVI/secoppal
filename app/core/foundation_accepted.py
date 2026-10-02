@@ -19,11 +19,12 @@ Canonicality: one meaning, one persisted form. Set-like lists (``request_ids``, 
 order is REJECTED, never reordered on read. Every persisted datetime is ``timezone.utc`` and every integer is a real
 ``int`` (``bool`` is not).
 
-M2A-3 (``docs/audits/m2a_conversation/M2A3_CANONICAL_FORM.md``): only a collection PROVEN set-like gets an order. An
-interpretation's ``policies`` and the children of an AND are set-like and sorted; a pure conjunction is ``logic =
-None``. ``conditions`` and ``requests`` keep the order they are given: it is observable (the projection's TOPIC terms,
-the runtime's groups). ``canonical_interpretation`` is the one constructor path of every effective (``compose`` and the
-future ``from_acceptance``); the type itself rejects any other form.
+M2A-3 (``docs/audits/m2a_conversation/M2A3_CANONICAL_FORM.md``; user decisions 2026-10-02): only an order PROVEN
+unobservable is canonicalized. ``conditions`` are grouped by slot in the closed table ``CONDITION_SLOT_ORDER`` and keep
+the acceptance order inside a slot (observable: the projection's TOPIC terms); ``policies`` are split (one condition
+each) and sorted; a pure conjunction is ``logic = None`` and any tree with OR/NOT is kept as given; ``requests`` keep
+their order (the runtime's groups). ``canonical_interpretation`` is the one constructor path of every effective
+(``compose`` and the future ``from_acceptance``); the type itself rejects any other form.
 
 Barriers (INV-M2A-04, INV-M2A-24): nothing here translates to ``parsed_params`` or to any legacy input, imports a
 legacy reader or a lexicon, or reads the turn's text. Values exist only as ``ExecutableValue.encode()`` tuples.
@@ -456,6 +457,26 @@ class Slot:
 
 UNIVERSE_SLOT = Slot(None)
 
+_POS, _NEG = Polarity.POSITIVE, Polarity.NEGATIVE
+# The canonical order of an interpretation's conditions BY SLOT (user decision 2026-10-02, D-CANON-1): closed, explicit
+# and in the order contract §4.2 lists the slots; never alphabetical. Within one slot the acceptance order is kept: it
+# is observable (TOPIC/POSITIVE terms change the soql; M2A3_CANONICAL_FORM.md). UNIVERSE is the request-level slot of
+# §4.2: no condition occupies it (``slot_of`` never returns it), so it has no rank here.
+CONDITION_SLOT_ORDER = (
+    Slot(SemanticDimension.TOPIC, _POS), Slot(SemanticDimension.TOPIC, _NEG),
+    Slot(SemanticDimension.BUYER, _POS), Slot(SemanticDimension.BUYER, _NEG),
+    Slot(SemanticDimension.ACTOR, _POS), Slot(SemanticDimension.ACTOR, _NEG),
+    Slot(SemanticDimension.GEOGRAPHY, _POS), Slot(SemanticDimension.GEOGRAPHY, _NEG),
+    Slot(SemanticDimension.TIME, _POS), Slot(SemanticDimension.TIME, _NEG),
+    Slot(SemanticDimension.STATE, _POS), Slot(SemanticDimension.STATE, _NEG),
+    Slot(SemanticDimension.MODALITY, _POS), Slot(SemanticDimension.MODALITY, _NEG),
+    Slot(SemanticDimension.CONTRACT_TYPE_OR_NATURE, _POS), Slot(SemanticDimension.CONTRACT_TYPE_OR_NATURE, _NEG),
+    Slot(SemanticDimension.VALUE, side=ValueSide.LOWER), Slot(SemanticDimension.VALUE, side=ValueSide.UPPER),
+    Slot(SemanticDimension.ORDER),
+    Slot(SemanticDimension.CARDINALITY),
+)
+_SLOT_RANK = {slot: rank for rank, slot in enumerate(CONDITION_SLOT_ORDER)}
+
 
 def slot_of(dimension: SemanticDimension, value: tuple[str, ...]) -> Slot:
     """The slot a typed value occupies: VALUE by its comparator, polarized dimensions by ``excluded``."""
@@ -608,10 +629,13 @@ def policy_to_dict(policy: HostPolicy) -> dict:
 
 
 def _canonical_policy(policy: HostPolicy) -> HostPolicy:
-    """A ``HostPolicy`` persisted here names its conditions as a set: sorted (``HostPolicy`` already forbids
-    duplicates). The IR v2 type itself is not narrowed; only its persisted form inside M2a is."""
-    if list(policy.condition_ids) != sorted(policy.condition_ids):
-        _fail("UNSORTED_POLICY_CONDITION_IDS")
+    """A ``HostPolicy`` persisted here is ONE application of a policy to ONE condition: the split form ``main`` emits
+    (every ``HostPolicy`` of ``foundation_admission`` cites one condition). Independent applications are never merged
+    by projection equivalence; a genuinely joint policy would need an express declaration by its owner and none exists,
+    so it is refused (user decision 2026-10-02, D-CANON-2). The IR v2 type itself is not narrowed; only its persisted
+    form inside M2a is."""
+    if len(policy.condition_ids) != 1:
+        _fail("MULTI_CONDITION_POLICY")
     return policy
 
 
@@ -630,10 +654,10 @@ def _policy_key(policy: HostPolicy) -> tuple:
 def _check_policies(policies: tuple[HostPolicy, ...], condition_ids: set[str]) -> None:
     """An interpretation's ``HostPolicy`` list (contract §3.2, §6.6), the way the projection reads it.
 
-    Every cited condition exists (a ``CLEAR`` never leaves a dangling policy). A (policy ref, condition) pair is cited
-    once (``(p1, p1)`` included): the projection admits exactly one policy per condition and ref. One ref, one effect:
-    the projection maps ``policy_id@version`` to ONE effect, so two effects would make the persisted order observable
-    in ``plan_hash``. With those, the list is set-like and is sorted.
+    Every cited condition exists (a ``CLEAR`` never leaves a dangling policy). An application (policy ref, condition)
+    appears once (``(p1, p1)`` included): the projection admits exactly one policy per condition and ref. One ref, one
+    effect: the projection maps ``policy_id@version`` to ONE effect, so two effects would make the persisted order
+    observable in ``plan_hash``. With those, the list is set-like and is sorted.
     """
     effects: dict[str, Effect] = {}
     cited: set[tuple[str, str]] = set()
@@ -657,19 +681,17 @@ def canonical_policies(policies: tuple[HostPolicy, ...]) -> tuple[HostPolicy, ..
     return tuple(sorted(policies, key=_policy_key))
 
 
-def _expression_key(node: ConditionExpression) -> str:
-    return json.dumps(expression_to_dict(node), sort_keys=True, ensure_ascii=False)
+def _slot_rank(slot: Slot) -> int:
+    rank = _SLOT_RANK.get(slot)
+    if rank is None:
+        _fail("SLOT_WITHOUT_RANK")
+    return rank
 
 
-def _canonical_node(node: ConditionExpression) -> ConditionExpression:
-    if node.operator is LogicOperator.ATOM:
-        return node
-    children = tuple(_canonical_node(child) for child in node.children)
-    if node.operator is LogicOperator.AND:  # commutative and associative: flat and sorted
-        flat = (grandchild for child in children
-                for grandchild in (child.children if child.operator is LogicOperator.AND else (child,)))
-        children = tuple(sorted(flat, key=_expression_key))
-    return ConditionExpression(node.operator, None, children)  # OR and NOT keep their children's order
+def canonical_conditions(conditions: tuple[AcceptedCondition, ...]) -> tuple[AcceptedCondition, ...]:
+    """Conditions grouped by slot in ``CONDITION_SLOT_ORDER``; inside a slot, the order given (stable: never sorted)."""
+    _records(conditions, AcceptedCondition, "CONDITIONS")
+    return tuple(sorted(conditions, key=lambda condition: _slot_rank(condition.slot)))
 
 
 def _conjunction_only(node: ConditionExpression) -> bool:
@@ -678,12 +700,13 @@ def _conjunction_only(node: ConditionExpression) -> bool:
 
 
 def canonical_logic(logic: ConditionExpression | None) -> ConditionExpression | None:
-    """The one form of an interpretation's expression: ``None`` for a pure conjunction (contract §3.2: ``None`` is the
-    AND of all); otherwise every AND flattened (no AND child of an AND) with its children sorted."""
+    """Contract §3.2: a pure conjunction is ``None`` (the AND of all). Any tree with OR/NOT is kept as given, its
+    structure and order untouched: nothing executes it, so «same meaning ⇒ same bytes» is NOT guaranteed inside
+    OR/NOT until a consumer proves which rewrites are safe (limited guarantee, user decision 2026-10-02)."""
     if logic is None:
         return None
     _instance(logic, ConditionExpression, "LOGIC")
-    return None if _conjunction_only(logic) else _canonical_node(logic)
+    return None if _conjunction_only(logic) else logic
 
 
 # ---- AcceptedRequest / AcceptedCondition / AcceptedInterpretation (contract §3.2, §4) ----------------------------
@@ -855,6 +878,9 @@ class AcceptedInterpretation:
             if not set(condition.request_ids) <= set(request_ids):
                 _fail("FOREIGN_CONDITION_REQUEST")
         _check_policies(self.policies, set(condition_ids))
+        ranks = [_slot_rank(condition.slot) for condition in self.conditions]
+        if ranks != sorted(ranks):
+            _fail("NONCANONICAL_CONDITION_ORDER")  # rejected, never rewritten: build with ``canonical_interpretation``
         for request_id in request_ids:
             taken: set[Slot] = set()
             for condition in self.conditions:
@@ -900,13 +926,13 @@ def canonical_interpretation(requests: tuple[AcceptedRequest, ...], conditions: 
                              base_trace_id: str | None, root_trace_id: str) -> AcceptedInterpretation:
     """THE constructor path of every effective (contract §4.1: ``compose`` and ``from_acceptance``).
 
-    It orders only what is proven set-like (``policies``, AND children) and keeps ``requests`` and ``conditions`` in
-    the order given, because that order is observable. It never deduplicates, merges or drops: the type validates
-    the result and refuses anything else. Permuting a set-like collection gives the same bytes and the same
-    ``interpretation_hash``.
+    It reorders only what is proven unobservable: conditions across slots (``CONDITION_SLOT_ORDER``; inside a slot the
+    order given is kept) and the split ``policies``; a pure conjunction becomes ``logic = None``. ``requests`` and any
+    OR/NOT tree are kept as given. It never deduplicates, merges or drops: the type validates the result and refuses
+    anything else. A cross-slot or policy permutation gives the same bytes and the same ``interpretation_hash``.
     """
-    return AcceptedInterpretation(requests, conditions, canonical_logic(logic), canonical_policies(policies),
-                                  base_trace_id, root_trace_id)
+    return AcceptedInterpretation(requests, canonical_conditions(conditions), canonical_logic(logic),
+                                  canonical_policies(policies), base_trace_id, root_trace_id)
 
 
 def interpretation_hash(effective: AcceptedInterpretation) -> str:
