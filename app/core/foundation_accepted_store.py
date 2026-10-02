@@ -35,11 +35,18 @@ Decisions (each one is pinned by ``tests/test_foundation_accepted_store.py``):
   ``append`` runs the same check on the new line before writing, so a producer bug cannot poison the whole store.
 * Anchor. ``resolve_anchor`` follows the ``anchor_trace_id`` of the LAST record to exactly one readable record with an
   ``effective`` whose ``trace_id`` is in the PUBLISHED history. EMPTY store (or a last record that leaves no anchor) is
-  ``NO_ANCHOR``; every other failure is ``ANCHOR_UNREADABLE``. The history is the one ``ConversationStore.get_history``
-  returns (generation file under a usable envelope, ``.unavailable`` under a corrupt one), NEVER ``<chat>.jsonl``;
-  ``get_history`` silently omits corrupt lines, which can only close the anchor (a missing trace is not an anchor). A
+  ``NO_ANCHOR``; every other failure is ``ANCHOR_UNREADABLE``. The history is whatever ``ConversationStore.get_history``
+  returns for the chat: the generation file of a usable envelope, ``.unavailable/...`` under a corrupt one, and the flat
+  ``<chat>.jsonl`` only when there is no usable envelope (an EMPTY one). Never read a history file by name: ask
+  ``get_history``. It silently omits corrupt lines, which can only close the anchor (a missing trace is not an anchor). A
   record written without its ``Turn`` (crash between both) is therefore not an anchor. Callers pass the WHOLE published
   history, not a window: an anchor older than the window would read as unpublished.
+  RESTRICTION FOR M2A-6: inside ``stage_continuity`` (how ``coordinate_turn`` runs every turn with a reservation)
+  ``append_turn`` writes into the PRIVATE generation, which ``get_history`` already reads. A snapshot taken after the
+  turn's own ``append_turn`` lists a turn that is not published yet, and that never will be if the turn crashes or loses
+  the revision race: ``resolve_anchor`` fed with it answers ``ANCHOR`` for that turn. The anchor must be resolved with
+  the PUBLISHED history, i.e. the snapshot taken before the turn appends its own Turn (or after the publication), never
+  the one taken inside the staging after ``append_turn``. (Characterized in the tests; the store cannot tell.)
 * Retention. ``ConversationStore.clear`` deletes this file by literal under the same lock as the history (a declared
   legacy divergence, pinned by AST). The deletion is not done here: this module has no way to delete or truncate.
 * Personal data. Nothing here logs, prints or traces; errors and reasons carry fixed codes, never record content.
@@ -276,7 +283,8 @@ def anchor_of(store_read: StoreRead, published_trace_ids: Collection[str]) -> An
 def resolve_anchor(location: AcceptedStoreLocation, published_trace_ids: Collection[str], *,
                    lock_timeout: float = DEFAULT_TIMEOUT_SECONDS) -> AnchorRead:
     """``anchor_of`` over a fresh strict read. ``published_trace_ids``: the trace ids of the history that
-    ``get_history`` returns for the chat, whole, taken BEFORE this call (any race then only closes the anchor)."""
+    ``get_history`` returns for the chat, whole, taken BEFORE this call (any race then only closes the anchor) and
+    PUBLISHED, not the snapshot of a turn in flight (see RESTRICTION FOR M2A-6 in the module docstring)."""
     return anchor_of(read(location, lock_timeout=lock_timeout), published_trace_ids)
 
 

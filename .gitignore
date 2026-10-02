@@ -21,6 +21,10 @@ data/conversations/audit_*.jsonl
 data/conversations/dbg_*.jsonl
 data/conversations/debug_*.jsonl
 data/conversations/demo_*.jsonl
+# M2A-2 accepted-record store (contract §3.7, §3.8): personal data, "nada del almacén va a git". NARROW on purpose:
+# only the store of the accepted records; the files of data/conversations that are already tracked are a
+# pre-existing debt (docs/audits/m1_c1/C1_2_FRONTIER_PIN_DEBT.md) and are not touched here.
+data/conversations/*.accepted.jsonl
 .coverage
 
 # Personal strategic memory — not tracked in git

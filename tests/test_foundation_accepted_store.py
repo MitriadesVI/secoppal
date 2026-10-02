@@ -30,6 +30,7 @@ import io
 import json
 import logging
 import os
+import stat
 import subprocess
 import sys
 import tempfile
@@ -299,6 +300,34 @@ def check_empty_is_not_unreadable(m, root):
     assert m.AnchorStatus.NO_ANCHOR is not m.AnchorStatus.ANCHOR_UNREADABLE
 
 
+@check
+def check_an_unreadable_file_is_corrupt_never_empty(m, root):
+    w = World(m, root)
+    w.path.mkdir()  # a directory where the file should be: reading it raises an OSError that is NOT "not found"
+    got = w.read()
+    assert (got.status, got.reason, got.line) == (m.StoreStatus.CORRUPT, "IO_ERROR", None)
+    anchor = m.resolve_anchor(w.loc, {"t1"})
+    assert (anchor.status, anchor.reason) == (m.AnchorStatus.ANCHOR_UNREADABLE, "STORE_CORRUPT")
+    err = raised(w.append, make_record("t1"))
+    assert isinstance(err, m.AcceptedStoreError) and err.code == "STORE_CORRUPT:IO_ERROR"
+    assert w.path.is_dir()
+
+
+@check
+def check_chat_id_is_compared_literally(m, root):
+    nfc, nfd = "Zo\u00eb", "Zoe\u0308"  # the same text for a human, two different strings
+    assert nfc != nfd
+    for location_chat, record_chat in (("Chat-1", "chat-1"), (nfc, nfd), ("chat-1", "chat-1 ")):
+        w = World(m, root / f"{abs(hash((location_chat, record_chat)))}", location_chat)
+        w.path.write_bytes(line(make_record("t1", chat_id=record_chat)))
+        got = w.read()  # on a case-insensitive file system both names are ONE file: only the comparison keeps them apart
+        assert (got.status, got.reason) == (m.StoreStatus.CORRUPT, "FOREIGN_CHAT"), (location_chat, record_chat)
+        w.path.unlink()
+        err = raised(w.append, make_record("t1", chat_id=record_chat))
+        assert isinstance(err, m.AcceptedStoreError) and err.code == "FOREIGN_CHAT", (location_chat, record_chat)
+        assert not w.path.exists()
+
+
 # ---- 8. byte identity ----------------------------------------------------------------------------------------------------
 @check
 def check_byte_identity(m, root):
@@ -455,10 +484,11 @@ def check_stale_epoch(m, root):
 @check
 def check_an_unreadable_epoch_refuses_the_append(m, root):
     w = World(m, root)
-    store_epoch.epoch_path(w.loc.envelope_path).write_text("not a number")
-    err = raised(m.append, w.loc, make_record("t1"), epoch=0)
-    assert isinstance(err, m.AcceptedStoreError) and err.code == "EPOCH_UNREADABLE"
-    assert not w.path.exists()
+    for content in ("not a number", "", "1.5", "-3"):  # garbage, empty, not an int, a negative epoch (even for epoch=-3)
+        store_epoch.epoch_path(w.loc.envelope_path).write_text(content)
+        err = raised(m.append, w.loc, make_record("t1"), epoch=0)
+        assert isinstance(err, m.AcceptedStoreError) and err.code == "EPOCH_UNREADABLE", content
+        assert not w.path.exists(), content
 
 
 @check
@@ -472,6 +502,33 @@ def check_the_clear_literal_and_the_store_name_agree(m, root):
         w.path.write_bytes(b"x")
         w.cs.clear(chat)  # ConversationStore.clear names the file by LITERAL: it must be this one
         assert not w.path.exists(), chat
+
+
+# ---- durability: flushed, fsynced, and the directory entry synced when the file is created ---------------------------------------------------
+@check
+def check_an_append_is_flushed_and_fsynced_before_it_returns(m, root):
+    w = World(m, root)
+    first, second = make_record("t1"), make_record("t2")
+    epoch = w.epoch()
+    seen: list[tuple[str, int]] = []
+    real_fsync = os.fsync
+
+    def observing_fsync(descriptor):
+        info = os.fstat(descriptor)
+        seen.append(("dir" if stat.S_ISDIR(info.st_mode) else "file", info.st_size))
+        return real_fsync(descriptor)
+
+    with mock.patch.object(os, "fsync", observing_fsync):
+        m.append(w.loc, first, epoch=epoch)
+        created = list(seen)
+        seen.clear()
+        m.append(w.loc, second, epoch=epoch)
+        appended = list(seen)
+    # the file is fsynced with the WHOLE line already handed to the OS (flush before fsync), then, because the file
+    # was just created, its directory entry is synced
+    assert [kind for kind, _ in created] == ["file", "dir"], created
+    assert created[0][1] == len(line(first)), created
+    assert appended and appended[0] == ("file", len(line(first)) + len(line(second))), appended
 
 
 # ---- 2. lock identity (F2), reentrancy (F3), threads and processes ---------------------------------------------------------------
@@ -608,20 +665,115 @@ def check_the_critical_section_excludes_a_second_writer(m, root):
     assert got.status is m.StoreStatus.OK and got.records == (first,)  # one line; the cardinality is not hidden
 
 
+@contextlib.contextmanager
+def short_clear_lock_timeout(store_class, seconds: float = 0.3):
+    """``ConversationStore.clear`` asks for its lock with the default 10 s. Inside this context the SAME call gives up
+    after ``seconds``, so "clear() cannot enter while the lock is held" is decided by an exception, not by how long a
+    thread stays alive. Patches the module namespace of the class under test and nothing else."""
+    namespace = store_class.clear.__globals__
+    real = namespace["conversation_lock"]
+
+    def short(path, **kwargs):
+        return real(path, **{"timeout": seconds, **kwargs})
+
+    with mock.patch.dict(namespace, {"conversation_lock": short}):
+        yield
+
+
 @check
-def check_clear_waits_for_an_append_in_flight(m, root):
+def check_clear_cannot_enter_while_an_append_is_in_flight(m, root):
     w = World(m, root)
     epoch = w.epoch()
-    cleared = threading.Thread(target=w.cs.clear, args=(CHAT,), daemon=True)
     with PausedAppend(m, w.loc, make_record("t1"), epoch) as paused:
-        cleared.start()
-        cleared.join(1.0)
-        blocked = cleared.is_alive()  # clear() takes the same lock: it cannot finish while the append holds it
-    cleared.join(30)
-    assert blocked, "clear() finished while an append held the envelope lock"
+        with short_clear_lock_timeout(ConversationStore):
+            during = raised(w.cs.clear, CHAT)  # clear() takes the same lock: while the append holds it, it cannot enter
+    assert isinstance(during, ConversationLockTimeout), "clear() entered while an append held the envelope lock"
     assert paused.error is None
-    assert not w.path.exists()  # clear() linearized after the append: no residue of the deleted chat
+    assert w.path.exists()  # the append finished; the clear that could not enter did nothing ...
+    assert w.epoch() == epoch  # ... not even the epoch advance
+    w.cs.clear(CHAT)  # once the append is done clear() runs: linearized after it, no residue of the deleted chat
+    assert not w.path.exists()
     assert w.epoch() == epoch + 1
+
+
+class WaitingAppend:
+    """A writer that has finished ALL its pre-lock work and WAITS for the lock with a long timeout. The module's
+    ``conversation_lock`` is wrapped to set an Event, in that writer's thread, the instant before it asks for the lock:
+    whatever the writer decided before waiting it decided already, and whatever it decides after must be judged on the
+    state the lock gave it. ``start()`` returns at that instant; ``join()`` collects the outcome. Event-driven."""
+
+    def __init__(self, m, loc, record, epoch):
+        self.m, self.loc, self.record, self.epoch = m, loc, record, epoch
+        self.at_lock = threading.Event()
+        self.error = None
+        self._thread = None
+        self._patch = None
+
+    def _run(self):
+        try:
+            self.m.append(self.loc, self.record, epoch=self.epoch, lock_timeout=60)
+        except Exception as error:  # noqa: BLE001
+            self.error = error
+
+    def start(self):
+        real = self.m.conversation_lock
+
+        def signalling(path, **kwargs):
+            if threading.current_thread() is self._thread:
+                self.at_lock.set()
+            return real(path, **kwargs)
+
+        self._patch = mock.patch.object(self.m, "conversation_lock", signalling)
+        self._patch.start()
+        self._thread = threading.Thread(target=self._run, daemon=True)
+        self._thread.start()
+        assert self.at_lock.wait(30), "the writer never reached the lock"
+
+    def join(self):
+        self._thread.join(60)
+        self._patch.stop()
+
+
+@check
+def check_a_waiting_writer_sees_the_duplicate_the_first_one_left(m, root):
+    w = World(m, root)
+    epoch = w.epoch()
+    first, second = make_record("dup"), make_record("dup", conditions=("topic", "buyer"))
+    waiting = WaitingAppend(m, w.loc, second, epoch)
+    with PausedAppend(m, w.loc, first, epoch) as paused:  # the first writer is inside its critical section ...
+        waiting.start()  # ... and the second one has done its pre-lock work and now waits for the lock
+    waiting.join()
+    assert paused.error is None
+    assert isinstance(waiting.error, m.AcceptedStoreError) and waiting.error.code == "DUPLICATE_TRACE_ID", waiting.error
+    got = w.read()
+    assert got.status is m.StoreStatus.OK and got.records == (first,)  # one line, and the store stays readable
+
+
+@check
+def check_a_waiting_writer_sees_a_store_corrupted_while_it_waited(m, root):
+    w = World(m, root)
+    epoch = w.epoch()
+    waiting = WaitingAppend(m, w.loc, make_record("t1"), epoch)
+    with conversation_lock(w.loc.envelope_path):  # somebody else holds the lock ...
+        waiting.start()
+        w.path.write_bytes(b"{garbage")  # ... and a crashed writer leaves a truncated tail before releasing it
+    waiting.join()
+    assert isinstance(waiting.error, m.AcceptedStoreError), waiting.error
+    assert waiting.error.code == "STORE_CORRUPT:TRUNCATED_TAIL"
+    assert w.path.read_bytes() == b"{garbage"  # nothing was buried under it
+
+
+@check
+def check_a_waiting_writer_sees_the_epoch_advanced_while_it_waited(m, root):
+    w = World(m, root)
+    epoch = w.epoch()
+    waiting = WaitingAppend(m, w.loc, make_record("t1"), epoch)
+    with conversation_lock(w.loc.envelope_path):
+        waiting.start()
+        store_epoch.advance_epoch(w.loc.envelope_path)  # a reset completed while the writer waited
+    waiting.join()
+    assert isinstance(waiting.error, m.StaleEpochError), waiting.error
+    assert not w.path.exists()  # the record of the deleted chat is not resurrected
 
 
 @check
@@ -727,8 +879,31 @@ POINTER_LINE = "    pointer = store_read.records[-1].anchor_trace_id\n"
 CODE_GUARD = ('        if code and all(char.isupper() or char.isdigit() or char == "_" for char in code):\n'
               '            return f"RECORD_REJECTED:{code}"\n        return "RECORD_REJECTED"\n')
 
+PAYLOAD_LINE = '    payload = text.encode("ascii") + b"\\n"\n'
+IN_LOCK_DUP = ('        if any(stored.trace_id == record.trace_id for stored in current.records):\n'
+               '            raise AcceptedStoreError("DUPLICATE_TRACE_ID")\n')
+IN_LOCK_CORRUPT = ('        if current.status is StoreStatus.CORRUPT:\n'
+                   '            raise AcceptedStoreError(f"STORE_CORRUPT:{current.reason}")\n')
+PRE_DUP = ('    _pre = _read_file(location)\n    if any(stored.trace_id == record.trace_id for stored in _pre.records):\n'
+           '        raise AcceptedStoreError("DUPLICATE_TRACE_ID")\n')
+PRE_CORRUPT = ('    _pre = _read_file(location)\n    if _pre.status is StoreStatus.CORRUPT:\n'
+               '        raise AcceptedStoreError(f"STORE_CORRUPT:{_pre.reason}")\n')
+# both checks move out of the lock, onto a read taken BEFORE waiting for it (ZEUS' TOCTOU mutant)
+PRE_LOCK_CHECKS_OLD = (PAYLOAD_LINE + "    with conversation_lock(location.envelope_path, timeout=lock_timeout):\n"
+                       "        if _read_epoch(location.envelope_path) != epoch:\n            raise StaleEpochError()\n"
+                       "        current = _read_file(location)\n" + IN_LOCK_CORRUPT + IN_LOCK_DUP)
+PRE_LOCK_CHECKS_NEW = (PAYLOAD_LINE + "    current = _read_file(location)\n"
+                       '    if current.status is StoreStatus.CORRUPT:\n        raise AcceptedStoreError(f"STORE_CORRUPT:{current.reason}")\n'
+                       '    if any(stored.trace_id == record.trace_id for stored in current.records):\n'
+                       '        raise AcceptedStoreError("DUPLICATE_TRACE_ID")\n'
+                       "    with conversation_lock(location.envelope_path, timeout=lock_timeout):\n"
+                       "        if _read_epoch(location.envelope_path) != epoch:\n            raise StaleEpochError()\n")
+EPOCH_IN_LOCK_OLD = (PAYLOAD_LINE + "    with conversation_lock(location.envelope_path, timeout=lock_timeout):\n"
+                     "        if _read_epoch(location.envelope_path) != epoch:\n            raise StaleEpochError()\n")
+EPOCH_BEFORE_LOCK_NEW = (PAYLOAD_LINE + "    if _read_epoch(location.envelope_path) != epoch:\n        raise StaleEpochError()\n"
+                         "    with conversation_lock(location.envelope_path, timeout=lock_timeout):\n")
 ALL_LOCK_CHECKS = ("check_lock_key_and_reentrancy", "check_exclusion_across_threads",
-                   "check_exclusion_across_processes", "check_clear_waits_for_an_append_in_flight")
+                   "check_exclusion_across_processes", "check_clear_cannot_enter_while_an_append_is_in_flight")
 MUTANTS = {
     # brief: lock sobre otra ruta
     "append_locks_the_data_file_instead_of_the_envelope": (
@@ -804,6 +979,49 @@ MUTANTS = {
     "the_data_file_is_named_apart_from_clear": (
         (('ACCEPTED_SUFFIX = ".accepted.jsonl"', 'ACCEPTED_SUFFIX = ".accepted.json"'),),
         ("check_the_clear_literal_and_the_store_name_agree",)),
+    # ZEUS (round 1) and the follow-ups of the same round
+    "dup_and_corrupt_checks_on_a_pre_lock_read": (((PRE_LOCK_CHECKS_OLD, PRE_LOCK_CHECKS_NEW),), (
+        "check_a_waiting_writer_sees_the_duplicate_the_first_one_left",
+        "check_a_waiting_writer_sees_a_store_corrupted_while_it_waited")),
+    "duplicate_check_on_a_pre_lock_read": (
+        ((PAYLOAD_LINE, PAYLOAD_LINE + PRE_DUP), (IN_LOCK_DUP, "")),
+        ("check_a_waiting_writer_sees_the_duplicate_the_first_one_left",)),
+    "corrupt_check_on_a_pre_lock_read": (
+        ((PAYLOAD_LINE, PAYLOAD_LINE + PRE_CORRUPT), (IN_LOCK_CORRUPT, "")),
+        ("check_a_waiting_writer_sees_a_store_corrupted_while_it_waited",)),
+    "epoch_check_before_lock": (
+        ((EPOCH_IN_LOCK_OLD, EPOCH_BEFORE_LOCK_NEW),), ("check_a_waiting_writer_sees_the_epoch_advanced_while_it_waited",)),
+    "io_error_reads_as_empty": (
+        (('    except OSError:\n        return _corrupt("IO_ERROR", None)\n',
+          '    except OSError:\n        return StoreRead(StoreStatus.EMPTY)\n'),),
+        ("check_an_unreadable_file_is_corrupt_never_empty",)),
+    "negative_epoch_is_accepted": (
+        (('    if value < 0:\n        raise AcceptedStoreError("EPOCH_UNREADABLE")\n', ""),),
+        ("check_an_unreadable_epoch_refuses_the_append",)),
+    "chat_id_compared_case_insensitively_on_read": (
+        (("        if parsed.chat_id != location.chat_id:", "        if parsed.chat_id.casefold() != location.chat_id.casefold():"),),
+        ("check_chat_id_is_compared_literally",)),
+    "chat_id_compared_case_insensitively_on_append": (
+        (("    if record.chat_id != location.chat_id:\n        raise AcceptedStoreError(\"FOREIGN_CHAT\")",
+          "    if record.chat_id.casefold() != location.chat_id.casefold():\n        raise AcceptedStoreError(\"FOREIGN_CHAT\")"),),
+        ("check_chat_id_is_compared_literally",)),
+    "chat_id_compared_after_unicode_normalization": (
+        (("        if parsed.chat_id != location.chat_id:",
+          "        if __import__('unicodedata').normalize('NFC', parsed.chat_id) != "
+          "__import__('unicodedata').normalize('NFC', location.chat_id):"),),
+        ("check_chat_id_is_compared_literally",)),
+    "append_never_fsyncs_the_file": (
+        (("            os.fsync(handle.fileno())\n", ""),), ("check_an_append_is_flushed_and_fsynced_before_it_returns",)),
+    "append_never_syncs_the_directory": (
+        (("        if created:\n            _sync_directory(location.accepted_path.parent)\n", ""),),
+        ("check_an_append_is_flushed_and_fsynced_before_it_returns",)),
+    "append_neither_flushes_nor_fsyncs": (
+        (("            handle.flush()\n            os.fsync(handle.fileno())\n", ""),),
+        ("check_an_append_is_flushed_and_fsynced_before_it_returns",)),
+    "append_fsyncs_before_flushing": (
+        (("            handle.flush()\n            os.fsync(handle.fileno())\n",
+          "            os.fsync(handle.fileno())\n            handle.flush()\n"),),
+        ("check_an_append_is_flushed_and_fsynced_before_it_returns",)),
     "error_codes_carry_the_reader_message": (
         ((CODE_GUARD, '        return f"RECORD_REJECTED:{code}"\n'),), ("check_no_content_leaks",)),
 }
@@ -851,26 +1069,13 @@ def check_clear_deletes_the_store_under_the_envelope_lock(store_class, root: Pat
     location = store.AcceptedStoreLocation.for_chat(cs, CHAT)
     store.append(location, make_record("t1"), epoch=0)
     assert location.accepted_path.exists()
-    held, release = threading.Event(), threading.Event()
-
-    def holder():
-        with conversation_lock(location.envelope_path):
-            held.set()
-            release.wait(30)
-
-    keeper = threading.Thread(target=holder, daemon=True)
-    clearing = threading.Thread(target=cs.clear, args=(CHAT,), daemon=True)
-    keeper.start()
-    try:
-        assert held.wait(30)
-        clearing.start()
-        clearing.join(1.0)
-        blocked, survived = clearing.is_alive(), location.accepted_path.exists()
-    finally:
-        release.set()
-        keeper.join(30)
-    clearing.join(30)
-    assert blocked and survived, "clear() acted on the store outside the envelope lock"
+    with conversation_lock(location.envelope_path):  # the lock publish_turn takes, held by someone else
+        with short_clear_lock_timeout(store_class):
+            during = raised(cs.clear, CHAT)
+        survived = location.accepted_path.exists()
+    assert isinstance(during, ConversationLockTimeout), "clear() did not wait for the envelope lock"
+    assert survived, "clear() acted on the accepted store outside the envelope lock"
+    cs.clear(CHAT)  # the lock is free now
     assert not location.accepted_path.exists(), "clear() left the accepted store behind"
     assert store.resolve_anchor(location, {"t1"}).status is store.AnchorStatus.NO_ANCHOR
 
@@ -923,6 +1128,32 @@ def test_a_reset_leaves_no_anchor_even_with_a_published_history(tmp_path):
     w.cs.clear(CHAT)
     assert not w.path.exists() and w.cs.get_history(CHAT, last_n=1000) == []
     assert store.resolve_anchor(w.loc, published).status is store.AnchorStatus.NO_ANCHOR  # even with a stale snapshot
+
+
+def test_constraint_for_m2a_6_inside_the_staging_get_history_already_holds_the_turn_in_flight(tmp_path):
+    """NOT a contract of the store: the restriction M2A-6 inherits. ``coordinate_turn`` runs every turn with a
+    reservation inside ``stage_continuity``; there ``append_turn`` writes into the PRIVATE generation, which
+    ``get_history`` already reads. A snapshot of the history taken after the turn's own ``append_turn`` therefore lists
+    a turn that is not published yet (and never will be if the turn crashes or loses the revision race), and
+    ``resolve_anchor`` fed with it answers ANCHOR for it. The anchor must be resolved with the PUBLISHED history: the
+    snapshot taken before the turn appends its own Turn, or after the publication."""
+    w = World(store, tmp_path)
+    publish_turn_of(w, "t1")
+    w.append(make_record("t1"))
+    reservation = w.cs.reserve_turn(CHAT)
+    with stage_continuity(w.cs, reservation):
+        store.append(w.loc, make_record("t2"), epoch=reservation.epoch)  # the record goes first (contract 3.8)
+        before = {turn.trace_id for turn in w.cs.get_history(CHAT, last_n=1000)}
+        w.cs.append_turn(CHAT, "q", "r", {}, trace_id="t2")  # the Turn goes into the private generation
+        inside = {turn.trace_id for turn in w.cs.get_history(CHAT, last_n=1000)}
+        assert before == {"t1"} and inside == {"t1", "t2"}
+        assert store.resolve_anchor(w.loc, before).status is store.AnchorStatus.ANCHOR_UNREADABLE  # published only
+        wrong = store.resolve_anchor(w.loc, inside)
+        assert wrong.status is store.AnchorStatus.ANCHOR and wrong.record.trace_id == "t2"  # the trap
+        # the publish never happens (crash, StaleRevisionError): leaving the staging discards the private copy
+    outside = {turn.trace_id for turn in w.cs.get_history(CHAT, last_n=1000)}
+    assert outside == {"t1"}
+    assert store.resolve_anchor(w.loc, outside).status is store.AnchorStatus.ANCHOR_UNREADABLE
 
 
 def test_characterization_pre_existing_debt_clear_leaves_the_generation_copies(tmp_path):
@@ -1064,6 +1295,43 @@ def test_the_module_is_append_only_and_logs_nothing_by_ast():
 def test_mutant_the_ast_pin_catches_what_breaks_append_only_or_logs(old, new):
     assert SOURCE.count(old) >= 1
     assert module_problems(SOURCE.replace(old, new, 1)), (old, new)
+
+
+# ---- the store never enters git (contract §3.7: "nada del almacén va a git") ----------------------------------------------------------------------
+GITIGNORE_PATTERN = "data/conversations/*.accepted.jsonl"
+
+
+def _git_ignores(gitignore: str, path: str, directory: Path) -> bool:
+    """Does a repo whose ``.gitignore`` is ``gitignore`` ignore ``path``? (``git check-ignore``; exit 0 = ignored)"""
+    directory.mkdir(parents=True, exist_ok=True)
+    subprocess.run(["git", "init", "-q", str(directory)], check=True)
+    (directory / ".gitignore").write_text(gitignore, encoding="utf-8")
+    done = subprocess.run(["git", "-C", str(directory), "check-ignore", "-q", "--no-index", path], check=False)
+    assert done.returncode in (0, 1), done.returncode
+    return done.returncode == 0
+
+
+def test_the_accepted_store_is_ignored_by_git_with_a_narrow_pattern(tmp_path):
+    gitignore = (ROOT / ".gitignore").read_text(encoding="utf-8")
+    assert GITIGNORE_PATTERN in gitignore.splitlines()
+    assert _git_ignores(gitignore, "data/conversations/st_anon_0123456789ab.accepted.jsonl", tmp_path / "real")
+    for path in ("data/conversations/st_anon_0123456789ab.jsonl", "data/conversations/st_anon_0123456789ab.envelopes.jsonl",
+                 "data/conversations/st_anon_0123456789ab.pagination.json", "data/other/st_anon.accepted.jsonl",
+                 "data/conversations/accepted.jsonl"):
+        assert not _git_ignores(gitignore, path, tmp_path / "narrow"), path  # narrow: only the accepted-record store
+
+
+def test_mutant_without_the_pattern_the_store_is_not_ignored(tmp_path):
+    gitignore = (ROOT / ".gitignore").read_text(encoding="utf-8")
+    without = "\n".join(line for line in gitignore.splitlines() if line != GITIGNORE_PATTERN) + "\n"
+    assert without != gitignore
+    assert not _git_ignores(without, "data/conversations/st_anon_0123456789ab.accepted.jsonl", tmp_path / "mutant")
+
+
+def test_no_accepted_store_is_tracked_by_git():
+    done = subprocess.run(["git", "-C", str(ROOT), "ls-files", "--", "data/conversations/*.accepted.jsonl"],
+                          check=True, capture_output=True, text=True)
+    assert done.stdout == ""
 
 
 # ---- Hypothesis: the store never changes what it was given ---------------------------------------------------------------------------------------------------
