@@ -1,6 +1,6 @@
-"""M2A-1: closed persisted types of the M2a contract (``app/core/foundation_accepted.py``).
+"""M2A-1a TYPES/DIRECTIVES: closed persisted types of the M2a contract (``app/core/foundation_accepted.py``).
 
-Invariants proved here (mission M2A-1; contract §3, §5, §8, §9, §12, §17):
+Invariants proved here (mission M2A-1a; contract §3, §5, §8, §9, §12, §17):
 
 1. ``from_dict(to_dict(x)) == x`` (and through JSON text) for every persistible type — Hypothesis property.
 2. Unknown or missing keys and unknown schema versions fail closed, at every nesting level.

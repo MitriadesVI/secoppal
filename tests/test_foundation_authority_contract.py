@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import ast
 import dataclasses
 import re
 import tokenize
@@ -45,7 +46,14 @@ NEW_RUNTIME_MODULES = ("foundation_authority_contract", "foundation_authority_va
 # C1.2 integrates the geographic level into the IR v2 (it was created for that: C1.1 §3.2).
 # Nothing else may import it, so the authority contract still has no runtime caller.
 GEO_LEVEL_IMPORTERS = frozenset({"interpretation_contract", "foundation_lift_v1", "foundation_acceptance_loader",
-                                 "foundation_authority_contract", "foundation_authority_values"})
+                                 "foundation_authority_contract", "foundation_authority_values",
+                                 "foundation_accepted"})  # the one CLOSED_TYPE_CONSUMERS entry, see below
+# M2A-1a (user decision 2026-10-02): the ONLY exception to «nothing under app/ imports the C1.1 modules». It is a
+# consumer of CLOSED TYPES, not of authorities: it may import ``foundation_authority_values`` (and the geographic
+# level) solely to validate/decode already-accredited ``ExecutableValue``s and ``GeoLevel``. It may not import the
+# registry, the authority contract, the evidence window, ``host_authorities`` or any resolver, nor call ``resolve``,
+# and nothing under app/ may import it (also pinned transitively by tests/test_m2a_boundaries.py). No other module.
+CLOSED_TYPE_CONSUMERS = {"foundation_accepted": frozenset({"foundation_authority_values"})}
 
 
 def _code(path: Path) -> str:
@@ -340,10 +348,32 @@ def test_c1_1_modules_are_not_imported_by_any_runtime_module():
         rel = path.relative_to(ROOT).as_posix()
         if path.stem in NEW_RUNTIME_MODULES or "/host_authorities/" in rel:
             continue
-        if pattern.search(_code(path)):
+        found = set(pattern.findall(_code(path)))
+        allowed = CLOSED_TYPE_CONSUMERS.get(path.stem) if rel == f"app/core/{path.stem}.py" else None
+        if found and (allowed is None or not found <= allowed):
             offenders.append(rel)
     assert offenders == []
     assert (ROOT / "app/core/host_authorities/__init__.py").read_text() == ""
+
+
+def test_closed_type_consumers_never_resolve_and_have_no_runtime_importer():
+    """The M2A-1a exception stays a closed-type consumer: no ``resolve``, no authority module, no importer."""
+    assert set(CLOSED_TYPE_CONSUMERS) == {"foundation_accepted"}
+    forbidden = re.compile(r"_authority$|_authorities$|_resolver$|authority_registry|authority_contract"
+                           r"|evidence_window|host_authorities|accreditation")
+    for stem in CLOSED_TYPE_CONSUMERS:
+        tree = ast.parse((ROOT / "app" / "core" / f"{stem}.py").read_text(encoding="utf-8"))
+        imported = {alias.name for node in ast.walk(tree) if isinstance(node, ast.Import) for alias in node.names}
+        imported |= {f"{node.module}.{alias.name}" for node in ast.walk(tree)
+                     if isinstance(node, ast.ImportFrom) for alias in node.names}
+        imported |= {node.module for node in ast.walk(tree) if isinstance(node, ast.ImportFrom)}
+        assert not [name for name in imported if any(forbidden.search(part) for part in name.split("."))]
+        calls = [node for node in ast.walk(tree) if isinstance(node, ast.Call) and getattr(
+            node.func, "attr", getattr(node.func, "id", None)) == "resolve"]
+        assert calls == []
+        importers = [path.relative_to(ROOT).as_posix() for path in (ROOT / "app").rglob("*.py")
+                     if path.stem != stem and re.search(rf"\b{stem}\b", _code(path))]
+        assert importers == []
 
 
 def test_only_the_ir_v2_and_the_authority_contract_import_the_geographic_level():

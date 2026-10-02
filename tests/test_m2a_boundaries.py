@@ -1,4 +1,4 @@
-"""M2a boundary pins (contract §3.7, INV-M2A-04, INV-M2A-24; mission M2A-1 invariants 4, 5 and 6).
+"""M2a boundary pins (contract §3.7, INV-M2A-04, INV-M2A-24; mission M2A-1a invariants 4, 5 and 6).
 
 * IMPORTS: the transitive import closure of every M2a module is EXACTLY the pinned allowlist. In particular no M2a
   module reaches ``query_router``, ``followup_engine``, ``followup_mutations``, the conversation store, the
@@ -7,7 +7,7 @@
 * NO BRIDGE: no M2a module names ``parsed_params`` or a legacy input type (``QueryFrame``, ``ConversationContext``,
   ``FollowupEngine``, ``QueryRouter``) in code: no function, attribute, argument, keyword or string key.
 * NO LEXICON: no M2a module imports a regex engine or a lexicon module (A8.1 and A9.1 decide on typed values).
-* NO CONSUMER: M2A-1 has no productive consumer. No ``app``/``scripts``/``streamlit_app`` module imports an M2a
+* NO CONSUMER: M2A-1a has no productive consumer. No ``app``/``scripts``/``streamlit_app`` module imports an M2a
   module, so neither the legacy closure nor the Foundation runtime can observe it (no runtime change).
 
 Each pin is shown not to be vacuous by a mutant it must catch. The import graph is the AST scanner of
@@ -43,7 +43,12 @@ FORBIDDEN_MODULES = frozenset({
     "app.core.query_router", "app.core.followup_engine", "app.core.followup_mutations",
     "app.core.conversation_store", "app.core.orchestrator", "app.core.foundation_runtime",
 })
-FORBIDDEN_PREFIXES = ("app.core.accreditation", "app.core.workflow", "app.data")
+# M2A-1a consumes closed TYPES (``foundation_authority_values``, ``foundation_geo_level``), never authorities: no
+# registry, authority contract, evidence window, host authorities, resolver or ``*_authority`` module.
+FORBIDDEN_PREFIXES = ("app.core.accreditation", "app.core.workflow", "app.data", "app.core.host_authorities",
+                      "app.core.foundation_authority_registry", "app.core.foundation_authority_contract",
+                      "app.core.foundation_evidence_window", "app.core.foundation_admission")
+FORBIDDEN_SUFFIXES = ("_authority", "_resolver", "_authorities")
 FORBIDDEN_IDENTIFIERS = ("parsed_params", "queryframe", "conversationcontext", "followupengine", "queryrouter",
                          "followup_engine", "query_router", "query_frame", "conversation_context")
 REGEX_MODULES = frozenset({"re", "regex", "fnmatch", "sre_compile", "sre_parse"})
@@ -66,7 +71,7 @@ def closure_problems(overrides: dict[str, str] | None = None) -> list[str]:
     out += [f"M2a closure lost {name} (update the allowlist on purpose)"
             for name in sorted(M2A_ALLOWED_CLOSURE - reached)]
     out += [f"forbidden {name}" for name in sorted(reached)
-            if name in FORBIDDEN_MODULES or name.startswith(FORBIDDEN_PREFIXES)]
+            if name in FORBIDDEN_MODULES or name.startswith(FORBIDDEN_PREFIXES) or name.endswith(FORBIDDEN_SUFFIXES)]
     return out
 
 
@@ -101,6 +106,10 @@ def source_problems(source: str) -> list[str]:
             names.extend(filter(None, (node.name, node.asname)))
         elif isinstance(node, ast.Constant) and isinstance(node.value, str) and id(node) not in docstrings:
             names.append(node.value)
+        if isinstance(node, ast.Call) and (
+                (isinstance(node.func, ast.Attribute) and node.func.attr == "resolve")
+                or (isinstance(node.func, ast.Name) and node.func.id == "resolve")):
+            out.append(f"authority call resolve() (line {node.lineno})")
         for name in names:
             folded = name.lower()
             hit = next((ident for ident in FORBIDDEN_IDENTIFIERS if ident in folded), None)
@@ -158,6 +167,10 @@ MODULE = M2A_MODULES[0]
     "\n\ndef _late():\n    import importlib\n    return importlib.import_module('app.core.followup_mutations')\n",
     "\n\nfrom app.core.accreditation import authorities\n",
     "\n\ndef _late():\n    from app.core import conversation_store\n",
+    "\n\nfrom app.core.foundation_authority_registry import REGISTRY\n",
+    "\n\ndef _late():\n    from app.core import foundation_authority_contract\n",
+    "\n\ndef _late():\n    from app.core.foundation_evidence_window import build_window\n",
+    "\n\ndef _late():\n    from app.core import value_authority\n",
 ])
 def test_mutant_legacy_import_is_caught(extra):
     assert closure_problems({MODULE: _source(MODULE) + extra})
@@ -169,15 +182,22 @@ def test_mutant_legacy_import_is_caught(extra):
     "\n\ndef _frame(effective, frame):\n    return frame.QueryFrame\n",
     "\n\nimport re\n",
     "\n\nfrom app.core.foundation_text_predicates import nothing\n",
+    "\n\ndef _accredit(authority, window):\n    return authority.resolve(window)\n",
 ])
 def test_mutant_bridge_or_lexicon_is_caught(extra):
     assert source_problems(_source(MODULE) + extra)
 
 
-def test_mutant_productive_consumer_is_caught():
-    orchestrator = _source("app.core.orchestrator")
-    mutant = orchestrator + "\n\ndef _m2a():\n    from app.core.foundation_accepted import AcceptedTurnRecord\n"
-    assert consumer_problems({"app.core.orchestrator": mutant})
+@pytest.mark.parametrize("consumer, extra", [
+    ("app.core.orchestrator", "\n\ndef _m2a():\n    from app.core.foundation_accepted import AcceptedTurnRecord\n"),
+    ("app.core.foundation_runtime", "\n\nfrom app.core import foundation_accepted\n"),
+    ("app.core.foundation_projection",
+     "\n\ndef _m2a():\n    import importlib\n    return importlib.import_module('app.core.foundation_accepted')\n"),
+    ("streamlit_app", "\n\nimport app.core.foundation_accepted as _m2a\n"),
+])
+def test_mutant_productive_consumer_is_caught(consumer, extra):
+    """M2A-1a has no runtime consumer: any productive module importing it kills the pin."""
+    assert consumer_problems({consumer: _source(consumer) + extra})
 
 
 def test_the_docstring_mention_of_the_barrier_is_not_a_bridge():

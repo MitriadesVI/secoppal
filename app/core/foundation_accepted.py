@@ -1,9 +1,14 @@
 """M2a persisted types: the accepted interpretation of a Foundation turn and its conversational records.
 
 Normative authority: ``docs/decisions/M2A_CONVERSATION_CONTRACT_V1.md`` (§3–§5, §8, §9, §11, §12, §17, annex A).
-This module is M2A-1: closed, immutable types with a canonical ``to_dict`` and a STRICT reader (``from_dict``).
-It has no consumer yet; composition (M2A-3), store (M2A-2), pending protocol (M2A-4) and runtime (M2A-6) live
-elsewhere.
+This module is M2A-1a TYPES/DIRECTIVES: closed, immutable types with a canonical ``to_dict`` and a STRICT reader
+(``from_dict``). It has no consumer yet; composition (M2A-3), store (M2A-2), pending protocol (M2A-4) and runtime
+(M2A-6) live elsewhere. ``from_acceptance`` (contract §4.1) is M2A-1b: it waits for ``HostViewDecision`` (wave F)
+and the host receipt rules/metadata, which do not exist yet; no provisional shape is invented here.
+
+It consumes closed TYPES only: ``foundation_authority_values``/``foundation_geo_level`` to validate and decode
+already-accredited ``ExecutableValue``s and ``GeoLevel`` (the one exception to the C1.1 import pin). It never imports
+an authority, the registry or the evidence window, and never calls ``resolve``.
 
 Reader contract, for every type: unknown or missing key, unknown schema, wrong JSON type, value outside a closed
 list or wrong digest ⇒ ``ContractError``. ``from_dict(x.to_dict()) == x`` and ``to_dict(from_dict(d)) == d`` hold for

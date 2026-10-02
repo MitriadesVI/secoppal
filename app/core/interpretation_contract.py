@@ -697,7 +697,7 @@ class InterpretationProjection:
 
 
 # ---- wire 5.1: conversational control directives (M2A contract §5.3, §17; ADR-103 enm. 4 §4.4 «M2A-1») ----
-# M2A-1 introduces the records; the v5.1 producer/decoder that carries them is M2A-5. They are deliberately NOT a
+# M2A-1a introduces the records; the v5.1 producer/decoder that carries them is M2A-5. They are deliberately NOT a
 # field of ``InterpretationProposal`` yet: its ``to_dict`` feeds the first-turn ``interpretation_hash`` (INV-M2A-06).
 
 # UNSUPPORTED labels reserved for the wire 5.1 (M2A contract A.6). Reserved means named, nothing reads them yet.
