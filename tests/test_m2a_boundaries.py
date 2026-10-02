@@ -116,16 +116,26 @@ def _source(module: str) -> str:
 
 
 # ---- the graph, with virtual modules -------------------------------------------------------------------------------
-def _graph(overrides: dict[str, str] | None = None, virtual: dict[str, str] | None = None):
+def _graph(overrides: dict[str, str] | None = None, virtual: dict[str, str] | None = None,
+           steps: tuple[Step, ...] | None = None):
     """``build_graph`` that also takes VIRTUAL modules: (index, edges, modules with an unresolvable dynamic import).
 
     ``overrides`` replace the source of a module that exists on disk; ``virtual`` adds modules that do not exist. Edges
     to and from a virtual module resolve against an index extended with a fictitious path, so a virtual module can be
     registered, imported and reached. A virtual module that exists on disk, or an override of one that does not, is a
     broken mutant, not a pass.
+
+    ``steps`` is the registry of a SYNTHETIC world (``WORLD``). A module that the real registry (``STEPS``) registers
+    and ``steps`` does not is a lane's real file that world knows nothing about: it is BLANKED (an empty source), so
+    what a lane has or has not written can never change the verdict of a mutant. ``steps=None`` or the real registry
+    blanks nothing.
     """
     overrides, virtual = dict(overrides or {}), dict(virtual or {})
     index, graph, flagged = build_graph()
+    if steps is not None:
+        known = set(registered_modules(steps))
+        overrides = {**{module: "" for module in registered_modules(STEPS) if module in index and module not in known},
+                     **overrides}
     if clash := sorted(set(virtual) & set(index)):
         raise ValueError(f"virtual modules that exist on disk: {clash}")
     if missing := sorted(set(overrides) - set(index)):
@@ -211,7 +221,7 @@ def closure_problems(overrides: dict[str, str] | None = None, virtual: dict[str,
                      steps: tuple[Step, ...] = STEPS) -> list[str]:
     """Per step: closure(MODULES) - closure(modules of the steps it depends on) == CLOSURE, exactly. On the union:
     nothing forbidden, no unresolvable dynamic import."""
-    _, graph, flagged = _graph(overrides, virtual)
+    _, graph, flagged = _graph(overrides, virtual, steps)
     by_name = {step.name: step for step in steps}
     dependencies = _dependencies(steps)
 
@@ -236,7 +246,7 @@ def closure_problems(overrides: dict[str, str] | None = None, virtual: dict[str,
 def direction_problems(overrides: dict[str, str] | None = None, virtual: dict[str, str] | None = None,
                        steps: tuple[Step, ...] = STEPS) -> list[str]:
     """A direct edge from a module of step S to one of step T needs T == S or T a transitive dependency of S."""
-    _, graph, _ = _graph(overrides, virtual)
+    _, graph, _ = _graph(overrides, virtual)  # only registered modules' edges are read: a world blanks none of them
     owners: dict[str, set[str]] = {}
     for step in steps:
         for module in step.modules:
@@ -257,7 +267,7 @@ def consumer_problems(overrides: dict[str, str] | None = None, virtual: dict[str
                       steps: tuple[Step, ...] = STEPS) -> list[str]:
     """The definitive invariant: no module that is not registered imports one that is (direct edges are enough: a
     transitive consumer is a direct importer of something registered, or is itself registered)."""
-    _, graph, _ = _graph(overrides, virtual)
+    _, graph, _ = _graph(overrides, virtual, steps)
     registered = set(registered_modules(steps))
     return [f"{name} imports {target}" for name, edges in sorted(graph.items()) if name not in registered
             for target in sorted(edges & registered)]
@@ -267,7 +277,7 @@ def legacy_reach_problems(overrides: dict[str, str] | None = None, virtual: dict
                           steps: tuple[Step, ...] = STEPS) -> list[str]:
     """Neither the legacy closure (cutting only the declared mode frontier) nor the Foundation runtime (the same
     closure through the frontier) reaches a registered module; the legacy closure also stays clear of the IR wire."""
-    _, graph, _ = _graph(overrides, virtual)
+    _, graph, _ = _graph(overrides, virtual, steps)
     registered = set(registered_modules(steps))
     legacy = set(closure(graph))
     runtime = set(closure(graph, cut=()))
@@ -395,6 +405,11 @@ def _real(name: str) -> Step:
     return next(step for step in STEPS if step.name == name)
 
 
+# The synthetic world of every mutant: M2A-1 (the one registry a test may assume: it is the foundation) and two EMPTY
+# lane steps with their reviewed DAG. The real lane steps are never reused: a lane fills its own registry file, and no
+# pin of this file may depend on what it holds (``_graph`` blanks the real lane modules a world does not register).
+WORLD = (_real("M2A-1"), _step("M2A-2", (), ("M2A-1",)), _step("M2A-3", (), ("M2A-1",)))
+
 _DISK_MODULES = frozenset(build_graph()[0])
 
 
@@ -402,7 +417,7 @@ def _present(*extra: str) -> set[str]:
     return set(_DISK_MODULES) | set(extra)
 
 
-def _all_problems(overrides=None, virtual=None, steps=STEPS) -> dict[str, list[str]]:
+def _all_problems(overrides=None, virtual=None, steps=WORLD) -> dict[str, list[str]]:
     return {
         "registry": registry_problems(steps, _present(*(virtual or {}))),
         "closure": closure_problems(overrides, virtual, steps),
@@ -441,6 +456,45 @@ def test_relative_imports_resolve_against_the_package_of_the_module():
     assert MODULE in graph["app.core.m2a_virtual_rel"]  # a module: its package is the parent
     _, graph, _ = _graph({"app.core": "from . import foundation_accepted\n"})
     assert MODULE in graph["app.core"]  # a package (__init__.py): it is its own package
+
+
+def test_a_world_blanks_the_real_lane_modules_it_does_not_register_and_the_real_registry_blanks_nothing(monkeypatch):
+    lane = "app.core.foundation_messages"  # a real module with edges, standing in for a lane's real file
+    fake = (_real("M2A-1"), _step("M2A-2", (lane, "app.core.m2a_not_on_disk"), ("M2A-1",)),
+            _step("M2A-3", (), ("M2A-1",)))
+    monkeypatch.setitem(globals(), "STEPS", fake)
+    disk_edges = build_graph()[1][lane]
+    assert disk_edges  # the stand-in does import things
+    assert _graph(steps=WORLD)[1][lane] == set()  # unregistered by the world: blanked (and a missing one is skipped)
+    assert _graph(steps=fake)[1][lane] == disk_edges  # registered: its real edges stay
+    assert _graph(steps=None)[1][lane] == disk_edges  # no world: nothing blanked
+    assert _graph({lane: "import app.core.store_lock\n"}, None, WORLD)[1][lane] == {"app", "app.core",
+                                                                                      "app.core.store_lock"}
+    assert _graph(steps=WORLD)[1][MODULE] == build_graph()[1][MODULE]  # M2A-1 is the foundation: never blanked
+
+
+def test_the_pins_of_a_world_ignore_what_a_real_lane_file_imports(monkeypatch):
+    """A lane's real file is not on disk in this prep, so a patched graph node stands in for it: it imports M2A-1 and a
+    module that legacy reaches. For a world that does not register it that is nothing; for the registry that does, it
+    is judged as a registered module should be."""
+    lane = "app.core.m2a_lane_stand_in"
+    index, graph, flagged = build_graph()
+    index = {**index, lane: ROOT / "app/core/m2a_lane_stand_in.py"}
+    graph = {**graph, lane: {MODULE, "app.core.money_polarity"},
+             "app.core.conversation_store": graph["app.core.conversation_store"] | {lane}}
+    monkeypatch.setitem(globals(), "build_graph", lambda: (index, graph, flagged))
+    registered = (_real("M2A-1"), _step("M2A-2", (lane,), ("M2A-1",)), _step("M2A-3", (), ("M2A-1",)))
+    monkeypatch.setitem(globals(), "STEPS", registered)
+    virtual = {VIRTUAL_A: ON_M2A_1 + f"import {lane}\n"}
+    world = (*WORLD, _step("M2A-S1", (VIRTUAL_A,), ("M2A-1",), {VIRTUAL_A, lane}))
+    assert consumer_problems(None, None, WORLD) == []  # not registered here: the lane's file is not a consumer
+    assert legacy_reach_problems(None, None, WORLD) == []  # ...nor does legacy reach M2A-1 through it
+    assert closure_problems(None, virtual, world) == []  # ...nor does its money_polarity edge enter a closure
+    assert consumer_problems(None, None, registered) == [  # registered: only legacy's import of it is a consumer
+        f"app.core.conversation_store imports {lane}"]
+    assert any(f"legacy closure reaches {lane}" in p for p in legacy_reach_problems(None, None, registered))
+    assert any("M2A-2: closure reaches app.core.money_polarity" in p
+               for p in closure_problems(None, None, registered))  # registered: its real edges count
 
 
 def test_the_graph_with_no_mutation_is_the_disk_graph():
@@ -602,12 +656,12 @@ def test_manifest_modules_maps_paths_to_modules():
 
 
 def _exact_step(virtual: dict[str, str], module: str, name: str = "M2A-S1") -> tuple[Step, ...]:
-    """The real registry plus a step that depends on M2A-1 and declares EXACTLY its own increment: every closure pin
-    is then satisfied by construction, so only the clause under test can speak."""
-    _, graph, _ = _graph(None, virtual)
+    """The world plus a step that depends on M2A-1 and declares EXACTLY its own increment: every closure pin is then
+    satisfied by construction, so only the clause under test can speak."""
+    _, graph, _ = _graph(None, virtual, WORLD)
     inherited = set(closure(graph, entrypoints=_real("M2A-1").modules, cut=()))
     own = set(closure(graph, entrypoints=(module,), cut=())) - inherited
-    return (*STEPS, _step(name, (module,), ("M2A-1",), own))
+    return (*WORLD, _step(name, (module,), ("M2A-1",), own))
 
 
 # Spelled out (not derived from the constant): removing a name from POST_MAIN_EXISTING must make one of these fail.
@@ -627,7 +681,7 @@ def test_the_post_main_list_is_exactly_the_reviewed_one():
                                     "app.core.query_text_consumption", *POST_MAIN_EXPECTED])
 def test_mutant_registering_a_module_that_already_existed_is_refused(module):
     assert module in _DISK_MODULES
-    problems = registry_problems((*STEPS, _step("M2A-S1", (module,), ("M2A-1",))), _present())
+    problems = registry_problems((*WORLD, _step("M2A-S1", (module,), ("M2A-1",))), _present())
     assert [p for p in problems if "already existed" in p] == [
         f"M2A-S1: {module} already existed before M2a: a step registers only what it creates"]
 
@@ -642,7 +696,7 @@ def test_the_orphans_that_every_other_pin_lets_through_are_refused_by_the_regist
 
 
 def test_registry_control_a_new_module_and_m2a_1s_own_are_accepted():
-    steps = (*STEPS, _step("M2A-S1", (VIRTUAL_A,), ("M2A-1",)))
+    steps = (*WORLD, _step("M2A-S1", (VIRTUAL_A,), ("M2A-1",)))
     assert registry_problems(steps, _present(VIRTUAL_A)) == []
     assert MODULE in registered_modules(steps)
 
@@ -658,13 +712,13 @@ def test_the_step_dag_is_the_reviewed_one():
     ("M2A-2", ()), ("M2A-2", ("M2A-1", "M2A-3")), ("M2A-1", ("M2A-2",)), ("M2A-1", ("M2A-3",)),
 ])
 def test_mutant_a_lane_widening_or_dropping_its_own_depends_on_is_caught(name, depends):
-    problems = dag_problems(_swap(STEPS, name, depends_on=depends))
+    problems = dag_problems(_swap(WORLD, name, depends_on=depends))
     assert len(problems) == 1 and problems[0].startswith(f"{name} DEPENDS_ON {sorted(depends)} but the reviewed DAG")
 
 
 def test_mutant_an_unreviewed_step_and_a_missing_reviewed_step_are_caught():
-    assert dag_problems((*STEPS, _step("M2A-4", (), ("M2A-1",)))) == ["M2A-4 is not in the reviewed DAG"]
-    assert dag_problems(tuple(step for step in STEPS if step.name != "M2A-3")) == [
+    assert dag_problems((*WORLD, _step("M2A-4", (), ("M2A-1",)))) == ["M2A-4 is not in the reviewed DAG"]
+    assert dag_problems(tuple(step for step in WORLD if step.name != "M2A-3")) == [
         "reviewed step M2A-3 has no registry file"]
 
 
@@ -672,7 +726,7 @@ def test_mutant_the_dag_pin_is_what_keeps_the_reducer_from_importing_the_store()
     """M2A-3 adds «M2A-2» to its own DEPENDS_ON and imports the store: the direction pin is then satisfied (declared),
     the registry is clean and the closure is exact, so the reviewed DAG is the only pin that objects."""
     virtual = {VIRTUAL_B: ON_M2A_1, VIRTUAL_C: IMPORT_B}
-    stored = _swap(STEPS, "M2A-2", modules=(VIRTUAL_B,), closure=frozenset({VIRTUAL_B}))
+    stored = _swap(WORLD, "M2A-2", modules=(VIRTUAL_B,), closure=frozenset({VIRTUAL_B}))
     steps = _swap(stored, "M2A-3", modules=(VIRTUAL_C,), depends_on=("M2A-1", "M2A-2"),
                   closure=frozenset({VIRTUAL_C}))
     assert [name for name, found in _all_problems(virtual=virtual, steps=steps).items() if found] == []
@@ -759,7 +813,7 @@ STEP_1 = _real("M2A-1")
 
 
 def _synthetic(closure_extra: frozenset[str] | set[str] = frozenset(), body: str = ON_M2A_1):
-    steps = (*STEPS, _step("M2A-S1", (VIRTUAL_A,), ("M2A-1",), {VIRTUAL_A, *closure_extra}))
+    steps = (*WORLD, _step("M2A-S1", (VIRTUAL_A,), ("M2A-1",), {VIRTUAL_A, *closure_extra}))
     return {VIRTUAL_A: body}, steps
 
 
@@ -771,13 +825,13 @@ def test_closure_control_a_virtual_step_that_only_adds_itself_is_clean_on_every_
 
 @pytest.mark.parametrize("dropped", sorted(STEP_1.closure))
 def test_mutant_a_closure_with_one_element_less_is_caught(dropped):
-    steps = _swap(STEPS, "M2A-1", closure=STEP_1.closure - {dropped})
+    steps = _swap(WORLD, "M2A-1", closure=STEP_1.closure - {dropped})
     assert f"M2A-1: closure reaches {dropped}" in closure_problems(steps=steps)
 
 
 @pytest.mark.parametrize("added", ["app.core.money_polarity", "app.core.conversation_store", "app.main"])
 def test_mutant_a_closure_with_one_element_more_is_caught(added):
-    steps = _swap(STEPS, "M2A-1", closure=STEP_1.closure | {added})
+    steps = _swap(WORLD, "M2A-1", closure=STEP_1.closure | {added})
     assert any(f"closure lost {added}" in problem for problem in closure_problems(steps=steps))
 
 
@@ -804,7 +858,7 @@ def test_a_step_inherits_the_closure_of_its_transitive_dependencies():
     """S3 -> S2 -> S1, and S2 imports nothing of S1: S3 still inherits S1's closure (it declares only its increment)."""
     store_lock = "app.core.store_lock"  # a leaf outside M2A-1's closure
     virtual = {VIRTUAL_A: ON_M2A_1 + f"import {store_lock}\n", VIRTUAL_B: "", VIRTUAL_C: f"import {store_lock}\n"}
-    steps = (*STEPS, _step("M2A-S1", (VIRTUAL_A,), ("M2A-1",), {VIRTUAL_A, store_lock}),
+    steps = (*WORLD, _step("M2A-S1", (VIRTUAL_A,), ("M2A-1",), {VIRTUAL_A, store_lock}),
              _step("M2A-S2", (VIRTUAL_B,), ("M2A-S1",), {VIRTUAL_B}),
              _step("M2A-S3", (VIRTUAL_C,), ("M2A-S2",), {VIRTUAL_C}))
     assert closure_problems(None, virtual, steps) == []
@@ -817,7 +871,7 @@ def test_when_two_steps_grow_towards_the_same_module_the_dependent_one_fails_saf
     ``lost`` and its owner drops the module from its own CLOSURE; M2A-1's registry is not touched."""
     store_lock = "app.core.store_lock"
     virtual = {VIRTUAL_A: ON_M2A_1 + f"import {store_lock}\n"}
-    steps = _swap(STEPS, "M2A-2", modules=(VIRTUAL_A,), closure=frozenset({VIRTUAL_A, store_lock}))
+    steps = _swap(WORLD, "M2A-2", modules=(VIRTUAL_A,), closure=frozenset({VIRTUAL_A, store_lock}))
     assert closure_problems(None, virtual, steps) == []
     drift = {MODULE: _source(MODULE) + f"\nimport {store_lock}\n"}
     grown = _swap(steps, "M2A-1", closure=_real("M2A-1").closure | {store_lock})
@@ -827,19 +881,19 @@ def test_when_two_steps_grow_towards_the_same_module_the_dependent_one_fails_saf
 
 
 def test_the_closure_pin_survives_an_unknown_dependency_that_the_registry_reports():
-    steps = _swap(STEPS, "M2A-2", depends_on=("M2A-NOPE",))
-    assert closure_problems(steps=steps) == []  # nothing to inherit from a step that does not exist
+    steps = (*WORLD, _step("M2A-S1", (), ("M2A-NOPE",)))
+    assert closure_problems(steps=steps) == []  # nothing to inherit from a step that does not exist, and no crash
     assert any("unknown step M2A-NOPE" in problem for problem in registry_problems(steps, _present()))
 
 
 def test_an_unresolvable_dynamic_import_outside_the_registered_closure_is_not_the_closure_pins_business():
     virtual = {VIRTUAL_A: "import importlib\n\ndef _late(name):\n    return importlib.import_module(name)\n"}
-    assert VIRTUAL_A in _graph(None, virtual)[2]
-    assert closure_problems(None, virtual) == []  # unregistered and unreached: a limited guarantee, see the docstring
+    assert VIRTUAL_A in _graph(None, virtual, WORLD)[2]
+    assert closure_problems(None, virtual, WORLD) == []  # unregistered, unreached: a limited guarantee (docstring)
 
 
 def test_a_step_with_no_dependency_declares_the_whole_closure():
-    steps = (*STEPS, _step("M2A-S1", (VIRTUAL_A,), (), {VIRTUAL_A}))  # the synthetic step with DEPENDS_ON dropped
+    steps = (*WORLD, _step("M2A-S1", (VIRTUAL_A,), (), {VIRTUAL_A}))  # the synthetic step with DEPENDS_ON dropped
     problems = closure_problems(None, {VIRTUAL_A: ON_M2A_1}, steps)
     assert f"M2A-S1: closure reaches {MODULE}" in problems and "M2A-S1: closure reaches app.core" in problems
 
@@ -850,7 +904,7 @@ def test_a_step_with_no_dependency_declares_the_whole_closure():
 def test_mutant_registering_a_legacy_or_forbidden_module_does_not_launder_it(module):
     """Registration opens no door: the module is still forbidden in the closure, still consumed by unregistered
     modules and still part of what legacy (or the Foundation runtime) reaches."""
-    steps = (*STEPS, _step("M2A-S1", (module,), ("M2A-1",)))
+    steps = (*WORLD, _step("M2A-S1", (module,), ("M2A-1",)))
     assert f"forbidden {module}" in closure_problems(steps=steps)
     assert consumer_problems(steps=steps), "its importers are unregistered modules"
     assert any(module in problem for problem in legacy_reach_problems(steps=steps)) or module == "app.core.orchestrator"
@@ -884,14 +938,14 @@ def test_every_forbidden_prefix_has_a_representative_above():
 @pytest.mark.parametrize("name", ["app.core.m2a_virtual_resolver", "app.core.m2a_virtual_authority",
                                   "app.core.m2a_virtual_authorities"])
 def test_mutant_a_registered_module_named_as_an_authority_or_resolver_is_forbidden(name):
-    steps = (*STEPS, _step("M2A-S1", (name,), ("M2A-1",), {name}))
+    steps = (*WORLD, _step("M2A-S1", (name,), ("M2A-1",), {name}))
     assert f"forbidden {name}" in closure_problems(None, {name: ON_M2A_1}, steps)
 
 
 # ---- non-vacuity: direction ----------------------------------------------------------------------------------------
 def _chain(*, b_depends=(), c_depends=(), a_body=ON_M2A_1, b_body=IMPORT_A, c_body=IMPORT_B):
     virtual = {VIRTUAL_A: a_body, VIRTUAL_B: b_body, VIRTUAL_C: c_body}
-    steps = (*STEPS, _step("M2A-S1", (VIRTUAL_A,), ("M2A-1",)), _step("M2A-S2", (VIRTUAL_B,), b_depends),
+    steps = (*WORLD, _step("M2A-S1", (VIRTUAL_A,), ("M2A-1",)), _step("M2A-S2", (VIRTUAL_B,), b_depends),
              _step("M2A-S3", (VIRTUAL_C,), c_depends))
     return virtual, steps
 
@@ -920,7 +974,7 @@ def test_mutant_a_module_importing_a_sibling_step_that_it_does_not_depend_on_is_
 
 def test_a_module_may_import_a_module_of_its_own_step():
     virtual = {VIRTUAL_A: ON_M2A_1, VIRTUAL_B: IMPORT_A}
-    steps = (*STEPS, _step("M2A-S1", (VIRTUAL_A, VIRTUAL_B), ("M2A-1",)))
+    steps = (*WORLD, _step("M2A-S1", (VIRTUAL_A, VIRTUAL_B), ("M2A-1",)))
     assert direction_problems(None, virtual, steps) == []
 
 
@@ -935,13 +989,13 @@ def test_mutant_a_real_module_importing_a_step_that_the_step_does_not_depend_on(
 # ---- non-vacuity: consumption (the definitive invariant) -----------------------------------------------------------
 @pytest.mark.parametrize("name", ["app.core.m2a_virtual_ext", "app.m2a_virtual_ext", "scripts.m2a_virtual_ext"])
 def test_mutant_an_unregistered_virtual_module_importing_m2a_is_caught(name):
-    assert consumer_problems(None, {name: ON_M2A_1}) == [f"{name} imports {MODULE}"]
+    assert consumer_problems(None, {name: ON_M2A_1}, WORLD) == [f"{name} imports {MODULE}"]
 
 
 def test_consumer_control_the_same_source_registered_in_a_step_is_not_a_consumer():
     virtual, steps = _synthetic()
     assert consumer_problems(None, virtual, steps) == []
-    assert consumer_problems(None, virtual) == [f"{VIRTUAL_A} imports {MODULE}"]  # unregistered: caught
+    assert consumer_problems(None, virtual, WORLD) == [f"{VIRTUAL_A} imports {MODULE}"]  # unregistered: caught
 
 
 def test_mutant_an_unregistered_module_importing_a_registered_virtual_module_is_caught():
@@ -953,7 +1007,7 @@ def test_mutant_an_unregistered_module_importing_a_registered_virtual_module_is_
 def test_mutant_a_wildcard_dynamic_import_that_can_load_m2a_is_a_consumer():
     """``importlib.import_module(f"app.core.{name}")`` can load any module under the prefix: it reaches M2a."""
     extra = "\n\ndef _late(name):\n    import importlib\n    return importlib.import_module(f'app.core.{name}')\n"
-    problems = consumer_problems({"app.core.store_lock": _source("app.core.store_lock") + extra})
+    problems = consumer_problems({"app.core.store_lock": _source("app.core.store_lock") + extra}, None, WORLD)
     assert f"app.core.store_lock imports {MODULE}" in problems
 
 
@@ -978,15 +1032,197 @@ def test_mutant_the_foundation_runtime_reaching_a_registered_module_is_caught_ap
 
 def test_mutant_the_legacy_closure_reaching_the_ir_wire_module_is_caught():
     overrides = {"app.core.conversation_store": _source("app.core.conversation_store") + LATE_IMPORT_OF_IR}
-    assert legacy_reach_problems(overrides) == [f"legacy closure reaches {LEGACY_MUST_STAY_OUT}"]
+    assert legacy_reach_problems(overrides, None, WORLD) == [f"legacy closure reaches {LEGACY_MUST_STAY_OUT}"]
 
 
 def test_mutant_the_real_m2a_module_in_the_legacy_closure_is_caught():
     overrides = {"app.core.conversation_store":
                  _source("app.core.conversation_store") + LATE_IMPORT_OF_M2A}
-    problems = legacy_reach_problems(overrides)
+    problems = legacy_reach_problems(overrides, None, WORLD)
     assert f"legacy closure reaches {MODULE}" in problems
     assert f"legacy closure reaches {LEGACY_MUST_STAY_OUT}" in problems  # M2A-1 imports the IR: the legacy path too
+
+
+# ---- robustness: every pin against SIMULATED, filled lane registries ------------------------------------------------
+# A lane fills its own registry file, so no pin of this prep may depend on what a lane holds. These registries simulate
+# the two lanes AFTER they land: a store module that imports M2A-1 and ``store_lock`` (M2A-2) and a reducer split in two
+# modules over the IR v2 vocabulary (M2A-3). Every pin must stay green on them, and every mutant keep catching its own.
+SIM_STORE, SIM_DELTA, SIM_SCOPE = "app.core.m2a_sim_store", "app.core.m2a_sim_delta", "app.core.m2a_sim_scope"
+IR_V2_VOCABULARY = ("from app.core import (\n    foundation_operations, foundation_operator_table, "
+                    "interpretation_contract, semantic_dimensions,\n)\n")
+SIM_VIRTUAL = {
+    SIM_STORE: ON_M2A_1 + "import app.core.store_lock\n",
+    SIM_DELTA: ON_M2A_1 + IR_V2_VOCABULARY,
+    SIM_SCOPE: ON_M2A_1 + "from app.core import interpretation_contract\n",
+}
+SIM = (_real("M2A-1"), _step("M2A-2", (SIM_STORE,), ("M2A-1",), {SIM_STORE, "app.core.store_lock"}),
+       _step("M2A-3", (SIM_DELTA, SIM_SCOPE), ("M2A-1",), {SIM_DELTA, SIM_SCOPE}))
+PIN_NAMES = ("registry", "closure", "direction", "consumer", "legacy")
+
+
+def _render(step: Step) -> str:
+    """A registry file for a step, in the only shape allowed: a docstring and four literal assignments."""
+    closure_text = "frozenset({" + ", ".join(repr(item) for item in sorted(step.closure)) + "})" if step.closure \
+        else "frozenset()"
+    return (f'"""{step.name} (simulated)."""\n\nSTEP = {step.name!r}\nMODULES = {step.modules!r}\n'
+            f"DEPENDS_ON = {step.depends_on!r}\nCLOSURE = {closure_text}\n")
+
+
+def _namespace_of(source: str) -> dict:
+    """The namespace of a literal-only registry file, read by the AST (no ``exec``)."""
+    out = {}
+    for node in ast.parse(source).body[1:]:
+        value = node.value
+        if isinstance(value, ast.Call):  # frozenset(...)
+            out[node.targets[0].id] = frozenset(ast.literal_eval(value.args[0])) if value.args else frozenset()
+        else:
+            out[node.targets[0].id] = ast.literal_eval(value)
+    return out
+
+
+def _with(module: str, extra: str) -> dict[str, str]:
+    return {**SIM_VIRTUAL, module: SIM_VIRTUAL[module] + extra}
+
+
+def _declared(virtual: dict[str, str], steps: tuple[Step, ...]) -> tuple[Step, ...]:
+    """The same steps with every lane CLOSURE declared exactly from the graph (a lane that did its job), so only a
+    forbidden clause can object."""
+    _, graph, _ = _graph(None, virtual, steps)
+    dependencies = _dependencies(steps)
+    by_name = {step.name: step for step in steps}
+    out = []
+    for step in steps:
+        if step.name == "M2A-1":
+            out.append(step)
+            continue
+        inherited = set(closure(graph, entrypoints=tuple(m for d in dependencies[step.name]
+                                                         for m in by_name[d].modules), cut=()))
+        out.append(replace(step, closure=frozenset(set(closure(graph, entrypoints=step.modules, cut=())) - inherited)))
+    return tuple(out)
+
+
+def _conversation_store(extra: str) -> dict[str, str]:
+    return {"app.core.conversation_store": _source("app.core.conversation_store") + extra}
+
+
+def test_robustness_every_pin_is_green_on_simulated_filled_lane_registries():
+    assert _all_problems(virtual=SIM_VIRTUAL, steps=SIM) == {name: [] for name in PIN_NAMES}
+    assert dag_problems(SIM) == []
+    assert all(source_problems(source) == [] for source in SIM_VIRTUAL.values())
+    assert registered_modules(SIM) == (MODULE, SIM_STORE, SIM_DELTA, SIM_SCOPE)
+
+
+def test_robustness_the_simulated_registries_are_well_formed_files():
+    namespaces = {}
+    for step in SIM:
+        source = _render(step)
+        assert file_problems(source) == [], source
+        namespaces[step.stem] = _namespace_of(source)
+        assert step_from_namespace(step.stem, namespaces[step.stem]) == (step, [])
+    assert steps_from_namespaces(namespaces) == SIM  # file order: m2a_1, m2a_2, m2a_3
+
+
+def test_robustness_the_same_mutant_gets_the_same_verdict_over_empty_and_over_filled_lanes():
+    for steps, virtual in ((WORLD, {}), (SIM, SIM_VIRTUAL)):
+        virtual = {**virtual, VIRTUAL_A: ON_M2A_1 + "import app.core.money_polarity\n"}
+        extended = (*steps, _step("M2A-S1", (VIRTUAL_A,), ("M2A-1",), {VIRTUAL_A}))
+        assert "M2A-S1: closure reaches app.core.money_polarity" in closure_problems(None, virtual, extended)
+
+
+SIM_MUTANTS = {
+    "closure: M2A-2 leaves store_lock out of its CLOSURE": (
+        "M2A-2: closure reaches app.core.store_lock",
+        lambda: closure_problems(None, SIM_VIRTUAL, _swap(SIM, "M2A-2", closure=frozenset({SIM_STORE})))),
+    "closure: M2A-3 declares a module it does not reach": (
+        "M2A-3: closure lost app.core.money_polarity",
+        lambda: closure_problems(None, SIM_VIRTUAL, _swap(SIM, "M2A-3", closure=frozenset(
+            {SIM_DELTA, SIM_SCOPE, "app.core.money_polarity"})))),
+    "closure: the reducer reaches something undeclared": (
+        "M2A-3: closure reaches app.core.money_polarity",
+        lambda: closure_problems(None, _with(SIM_DELTA, "import app.core.money_polarity\n"), SIM)),
+    "closure: a forbidden prefix, with the CLOSURE declared exactly": (
+        "forbidden app.core.workflow.store_epoch",
+        lambda: closure_problems(None, _with(SIM_SCOPE, "from app.core.workflow import store_epoch\n"),
+                                 _declared(_with(SIM_SCOPE, "from app.core.workflow import store_epoch\n"), SIM))),
+    "closure: the store reaches a legacy module": (
+        "forbidden app.core.conversation_store",
+        lambda: closure_problems(None, _with(SIM_STORE, "from app.core import conversation_store\n"),
+                                 _declared(_with(SIM_STORE, "from app.core import conversation_store\n"), SIM))),
+    "closure: an unresolvable dynamic import in the store": (
+        f"unresolvable dynamic import in {SIM_STORE}",
+        lambda: closure_problems(None, _with(SIM_STORE, "import importlib\n\ndef _l(n):\n    return "
+                                                         "importlib.import_module(n)\n"), SIM)),
+    "direction: the reducer imports the store": (
+        f"{SIM_DELTA} (M2A-3) imports {SIM_STORE} (M2A-2) without DEPENDS_ON",
+        lambda: direction_problems(None, _with(SIM_DELTA, "from app.core import m2a_sim_store\n"), SIM)),
+    "direction: the store imports the reducer": (
+        f"{SIM_STORE} (M2A-2) imports {SIM_DELTA} (M2A-3) without DEPENDS_ON",
+        lambda: direction_problems(None, _with(SIM_STORE, "from app.core import m2a_sim_delta\n"), SIM)),
+    "dag: the reducer widens its own DEPENDS_ON to the store": (
+        "M2A-3 DEPENDS_ON ['M2A-1', 'M2A-2'] but the reviewed DAG says ['M2A-1']",
+        lambda: dag_problems(_swap(SIM, "M2A-3", depends_on=("M2A-1", "M2A-2")))),
+    "dag: the store starts depending on the reducer": (
+        "M2A-2 DEPENDS_ON ['M2A-1', 'M2A-3'] but the reviewed DAG says ['M2A-1']",
+        lambda: dag_problems(_swap(SIM, "M2A-2", depends_on=("M2A-1", "M2A-3")))),
+    "consumer: an unregistered app module imports the store": (
+        "app.core.m2a_sim_ext imports app.core.m2a_sim_store",
+        lambda: consumer_problems(None, {**SIM_VIRTUAL, "app.core.m2a_sim_ext": "from app.core import m2a_sim_store\n"},
+                                  SIM)),
+    "consumer: a script imports the reducer": (
+        "scripts.m2a_sim_ext imports app.core.m2a_sim_delta",
+        lambda: consumer_problems(None, {**SIM_VIRTUAL, "scripts.m2a_sim_ext": "from app.core import m2a_sim_delta\n"},
+                                  SIM)),
+    "consumer: the orchestrator imports the scope module": (
+        f"app.core.orchestrator imports {SIM_SCOPE}",
+        lambda: consumer_problems({"app.core.orchestrator": _source("app.core.orchestrator")
+                                   + f"\n\ndef _m2a():\n    import {SIM_SCOPE}\n"}, SIM_VIRTUAL, SIM)),
+    "legacy: conversation_store imports the store": (
+        f"legacy closure reaches {SIM_STORE}",
+        lambda: legacy_reach_problems(_conversation_store(f"\n\ndef _m2a():\n    import {SIM_STORE}\n"),
+                                      SIM_VIRTUAL, SIM)),
+    "legacy: foundation_runtime imports the reducer": (
+        f"Foundation runtime closure reaches {SIM_DELTA}",
+        lambda: legacy_reach_problems({"app.core.foundation_runtime": _source("app.core.foundation_runtime")
+                                       + f"\n\ndef _m2a():\n    import {SIM_DELTA}\n"}, SIM_VIRTUAL, SIM)),
+    "legacy: conversation_store imports the IR wire module": (
+        f"legacy closure reaches {LEGACY_MUST_STAY_OUT}",
+        lambda: legacy_reach_problems(_conversation_store(LATE_IMPORT_OF_IR), SIM_VIRTUAL, SIM)),
+    "registry: the reducer also registers the store's module": (
+        "registered twice",
+        lambda: registry_problems(_swap(SIM, "M2A-3", modules=(SIM_DELTA, SIM_SCOPE, SIM_STORE)),
+                                  _present(*SIM_VIRTUAL))),
+    "registry: the reducer registers a module that already existed": (
+        "already existed before M2a",
+        lambda: registry_problems(_swap(SIM, "M2A-3", modules=(SIM_DELTA, "app.core.polysemic")),
+                                  _present(*SIM_VIRTUAL))),
+    "registry: the store registers something outside app.core": (
+        "is not an app.core module",
+        lambda: registry_problems(_swap(SIM, "M2A-2", modules=(SIM_STORE, "app.main")), _present(*SIM_VIRTUAL))),
+    "registry: the store registers a module that does not exist": (
+        "does not exist",
+        lambda: registry_problems(_swap(SIM, "M2A-2", modules=(SIM_STORE, "app.core.m2a_sim_nowhere")),
+                                  _present(*SIM_VIRTUAL))),
+    "file: the reducer's registry file holds an import": (
+        "Import is not allowed", lambda: file_problems(_render(SIM[2]) + "import os\n")),
+    "file: the store's registry file computes its closure": (
+        "must be a literal",
+        lambda: file_problems(_render(SIM[1]).replace("CLOSURE = frozenset({", "CLOSURE = _BASE | frozenset({"))),
+    "file: the store's registry file names another step": (
+        "does not name this file",
+        lambda: step_from_namespace("m2a_2", {**_namespace_of(_render(SIM[1])), "STEP": "M2A-3"})[1]),
+    "source: the reducer names a legacy input type": (
+        "bridge identifier",
+        lambda: source_problems(SIM_VIRTUAL[SIM_DELTA] + "\ndef to_parsed_params(x):\n    pass\n")),
+    "source: the store imports a regex engine": (
+        "regex engine import", lambda: source_problems(SIM_VIRTUAL[SIM_STORE] + "\nimport re\n")),
+}
+
+
+@pytest.mark.parametrize("label", list(SIM_MUTANTS))
+def test_robustness_each_mutant_still_catches_its_own_on_the_simulated_registries(label):
+    expected, run = SIM_MUTANTS[label]
+    problems = run()
+    assert any(expected in problem for problem in problems), problems
 
 
 # ---- non-vacuity: imports, bridge, lexicon, dynamic import (the M2A-1a mutants, unchanged) -------------------------

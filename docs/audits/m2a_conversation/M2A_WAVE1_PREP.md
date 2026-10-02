@@ -98,7 +98,7 @@ Los mutantes usan módulos **virtuales** (fuentes en memoria): ningún mutante c
 cierto: la cláusula `name.startswith(FORBIDDEN_PREFIXES)` y la condición `relative == f"app/core/{stem}.py"` sobrevivían.
 Ahora la meta-mutación es **sistemática** y se corre sobre el candidato:
 
-- **Por función** (354 mutantes: manifiesto 4, paquete de registro 101, contrato de autoridad 45, fronteras 204): de a
+- **Por función** (363 mutantes: manifiesto 4, paquete de registro 101, contrato de autoridad 45, fronteras 213): de a
   uno, cada `if` e `if` en expresión (a `False` y a `True`), cada operando de `and`/`or`, cada filtro de comprensión,
   cada comparación invertida, cada resta o intersección de conjuntos, cada `not`, cada `append`/`extend`/`add` y el cuerpo
   entero. Los mutantes sobre anotaciones de tipo se excluyen (equivalentes). **3 supervivientes, los tres equivalentes:**
@@ -119,3 +119,23 @@ Lo que la primera pasada sistemática destapó (y ya tiene mutante): argumentos,
 indicador de import dinámico de un override; la resolución de imports relativos de paquetes; un paso que depende de uno
 inexistente; el autoimporte `foundation_geo_level`; `_module_name` de un `__init__.py`; primer enunciado que no es un
 docstring en un archivo de registro.
+
+## 10. Los carriles llenan sus registros (R2)
+
+Los registros de M2A-2 y M2A-3 están hechos para que los carriles los llenen; **ningún test de esta preparación puede
+depender de lo que un carril tenga escrito**. La composición real (R1 + M2A-2 + M2A-3) dejó dos tests míos en rojo porque
+derivaban sus pasos sintéticos de los registros reales y suponían que estaban vacíos. Lo que sí puede asumirse es
+`m2a_1.py`: es la fundación. Reparación:
+
+- **Mundo sintético** (`WORLD` en `tests/test_m2a_boundaries.py`): M2A-1 real y dos pasos de carril **vacíos** con el DAG
+  revisado. Todo mutante se construye sobre él; ninguno reutiliza un paso real de carril. `_graph(..., steps)` pone en
+  blanco los archivos reales que el registro real registra y el mundo no, de modo que ni lo que un carril importa ni lo que
+  deja de importar cambia el veredicto de un mutante. Con el registro real no se blanquea nada.
+- **Mutantes de contrato de autoridad** (`tests/test_foundation_authority_contract.py`): leen **sólo** sus fuentes
+  virtuales (`_only`), nunca el árbol real; los pines del árbol real siguen leyéndolo.
+- **Registros simulados llenos**: un M2A-2 con un módulo que importa `foundation_accepted` y `store_lock`, y un M2A-3 con
+  dos módulos sobre el vocabulario del IR v2. Todos los pines quedan en verde (también los archivos de registro, que se
+  generan y se validan), y 24 mutantes siguen cazando lo suyo sobre esos registros.
+- **Composición real** (merge desacoplado de R2 + `c6ca1ac6` + `f30e91ff`, sin commitear nada ajeno): todos los pines de
+  esta preparación pasan; los fallos que quedan son los fixtures de `tests/test_foundation_accepted_store.py` frente al tipo
+  canónico de M2A-3 y se resuelven en la integración (ver el reporte de R2).

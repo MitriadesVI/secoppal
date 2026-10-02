@@ -83,6 +83,12 @@ def _runtime_sources(virtual: dict[str, str] | None = None) -> dict[str, bytes]:
     return sources
 
 
+def _only(virtual: dict[str, str]) -> dict[str, bytes]:
+    """The sources of a mutant: ONLY its virtual modules. What the real tree (and so a lane's real files) holds can
+    never change the verdict of a mutant; the real-tree pins are the tests that read ``_runtime_sources()``."""
+    return {relative: text.encode("utf-8") for relative, text in virtual.items()}
+
+
 def _module_name(relative: str) -> str:
     parts = relative[: -len(".py")].split("/")
     return ".".join(parts[:-1] if parts[-1] == "__init__" else parts)
@@ -428,6 +434,7 @@ def test_only_the_ir_v2_and_the_authority_contract_import_the_geographic_level()
 
 
 # ---- non-vacuity of the C1.x amendment: virtual modules (no file is created) ----------------------------------------
+M2A_1_ONLY = frozenset({"app.core.foundation_accepted"})  # the one registered module a mutant may assume
 VIRTUAL_REGISTERED = "app/core/m2a_virtual_decoder.py"
 VIRTUAL_REGISTERED_NAME = "app.core.m2a_virtual_decoder"
 IMPORTS_ACCEPTED = "from app.core.foundation_accepted import AcceptedTurnRecord\n"
@@ -446,8 +453,8 @@ def test_c1x_control_the_real_importers_are_the_registered_modules_and_the_regis
 @pytest.mark.parametrize("relative", ["app/core/m2a_virtual_external.py", "app/m2a_virtual_external.py",
                                       "app/core/workflow/m2a_virtual_external.py"])
 def test_mutant_an_external_virtual_module_that_mentions_foundation_accepted_is_caught(relative):
-    sources = _runtime_sources({relative: IMPORTS_ACCEPTED})
-    assert closed_type_importer_offenders(sources, frozenset(registered_modules())) == [relative]
+    sources = _only({relative: IMPORTS_ACCEPTED})
+    assert closed_type_importer_offenders(sources, M2A_1_ONLY) == [relative]
 
 
 @pytest.mark.parametrize("source", [
@@ -455,46 +462,46 @@ def test_mutant_an_external_virtual_module_that_mentions_foundation_accepted_is_
     "def _late():\n    import importlib\n    return importlib.import_module('app.core.foundation_accepted')\n",
 ])
 def test_mutant_every_spelling_of_the_import_is_caught_in_an_unregistered_module(source):
-    sources = _runtime_sources({VIRTUAL_REGISTERED: source})
-    assert closed_type_importer_offenders(sources, frozenset(registered_modules())) == [VIRTUAL_REGISTERED]
+    sources = _only({VIRTUAL_REGISTERED: source})
+    assert closed_type_importer_offenders(sources, M2A_1_ONLY) == [VIRTUAL_REGISTERED]
 
 
 def test_c1x_control_a_registered_virtual_module_may_import_foundation_accepted():
-    sources = _runtime_sources({VIRTUAL_REGISTERED: IMPORTS_ACCEPTED})
-    registered = frozenset(registered_modules()) | {VIRTUAL_REGISTERED_NAME}
+    sources = _only({VIRTUAL_REGISTERED: IMPORTS_ACCEPTED})
+    registered = M2A_1_ONLY | {VIRTUAL_REGISTERED_NAME}
     assert closed_type_importer_offenders(sources, registered) == []
     assert c1_1_import_offenders(sources) == [] and not geo_level_importers(sources) - GEO_LEVEL_IMPORTERS
 
 
 def test_a_comment_that_names_foundation_accepted_is_not_an_import():
-    sources = _runtime_sources({VIRTUAL_REGISTERED: "# decodes through foundation_accepted\nX = 1\n"})
-    assert closed_type_importer_offenders(sources, frozenset(registered_modules())) == []
+    sources = _only({VIRTUAL_REGISTERED: "# decodes through foundation_accepted\nX = 1\n"})
+    assert closed_type_importer_offenders(sources, M2A_1_ONLY) == []
 
 
 def test_mutant_registering_a_module_does_not_grant_it_the_closed_types():
     """Registered: it may consume M2a (the amendment) but ``foundation_authority_values`` stays an offence."""
-    sources = _runtime_sources({VIRTUAL_REGISTERED: IMPORTS_ACCEPTED + IMPORTS_VALUES})
-    registered = frozenset(registered_modules()) | {VIRTUAL_REGISTERED_NAME}
+    sources = _only({VIRTUAL_REGISTERED: IMPORTS_ACCEPTED + IMPORTS_VALUES})
+    registered = M2A_1_ONLY | {VIRTUAL_REGISTERED_NAME}
     assert closed_type_importer_offenders(sources, registered) == []
     assert c1_1_import_offenders(sources) == [VIRTUAL_REGISTERED]
 
 
 @pytest.mark.parametrize("relative", [VIRTUAL_REGISTERED, "app/core/m2a_virtual_external.py"])
 def test_mutant_a_module_that_imports_foundation_authority_values_is_an_offender(relative):
-    assert c1_1_import_offenders(_runtime_sources({relative: IMPORTS_VALUES})) == [relative]
+    assert c1_1_import_offenders(_only({relative: IMPORTS_VALUES})) == [relative]
 
 
 @pytest.mark.parametrize("relative", ["app/core/workflow/foundation_accepted.py", "app/foundation_accepted.py",
                                       "app/data/foundation_accepted.py", "app/core/host_data/foundation_accepted.py"])
 def test_mutant_the_closed_type_exception_belongs_to_the_one_real_path_only(relative):
     """A module that merely SHARES the stem of the closed-type consumer (another directory) gets no exception."""
-    assert c1_1_import_offenders(_runtime_sources({relative: IMPORTS_VALUES})) == [relative]
+    assert c1_1_import_offenders(_only({relative: IMPORTS_VALUES})) == [relative]
 
 
 @pytest.mark.parametrize("module", ["foundation_authority_contract", "foundation_evidence_window",
                                     "foundation_authority_registry", "host_authorities"])
 def test_mutant_a_registered_module_that_imports_any_other_c1_1_module_is_an_offender(module):
-    sources = _runtime_sources({VIRTUAL_REGISTERED: IMPORTS_ACCEPTED + f"from app.core import {module}\n"})
+    sources = _only({VIRTUAL_REGISTERED: IMPORTS_ACCEPTED + f"from app.core import {module}\n"})
     assert c1_1_import_offenders(sources) == [VIRTUAL_REGISTERED]
 
 
@@ -507,7 +514,7 @@ def test_c1_1_control_foundation_accepted_itself_may_import_the_closed_types_and
 
 def test_mutant_a_registered_module_that_imports_the_geographic_level_directly_is_caught():
     """Decision 3: the other M2a modules decode through ``foundation_accepted``; the level has no new importer."""
-    sources = _runtime_sources({VIRTUAL_REGISTERED: IMPORTS_ACCEPTED + IMPORTS_GEO_LEVEL})
+    sources = _only({VIRTUAL_REGISTERED: IMPORTS_ACCEPTED + IMPORTS_GEO_LEVEL})
     assert geo_level_importers(sources) - GEO_LEVEL_IMPORTERS == {"m2a_virtual_decoder"}
 
 
@@ -516,9 +523,9 @@ def test_a_registered_package_is_named_by_its_directory_not_by_its_init():
     assert _module_name("app/core/pkg/__init__.py") == "app.core.pkg"
     assert _module_name("app/core/pkg/leaf.py") == "app.core.pkg.leaf"
     relative = "app/core/m2a_virtual_pkg/__init__.py"
-    sources = _runtime_sources({relative: IMPORTS_ACCEPTED})
-    assert closed_type_importer_offenders(sources, frozenset(registered_modules())) == [relative]
-    registered = frozenset(registered_modules()) | {"app.core.m2a_virtual_pkg"}
+    sources = _only({relative: IMPORTS_ACCEPTED})
+    assert closed_type_importer_offenders(sources, M2A_1_ONLY) == [relative]
+    registered = M2A_1_ONLY | {"app.core.m2a_virtual_pkg"}
     assert closed_type_importer_offenders(sources, registered) == []
 
 
@@ -526,6 +533,23 @@ def test_the_geographic_level_module_does_not_count_as_its_own_importer():
     own = {"app/core/foundation_geo_level.py": b"# the level\nfoundation_geo_level = 1\n"}
     assert geo_level_importers(own) == set()
     assert geo_level_importers({**own, "app/core/other.py": b"import foundation_geo_level\n"}) == {"other"}
+
+
+def test_robustness_simulated_filled_lane_modules_are_clean_and_each_mutant_still_catches_its_own():
+    """The lanes' real files are theirs. Over SIMULATED registered modules (a store over ``store_lock``, a reducer
+    split in two) the C1.x pins are green and every mutant on them still speaks."""
+    stems = ("m2a_sim_store", "m2a_sim_delta", "m2a_sim_scope")
+    simulated = {f"app/core/{stem}.py": IMPORTS_ACCEPTED + "import app.core.store_lock\n" for stem in stems}
+    registered = M2A_1_ONLY | {f"app.core.{stem}" for stem in stems}
+    assert closed_type_importer_offenders(_only(simulated), registered) == []
+    assert c1_1_import_offenders(_only(simulated)) == []
+    assert not geo_level_importers(_only(simulated)) - GEO_LEVEL_IMPORTERS
+    assert closed_type_importer_offenders(_only(simulated), M2A_1_ONLY) == sorted(simulated)  # unregistered: caught
+    for relative in simulated:
+        stem = Path(relative).stem
+        assert c1_1_import_offenders(_only({**simulated, relative: simulated[relative] + IMPORTS_VALUES})) == [relative]
+        assert geo_level_importers(_only({**simulated, relative: simulated[relative] + IMPORTS_GEO_LEVEL})
+                                   ) - GEO_LEVEL_IMPORTERS == {stem}
 
 
 def test_the_runtime_scan_covers_the_whole_app_tree_not_only_app_core():
