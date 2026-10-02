@@ -476,22 +476,24 @@ def test_a_world_blanks_the_real_lane_modules_it_does_not_register_and_the_real_
 def test_the_pins_of_a_world_ignore_what_a_real_lane_file_imports(monkeypatch):
     """A lane's real file is not on disk in this prep, so a patched graph node stands in for it: it imports M2A-1 and a
     module that legacy reaches. For a world that does not register it that is nothing; for the registry that does, it
-    is judged as a registered module should be."""
+    is judged as a registered module should be. The registry patched in keeps whatever the REAL lanes register (so the
+    world must blank those too): this test holds with the lanes empty and with them filled."""
     lane = "app.core.m2a_lane_stand_in"
     index, graph, flagged = build_graph()
     index = {**index, lane: ROOT / "app/core/m2a_lane_stand_in.py"}
     graph = {**graph, lane: {MODULE, "app.core.money_polarity"},
              "app.core.conversation_store": graph["app.core.conversation_store"] | {lane}}
     monkeypatch.setitem(globals(), "build_graph", lambda: (index, graph, flagged))
-    registered = (_real("M2A-1"), _step("M2A-2", (lane,), ("M2A-1",)), _step("M2A-3", (), ("M2A-1",)))
+    lanes = {step.name: step for step in STEPS}
+    registered = (_real("M2A-1"), _step("M2A-2", (*lanes["M2A-2"].modules, lane), ("M2A-1",)),
+                  _step("M2A-3", lanes["M2A-3"].modules, ("M2A-1",)))
     monkeypatch.setitem(globals(), "STEPS", registered)
     virtual = {VIRTUAL_A: ON_M2A_1 + f"import {lane}\n"}
     world = (*WORLD, _step("M2A-S1", (VIRTUAL_A,), ("M2A-1",), {VIRTUAL_A, lane}))
     assert consumer_problems(None, None, WORLD) == []  # not registered here: the lane's file is not a consumer
     assert legacy_reach_problems(None, None, WORLD) == []  # ...nor does legacy reach M2A-1 through it
     assert closure_problems(None, virtual, world) == []  # ...nor does its money_polarity edge enter a closure
-    assert consumer_problems(None, None, registered) == [  # registered: only legacy's import of it is a consumer
-        f"app.core.conversation_store imports {lane}"]
+    assert f"app.core.conversation_store imports {lane}" in consumer_problems(None, None, registered)  # registered
     assert any(f"legacy closure reaches {lane}" in p for p in legacy_reach_problems(None, None, registered))
     assert any("M2A-2: closure reaches app.core.money_polarity" in p
                for p in closure_problems(None, None, registered))  # registered: its real edges count
