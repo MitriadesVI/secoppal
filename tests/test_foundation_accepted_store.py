@@ -303,7 +303,8 @@ def check_empty_is_not_unreadable(m, root):
 @check
 def check_byte_identity(m, root):
     w = World(m, root)
-    rec = make_record("t1", conditions=("topic", "buyer"), turn_id="turno-ñandú-✓")
+    # non-ASCII, an astral character, a lone surrogate and U+2028 all survive as plain ASCII escapes
+    rec = make_record("t1", conditions=("topic", "buyer"), turn_id="turno-ñandú-✓ \U0001F600 \ud800 \u2028")
     w.put(rec)
     got = w.read()
     assert got.status is m.StoreStatus.OK and got.records == (rec,)  # exactly what was written ...
