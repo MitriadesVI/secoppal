@@ -17,6 +17,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from app.core.contract_invariants import INVALID_CONTRACT_STATES
 from app.core.estado_families import ESTADO_FAMILIES, process_state_field
 from app.core.host_authorities.datasets import CONTRACTS, PROCESSES
 from app.data.estados import (
@@ -91,8 +92,12 @@ LEXICON: dict[tuple[str, ...], StateReading] = {
 }
 
 # Words that name a state SECOP has no literal for: clarified with a closed reason, never approximated.
+# «firmado»/«celebrado» are the contract states the invariants forbid as a SECOP value: they are read from
+# their single source of truth (``INVALID_CONTRACT_STATES``), never retyped here. The rest is this
+# authority's own lexicon of words with no literal in either dataset.
 KNOWN_UNREPRESENTABLE = frozenset({
-    ("liquidado",), ("firmado",), ("celebrado",), ("aprobado",), ("en", "aprobacion"), ("desierto",),
+    *((state,) for state in INVALID_CONTRACT_STATES),
+    ("liquidado",), ("aprobado",), ("en", "aprobacion"), ("desierto",),
     ("revocado",), ("modificado",), ("prorrogado",), ("finalizado",), ("enviado", "proveedor"),
 })
 

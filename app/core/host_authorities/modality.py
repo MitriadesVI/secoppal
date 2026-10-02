@@ -14,7 +14,8 @@ the answer to THIS condition:
   negation as an exclusion and the old host mixed ``includes + excludes``.  It is
   ``OPERATOR_EVIDENCE_MISMATCH:MODALITY``.  A NEGATIVE condition is honoured as ``excluded`` (NOT IN the
   procedures); the negation may be inside the cite or outside it (the condition's own polarity);
-* exact reading: the cite must be only the modality (plus the negation scaffold).  «directa o licitación»
+* exact reading: the cite must be only the modality (plus the scaffold BEFORE it: negation, preposition,
+  article, copula; a scaffold word AFTER it is residue).  «directa o licitación»
   (A2 MODALITY-033: only «licitación» survived), «licitación pública de obra» or two modalities in one cite
   leave residue and are ``RESIDUE_UNREAD:MODALITY``;
 * strength: only ``exact_legal`` / ``exact_common`` execute; ``contextual`` / ``legacy_raw`` clarify;
@@ -111,6 +112,12 @@ class ModalityAuthority:
             return _reject("OPERATOR_EVIDENCE_MISMATCH:MODALITY", "MODALITY_NEGATION_IN_POSITIVE_CITE")
         if negated and not (resolution.excludes and not resolution.includes):
             return _reject("RESIDUE_UNREAD:MODALITY", "MODALITY_NEGATION_NOT_BOUND")
+        # The scaffold («que no sean de», «por», «las») only PRECEDES the modality, as in STATE: whatever
+        # follows it is residue even when it is a scaffold word («acuerdo marco sea», «contratación
+        # directa son»), because nothing in the cite reads it.  After the negation checks, which keep their
+        # own diagnosis for a trailing «no / ni / sin».
+        if window_tokens(quote[match.original_end:]):
+            return _reject("RESIDUE_UNREAD:MODALITY", "MODALITY_QUOTE_NOT_FULLY_READ")
         excluded = evidence.polarity is Polarity.NEGATIVE
 
         if match.strength is MatchStrength.COLLOQUIAL or match.assumption_code:

@@ -5,7 +5,7 @@ from dataclasses import replace
 from itertools import permutations
 
 import pytest
-from hypothesis import given, settings, strategies as st
+from hypothesis import example, given, settings, strategies as st
 
 from app.core.foundation_authority_contract import AuthorityContext, ModalityValue, decode_value
 from app.core.foundation_projection import MODALITY_FAMILIES
@@ -340,8 +340,19 @@ def test_the_context_around_the_cite_never_changes_the_value():
 _WORD = st.text(alphabet="abcdefghijklmnopqrstuvwxyz", min_size=3, max_size=9)
 
 
-@settings(max_examples=120, deadline=None)
+# derandomize + no database: the run never depends on ``.hypothesis`` nor on the seed of the day.  The
+# scaffold words (``mod.SCAFFOLD_TOKENS``) that used to slip through are pinned as examples, and
+# ``test_a_scaffold_word_after_the_modality_is_residue`` enumerates them against every phrase.
+@settings(max_examples=120, deadline=None, derandomize=True, database=None)
 @given(junk=_WORD, index=st.integers(0, 9))
+@example(junk="sea", index=0)
+@example(junk="son", index=1)
+@example(junk="las", index=2)
+@example(junk="del", index=3)
+@example(junk="que", index=4)
+@example(junk="por", index=5)
+@example(junk="los", index=6)
+@example(junk="una", index=7)
 def test_property_an_unread_word_in_the_cite_never_resolves(junk, index):
     phrases = sorted({phrase for rule, phrase in _phrases() if rule.match_strength != "colloquial"})
     phrase = phrases[index % len(phrases)]
@@ -349,6 +360,30 @@ def test_property_an_unread_word_in_the_cite_never_resolves(junk, index):
     verdict = run(f"procesos por {quote}", quote, "family", POS)
     if verdict.decision is RESOLVED:  # only when the junk word is itself part of a catalog phrase
         assert any(quote.lower() == p.lower() or junk in p.lower() for p in phrases), quote
+
+
+@pytest.mark.parametrize("raw, needle", [
+    ("procesos por acuerdo marco sea", "acuerdo marco sea"),
+    ("procesos por contratación directa son", "contratación directa son"),
+    ("procesos por licitación pública las", "licitación pública las"),
+])
+def test_the_hypothesis_reproducers_are_residue(raw, needle):
+    assert reasons(run(raw, needle)) == ("RESIDUE_UNREAD:MODALITY", "MODALITY_QUOTE_NOT_FULLY_READ")
+
+
+def test_a_scaffold_word_after_the_modality_is_residue():
+    """The scaffold precedes the modality; after it, a scaffold word is as unread as any other word."""
+    phrases = sorted({phrase for rule, phrase in _phrases() if rule.match_strength != "colloquial"})
+    assert phrases and mod.SCAFFOLD_TOKENS
+    for phrase in phrases:
+        for word in sorted(mod.SCAFFOLD_TOKENS):
+            for polarity in (POS, NEG):
+                quote = f"{phrase} {word}"
+                verdict = run(f"procesos por {quote}", quote, "family", polarity)
+                assert verdict.decision is not RESOLVED, (quote, polarity)
+        # ... while the same scaffold BEFORE the phrase is still read
+        assert reasons(run(f"procesos por {phrase}", f"por {phrase}", "family", POS)) \
+            == reasons(run(f"procesos por {phrase}", phrase, "family", POS)), phrase
 
 
 # ---- 7. Gold slice (synthetic) with the oracle IR ---------------------------------------------------------------
