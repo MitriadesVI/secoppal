@@ -45,6 +45,11 @@ Cada cambio deja su rastro en las notas de la etiqueta afectada (`| U3 (usuario,
 3. **SF195, `polarity` de `SET_ORDER`.** A pone `POSITIVE` y B `null`. No se adjudicó, así que queda tal cual en cada
    etiqueta. La convención del Gold es `POSITIVE` (48 de 48), y ninguna regla del verificador la lee.
 4. **SF192 `gap_codes = ["SET"]`.** A y B coinciden; queda tal cual.
+5. **SF192, alternativas parciales (R3b, U23).** El registro sellado declara que sus alternativas son **parciales**:
+   el campo `partial_alternatives` nombra la dependencia (`DEP-E-ORDER-CANDIDATES`, `COMPOSICION`, §19) y dice qué se
+   sella (C1) y qué queda pendiente de E-ORDER (los `SET_ORDER`). Lo provisional no se sella como normativo. Lo escribe
+   `build_sealed_gold.py` (`U3_RECORD_FIELDS`), y el extractor de §19 falla si la declaración no nombra una fila
+   `COMPOSICION` que contenga el caso. Entra en el sello en el re-sellado único de R3b-2.
 
 ## Partición DEV/TEST
 

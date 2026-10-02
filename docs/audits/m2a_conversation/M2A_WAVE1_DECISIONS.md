@@ -211,6 +211,95 @@ Los marcados «a completar» los completa el orquestador al integrar.
 - **Si cambia, tocar.** Contrato §19; `extract_contract_dependencies.py` (`OWNERS` / `OWNER_CELLS`); matriz X05;
   documentación del oráculo (rama 8a0).
 
+### U20. Ley de la pendiente posible (ZEUS P1-1 y P1-2, 2026-10-02)
+- **Decisión.** Una `PendingClarification` sólo existe si su `frame` (base + parche sin las operaciones del span
+  abierto) es una `AcceptedInterpretation` válida y cada candidato compone sobre él. Si no, `INFORM`, 0 llamadas, ancla
+  intacta y sin pendiente.
+  - Las causas de rechazo tienen una precedencia cerrada y se deciden antes de H1. Con dos o más causas, `INFORM` con
+    el código de mayor precedencia; el mensaje nombra todas y el registro guarda sólo ese código.
+  - Sobre un ancla vencida sólo puede nacer `CONTEXT_EXPIRED_CONFIRM`, y sólo si «continuar» compone y ejecuta.
+  - Una lista cerrada de códigos de `CLARIFY` vale también con `INFORM`.
+  - «Dame 20» con la pendiente de R3-1: mientras IR v2 rechace un `FOLLOWUP_DELTA` sólo con CARDINALITY, es §7.1
+    fila 4b (`INFORM UNSUPPORTED_PROPOSAL:INVALID_PROPOSAL`) con la pendiente intacta.
+- **Quién.** Usuario (dentro de R3).
+- **Motivo.** NO_GO de ZEUS sobre `4cf1cad3`: el contrato permitía pendientes imposibles y un test construía la
+  respuesta saltándose el wire.
+- **Dónde.** Contrato §6 paso 3b y H1, §6.7, §8.4, §10.1, A.3, INV-M2A-26 y Anexo D.3 (R3b-1); barrido, filas S08 y
+  S10–S12 y pins R3b (`tests/test_m2a_contract_r3_sweep.py`); verificador G9 (pares disposición↔código) y sus mutantes.
+- **Si cambia, tocar.** Contrato §6, §8.4, A.3 y D.3; matriz (filas R3b); barrido; `check_m2a_gold_contract.py`.
+
+### U21. Gate multi-op de INV-M2A-25
+- **Decisión.** Antes del re-sellado, INV-M2A-25 se comprueba con varias operaciones, a nivel contrato, sobre un modelo
+  simbólico de ocupación de ranuras derivado del contrato y de las tablas del código:
+  - barrido exhaustivo por parejas × ocupación de la base;
+  - Hypothesis con N operaciones e invariancia a la permutación.
+
+  Cada combinación tiene una sola respuesta representable. La misma propiedad sobre el `compose` real es gate de M2A-3
+  fase 2. Las precisiones fail-closed que el barrido forzó constan en el Anexo D.3, pendientes de confirmación del
+  usuario.
+- **Quién.** Usuario.
+- **Motivo.** El hallazgo de ZEUS era multi-operación y el barrido de R3 era de una operación.
+- **Dónde.** `tests/test_m2a_contract_r3_multiop.py`; contrato §8.4 y §18 (R3b-1).
+- **Si cambia, tocar.** Contrato §18 y D.3; matriz; `M2A_IMPLEMENTATION_PLAN.md` (fila M2A-3, fase 2) al integrar.
+
+### U22. `KEEP` + `SET`, selección semántica y alcance de `REASK`
+- **Decisión.**
+  - `KEEP` + `SET`/`SET_ORDER` de la misma ranura ⇒ `DELTA_SLOT_CONFLICT`, aunque los valores coincidan.
+  - Un candidato se selecciona por identidad semántica: (op, ranura, valor canónico) o (`REPLACE_UNIVERSE`, destino).
+    Nunca por texto ni ids. Seleccionar compone el parche completo del candidato. Una edición de otra ranura es §8.3
+    fila 5 (`REASK ANSWER_EDITS_OTHER_SLOT`).
+  - Un rechazo con pendiente vigente vuelve al alcance decidido en R3-2: `REASK` si había pendiente.
+- **Quién.** Usuario.
+- **Motivo.** ZEUS P2.
+- **Dónde.** Contrato §6 paso 2, §8.3 «Selección» y párrafo de códigos de rechazo (R3b-1); barrido
+  (`test_d1_option1_answers_go_through_the_wire_and_select_by_semantic_identity`).
+- **Si cambia, tocar.** Contrato §6 y §8.3; matriz; barrido.
+
+### U23. §19, única autoridad de dependencias, con impacto en M2A-3
+- **Decisión.** Cada fila de §19 declara:
+  - ids explícitos (también `[]`) y un conteo verificable;
+  - un dueño de la lista cerrada;
+  - `impacto_m2a3`:
+    - `LECTURA` si hace falta para pasar del lenguaje al IR; el reducer es medible;
+    - `COMPOSICION` si hace falta para decidir o componer el estado; el reducer no es medible todavía.
+
+  E-ORDER enumera sus casos en §19. SF166, SF168 y R0303 no son dependencia (H3 puro). Las alternativas selladas de
+  SF192 se marcan parciales y dependientes de E-ORDER (`partial_alternatives`, `DEP-E-ORDER-CANDIDATES`), sin sellar
+  lo provisional como normativo.
+
+  El extractor falla cerrado ante:
+  - un id desconocido o con otra forma;
+  - un conteo que no coincide con los ids;
+  - un dueño o un impacto desconocidos;
+  - cualquier discrepancia con el índice o los registros sellados.
+
+  Hay un test por cada modo de fallo.
+- **Quién.** Usuario.
+- **Motivo.** ZEUS P1-3.
+- **Dónde.** Contrato §19 (R3b-1); `extract_contract_dependencies.py` (esquema `m2a-contract-s19/2`);
+  `build_sealed_gold.py` (`U3_RECORD_FIELDS`); `tests/test_m2a_contract_s19_extraction.py`.
+- **Si cambia, tocar.** Contrato §19; extractor; matriz X05; documentación del oráculo (rama 8a0).
+
+### U24. Controles mínimos del Gold
+- **Decisión.** Antes del re-sellado se etiquetan a ciegas (A/B) los controles SF196–SF202:
+  - dos causas a la vez;
+  - `KEEP` + `SET` de la misma ranura, con valor distinto y con el mismo valor;
+  - ancla vencida cuyo candidato no puede resolverse;
+  - «dame 20» con la pendiente de R3-1;
+  - selección por clave semántica y edición de otra ranura.
+
+  El Gold puede pasar de 203 casos.
+- **Quién.** Usuario.
+- **Motivo.** Que el Gold sellado fije el contrato R3b, no sólo el barrido.
+- **Dónde.** `docs/audits/m2a_conversation/labeling_r3b/R3B_LABELER_INPUT.md` (R3b-1); adjudicación y re-sellado en
+  R3b-2.
+- **Si cambia, tocar.** Entrada de etiquetado; `ADJUDICATION_R3.md`; `build_sealed_gold.py` (U3); sello.
+
+## Estado
+
+- **M2A-3 LANGUAGE R3 = FROZEN.** Se activa con el GO de ZEUS sobre el re-sellado de R3b-2 (contrato §20.4). Hasta
+  entonces, R3 sigue abierto sólo para R3b.
+
 ## Decisiones del orquestador (no-producto)
 
 ### O1. El almacén va a `.gitignore`
@@ -261,4 +350,5 @@ Los marcados «a completar» los completa el orquestador al integrar.
 | `a90d6ad0` | B1-fix: D-1 opción 1, D-6 aprobado, Anexo D.2 resuelto |
 | `76303e02` | B1-fix: este registro (U1–U17, O1–O5) |
 | `379ca3db` | B4: re-sellado único r3 (sello `3fdd81df…`), U3, P-3 (U18) y §19 sellado (U19) |
-| commit siguiente a `379ca3db` | B4: U18, U19 y casos adjudicados en la matriz |
+| `4cf1cad3` | B4: U18, U19 y casos adjudicados en la matriz |
+| los dos commits siguientes a `4cf1cad3` | R3b-1: reparación del NO_GO de ZEUS (U20–U24), sin re-sellar: contrato, herramientas y gates; después, entrada de etiquetado, registro y matriz |
