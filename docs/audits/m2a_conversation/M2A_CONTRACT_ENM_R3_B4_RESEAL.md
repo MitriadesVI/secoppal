@@ -1,6 +1,22 @@
 # M2A — Enmienda R3, paso B4: procedimiento de re-sellado (release r3)
 
-**Estado:** procedimiento escrito en B1; **no ejecutado**. **Rama:** `mission/m2a-contract-enm-r3` (mismo worktree).
+> **EJECUTADO** el 2026-10-02 en `379ca3db`: sello `3fdd81df…`, 203 + 57 casos. En qué se apartó la ejecución del
+> texto de abajo, todo decidido por el usuario o derivado de sus decisiones:
+>
+> - **Adiciones.** No hay `ADDITIONS_R3_synthetic.jsonl`. `build_sealed_gold.py` (`u3_additions`) construye los cuatro
+>   registros desde las etiquetas ciegas literales (`labeling_r3/labels_{A,B}.jsonl`, selladas) y aplica sólo la
+>   adjudicación U3. Así la procedencia se reproduce.
+> - **G9 de `DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER`.** Exige **exactamente C1**, porque el usuario decidió sellar sólo
+>   C1 (los `SET_ORDER` son de E-ORDER, §19). G9 añade `KEEP_ON_EMPTY_SLOT`, y G10 añade la rama fail-closed de F16 y
+>   P-3 (U18).
+> - **Vocabulario de razones del verificador.** Se lee del A.3 del contrato con el parser único
+>   (`m2a_contract_text.py`), con las colas acotadas por el contrato.
+> - **U19.** Extracción generada y sellada de §19 (`gold/CONTRACT_S19_DEPENDENCIES.json`), con el gate
+>   `contract_dependencies_reproduce` en `m2a_gold_seal.py verify`.
+>
+> Detalle de la adjudicación y de la partición: `gold/ADJUDICATION_R3.md`.
+
+**Estado (B1):** procedimiento escrito en B1. **Rama:** `mission/m2a-contract-enm-r3` (mismo worktree).
 **Contrato:** `docs/decisions/M2A_CONVERSATION_CONTRACT_V1.md`, con la enmienda R3 (Anexo D). **Casos:** SF192–SF195
 (U3), entrada en `docs/audits/m2a_conversation/labeling_r3/R3_LABELER_INPUT.md`.
 

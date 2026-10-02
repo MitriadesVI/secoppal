@@ -1,6 +1,6 @@
 # M2A — Matriz de trazabilidad
 
-**Fecha:** 2026-10-01; **enmendada 2026-10-02 (R3**, contrato Anexo D: filas T14–T17, N06, P11, M10, X03, X04 y la reconciliación «CLEAR(ORDER) con CARDINALITY»). **Contrato:** `docs/decisions/M2A_CONVERSATION_CONTRACT_V1.md` (§ = sección del contrato).
+**Fecha:** 2026-10-01; **enmendada 2026-10-02 (R3**, contrato Anexo D: filas T14–T17, N06, P11, M10, M11, X03–X05 y la reconciliación «CLEAR(ORDER) con CARDINALITY»; casos asignados en B4, `379ca3db`). **Contrato:** `docs/decisions/M2A_CONVERSATION_CONTRACT_V1.md` (§ = sección del contrato).
 **Gold:** `docs/audits/m2a_conversation/gold/M2A_GOLD_SEAL.json` (199 casos, release r2 con U1/U2/D1; ids `R…` = REAL, texto
 fuera de git; `SF…` = sintético).
 
@@ -26,8 +26,8 @@ verificará.
 | T10 | `REPLACE_UNIVERSE`; ancla dual se queda con el nombrado; `UNIVERSE_CHANGED` (§5.2, §14) | F1 (`SET_UNIVERSE`), D7 «REPLACE de universo» | R0094, SF073–SF080, SF131, SF186, SF187 | `PatchOp(REPLACE_UNIVERSE)` | M2A-3: INV-M2A-11 |
 | T11 | Estado/modalidad inexistente en el universo resultante ⇒ CLARIFY (§6 H8) | F27 | SF079 | regla H8 sobre `state@1.literals` por dataset | M2A-3 |
 | T12 | Re-consulta, no filtro de lo mostrado («los de mayor valor», «los que…») (§9) | F4; clasificación SF017 | 47 con `refers_to_result_set` (p. ej. R0079, R0083, R0087, R0089, R0099, R0223, R0459, SF003, SF017…) | `semantic_ref` (no `result_set_ref`) | M2A-3/M2A-6: INV-M2A-22 |
-| T14 | CARDINALITY sin ORDER tras componer ⇒ rechazo `DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER` y `CLARIFY`, base intacta; decidido sobre el estado (§6.7) | usuario 2026-10-02 (STOP-2 de M2A-3; D-1, D-2); `M2A_DESIGN_v2.md:240` | SF192–SF195 se asignan en B4, tras la adjudicación ciega | `DeltaRefusal` + pendiente con un candidato | M2A-3: INV-M2A-01, -16, -25; mutantes «conserva la CARDINALITY sin ORDER» y «la borra sin cita» |
-| T15 | Todo `DeltaRefusal` tiene código de A.3 (§6, tabla) | barrido R3 (R3-2) | SF192–SF195 se asignan en B4, tras la adjudicación ciega | tabla `DeltaRefusal` → A.3 | M2A-3/M2A-4: INV-M2A-25 |
+| T14 | CARDINALITY sin ORDER tras componer ⇒ rechazo `DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER` y `CLARIFY`, base intacta; decidido sobre el estado (§6.7) | usuario 2026-10-02 (STOP-2 de M2A-3; D-1, D-2); `M2A_DESIGN_v2.md:240` | SF192 (+ SF195, control: `CLEAR(ORDER)`+`SET_ORDER` conserva la CARDINALITY) | `DeltaRefusal` + pendiente con un candidato | M2A-3: INV-M2A-01, -16, -25; mutantes «conserva la CARDINALITY sin ORDER» y «la borra sin cita» |
+| T15 | Todo `DeltaRefusal` tiene código de A.3 (§6, tabla) | barrido R3 (R3-2) | SF193 (`KEEP_ON_EMPTY_SLOT`) | tabla `DeltaRefusal` → A.3 | M2A-3/M2A-4: INV-M2A-25 |
 | T16 | `<DIM>` recorre las claves de dimensión de las ranuras, incluida UNIVERSE (A.3) | barrido R3 (R3-3); STOP-1 de M2A-3 | SF075 (rojo declarado, dependencia `FOUNDATION_O1B_EXPLICIT_TIME_PARITY`) | `UNRESOLVED_VALUE:UNIVERSE`, `OP_NOT_ACCREDITED:UNIVERSE` | M2A-3 fase 1c (tipo): INV-M2A-25 |
 | T17 | `REPLACE_UNIVERSE` con ancla dual estrecha `request_ids` de lo arrastrado (§6.3) | barrido R3 (P-1); R5 de M2A-3 | SF076, SF077 | excepción de §6.3 | M2A-3: INV-M2A-02 |
 | T13 | Composición determinista; `interpretation_hash` de la efectiva (§4.3, §12) | D7 «Eco y hashes» | los 199 | `_digest(AcceptedInterpretation)` | M2A-1: propiedad de determinismo; INV-M2A-06 (`plan_hash` del primer turno igual) |
@@ -57,7 +57,7 @@ verificará.
 | P08 | Rechazo citado + fragmento ⇒ cancela y aplica sobre el marco (§8.3.2, §17.3) | F23, A7 (base = marco) | SF191 (y SF063 con búsqueda nueva) | directiva `CANCEL_PENDING` | M2A-4: INV-M2A-08, -23 |
 | P09 | Ambigüedad con dos lecturas ⇒ CLARIFY con 2 `candidate_patches` (§6 H5/H6) | F12, F30 | SF163 (BUYER/lugar); SF123, SF155 (territorio) | `CandidatePatch` (pueden tocar varias ranuras) | M2A-4 |
 | P10 | Sin pregunta respondida ni rechazo ⇒ REASK (§8.3.8) | F29 | — (sin caso en Gold; regla de protocolo) | regla de §8.3 | M2A-4 |
-| P11 | Retirar el ORDER con top-N ⇒ pendiente con C1 «quitar orden y límite» + un `SET_ORDER` por cada criterio de orden alternativo del dataset (resueltos al preguntar, sin el vigente), `answer_slots = {ORDER, CARDINALITY}`; «por fecha» selecciona su candidato (§8.3 fila 4, texto sellado), «dame 20» ⇒ `REASK ANSWER_UNRESOLVED`, «déjalo como estaba» = `CANCEL_PENDING`; sin E-ORDER, sólo C1 (§6.7, §19) | usuario 2026-10-02 (D-1, opción 1 del orquestador) | SF192–SF195 se asignan en B4, tras la adjudicación ciega | `CandidatePatch` (C1 + `SET_ORDER`) | M2A-4: INV-M2A-08, -25 |
+| P11 | Retirar el ORDER con top-N ⇒ pendiente con C1 «quitar orden y límite» + un `SET_ORDER` por cada criterio de orden alternativo del dataset (resueltos al preguntar, sin el vigente), `answer_slots = {ORDER, CARDINALITY}`; «por fecha» selecciona su candidato (§8.3 fila 4, texto sellado), «dame 20» ⇒ `REASK ANSWER_UNRESOLVED`, «déjalo como estaba» = `CANCEL_PENDING`; sin E-ORDER, sólo C1 (§6.7, §19) | usuario 2026-10-02 (D-1, opción 1 del orquestador) | SF192 (sellado sólo C1; los `SET_ORDER` son de E-ORDER, §19) | `CandidatePatch` (C1 + `SET_ORDER`) | M2A-4: INV-M2A-08, -25 |
 
 ## 4. Referentes, vigencia y fallo de fuente
 
@@ -100,7 +100,8 @@ verificará.
 | M07 | Negar el único positivo lo invierte (§6.5) | F16 | SF011, SF012 | sustitución declarada `POLARITY_INVERTED` | M2A-3: INV-M2A-19 |
 | M08 | Negar otro valor añade la exclusión (§6.5) | F17 | SF001, SF003, SF005, SF007, SF009, SF014 | `SET` negativo | M2A-3: INV-M2A-19 |
 | M09 | Región fuera de la lista ⇒ CLARIFY (§6 H7) | F13 | SF159 | regla H7 | E-GEO + M2A-3 |
-| M10 | Negar sobre varios positivos o un valor contenido ⇒ `OP_NOT_ACCREDITED:<DIM>` ⇒ `CLARIFY UNRESOLVED_VALUE:<DIM>` (§6.5) | barrido R3 (R3-4; D-3) | SF192–SF195 se asignan en B4, tras la adjudicación ciega | regla F16, rama fail-closed | M2A-3: INV-M2A-19, -25 |
+| M10 | Negar sobre varios positivos o un valor contenido ⇒ `OP_NOT_ACCREDITED:<DIM>` ⇒ `CLARIFY UNRESOLVED_VALUE:<DIM>` (§6.5) | barrido R3 (R3-4; D-3) | SF194 | regla F16, rama fail-closed | M2A-3: INV-M2A-19, -25 |
+| M11 | F16 sólo invierte un positivo **arrastrado**; +X y −X en el mismo parche ⇒ `OP_NOT_ACCREDITED:<DIM>` ⇒ `CLARIFY UNRESOLVED_VALUE:<DIM>` (§6.5) | usuario 2026-10-02 (P-3, U18) | — (sin caso; mutante del verificador `R3_P3_SF001_same_patch_both_polarities`) | regla F16, rama fail-closed | M2A-3: INV-M2A-19, -25 |
 
 ## 7. Frontera (lo que M2a NO hace)
 
@@ -110,6 +111,7 @@ verificará.
 | X02 | Nada cruza a legacy con ancla Foundation (§3.7) | D7; R-BARRERA | los 199 | — | M2A-1…M2A-9: INV-M2A-04, -15 |
 | X03 | Toda respuesta alcanzable es representable (INV-M2A-25, invariante mayor) | usuario 2026-10-02 (R3-5) | todos | códigos de A.3 admitidos por el tipo | `tests/test_m2a_contract_r3_sweep.py` (barrido generado; lo que falte en el tipo es un xfail estricto) |
 | X04 | Congelación tras R3 (§20.4) | usuario 2026-10-02 | — | — | revisión: toda enmienda posterior cita una inconsistencia del contrato o una extensión/versionado del lenguaje |
+| X05 | Una autoridad para las dependencias: §19 ⇒ extracción generada y sellada; ningún consumidor tiene lista ni override propio (§19) | usuario 2026-10-02 (U19) | SF075 (`DEP-O1B-OPPORTUNITIES`), R0301, R0304, SF165, SF167 (`DEP-SMMLV`) | `gold/CONTRACT_S19_DEPENDENCIES.json` (`extract_contract_dependencies.py`) | `m2a_gold_seal.py verify` (gate `contract_dependencies_reproduce`); `tests/test_m2a_gold_seal.py` |
 
 ## 8. Reconciliaciones A↔B registradas
 

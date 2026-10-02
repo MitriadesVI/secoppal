@@ -87,7 +87,8 @@ Los marcados «a completar» los completa el orquestador al integrar.
   implícitamente. Caso sintético, adjudicación independiente y re-sellado.
 - **Quién.** Usuario.
 - **Motivo.** Un estado alcanzable sin respuesta representable es un hueco del contrato.
-- **Dónde.** Contrato §6.7 y A.3 (`cb32361a`, `a90d6ad0`); `M2A3_PHASE1_CLOSE.md` §5 (`f30e91ff`); caso SF192.
+- **Dónde.** Contrato §6.7 y A.3 (`cb32361a`, `a90d6ad0`); `M2A3_PHASE1_CLOSE.md` §5 (`f30e91ff`); caso SF192
+  sellado en r3 (`379ca3db`).
 - **Si cambia, tocar.** Contrato §6.7, A.3 y Anexo D; matriz T14; `M2A_CONTRACT_ENM_R3_B4_RESEAL.md`;
   `labeling_r3/R3_LABELER_INPUT.md`.
 
@@ -122,7 +123,8 @@ Los marcados «a completar» los completa el orquestador al integrar.
   - Entran R3-1…R3-5, P-1 y P-2.
   - D-2: la regla se decide sobre el estado resultante.
   - D-3: se reutiliza el código existente (`OP_NOT_ACCREDITED:<DIM>` ⇒ `UNRESOLVED_VALUE:<DIM>`).
-  - D-4: SF192–SF195 entran en un único re-sellado.
+  - D-4: SF192–SF195 entran en un único re-sellado (hecho en `379ca3db`, sello `3fdd81df…`; adjudicación en
+    `gold/ADJUDICATION_R3.md`).
   - D-5: E-ORDER se registra en §19.
   - D-6, genérica: `OUT_UNSUPPORTED_PROPOSAL` / `INFORM UNSUPPORTED_PROPOSAL:<motivo>`, 0 llamadas, ancla intacta.
     Motivos y dueños: `MULTI_REQUEST` → M2b; `UNSUPPORTED_CONDITION` → extensión o versionado del lenguaje;
@@ -183,6 +185,32 @@ Los marcados «a completar» los completa el orquestador al integrar.
 - **Si cambia, tocar.** `M2A_CONTRACT_ENM_R3_B4_RESEAL.md` §2; `M2A_IMPLEMENTATION_PLAN.md` §2 (secuencia; pendiente
   de reflejar al integrar).
 
+### U18. P-3: F16 sólo invierte un positivo arrastrado
+- **Decisión.** F16 sólo invierte un positivo **arrastrado** de la base; un positivo creado por el mismo parche no
+  cuenta. Un parche que introduce a la vez +X y −X (mismo valor canónico, misma dimensión) cae en la rama fail-closed de
+  R3-4 (`OP_NOT_ACCREDITED:<DIM>` ⇒ `UNRESOLVED_VALUE:<DIM>`).
+- **Quién.** Usuario (dentro de R3).
+- **Motivo.** Evitar que F16 «arregle» una contradicción que el propio turno crea.
+- **Dónde.** Contrato §6.5 F16 y Anexo D.1 (`379ca3db`); barrido, fila S09, sonda P-p3 y pin del texto
+  (`tests/test_m2a_contract_r3_sweep.py`); verificador G10 y mutante `R3_P3_SF001_same_patch_both_polarities`.
+- **Si cambia, tocar.** Contrato §6.5; matriz M11; `check_m2a_gold_contract.py` (G10) y el mutante; barrido S09.
+
+### U19. Una autoridad para las dependencias
+- **Decisión.** «Una cuestión → una autoridad → todos los demás consumen». SF075 y todas las dependencias salen
+  exclusivamente de §19 del contrato sellado. Un único generador (`extract_contract_dependencies.py`, con el parser único
+  `m2a_contract_text.py`) escribe `gold/CONTRACT_S19_DEPENDENCIES.json`.
+  - Falla si §19 no se puede leer, si un dueño no está en la lista cerrada declarada o si un caso citado no existe en
+    el Gold.
+  - La extracción queda sellada (gate `contract_dependencies_reproduce`) y no admite ningún override local.
+  - El oráculo deja su `APPLICABILITY_DECISIONS.json` / `USER_DECISIONS.jsonl`; lo cambia su carril, tras el
+    re-sellado.
+- **Quién.** Usuario.
+- **Motivo.** Que ninguna decisión de dependencia viva en dos sitios.
+- **Dónde.** Contrato §19, columna `Id` y párrafo U19 (`379ca3db`); generador, parser y extracción sellados
+  (`379ca3db`).
+- **Si cambia, tocar.** Contrato §19; `extract_contract_dependencies.py` (`OWNERS` / `OWNER_CELLS`); matriz X05;
+  documentación del oráculo (rama 8a0).
+
 ## Decisiones del orquestador (no-producto)
 
 ### O1. El almacén va a `.gitignore`
@@ -231,4 +259,6 @@ Los marcados «a completar» los completa el orquestador al integrar.
 | `cb32361a` | B1: enmienda R3 aplicada al contrato; barrido sobre el texto enmendado |
 | `44a3a01c` | B1: entrada para el etiquetado ciego y procedimiento B4 |
 | `a90d6ad0` | B1-fix: D-1 opción 1, D-6 aprobado, Anexo D.2 resuelto |
-| este commit | este registro |
+| `76303e02` | B1-fix: este registro (U1–U17, O1–O5) |
+| `379ca3db` | B4: re-sellado único r3 (sello `3fdd81df…`), U3, P-3 (U18) y §19 sellado (U19) |
+| commit siguiente a `379ca3db` | B4: U18, U19 y casos adjudicados en la matriz |
