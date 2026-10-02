@@ -7,6 +7,15 @@ integrado. Autoridad: roadmap `docs/planes/2026-09-30_FOUNDATION_SINGLE_INTERPRE
 evidencia de Fase A (A2–A5, `PHASE_A_CLOSE.md`).
 
 No implementa nada. Las líneas citadas son de `4ec99bc1` salvo que diga «+H0».
+> **Enmendado por ADR-103 enmienda 4 (2026-10-01, v3).** Donde este diseño y la enmienda difieran, manda la enmienda:
+> - separación de gramáticas, pin generado del cierre legacy (código y datos) y congelamiento de `app/data/**` hasta
+>   el CUTOVER (INV-SEP, D1, D13);
+> - INV-OWN con cuatro fuentes;
+> - registro de ocurrencias, opacidad y re-anclaje (INV-C0-13/14);
+> - cobertura de vocabulario cerrado como gate del CUTOVER (INV-C0-15);
+> - P8 con tope ejecutado y anunciado (INV-C0-16);
+> - M2a como precondición del CUTOVER;
+> - `foundation_v5_previous` elegible como gate de rollback (degradado en follow-ups).
 
 ---
 
@@ -69,7 +78,7 @@ conflicto entre ADR-102 §9 y D1 (§2).
 | Invariante 3 (el LLM no entrega valores) | Se quitan `value_hint` y `limit_n` del wire; la cardinalidad es una cita que resuelve el host. | — |
 | Invariante 4 (sin fallback silencioso, ADR-069) | Las operaciones sin dueño terminan en mensaje explícito, no en tabular legacy. | Cambio visible: es decisión de producto P1 (§11). |
 | Invariante 5 (un dueño, transferencia con borrado) | Enrutamiento por estructura declarada (operación), nunca por el resultado de una resolución. Cada paso E borra la rama del host que reemplaza. | — |
-| Invariante 6 (nadie relee el texto crudo) | Las autoridades sólo ven la ventana. | Las reclamaciones de los dueños legacy (§5.3.3) **sí** releen el texto: deuda declarada que muere en M3, la misma que hoy tiene `specialized_owner`. |
+| Invariante 6, **reformulado por ADR-103 enm. 4 (INV-OWN)**: nadie deriva significado *positivo* de texto fuera de un span con dueño. Toda condición o valor sale de (1) un span con dueño del turno, (2) un valor tipado arrastrado (M2a), (3) un evento de protocolo acreditado o (4) una política declarada del host (`HostPolicy`/`HostViewDecision`) que no lee texto y lleva eco (PV1–PV6, O1B/ACTOR×STATE, año por reloj de SMMLV, tope top-N, dirección de orden por defecto). | Las autoridades sólo ven la ventana, cuyo contexto sólo retira (INV-C0-7/7b). La opacidad se aplica a los segmentos antes (INV-C0-13). Sobre el texto sólo: verificar la cita, offsets, ventana y residuo. | Las reclamaciones de los dueños legacy (§5.3.3) y el dueño legacy de una entrega (R2) **sí** leen el texto con su gramática: deuda que muere en M3. |
 | ADR-101 (H7) | H7 sigue siendo obligatoria en todo perfil; con `UNSPECIFIED` no decide (autoridad `NOT_APPLICABLE`). | — |
 | ADR-102 §2/§4 «productor único, sin selector» | Los perfiles son paquetes cerrados (productor+wire+H7+host). No hay selector de productor suelto. | **Enmienda necesaria**: `secoppal_foundation_mode ∈ {legacy, foundation_v3, foundation_v5}`. El test `test_foundation_is_off_by_default_and_has_one_profile` se reemplaza por uno de conjunto cerrado (cambio declarado; no se relaja). |
 | ADR-102 §9 (búsqueda básica rotulada ante `PROVIDER_ERROR`) vs D1 («sin legacy») | C1 no toca el fallback; G lo resuelve. | D1 (2026-09-30) es posterior y contradice §9. La ADR nueva debe decir cuál rige en `foundation_v5`. Recomendación: D1. |
@@ -106,6 +115,12 @@ conflicto entre ADR-102 §9 y D1 (§2).
 | INV-C0-10 | **Toda vista por defecto se anuncia**: READY con una petición `UNSPECIFIED` exige exactamente un `HostViewDecision` con `announced=True`, y la respuesta contiene su eco. | Validación de contrato + test de presentación. |
 | INV-C0-11 | **El host no depende de la memoria del prompt**: para cada convención normativa de la lista cerrada (§5.4.2), una propuesta que la viola termina con la disposición Gold o con CLARIFY, nunca con un EXECUTE distinto. | Suite de mutantes «prompt amnésico» con IR oráculo. |
 | INV-C0-12 | **El ORDER semántico prohíbe el fallback H4**: una petición con ORDER no puede degradar a `NO_PRESERVE` (`foundation_runtime.py:117`). | Test + mutante. |
+| INV-C0-13 | **Opacidad, anidación y re-anclaje** (enm. 4 D4). Son opacos sólo BUYER exacto, ACTOR autoritativo y GEO exacta (reglas `buyer.exact`, `actor.authoritative`, `geo.exact`). Todo se decide **por offsets**. Una ocurrencia estrictamente anidada en una opaca: si su superficie **reaparece sin cubrir** una vez, se re-ancla (`reanchored`); si reaparece varias veces, se aclara; si no reaparece, no genera significado (`nested_in_opaque:<DIM>`). Una condición de segmento entero (TOPIC…) que contiene a una opaca o la solapa en parte da `OVERLAPPING_OCCURRENCE`. La evidencia de universo u operación puede contener una opaca si el token que la funda está fuera. Nunca se descarta en silencio. | X020 y X059 (CLEAR) con su disposición Gold. X038 (AMBIGUOUS, MULTI) sólo se informa. Revisión de los 2/294 solapes BUYER+GEO de `OMISSION_PROBE.md:222` antes del sello. Mutantes: anidar por texto; descartar una superficie que reaparece; opaca sin regla; TOPIC que contiene a un BUYER y ejecuta. |
+| INV-C0-14 | **Registro de ocurrencias**: una entrada por superficie con dueño (`AccreditedSpan` con `dimension = SemanticDimension.value`, estado, valor canónico codificado, `opaque`). Sin texto crudo, sin persistencia, sin lo arrastrado. | El núcleo importa `AccreditedSpan` sólo desde la hoja `accredited_span` (pin AST); nunca importa el paquete `accreditation`. |
+| INV-C0-15 | **Cobertura de vocabulario cerrado** (gate del CUTOVER): material del residuo que reconoce el vocabulario publicado por las autoridades (`TRIGGER_TOKENS`), sin dueño ⇒ `UNCOVERED_MATERIAL`. Los `candidate_ids` de petición no cubren. El resto de la cobertura queda en SHADOW. | Pin: el conjunto disparador es la unión de los `TRIGGER_TOKENS` importados. Gate del CUTOVER: 0 `L-only-OK` añadidos; la sobre-aclaración se mide y se publica, **sin umbral**. El «≤ 5 %» sólo es criterio para activar la cobertura completa, fuera del CUTOVER. |
+| INV-C0-16 | **Tope anunciado (P8)**: `n == min(n_requested, MAX_TOP_N)`. READY con `capped` ⇔ `HostPolicy topn-cap@1` (NARROWING) y aviso `TOPN_CAPPED`. | Kit INV-C1.2-CAP; test de presentación; mutantes de `C1_2_TOPN_SPEC.md`. |
+| INV-C0-17 | **Tras el CUTOVER no hay SEARCH legacy**: 0 SEARCH sin ancla con parámetros de `QueryRouter` en cualquier perfil alcanzable. | Test sobre todos los perfiles con productor stub. |
+| INV-SEP | **Separación de gramáticas** (enm. 4 D1/D13). Cada `.py` del cierre legacy y cada archivo versionado que no sea `.py` y que el cierre lea (todo `app/data/**` y los artefactos municipales de `territorial_knowledge`; casación por ruta resuelta, con exenciones explícitas) tienen el sha de la base `88653752`. Las divergencias permitidas son `semantic_dimensions` (lista blanca) y la hoja `foundation_guard`, cuyo sha queda fijado tras la división. Las correcciones de datos de las autoridades viven en `app/host_data/`, inalcanzable desde legacy. Tras el CUTOVER rige `DISPATCH_FRONTIER` (aristas L→F sólo hacia la hoja y los dos auxiliares; F→L sólo `foundation_route_owner`; el uso del atributo `.query_router` en F, sólo en `foundation_route_owner` y `foundation_shadow_hook` (instrumento SHADOW hasta M4), más `foundation_basic_fallback` hasta el CUTOVER). | `tests/test_m1_wave1_parity_pins.py` y el manifiesto generado (`C1_2_FRONTIER_SPEC.md`). |
 
 ---
 
@@ -278,11 +293,11 @@ resultado, registra `executed_owner(result)` (INV-C0-6).
 | RANK_SUPPLIERS | SUPPLIERS | `{entity_profile.suppliers}` (sólo vía binding/perfil activo) | UNSUPPORTED | ídem |
 | FOLLOW | RADAR | `{radar}` (el comando literal ya corrió antes) | UNSUPPORTED + guía «guardar radar <nombre>» | `OPERATION_NOT_HOSTED:FOLLOW` |
 | EXPORT | — | — | UNSUPPORTED + guía «busca y usa Exportar» | `OPERATION_NOT_HOSTED:EXPORT` |
-| FOLLOWUP_DELTA | LEGACY_FOLLOWUP (D6) | `{tabular, actor, entity_profile}` | si el turno previo es Foundation: el `FOUNDATION_CONTINUATION_UNSUPPORTED` que ya existe; sin historia: CLARIFY | `FOLLOWUP_WITHOUT_HISTORY` |
+| FOLLOWUP_DELTA | **Decide el dueño del ancla** (enm. 4 D7). Ancla de dueño legacy: LEGACY_FOLLOWUP (D6). Ancla Foundation: hasta M2A-4, el `FOUNDATION_CONTINUATION_UNSUPPORTED` que ya existe; desde M2A-4, **M2a**, sin entrega | ancla legacy: `{tabular, actor, entity_profile}`; ancla Foundation: ninguno | sin historia: CLARIFY | `FOLLOWUP_WITHOUT_HISTORY` |
 | PROTOCOL | — | — | NO_ACTION | `PROTOCOL_WITHOUT_STATE` |
 | OUT_OF_DOMAIN | — | — | NO_ACTION | `OUT_OF_DOMAIN` |
 | MULTI (derivada) | — | — | NEEDS_CLARIFICATION, un botón por job | `MULTI_OPERATION` |
-| cualquier job con `referent_evidence` | como FOLLOWUP_DELTA | ídem | CLARIFY | `ANAPHORIC_WITHOUT_REFERENT` |
+| cualquier job con `referent_evidence` | Como FOLLOWUP_DELTA, según el dueño del ancla. Con ancla Foundation, una operación ≠ SEARCH, un referente de fila o Radar-SAVE **no se entregan**: `INFORM` | ídem (sólo con ancla legacy) | CLARIFY | `ANAPHORIC_WITHOUT_REFERENT`; con ancla Foundation, `OPERATION_CHANGE:<OP>` / `REFERENT_EXTENSIONAL` |
 
 Con un job SEARCH cuyas peticiones no son SEARCH-ejecutables (ACTOR sin autoridad activa, etc.) el
 turno **no** se desvía: sigue el camino SEARCH y el host aclara o bloquea (INV-C0-3).
@@ -347,13 +362,30 @@ cambian en C1.
    GEO municipio/región, STATE, MODALITY…), sin dispensas: una diferencia deliberada se resuelve
    corrigiendo el Gold por adjudicación y nueva versión sellada (ADR-103 enmienda 2). Además, 0
    ensanches silenciosos, 0 inversiones de universo en casos CLEAR y 0 inversiones de polaridad.
-5. Historia liberada: los 64 `FOLLOWUP_DELTA` REAL entregados a legacy sin degradación frente a hoy.
+5. **Conversation mínimo (M2a), enm. 4 D7.** (a) Todo turno Foundation persiste su registro aceptado. (b) Los gates M2a
+   de la enm. 4 §4.5 están a 0 sobre el Gold de follow-ups 2.1 con A1–A7 sellado (los 65 de 585 `FOLLOWUP_DELTA`
+   REAL re-etiquetados + sintético; sólo casos CLEAR), con al menos 2 pasadas. (c) Con ancla Foundation, 0 turnos
+   llegan a `handle_normal_flow`; con ancla de un dueño legacy, la entrega cumple INV-C0-4/6. (d) Paginación y
+   opciones funcionan con el Frame apagado. (e) Lo que M2a no hace sobre un ancla Foundation responde `INFORM`.
 6. G integrado (failover según A5/D1): sin puerta, todo primer turno depende del proveedor.
 7. Latencia medida: todo primer turno no protocolario paga la llamada al LLM (p90 ≈ 2 s con v4.2).
 
-Al cumplirse, en el mismo commit se borran `first_search_ineligibility` (`foundation_runtime.py:30-49`),
-el veto previo `decline_reason`/`specialized_owner` (`foundation_route_owner.py:41-79`) y
-`continues_foundation_turn` (`:93-114`), que reemplaza la operación `FOLLOWUP_DELTA`. Sin fallback.
+8. **Rollback obligatorio** (enm. 4 D8): `foundation_v5_previous` **elegible**. Pasa los gates de SEARCH con el host
+   del CUTOVER y trata el almacén M2a como ancla inválida. Es un rollback degradado en follow-ups (65 de 585 REAL
+   piden la búsqueda completa) y no hay legacy detrás. La reversión del commit es contingencia, no gate.
+9. **E-ACTOR ACTIVE**, G y F integrados (F espera a OQ-7) y el resto de gates de la enm. 4 §4.5: eco, opacidad,
+   cobertura de vocabulario cerrado, INV-C0-17, INV-SEP con `DISPATCH_FRONTIER`, datos congelados, SMMLV y top-N.
+
+Al cumplirse, en el mismo commit:
+- se borran `first_search_ineligibility` (`foundation_runtime.py:30-49`), el veto previo
+  `decline_reason`/`specialized_owner` (`foundation_route_owner.py:41-79`), `continues_foundation_turn` y
+  `last_foundation_turn` (`:82-114`), `foundation_basic_fallback.py`, el perfil `foundation_v3` y el valor `legacy`;
+- se añade `foundation_v5_previous`, con **default `foundation_v5`**; un valor retirado es un error al arrancar;
+- `DISPATCH_FRONTIER` sustituye a `MODE_FRONTIER`;
+- se decide expresamente si se levanta el congelamiento de `app/data/**`.
+
+Sin fallback. Tras M1, `QueryRouter` sobrevive sólo en tres papeles (enm. 4 D12): reclamaciones, valores del dueño
+legacy en una entrega y deltas con ancla de dueño legacy.
 
 ### 5.4 Productor v5
 
@@ -365,8 +397,16 @@ el veto previo `decline_reason`/`specialized_owner` (`foundation_route_owner.py:
   al revés).
 - `foundation_prompts.py` no se toca. Su test de «ninguna otra versión es alcanzable» (`:84`) se
   mantiene para *ese* módulo; el conjunto de perfiles se fija en un test nuevo.
-- `config.py:94`: `Literal["legacy", "foundation_v3", "foundation_v5"]`, default `legacy`. Rollback:
-  `foundation_v3` (v4.2 bajo el host v2) o `legacy` (el único rollback que reproduce `main`).
+- `config.py:94`: `Literal["legacy", "foundation_v3", "foundation_v5"]`, default `legacy`.
+- Rollback **hasta el CUTOVER**: `foundation_v3` (v4.2 bajo el host v2) o `legacy` (el único rollback que reproduce
+  `main`).
+- **En el CUTOVER** (enm. 4 D8):
+  - el conjunto pasa a `{foundation_v5, foundation_v5_previous}`, con **default `foundation_v5`**;
+  - `legacy` y `foundation_v3` retirados son un error de configuración al arrancar;
+  - mueren `foundation_basic_fallback.py` y v4.2 como perfil (queda como comparador del harness);
+  - `foundation_v5_previous` (la v5 acreditada en C1.6) es obligatoriamente elegible. Es degradado en follow-ups y no
+    tiene legacy detrás.
+- En C1.6, la guarda `!= "foundation_v3"` y `MODE_FRONTIER` pasan a «modo ∈ perfiles Foundation».
 
 #### 5.4.2 Qué sale del prompt (cierre normativo en el host)
 
@@ -396,6 +436,9 @@ rechazo) contra los 999 registros antes de congelar.
    `sha256(gold_id + "m1c0-split-v1") mod 4 == 0` → DEV (≈25 %), el resto → TEST. Se guarda la lista
    de ids y su digest en `gold/SPLIT_v1.json`; el texto REAL sigue fuera de git. El autor del prompt
    (ARES) sólo ve DEV. TEST lo ejecuta HERA.
+   **Enm. 4:** TEST se subdivide, de forma estratificada por slice y clase y antes de escribir el prompt v5, en
+   **TEST_A** (evalúa v5 para ACTIVATE_V5) y **TEST_B** (evalúa v5.1 antes del CUTOVER; nadie lo ve antes). Las
+   listas y sus digests van en `gold/SPLIT_v1.json`. Una fila de TEST_A no vuelve a usarse para activar v5.1.
 2. **Iteración acotada**: como mucho 3 versiones del prompt sobre DEV (hardening acotado). Si la
    tercera no pasa DEV, STOP.
 3. **Congelado**: SHA del prompt + commit del host. Toda corrida TEST cita ambos.
@@ -480,7 +523,7 @@ cambia de forma y la proyección decodifica:
 | `ModalityValue` | `procedure_ids`, `family_policy: str \| None`, `excluded: bool` |
 | `ContractTypeValue` | `type_ids` (residuo vacío obligatorio) |
 | `OrderValue` | `key ∈ {value, date}`, `direction` |
-| `CardinalityValue` | `n: int` (1..`MAX_TOP_N`, decisión P8) |
+| `CardinalityValue` (`cardinality@2`) | `n: int` ejecutado (1..`MAX_TOP_N`), `basis` y `n_requested: int` (lo pedido; tope de representación `MAX_REQUESTED_TOP_N = 10**18 − 1`). Se cumple `n == min(n_requested, MAX_TOP_N)`; en un singular, 1 y 1. P8: por encima del tope se ejecuta `MAX_TOP_N` y se anuncia; nunca se aclara, salvo OQ-6 (≥ 10⁹, política de E-ORDER, no del tipo) (enm. 4 D9). |
 
 `AUTHORITY_REASONS` (cerrado; el núcleo los traduce a mensaje): `UNRESOLVED_HOST_DIMENSION:<D>`,
 `AMBIGUOUS_HOST_DIMENSION:<D>` (el de H0 entra aquí), `UNCITED_QUALIFIER:<D>`,
@@ -491,12 +534,29 @@ nunca un vacío silencioso), `RESIDUE_UNREAD:<D>`, más los `VALUE_*` existentes
 
 Regla de polaridad: una autoridad recibe la polaridad y la honra (RESOLVED con `excluded`/complemento
 y su política) o devuelve `NEGATION_UNSUPPORTED`. Nunca ignora una NEGATIVE.
+**Entrada separada de insumos del host (enm. 4 D10).** `resolve` es puro y monótono (INV-C0-7). Un valor sólo depende
+de otro valor *tipado* por una entrada distinta, que sólo llama el host. Hoy hay dos casos:
+- el año de un monto en SMMLV, que sale de una de tres fuentes: `year.from_time` (el único `TimeValue` de la
+  petición), `year.inferred` (sin TIME: año local por reloj, `HostPolicy smmlv-clock-year@1` y eco
+  `YEAR_CLOCK_INFERRED`) o `year.inherited` (M2a);
+- la unidad heredada en M2a.
+Varios años o un año fuera del catálogo dan `SMMLV_YEAR_AMBIGUOUS`. Es la única excepción declarada a INV-C0-7;
+`AuthorityContext` no cambia. El catálogo de la ruta de cita vive en `app/host_data/value/`, porque el de legacy está
+congelado.
+
+**Reglas de recibo con efecto en el host** (lista cerrada `HOST_SIGNIFICANT_RULES`, probada por carril):
+`buyer.exact`, `actor.authoritative`, `geo.exact`, `reanchored`, `topn.capped`, `unit.<escala>`, `unit.sibling`,
+`unit.inherited`, `unit.smmlv`, `year.from_time`, `year.inferred`, `year.inherited`, `order.direction_defaulted`,
+`buyer.territory.<código>` y `buyer.national`. Cada autoridad publica además `TRIGGER_TOKENS` (INV-C0-15).
 
 #### 5.5.2 Ventana
 
 `foundation_evidence_window.py` (núcleo) es el **único** lugar que construye `EvidenceWindow` a partir
 del texto crudo. Se construye después de `validate_raw` y la autoridad nunca recibe `raw`. Reutiliza el
 tokenizador de `foundation_time_coverage.py` (`[a-z0-9]+` sobre `normalize_text`).
+La ventana es ciega a otras dimensiones **por diseño** (enm. 4 D4): el contexto no concede y el hueco no cambia el
+valor. La opacidad se aplica a los segmentos antes (INV-C0-13). Coste declarado: los tokens de una opaca vecina sólo
+pueden retirar autoridad.
 
 #### 5.5.3 Registro y punto de enchufe
 
@@ -587,13 +647,28 @@ restaurar) → `olympus-semgrep-delta --base <commit previo>`. «Corrí X, no la
 | **C1.5** | Cierres normativos en el host (`topic-k1@1`, `universe-c5@1`, H7 salta UNSPECIFIED; `modality-o6@1` si D-STATE/MOD no lo trae antes) | Suite de prompt amnésico con IR oráculo: 100 % (INV-C0-11) | quitar cada política, una por una |
 | **C1.6** | `foundation_prompts_v5.py`, partición `SPLIT_v1`, adaptador del harness v2 (HERA, `scripts/audits/m1_search/`), ≤3 iteraciones sobre DEV, congelado de SHA, `foundation_v5` en `config.py` | Criterios ACTIVATE_V5 (§5.4.3) sobre TEST ×2 + DA-6 por custodio | — (evaluación) |
 | **C1.7** | Freeze del candidato | Suite global pareada por nodeid frente a la base, semgrep delta con `--base`, `olympus-state candidate freeze`, ZEUS fresco (opus, no implementador) | — |
+**Enmienda 4 (orden; detalle en ADR-103 enm. 4 §4.4).**
+1. C1.2: primero se commitea el WIP, después `C1_2_TOPN_SPEC.md` y `C1_2_FRONTIER_SPEC.md`; los pines son gate.
+2. C1.6.0: TEST_A y TEST_B. C1.6: prompt v5 sin estado, evaluado en TEST_A.
+3. Tras C1.7:
+   - **E-0**: hoja `accredited_span`, registro, opacidad y re-anclaje, cobertura en SHADOW;
+   - **L-0**;
+   - E-* con adaptador, `TRIGGER_TOKENS`, SMMLV (E-VALUE), tope y política ≥ 10⁹ (E-ORDER) y reglas de exactitud.
+4. M2A-1 → 2 → 3 → 3b/3c → **M2A-4 (incluye el prompt v5.1)** → 5 → 6 → 8.
+5. Activación de v5.1 en TEST_B, con el TEST de follow-ups y DA-6 (custodio propio).
+6. M2A-9 y CUTOVER.
 
 Después de C1 (mismo escritor del núcleo, en serie):
 
 - **E-steps** (uno por dimensión, en orden de tráfico y riesgo: TIME, VALUE, STATE/MOD, GEO, BUYER,
-  ORDER+CARDINALITY, ACTOR, PV): entrada en el registro como SHADOW → slice Gold de la dimensión con IR
-  oráculo + captura v5 → ACTIVE con borrado de la rama en línea → proyección → mensaje. Gate por E: en
-  esa fila de A3, `L-only-OK` → 0 o firmado; ensanches silenciosos 0; mutantes del enchufe.
+  ORDER+CARDINALITY, ACTOR, PV). Cada uno:
+  1. entra en el registro como SHADOW;
+  2. trae su adaptador conforme `host_authorities/<dim>.py` (enm. 4 D11) con sus `TRIGGER_TOKENS`;
+  3. se mide contra el slice Gold de la dimensión con IR oráculo, las filas E-* de consumidor SEARCH y la captura v5;
+  4. pasa a ACTIVE borrando la rama en línea;
+  5. añade proyección y mensaje.
+  Gate por E: 0 `L-only-OK` en su fila de A3, 0 ensanches silenciosos y mutantes del enchufe. Las correcciones de
+  datos van a `app/host_data/<dim>/`, nunca a `app/data/` (congelado). Las filas E-* de dueños legacy son de M3.
   E-ORDER además: INV-C0-12 y el presupuesto de candidatos de `whole_token_folded` con orden por valor
   (riesgo §9).
 - **G** recibe la propiedad de `foundation_producers.py` y `foundation_basic_fallback.py` en el freeze
@@ -646,6 +721,10 @@ Después de C1 (mismo escritor del núcleo, en serie):
 | Partición DEV/TEST del Gold | Irreversible metodológicamente: una vez vista, una fila TEST no vuelve a ser TEST | Semilla y lista fijadas antes del prompt; acceso a TEST sólo para HERA. |
 | ACTOR en SEARCH (E-ACTOR) | Datos personales (cédulas de personas naturales) | La misma política que Actor Profile (ADR-060); el ledger ya redacta; decisión P9. |
 | Borrado de la puerta (M1-I, fuera de C1) | Producto visible + disponibilidad (todo turno depende del proveedor) | Precondiciones §5.3.6; G antes. |
+| CUTOVER: mueren `legacy` (SEARCH), `foundation_v3` y `foundation_basic_fallback` | Irreversible salvo revertir código | `foundation_v5_previous` elegible como gate (degradado en follow-ups); la reversión del commit es contingencia. |
+| Almacén M2a por chat | Persistencia y datos personales | Append-only, lector estricto, fuera de git, traza y ledger; ADR-060. |
+| `cardinality@2` | Contrato congelado | Sin registros `@1` persistidos. |
+| Congelamiento de `app/data/**` y `app/host_data/` | Datos duplicados durante M1 | Pin de sha; los errores de datos de legacy persisten hasta el CUTOVER (deuda). |
 
 ---
 
@@ -664,8 +743,9 @@ Después de C1 (mismo escritor del núcleo, en serie):
 | Coste/latencia del prompt v5 (más largo, salida con jobs) | p90 o truncados | Criterio ACTIVATE; `max_tokens` lo revisa G. |
 | La sesión de otro agente toca el worktree (memoria) | Commits ajenos | `git log` antes de cada freeze. |
 
-**Rollback**: `SECOPPAL_FOUNDATION_MODE=foundation_v3` (v4.2 bajo el host v2) o `legacy` (paridad con
-`main`, ADR-102). Cada paso C1.x es un commit revertible; C1.1 no cambia el runtime.
+**Rollback**: hasta el CUTOVER, `SECOPPAL_FOUNDATION_MODE=foundation_v3` (v4.2 bajo el host v2) o `legacy` (paridad con
+`main`, ADR-102). Tras el CUTOVER, `foundation_v5_previous`: obligatorio, degradado en follow-ups, sin legacy detrás.
+Contingencia: revertir el commit del CUTOVER (enm. 4 D8). Cada paso C1.x es un commit revertible.
 
 ---
 
@@ -682,6 +762,9 @@ Después de C1 (mismo escritor del núcleo, en serie):
    `foundation_v3`/`legacy` y avisar.
 7. Una decisión de §11 cambia un umbral o una fila de la tabla §5.3.2 → actualizar este documento antes
    de seguir.
+8. Una corrección de interpretación en un módulo legacy, un cambio en `app/data/**` antes del CUTOVER o un pin INV-SEP relajado → STOP (enm. 4 D1).
+9. Un adaptador E-* sólo puede hacerse conforme cambiando un módulo legacy → METIS.
+10. No hay una `foundation_v5_previous` elegible → no hay CUTOVER.
 
 ---
 
@@ -696,7 +779,7 @@ Después de C1 (mismo escritor del núcleo, en serie):
 | P5 | Enmendar ADR-102 §2/§4 a perfiles cerrados (`legacy`, `foundation_v3`, `foundation_v5`) | **Sí**; es la condición para tener v4.2 seleccionable como rollback. |
 | P6 | En `foundation_v5`, ante caída del proveedor: ¿D1 («no pude interpretar ahora», sin legacy) o la búsqueda básica rotulada de ADR-102 §9? | **D1** (es la decisión posterior); se implementa en G y se registra en la ADR. |
 | P7 | Botones de la Product View en M1: ¿sólo las vistas alternativas (Procesos históricos / Contratos / Oportunidades vigentes) como evento, dejando `[Elegir período]` y `[Mayor valor]` para M2 (necesitan un delta de IR)? En canales de texto, ¿opciones numeradas? | **Sí a ambas**: en M1, las vistas; en M2, período y orden. En texto, opciones numeradas con el protocolo de selección existente. |
-| P8 | Tope de `top_n` («los 500 más caros») | **Máximo 100, anunciado** («te muestro los 100 de mayor valor»); por encima, aclarar. |
+| P8 | Tope de `top_n` («los 500 más caros») | **Máximo 100: se ejecutan 100 y se anuncia** («te muestro los 100 de mayor valor; pediste 500»). Nunca se aclara, salvo OQ-6 (≥ 10⁹, política de E-ORDER, no del contrato: `CARDINALITY_FIGURE_OUT_OF_RANGE`) (ADR-103 enm. 4 D9; T3.3; F20). |
 | P9 | SEARCH filtrado por persona natural (nombre o cédula) | **La misma política que Actor Profile** (ADR-060); sin política nueva. |
 
 ---
@@ -720,7 +803,8 @@ Después de C1 (mismo escritor del núcleo, en serie):
 ## 13. Non-goals
 
 - Ejecutar cualquier operación que no sea SEARCH desde Foundation (M3).
-- Conversation IR, deltas, «y en 2025?», `[Mayor valor]`/`[Elegir período]` (M2).
+- Conversation IR completa (M2b): Frame de Entity Profile, anáforas entre capacidades, listas pendientes generales,
+  Suppliers, MULTI. **M2a sí es precondición del CUTOVER** (enm. 4 D7), aunque no forma parte de C1.
 - Fusionar Natural Alpha o tocar `capability_binding` (M3).
 - Borrar la puerta, los vetos o `continues_foundation_turn` (M1-I, con §5.3.6).
 - Elegir el proveedor de failover (G/A5).
