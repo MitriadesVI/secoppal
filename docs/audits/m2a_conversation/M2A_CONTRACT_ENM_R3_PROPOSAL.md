@@ -1,7 +1,16 @@
 # M2A — Enmienda R3 del contrato conversacional: barrido y borradores (FASE A)
 
 **Fecha:** 2026-10-02. **Rama:** `mission/m2a-contract-enm-r3` (base `fa0b6de8`, Paso 0 de la ola M2a). **Rol:** ARES.
-**Estado:** PROPUESTA. Este documento **no** edita el contrato (`docs/decisions/M2A_CONVERSATION_CONTRACT_V1.md`), el
+> **Estado posterior (B1, 2026-10-02).**
+>
+> - El usuario aprobó R3-1…R3-5, P-1 y P-2, y decidió D-1…D-6 y la congelación de §20.4.
+> - La enmienda aplicada y sus ajustes marcados para revisión están en el Anexo D del contrato. Las tablas de §2 son
+>   las de la fase A; el barrido vigente lo imprime `python -m tests.test_m2a_contract_r3_sweep`.
+> - El procedimiento de re-sellado está en `M2A_CONTRACT_ENM_R3_B4_RESEAL.md`.
+> - **Este documento no es entrada para los etiquetadores:** asocia cada caso a su regla. La entrada es
+>   `labeling_r3/R3_LABELER_INPUT.md`.
+
+**Estado (fase A):** PROPUESTA. Este documento **no** edita el contrato (`docs/decisions/M2A_CONVERSATION_CONTRACT_V1.md`), el
 Gold ni el sello: `m2a_gold_seal.py verify` sigue dando `seal OK bb2e9812…`. La fase B aplicará lo que el usuario
 apruebe, con adjudicación independiente y **un único** re-sellado.
 
