@@ -28,10 +28,13 @@ GOLD = "docs/audits/m2a_conversation/gold"  # sealed copy: candidate + U1/U2/D1 
 SEAL = ROOT / "docs/audits/m2a_conversation/gold/M2A_GOLD_SEAL.json"
 REPORT = "docs/audits/m2a_conversation/gold/REPRESENTABILITY_REPORT.json"
 CHECKER = "scripts/audits/m2a_conversation/check_m2a_gold_contract.py"
+S19_EXTRACTOR = "scripts/audits/m2a_conversation/extract_contract_dependencies.py"  # U19: §19 -> one sealed extraction
+LABELING_R3 = "docs/audits/m2a_conversation/labeling_r3"
 PARTITION_SALT = "m2a-gold-partition/1"
 # DEV/TEST frozen at seal 3aac2a20 (also pinned in tests/test_m2a_gold_seal.py). The seal is sticky, so without this pin
 # ``verify`` would only compare the partition with itself. Change it only after checking that no existing id moved.
-PARTITION_SHA256 = "04197bbd7f0962e7eef5668ced884df071373f7ee4aea7c66935bfec7c754f8e"
+# r3 (2026-10-02): 0 moves, 4 additions (SF192/SF193/SF194 TEST, SF195 DEV); r2 pin was 04197bbd….
+PARTITION_SHA256 = "a73d77c94d46d425ec271414d15f8d6fdf5a42f27e8f94d1d4bdaf1353e6831f"
 REAL_LOCATION = "~/Documents/secoppal-asesoria-2026-10-01/privado_no_git/gold_followups_real/GOLD_CANDIDATE/"
 
 PUBLIC_FILES = (
@@ -43,6 +46,7 @@ PUBLIC_FILES = (
     f"{CANDIDATE}/M2A_GOLD_AND_FRONTIER_INDEX.json",
     f"{CANDIDATE}/FOLLOWUP_GAPS_LEDGER.jsonl",
     f"{CANDIDATE}/FOLLOWUP_GAPS_LEDGER.md",
+    f"{GOLD}/CONTRACT_S19_DEPENDENCIES.json",
 )
 RULE_FILES = (
     "docs/decisions/M2A_CONVERSATION_CONTRACT_V1.md",
@@ -57,6 +61,12 @@ RULE_FILES = (
     "docs/audits/m2a_conversation/M2A0_H7B_REVIEW.md",
     "docs/audits/m2a_conversation/IMPORT_MANIFEST.sha256",
     CHECKER,
+    f"{GOLD}/ADJUDICATION_R3.md",
+    f"{LABELING_R3}/labels_A.jsonl",
+    f"{LABELING_R3}/labels_B.jsonl",
+    f"{LABELING_R3}/R3_LABELER_INPUT.md",
+    "scripts/audits/m2a_conversation/m2a_contract_text.py",
+    S19_EXTRACTOR,
 )
 ADJUDICATIONS = {
     "A1": "F26 retirada; VALUE por lado; unidad heredada única",
@@ -74,6 +84,7 @@ ADJUDICATIONS = {
     "U1": "SF166: año 2023 fuera del catálogo D10 ⇒ CLARIFY SMMLV_YEAR_AMBIGUOUS (control de no extrapolación)",
     "U2": "SF063: preestado normalizado a alcanzable (asks 3 -> 2)",
     "D1": "SF168: declarado prueba de estado persistido inválido",
+    "U3": "R3: SF192–SF195 añadidos; etiquetado ciego A/B y adjudicación del usuario (gold/ADJUDICATION_R3.md)",
 }
 
 
@@ -177,8 +188,8 @@ def body(real_dir: Path | None, previous: dict | None) -> dict:
     return {
         "seal_schema": "m2a-gold-seal/1",
         "gold_schema": idx["schema"],
-        "sealed_on": "2026-10-01",
-        "base_commit": "8c1f8c54",
+        "sealed_on": "2026-10-02",  # release r3 (r1/r2: 2026-10-01 on main 8c1f8c54)
+        "base_commit": "fa0b6de8",
         "totals": totals,
         "slices": slices,
         "public_files": files,
@@ -189,11 +200,12 @@ def body(real_dir: Path | None, previous: dict | None) -> dict:
                           "orchestrator_classification": dict(sorted(classified.items())),
                           "note": "R0205 entra en M2A_GOLD por A8.1 + money_comparators («en adelante» = GTE) sin re-etiquetado. "
                 "Única re-etiqueta: SF166 (U1, usuario 2026-10-02); SF063 sólo normaliza el preestado (U2); "
-                "SF168 se declara (D1)."},
+                "SF168 se declara (D1). r3: U3 añade SF192–SF195 desde las etiquetas ciegas A/B + adjudicación."},
         "partition": {"rule": "por slice y disposición; orden sha256(salt:id); posiciones pares → TEST, impares → DEV; "
                               "fija desde el sello r2: un id conserva su lado en re-sellados posteriores",
                       "salt": PARTITION_SALT, **part},
         "gates": {"sealed_gold_reproduces_from_candidate": _sealed_reproduces(),
+                  "contract_dependencies_reproduce": _dependencies_reproduce(),
                   "import_manifest_ok": _import_manifest_ok(),
                   "representability": {"checker": CHECKER, "report": REPORT,
                                        "report_sha256": sha_bytes((ROOT / REPORT).read_bytes()),
@@ -207,6 +219,18 @@ def _import_manifest_ok() -> bool:
         if sha_bytes((ROOT / path).read_bytes()) != digest:
             return False
     return True
+
+
+def _dependencies_reproduce() -> bool:
+    """U19: the §19 extraction is regenerated from the contract and must match the committed file byte for byte."""
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("s19", ROOT / S19_EXTRACTOR)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    try:
+        return (ROOT / GOLD / "CONTRACT_S19_DEPENDENCIES.json").read_text(encoding="utf-8") == mod.render()
+    except SystemExit:
+        return False
 
 
 def _sealed_reproduces() -> bool:
@@ -250,6 +274,9 @@ def main() -> int:
         return 1
     if not stored["gates"]["sealed_gold_reproduces_from_candidate"]:
         print("SEAL BROKEN: sealed gold does not reproduce from the candidate + adjudications")
+        return 1
+    if not stored["gates"]["contract_dependencies_reproduce"]:
+        print("SEAL BROKEN: the §19 extraction does not reproduce from the contract")
         return 1
     if stored["gates"]["representability"]["violations"] != 0:
         print("SEAL BROKEN: representability violations")

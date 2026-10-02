@@ -16,6 +16,11 @@ What it proves, per label (A and B) of every Gold record:
   G10 no hybrid over a pending, unit inherited from exactly one unit, SMMLV executed over one year at most;
   G11 reachable pre-states: asks ≤ 2; SMMLV executed only over one year of the D10 catalog (or a declared invalid
       persisted state, D1).
+R3 (contract amendment, 2026-10-02): the reason vocabulary is READ from annex A.3 of the contract through the one
+contract parser (``m2a_contract_text``), and a parameterised code's tail is bounded by the contract (``<DIM>``: R3-3;
+``<motivo>``: §7.1 row 4b). G9 also checks ``DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER`` (§6.7; only C1 is sealed, the
+SET_ORDER candidates are E-ORDER's, §19) and ``KEEP_ON_EMPTY_SLOT`` (§6.1); G10 also checks the F16 fail-closed branch
+(§6.5, R3-4) and P-3 (a negation never inverts a positive created by the same patch).
 Not checkable from Gold fields (needs the producer's evidence): the continuation guard of §7.2/§8.3 itself — a
 NEW_SEARCH relabel of a pending answer that keeps its conditions is representable; M2A-8 gates it.
 It proves the Gold is REPRESENTABLE by the contract; it does not DERIVE each disposition from §7.2/§8.3, which needs
@@ -30,6 +35,7 @@ from __future__ import annotations
 
 import argparse
 import collections
+import importlib.util
 import json
 import re
 import sys
@@ -40,6 +46,7 @@ sys.path.insert(0, str(ROOT))
 
 from app.core.foundation_authority_values import MAX_TOP_N  # noqa: E402
 from app.core.foundation_operator_table import OPERATORS  # noqa: E402
+from app.core.foundation_operations import Operation  # noqa: E402
 from app.core.semantic_dimensions import SemanticDimension  # noqa: E402
 from app.data.smmlv import SMMLV_COP_BY_YEAR  # noqa: E402  (D10: the catalog M2a may convert with)
 
@@ -59,14 +66,20 @@ SLOTS = {"TIME", "VALUE.lower", "VALUE.upper", "VALUE", "GEOGRAPHY", "BUYER", "A
 TURN_KINDS = {"DELTA", "NEW_SEARCH", "ANSWER_TO_CLARIFICATION", "PROTOCOL"}
 GOLD_SCOPES = {"IN", "IN_NEW_SEARCH", "IN_PROTOCOL"}
 DISPOSITIONS = {"EXECUTE", "NEW_SEARCH", "CLARIFY", "REASK", "INFORM"}
-REASONS = {
-    "CONTEXT_EXPIRED_CONFIRM", "BUYER_OR_PLACE_AFTER_ACTOR", "REGION_NOT_IN_LIST", "RELATIVE_TO_PREVIOUS_VALUE",
-    "UNIT_AMBIGUOUS", "MONTH_YEAR_AMBIGUOUS", "EMPTY_SEARCH_AFTER_DELTA", "STATE_NOT_IN_UNIVERSE",
-    "TERRITORY_VS_CARRIED_BUYER", "NO_ANCHOR", "ANCHOR_UNREADABLE", "TARGET_NOT_ADDRESSABLE",
-    "VALUE_WITHOUT_COMPARATOR", "SMMLV_YEAR_AMBIGUOUS", "OPTION_NOT_CHOSEN", "ANSWER_EDITS_OTHER_SLOT",
-    "PENDING_UNANSWERED", "ANSWER_UNRESOLVED", "CLEAR_ON_EMPTY_SLOT", "REFERENT_EXTENSIONAL",
+# The vocabulary of reasons is the contract's annex A.3, read through the one contract parser (U19); never a copy.
+_SPEC = importlib.util.spec_from_file_location("m2a_contract_text", Path(__file__).with_name("m2a_contract_text.py"))
+contract_text = importlib.util.module_from_spec(_SPEC)
+_SPEC.loader.exec_module(contract_text)
+_CONTRACT = contract_text.read()
+_A3 = {d: c for d, c in contract_text.annex_a3(_CONTRACT).items() if d in DISPOSITIONS}
+REASONS = {code for codes in _A3.values() for code in codes if ":" not in code}
+REASON_PREFIXES = tuple(sorted({code.split(":", 1)[0] + ":" for codes in _A3.values() for code in codes if ":" in code}))
+_DIM_NAMED, _DIM_EXCLUDED = contract_text.dim_parameter(_CONTRACT)
+REASON_TAILS = {  # the domain the contract declares for each parameter (A.3 «Parámetros (R3)»)
+    "UNRESOLVED_VALUE:": {d.value for d in SemanticDimension} - _DIM_EXCLUDED | _DIM_NAMED,
+    "OPERATION_CHANGE:": {op.value for op in Operation},
+    "UNSUPPORTED_PROPOSAL:": set(contract_text.row_4b_motives(_CONTRACT)),
 }
-REASON_PREFIXES = ("UNRESOLVED_VALUE:", "OPERATION_CHANGE:")
 RETIRED_REASONS = {"SMMLV_UNSUPPORTED", "INHERITED_UNIT_IMPLAUSIBLE", "TOPN_CAP_EXCEEDED"}  # A1, A2, P8
 EFFECTS = {"VALUE_RANGE_REPLACED", "TOPIC_REPLACED", "POLARITY_INVERTED", "VIEW_REDERIVED", "UNIVERSE_CHANGED",
            "TOPN_CARRIED", "TOPN_CAPPED", "ORDER_DIRECTION_DEFAULTED", "PENDING_CANCELLED", "CONTEXT_RESET"}
@@ -217,6 +230,10 @@ def check_label(r: Report, rec: dict, lab: str, L: dict) -> None:
         r.bad(gid, lab, f"disposition {disp}")
     if reason is not None and reason not in REASONS and not reason.startswith(REASON_PREFIXES):
         r.bad(gid, lab, f"reason {reason}")
+    elif reason is not None and reason.startswith(REASON_PREFIXES):
+        head, tail = reason.split(":", 1)
+        if tail not in REASON_TAILS.get(head + ":", set()):
+            r.bad(gid, lab, f"reason {reason}: tail outside the domain the contract declares")
     if reason in RETIRED_REASONS:
         r.bad(gid, lab, f"retired reason {reason}")
     eff = derive_effects(L)
@@ -446,6 +463,39 @@ def check_label(r: Report, rec: dict, lab: str, L: dict) -> None:
             r.bad(gid, lab, "CLEAR_ON_EMPTY_SLOT is not a lone CLEAR of an absent slot")
     if reason in ("BUYER_OR_PLACE_AFTER_ACTOR", "TERRITORY_VS_CARRIED_BUYER") and len(L.get("alternatives") or []) != 2:
         r.bad(gid, lab, f"{reason} without two candidate patches")
+    if reason == "DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER":  # contract §6.7 (R3-1, D-1 option 1)
+        p_ir = pir or {}
+        c1 = {**p_ir, "order": None, "cardinality": None}
+        if not (p_ir.get("order") and p_ir.get("cardinality")):
+            r.bad(gid, lab, "DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER without ORDER and CARDINALITY in the anchor")
+        if not any(o["op"] == "CLEAR" and o["slot"] == "ORDER" for o in ops) or any(
+                (o["op"] == "CLEAR" and o["slot"] == "CARDINALITY") or o["op"] == "SET_ORDER" for o in ops):
+            r.bad(gid, lab, "DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER: the ops do not leave CARDINALITY without ORDER")
+        if res is not None or (L.get("alternatives") or []) != [c1]:
+            r.bad(gid, lab, "DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER: sealed alternatives must be exactly C1 (§6.7, §19)")
+    if reason == "KEEP_ON_EMPTY_SLOT":  # contract §6.1
+        p_ir = pir or {"conditions": []}
+        present = ({slot_of(c) for c in p_ir["conditions"]} | {c["dimension"] for c in p_ir["conditions"]}
+                   | ({"ORDER"} if p_ir.get("order") else set()) | ({"CARDINALITY"} if p_ir.get("cardinality") else set())
+                   | {"UNIVERSE"})
+        if res is not None or not any(o["op"] == "KEEP" and o["slot"] not in present for o in ops):
+            r.bad(gid, lab, "KEEP_ON_EMPTY_SLOT without a KEEP of a slot absent from the anchor")
+
+    # G10 F16 fail-closed branch (§6.5, R3-4) and P-3: a negation over several carried positives, over a value
+    # contained in a positive, or against a positive created by the same patch never executes; it clarifies with
+    # UNRESOLVED_VALUE:<DIM> (the dimension of the slot).
+    for o in ops:
+        if o["op"] != "SET" or o["polarity"] != "NEGATIVE" or not o["slot"] or o["slot"].startswith("VALUE"):
+            continue
+        carried = [c for c in (pir or {"conditions": []})["conditions"]
+                   if c["dimension"] == o["slot"] and c["polarity"] == "POSITIVE"]
+        same_patch = any(p["op"] == "SET" and p["slot"] == o["slot"] and p["polarity"] == "POSITIVE"
+                         and p["value_hint"] == o["value_hint"] for p in ops)
+        several = len(carried) > 1 and any(c["value_hint"] == o["value_hint"] for c in carried)
+        if (several or same_patch) and disp in ("EXECUTE", "NEW_SEARCH") and tk != "NEW_SEARCH":
+            r.bad(gid, lab, "F16 fail-closed branch executed (several positives or same-patch +X/-X, §6.5 R3-4/P-3)")
+        if (several or same_patch) and disp == "CLARIFY" and reason != f"UNRESOLVED_VALUE:{o['slot']}":
+            r.bad(gid, lab, f"F16 fail-closed branch with reason {reason} (§6.5: UNRESOLVED_VALUE:{o['slot']})")
 
     # G10 pending, inheritance and SMMLV invariants (INV-M2A-08/-23, F5/A1, A2)
     if prior["state"] == "PENDING" and tk == "DELTA" and disp == "EXECUTE" and not ctrl:

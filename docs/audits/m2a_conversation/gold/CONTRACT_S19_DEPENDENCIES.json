@@ -1,0 +1,354 @@
+{
+ "case_dependencies": {
+  "R0301": [
+   "DEP-SMMLV"
+  ],
+  "R0304": [
+   "DEP-SMMLV"
+  ],
+  "SF075": [
+   "DEP-O1B-OPPORTUNITIES"
+  ],
+  "SF165": [
+   "DEP-SMMLV"
+  ],
+  "SF167": [
+   "DEP-SMMLV"
+  ]
+ },
+ "case_owners": {
+  "R0301": [
+   "D-MONEY",
+   "E-VALUE"
+  ],
+  "R0304": [
+   "D-MONEY",
+   "E-VALUE"
+  ],
+  "SF075": [
+   "FOUNDATION_O1B_EXPLICIT_TIME_PARITY",
+   "M2A-1b"
+  ],
+  "SF165": [
+   "D-MONEY",
+   "E-VALUE"
+  ],
+  "SF167": [
+   "D-MONEY",
+   "E-VALUE"
+  ]
+ },
+ "dependencies": [
+  {
+   "cases": [],
+   "cases_count": 3,
+   "dep_id": "DEP-TIME-RELATIVE",
+   "needs": "entrada separada de TIME con `time.relative_to_previous`",
+   "owners": [
+    "D-TIME",
+    "E-TIME"
+   ],
+   "scope": "3 (A5: referente temporal único)"
+  },
+  {
+   "cases": [
+    "R0301",
+    "R0304",
+    "SF165",
+    "SF167"
+   ],
+   "cases_count": 4,
+   "dep_id": "DEP-SMMLV",
+   "needs": "conversión por vigencia de D10 (`unit.smmlv`, `year.*`) dentro del catálogo 2024–2026; SF166 (2023) **no** es dependencia: es control de no extrapolación (CLARIFY)",
+   "owners": [
+    "D-MONEY",
+    "E-VALUE"
+   ],
+   "scope": "4 (SMMLV en follow-ups: R0301, R0304, SF165, SF167)"
+  },
+  {
+   "cases": [],
+   "cases_count": 8,
+   "dep_id": "DEP-VALUE-FORMS",
+   "needs": "lectura de la autoridad VALUE del primer turno",
+   "owners": [
+    "D-MONEY",
+    "E-VALUE"
+   ],
+   "scope": "8 (formas «entre X y Y», «mayores de», «pasen de»)"
+  },
+  {
+   "cases": [],
+   "cases_count": 0,
+   "dep_id": "DEP-VALUE-EQUALITY",
+   "needs": "lectura como par `>=`/`<=` del mismo turno",
+   "owners": [
+    "D-MONEY",
+    "E-VALUE"
+   ],
+   "scope": "0 (igualdad «exactamente X», §15.2)"
+  },
+  {
+   "cases": [],
+   "cases_count": null,
+   "dep_id": "DEP-INHERITANCE",
+   "needs": "`unit.inherited`, `year.inherited` por la entrada separada",
+   "owners": [
+    "D-MONEY",
+    "D-TIME"
+   ],
+   "scope": "herencia de unidad/año (F5–F7)"
+  },
+  {
+   "cases": [],
+   "cases_count": null,
+   "dep_id": "DEP-BUYER-TERRITORY",
+   "needs": "`buyer.territory.<código>` / `buyer.national`",
+   "owners": [
+    "D-BUYER"
+   ],
+   "scope": "F30"
+  },
+  {
+   "cases": [],
+   "cases_count": null,
+   "dep_id": "DEP-DERIVED-VIEW",
+   "needs": "`HostViewDecision`, `decide_view`",
+   "owners": [
+    "F"
+   ],
+   "scope": "vista derivada"
+  },
+  {
+   "cases": [
+    "SF075"
+   ],
+   "cases_count": 1,
+   "dep_id": "DEP-O1B-OPPORTUNITIES",
+   "needs": "re-decidir O1B / `opportunity-explicit-state` sobre la efectiva (su representación es de M2A-1b) y TIME explícito sobre oportunidades (`foundation_projection.py:235-237`). Mientras falte, `compose` rechaza con `OP_NOT_ACCREDITED:UNIVERSE` ⇒ `CLARIFY UNRESOLVED_VALUE:UNIVERSE` y el caso es rojo declarado (§20.2)",
+   "owners": [
+    "FOUNDATION_O1B_EXPLICIT_TIME_PARITY",
+    "M2A-1b"
+   ],
+   "scope": "1 (SF075: `REPLACE_UNIVERSE` a oportunidades con TIME arrastrado; R3-3)"
+  },
+  {
+   "cases": [],
+   "cases_count": null,
+   "dep_id": "DEP-E-ORDER",
+   "needs": "autoridad ORDER/CARDINALITY (`order@1`, `cardinality@2`, `order.direction_defaulted`, `topn.capped`); `main` aún no las admite en el primer turno (`UNRESOLVED_HOST_DIMENSION:ORDER`). Mientras falte, la pendiente de §6.7 (R3-1) es provisional fail-closed: **sólo C1** «quitar orden y límite» y la cancelación, sin candidatos `SET_ORDER`",
+   "owners": [
+    "E-ORDER"
+   ],
+   "scope": "follow-ups con ORDER/CARDINALITY (matriz T07; R3, D-5)"
+  }
+ ],
+ "gaps": [
+  {
+   "cases": [],
+   "cases_count": 4,
+   "exit": "código de razón propio al implementar paginación",
+   "gap_id": "G-FU-04",
+   "owners": [
+    "M2A-6"
+   ],
+   "provisional": "`INFORM`, 0 llamadas; el delta semántico sí se ejecuta",
+   "topic": "filas/página tras fallo de fuente"
+  },
+  {
+   "cases": [],
+   "cases_count": 2,
+   "exit": "regla y código de razón",
+   "gap_id": "G-FU-05",
+   "owners": [
+    "PROTOCOLO_M2A",
+    "M2b"
+   ],
+   "provisional": "`CLARIFY`",
+   "topic": "paginar ancla dual; página frente a top-N"
+  },
+  {
+   "cases": [],
+   "cases_count": 3,
+   "exit": "catálogo por vigencia + Gold E-VALUE",
+   "gap_id": "G-FU-06",
+   "owners": [
+    "E-VALUE"
+   ],
+   "provisional": "`CLARIFY` sin año único o con cotas no comparables (§15.2, fail-closed: más estricto que la mejor lectura `EXECUTE` que los etiquetadores dieron a SF170 marcándola AMBIGUOUS); M2a conserva unidad, año, cantidad fuente y COP",
+   "topic": "conversión SMMLV: eco, procedencia, años; **montos no comparables (millones frente a SMMLV)**"
+  },
+  {
+   "cases": [],
+   "cases_count": 4,
+   "exit": "Gold de composición de autoridades",
+   "gap_id": "G-FU-07",
+   "owners": [
+    "E-GEO",
+    "E-BUYER"
+   ],
+   "provisional": "`CLARIFY`",
+   "topic": "territorio contenido/contenedor frente a comprador"
+  },
+  {
+   "cases": [],
+   "cases_count": 6,
+   "exit": "aritmética de periodo + Gold E-TIME",
+   "gap_id": "G-FU-08",
+   "owners": [
+    "E-TIME"
+   ],
+   "provisional": "resolver con referente único (§16.3); si no hay referente único o es una ventana relativa, `CLARIFY`",
+   "topic": "referente temporal relativo (casos ambiguos o en disputa)"
+  },
+  {
+   "cases": [],
+   "cases_count": 1,
+   "exit": "álgebra de conjuntos por ranura",
+   "gap_id": "G-FU-09",
+   "owners": [
+    "M2b"
+   ],
+   "provisional": "`CLARIFY` (fail-closed): `DELTA_SLOT_CONFLICT` para la unión (dos `SET` en una ranura); `UNRESOLVED_VALUE:<DIM>` para la negación sobre varios positivos o un valor contenido (§6.5; R3-2, R3-4)",
+   "topic": "negación sobre conjuntos"
+  },
+  {
+   "cases": [],
+   "cases_count": 17,
+   "exit": "misma Conversation IR para todas las capacidades",
+   "gap_id": "G-FU-11",
+   "owners": [
+    "M3"
+   ],
+   "provisional": "`HANDOFF_LEGACY`",
+   "topic": "follow-up tras PROFILE/COUNT/RANK"
+  },
+  {
+   "cases": [],
+   "cases_count": 2,
+   "exit": "precedencia F11/F29",
+   "gap_id": "G-FU-12",
+   "owners": [
+    "M2b"
+   ],
+   "provisional": "`CLARIFY CONTEXT_EXPIRED_CONFIRM` (gana F11)",
+   "topic": "contexto vencido con pendiente"
+  },
+  {
+   "cases": [],
+   "cases_count": 2,
+   "exit": "búsqueda mínima admisible",
+   "gap_id": "G-FU-13",
+   "owners": [
+    "M2b"
+   ],
+   "provisional": "`CLARIFY`",
+   "topic": "qué cuenta como «búsqueda vacía»"
+  },
+  {
+   "cases": [
+    "SF065",
+    "SF066",
+    "SF067",
+    "SF070",
+    "SF071",
+    "SF072",
+    "SF180",
+    "SF068",
+    "SF069",
+    "R0081",
+    "R0192"
+   ],
+   "cases_count": 11,
+   "exit": "señal estructural extensional/intensional en el wire + `result_set_ref` con identidad de fila",
+   "gap_id": "G-FU-14",
+   "owners": [
+    "M2A-5",
+    "M2b"
+   ],
+   "provisional": "`INFORM` (sin llamada) sólo para lo que la señal extensional del wire 5.1 clasifique como extensional, una vez exista; sin la señal, M2A-6 no se activa",
+   "topic": "referentes extensionales"
+  },
+  {
+   "cases": [],
+   "cases_count": 7,
+   "exit": "operadores relativos sobre `ExecutableValue`",
+   "gap_id": "G-FU-15",
+   "owners": [
+    "M2b"
+   ],
+   "provisional": "`CLARIFY`",
+   "topic": "relativos no temporales"
+  },
+  {
+   "cases": [],
+   "cases_count": 4,
+   "exit": "manifiestos de capacidad sobre la efectiva",
+   "gap_id": "G-FU-16",
+   "owners": [
+    "M3"
+   ],
+   "provisional": "`INFORM`",
+   "topic": "otra operación sobre ancla SEARCH"
+  },
+  {
+   "cases": [],
+   "cases_count": 2,
+   "exit": "regresión fail-closed",
+   "gap_id": "G-FU-17",
+   "owners": [
+    "PROTOCOLO_M2A"
+   ],
+   "provisional": "`CLARIFY` (pedir la búsqueda completa)",
+   "topic": "fragmento sin ancla o ancla ilegible"
+  },
+  {
+   "cases": [],
+   "cases_count": 5,
+   "exit": "enmienda del contrato Gold M1",
+   "gap_id": "G-FU-18",
+   "owners": [
+    "CONTRATO_M1",
+    "E-VALUE"
+   ],
+   "provisional": "mejor lectura de la autoridad, marcada",
+   "topic": "formas de superficie VALUE (comparador desordenado/negado, cota sin comparador en rango)"
+  },
+  {
+   "cases": [],
+   "cases_count": 4,
+   "exit": "tabla PV adjudicada para follow-ups",
+   "gap_id": "G-FU-19",
+   "owners": [
+    "F"
+   ],
+   "provisional": "recalcular la vista sólo si era derivada (F9) y anunciar; ante un sustantivo coloquial que podría pedir otra vista (SF132), conservar el universo vigente y anunciarlo",
+   "topic": "vista y universo"
+  }
+ ],
+ "owners": [
+  "CONTRATO_M1",
+  "D-BUYER",
+  "D-MONEY",
+  "D-TIME",
+  "E-BUYER",
+  "E-GEO",
+  "E-ORDER",
+  "E-TIME",
+  "E-VALUE",
+  "F",
+  "FOUNDATION_O1B_EXPLICIT_TIME_PARITY",
+  "M2A-1b",
+  "M2A-5",
+  "M2A-6",
+  "M2b",
+  "M3",
+  "PROTOCOLO_M2A"
+ ],
+ "schema": "m2a-contract-s19/1",
+ "source": {
+  "contract": "docs/decisions/M2A_CONVERSATION_CONTRACT_V1.md",
+  "contract_sha256": "e580d67cbe2f39aac3925dc62bffc56a36eaddc6e8e213d85eeb57c52adc0383",
+  "section": "§19"
+ }
+}

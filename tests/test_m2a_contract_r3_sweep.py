@@ -26,6 +26,7 @@ from __future__ import annotations
 
 import ast
 import hashlib
+import importlib.util
 import re
 from collections import Counter
 from dataclasses import dataclass
@@ -256,65 +257,43 @@ def op_slot_matrix() -> dict[tuple[str, str], str]:
     return out
 
 
-# ---- the amended contract, read from its text -----------------------------------------------------------------------
+# ---- the amended contract, read through the ONE contract parser (U19; scripts/audits/m2a_conversation) -------------
+_CT_SPEC = importlib.util.spec_from_file_location(
+    "m2a_contract_text", ROOT / "scripts/audits/m2a_conversation/m2a_contract_text.py")
+CT = importlib.util.module_from_spec(_CT_SPEC)
+_CT_SPEC.loader.exec_module(CT)
+
+
 def _contract() -> str:
-    return CONTRACT.read_text(encoding="utf-8")
+    return CT.read(CONTRACT)
 
 
 def delta_refusal_codes() -> list[str]:
-    """The closed ``DeltaRefusal`` list as contract §6 writes it."""
-    block = re.search(r"Códigos de rechazo \(`DeltaRefusal`, cerrados\):(.*?)\.\s", _contract(), re.S).group(1)
-    return re.findall(r"`([^`]+)`", block)
+    return CT.refusal_codes(_contract())
 
 
 def refusal_table() -> dict[str, list[str]]:
-    """Contract §6 (R3-2): ``DeltaRefusal`` → the A.3 codes it publishes. «cualquier otro» lists its codes itself."""
-    block = _contract().split("| `DeltaRefusal` | `CLARIFY` (A.3) |", 1)[1].split("\n\n", 1)[0]
-    code = re.compile(r"`([A-Z_]+(?::<[a-zA-Z]+>)?)`")  # an A.3 code; a bare `<DIM>` in a comment is not one
-    out: dict[str, list[str]] = {}
-    for line in block.splitlines()[2:]:
-        left, right = line.strip("|").split("|", 1)
-        sources, targets = code.findall(left), code.findall(right)
-        if sources:
-            out.update({source: targets for source in sources})
-        else:  # «cualquier otro (estructural, sin autoridad)»: each listed code publishes itself
-            out.update({target: [target] for target in targets})
-    return out
+    return CT.refusal_table(_contract())
 
 
 def annex_a3() -> dict[str, list[str]]:
-    text = _contract().split("**A.3 Códigos de razón:**", 1)[1].split("Retirados:", 1)[0]
-    return {m.group(1): re.findall(r"`([^`]+)`", m.group(2))
-            for m in re.finditer(r"^\| `([A-Z_]+)` \| (.*) \|$", text, re.M)}
+    return CT.annex_a3(_contract())
 
 
 def annex_a1() -> list[str]:
-    text = _contract().split("**A.1 `TurnScope`:**", 1)[1].split("**A.2", 1)[0]
-    return re.findall(r"`([^`]+)`", text)
+    return CT.annex_a1(_contract())
 
 
 def row_4b_motives() -> dict[str, str]:
-    """§7.1 fila 4b (D-6): ``{motivo: dueño}`` of the closed list."""
-    block = _contract().split("| Motivo (cerrado) | P… | Dueño |", 1)[1].split("\n\n", 1)[0]
-    return {re.search(r"`([A-Z_]+)`", cells[0]).group(1): cells[2].strip()
-            for cells in (line.strip("|").split("|") for line in block.splitlines()[2:])}
-
-
-def dim_bullet() -> str:
-    """A.3 «Parámetros (R3)»: the bullet that defines the domain of ``<DIM>`` (and only that bullet)."""
-    params = _contract().split("Parámetros (R3):", 1)[1].split("\n\n", 2)[1]
-    return next(item for item in params.split("\n- ") if item.lstrip("- ").startswith("`<DIM>`"))
+    return CT.row_4b_motives(_contract())
 
 
 def dim_domain() -> set[str]:
-    """A.3 (R3-3): the domain of ``<DIM>`` as the contract states it: the slot dimensions plus UNIVERSE, never a
-    dimension that is not a slot."""
-    bullet = dim_bullet()
-    named = set(re.findall(r"`([A-Z_]+)`", bullet.split("Nunca", 1)[0]))
-    excluded = set(re.findall(r"`([A-Z_]+)`", bullet.split("Nunca", 1)[1].split(".", 1)[0]))
-    assert "once dimensiones de ranura" in bullet and excluded == {"UNSUPPORTED", "RETRIEVAL_INTENT",
-                                                                     "CONTROL_LANGUAGE"}
-    return ({d.value for d in SLOT_DIMENSIONS} | named) - excluded
+    """A.3 (R3-3): the domain of ``<DIM>`` as the contract states it: every dimension minus the excluded ones, plus
+    UNIVERSE. It must be exactly the slot dimensions plus UNIVERSE."""
+    named, excluded = CT.dim_parameter(_contract())
+    assert excluded == {"UNSUPPORTED", "RETRIEVAL_INTENT", "CONTROL_LANGUAGE"}
+    return ({d.value for d in D} - excluded) | named
 
 
 # ---- the sweep (verdicts are analysis; rows are tied to generated codes, ops and probes) ---------------------------
@@ -423,6 +402,12 @@ SWEEP = (
         "§6.7 y §19; §8.3 fila 4 sellada: «por fecha» selecciona uno, «dame 20» ninguno (fila 7); sondas "
         "P-d1-option1/P-d1-provisional; {ORDER} literal = CANDIDATE_OUTSIDE_ANSWER_SLOTS (P-d1-literal)", "R3-1",
         ("PENDING-R3-1",)),
+    Row("S09", (), "P-3: un parche que introduce a la vez +X y −X (mismo valor canónico, misma dimensión)",
+        "SET/<DIM>/POSITIVE + SET/<DIM>/NEGATIVE en un parche",
+        "SÍ (el tipo admite la efectiva con +X y −X nuevos: sonda P-p3)",
+        "OP_NOT_ACCREDITED:<DIM> → CLARIFY UNRESOLVED_VALUE:<DIM> (rama fail-closed de R3-4)", "CUBIERTO",
+        "§6.5 F16: sólo invierte un positivo ARRASTRADO; un positivo del mismo parche no cuenta (U18). Mutante del "
+        "verificador: R3_P3_SF001_same_patch_both_polarities (G10)", "P-3"),
     Row("R01", (), "rechazo DELTA_SLOT_CONFLICT (dos SET en una ranura; KEEP+CLEAR; dos REPLACE_UNIVERSE)",
         "SET×2, KEEP+CLEAR, REPLACE_UNIVERSE×2", "SÍ", "→ CLARIFY DELTA_SLOT_CONFLICT", "CUBIERTO",
         "tabla de §6; incluye la unión de valores de G-FU-09 (§19)", "R3-2", ("A3-DELTA_SLOT_CONFLICT",)),
@@ -452,7 +437,7 @@ PROBE_EXPECTED = {
     "P-dual-replace-narrowed": None, "P-order-or": "NONCONJUNCTIVE_ORDER", "P-order-and": None,
     "P-c": None, "P-c-target": None, "P-f16": None, "P-keep": None, "P-clear-order": None,
     "P-d1-literal": "CANDIDATE_OUTSIDE_ANSWER_SLOTS", "P-d1-option1": None, "P-d1-provisional": None,
-    "P-d6-multi-wire": None, "P-d6-unsupported-wire": None,
+    "P-d6-multi-wire": None, "P-d6-unsupported-wire": None, "P-p3": None,
 }
 
 
@@ -507,6 +492,9 @@ def probes() -> dict[str, str | None]:
             wire("t2", D.TOPIC, "contains", "vigilancia", raw_m, rid="r2")), multi)),
         "P-d6-unsupported-wire": refusal(lambda: proposal(raw_b, Operation.FOLLOWUP_DELTA, (
             wire("u", D.UNSUPPORTED, "is", "solo", raw_b, unsupported_label="exclusive_scope"),))),
+        # P-3: +X and −X both created by the patch (nothing carried): the type admits it, only §6.5 stops it.
+        "P-p3": refusal(lambda: effective((cond("c1", D.BUYER), cond("x1", D.TOPIC, start=4),
+                                           cond("x2", D.TOPIC, SAMPLE[D.TOPIC][1], start=6)))),
     }
 
 
@@ -647,9 +635,18 @@ def test_d1_option1_is_in_the_contract_and_section_8_3_is_untouched():
                    "`answer_slots = {ORDER, CARDINALITY}`", "`REASK ANSWER_UNRESOLVED`", "`CANCEL_PENDING`",
                    "**sólo C1**"):
         assert clause in section, clause
-    e_order = next(line for line in text.splitlines() if line.startswith("| follow-ups con ORDER/CARDINALITY"))
-    assert "**sólo C1**" in e_order
+    s19 = CT.section(text, "## 19. Frontera: M2b, M3 y E-*", "## 20. Gates")
+    e_order = next(row for row in CT.table(s19, "| Id | Casos `M2A_GOLD` | Necesitan | Dueño |")
+                   if row[0] == "`DEP-E-ORDER`")
+    assert "**sólo C1**" in e_order[2]
     assert "### D.2 Puntos de revisión del usuario: RESUELTOS (2026-10-02)" in text
+
+
+def test_p3_is_in_the_contract():
+    f16 = " ".join(CT.section(_contract(), "- **F16**:", "- **F3/F22**:").split())
+    assert "F16 sólo invierte un positivo **arrastrado** de la base; un positivo creado por el mismo parche no cuenta" in f16
+    assert "introduce a la vez +X y −X (mismo valor canónico, misma dimensión) no lo resuelve F16" in f16
+    assert "misma rama fail-closed y con el mismo código (R3, P-3)" in f16
 
 
 def test_d1_option1_answers_select_by_encoded_value():

@@ -149,8 +149,59 @@ def mutants(rows: list[dict]) -> dict:
         L["disposition_reason"] = None
         L["resulting_ir"] = copy.deepcopy(L["prior"]["ir"])
 
+    # ---- R3 (contract amendment, release r3): each mutant must die by ITS rule -------------------------------------
+    def executed(L, resulting):
+        L["expected_disposition"], L["disposition_reason"], L["alternatives"] = "EXECUTE", None, []
+        L["resulting_ir"] = resulting
+
+    def sf192_keeps_cardinality(L):  # «sin orden» executed keeping top-10: check_ir «cardinality without order»
+        executed(L, {**L["prior"]["ir"], "order": None})
+
+    def sf192_drops_cardinality(L):  # CARDINALITY removed without a cited op: G3
+        executed(L, {**L["prior"]["ir"], "order": None, "cardinality": None})
+
+    def sf192_reason_outside_a3(L):
+        L["disposition_reason"] = "CARDINALITY_WITHOUT_ORDER"
+
+    def sf192_seals_set_order_candidate(L):  # SET_ORDER candidates are E-ORDER's (§19), never sealed: G9
+        L["alternatives"] = L["alternatives"] + [{**L["prior"]["ir"], "order": {"direction_source": "DEFAULTED",
+                                                                                "operator": "date_desc"}}]
+
+    def sf193_keep_on_present_slot(L):  # the anchor HAS a buyer: KEEP_ON_EMPTY_SLOT is incoherent (G9)
+        L["prior"]["ir"]["conditions"].append({"dimension": "BUYER", "id": "c9", "level": None, "operator": "is",
+                                               "polarity": "POSITIVE", "unit": None, "value_hint": "INVIAS"})
+
+    def sf194_executed(L):  # negation over several positives executed: G10 F16 fail-closed branch
+        executed(L, {**L["prior"]["ir"], "conditions": L["prior"]["ir"]["conditions"] + [
+            {"dimension": "TOPIC", "id": "c4", "level": None, "operator": "contains", "polarity": "NEGATIVE",
+             "unit": None, "value_hint": "cafetería"}]})
+
+    def sf194_wrong_dimension(L):  # R3-4: the code names the dimension of the slot (G10)
+        L["disposition_reason"] = "UNRESOLVED_VALUE:BUYER"
+
+    def sf194_non_slot_dimension(L):  # R3-3: <DIM> never a dimension that is not a slot (G1 tail)
+        L["disposition_reason"] = "UNRESOLVED_VALUE:RETRIEVAL_INTENT"
+
+    def p3_same_patch(L):  # P-3: +X and −X in one patch never resolved by F16 (G10)
+        neg = next(o for o in L["ops"] if o["op"] == "SET" and o["polarity"] == "NEGATIVE")
+        L["ops"] = L["ops"] + [{**neg, "polarity": "POSITIVE", "quote": "de " + str(neg["value_hint"]),
+                                 "refers_to_result_set": True}]  # continuation: only P-3 may kill it
+
+    def sf195_drops_cardinality(L):  # CLEAR(ORDER)+SET_ORDER keeps CARDINALITY (F10): G3
+        L["resulting_ir"] = {**L["resulting_ir"], "cardinality": None}
+
     return {
 
+        "R3_SF192_executed_keeps_cardinality": ("SF192", sf192_keeps_cardinality),
+        "R3_SF192_executed_drops_cardinality": ("SF192", sf192_drops_cardinality),
+        "R3_SF192_reason_outside_A3": ("SF192", sf192_reason_outside_a3),
+        "R3_SF192_seals_set_order_candidate": ("SF192", sf192_seals_set_order_candidate),
+        "R3_SF193_keep_on_present_slot": ("SF193", sf193_keep_on_present_slot),
+        "R3_SF194_executed": ("SF194", sf194_executed),
+        "R3_SF194_wrong_dimension": ("SF194", sf194_wrong_dimension),
+        "R3_SF194_non_slot_dimension": ("SF194", sf194_non_slot_dimension),
+        "R3_P3_SF001_same_patch_both_polarities": ("SF001", p3_same_patch),
+        "R3_SF195_drops_cardinality": ("SF195", sf195_drops_cardinality),
         "U2_SF063_asks_three": ("SF063", asks_three),
         "V3b_SF051_hybrid_over_pending": ("SF051", hybrid_over_pending),
         "V8_SF102_unit_from_two_units": ("SF102", inherit_from_two_units),

@@ -1,6 +1,6 @@
 {
  "adjudications": {
-  "note": "R0205 entra en M2A_GOLD por A8.1 + money_comparators («en adelante» = GTE) sin re-etiquetado. Única re-etiqueta: SF166 (U1, usuario 2026-10-02); SF063 sólo normaliza el preestado (U2); SF168 se declara (D1).",
+  "note": "R0205 entra en M2A_GOLD por A8.1 + money_comparators («en adelante» = GTE) sin re-etiquetado. Única re-etiqueta: SF166 (U1, usuario 2026-10-02); SF063 sólo normaliza el preestado (U2); SF168 se declara (D1). r3: U3 añade SF192–SF195 desde las etiquetas ciegas A/B + adjudicación.",
   "orchestrator_classification": {
    "R0075": {
     "destination": "M2A_GOLD",
@@ -54,6 +54,12 @@
    ],
    "U2": [
     "SF063"
+   ],
+   "U3": [
+    "SF192",
+    "SF193",
+    "SF194",
+    "SF195"
    ]
   },
   "rules": {
@@ -71,16 +77,18 @@
    "D1": "SF168: declarado prueba de estado persistido inválido",
    "G-FU-03": "PendingClarification.candidate_patches[]",
    "U1": "SF166: año 2023 fuera del catálogo D10 ⇒ CLARIFY SMMLV_YEAR_AMBIGUOUS (control de no extrapolación)",
-   "U2": "SF063: preestado normalizado a alcanzable (asks 3 -> 2)"
+   "U2": "SF063: preestado normalizado a alcanzable (asks 3 -> 2)",
+   "U3": "R3: SF192–SF195 añadidos; etiquetado ciego A/B y adjudicación del usuario (gold/ADJUDICATION_R3.md)"
   }
  },
- "base_commit": "8c1f8c54",
+ "base_commit": "fa0b6de8",
  "gates": {
+  "contract_dependencies_reproduce": true,
   "import_manifest_ok": true,
   "representability": {
    "checker": "scripts/audits/m2a_conversation/check_m2a_gold_contract.py",
    "report": "docs/audits/m2a_conversation/gold/REPRESENTABILITY_REPORT.json",
-   "report_sha256": "5aead3cf2294208d4ec742b186ef51c76fd12ddf95e0ce2d60ba2f1d89569dab",
+   "report_sha256": "c2d8a6f22111f889c6454e06dd7dd774404867fb76f7d6df280dff579de25409",
    "violations": 0
   },
   "sealed_gold_reproduces_from_candidate": true
@@ -96,9 +104,15 @@
   "docs/audits/m2a_conversation/IMPORT_MANIFEST.sha256": "a6d11cca79ece570561c2381351028789097e58445ea1acfd351f87238c44351",
   "docs/audits/m2a_conversation/M2A0_H7B_REVIEW.md": "7f9e9f3e836e83de77ef31265ddbd2e26913f98288d7a2a531637c41de7fd381",
   "docs/audits/m2a_conversation/gold/ADJUDICATION_2026-10-02.md": "160edec8efee339021060713e2b306af74c0591e5addd7968fd5f0323a164fa0",
-  "docs/decisions/M2A_CONVERSATION_CONTRACT_V1.md": "2a582145c7b44e4c241900158608f72a729e009f885ec19994980ea57cc0dc49",
-  "scripts/audits/m2a_conversation/build_sealed_gold.py": "9c9e14ad924df52aca23c947b8e092a5d27327b8fe47d4d12b2e0551996e2941",
-  "scripts/audits/m2a_conversation/check_m2a_gold_contract.py": "c5b3d4771a85821fb20e7917aeb6c7dc8e446b3d77cfdc53497af1c9dce4ba91"
+  "docs/audits/m2a_conversation/gold/ADJUDICATION_R3.md": "d20dcfe5b2f081a6abdbee4ad13cacccc210ba3b0789fa4c6f66ea30f71fcc61",
+  "docs/audits/m2a_conversation/labeling_r3/R3_LABELER_INPUT.md": "4766d610cd8d1d920b7880f8bc9313488b84b32e15dc89a8baf6b22885dfeab8",
+  "docs/audits/m2a_conversation/labeling_r3/labels_A.jsonl": "cfc932e8c17b5d34beede7537c3fa408ece31d6a9384eba0ebdaa6ef3c70c68e",
+  "docs/audits/m2a_conversation/labeling_r3/labels_B.jsonl": "025d1b3044808449a46bca8516e605bdffca985458de3027da8b4f2217f68299",
+  "docs/decisions/M2A_CONVERSATION_CONTRACT_V1.md": "e580d67cbe2f39aac3925dc62bffc56a36eaddc6e8e213d85eeb57c52adc0383",
+  "scripts/audits/m2a_conversation/build_sealed_gold.py": "751c6fc35d09ecf30300ecbcfeacffc30b70960f8c093a9d4c1a74f0a3062a7d",
+  "scripts/audits/m2a_conversation/check_m2a_gold_contract.py": "a823bc10a7fc5a8502ad1101ba2e6e81bf9d20bb3851f20c6e521b2ca7d63a61",
+  "scripts/audits/m2a_conversation/extract_contract_dependencies.py": "3ab0f62f31aa0a02f3e9664ef6536513877f8f32e62011dd8e29668908a267f4",
+  "scripts/audits/m2a_conversation/m2a_contract_text.py": "6234d321a8a259dcb58fb7eba2262155c8f353c653251fcf97467d6802178fd6"
  },
  "partition": {
   "DEV": {
@@ -202,7 +216,8 @@
     "SF186",
     "SF187",
     "SF189",
-    "SF191"
+    "SF191",
+    "SF195"
    ]
   },
   "TEST": {
@@ -309,7 +324,10 @@
     "SF182",
     "SF185",
     "SF188",
-    "SF190"
+    "SF190",
+    "SF192",
+    "SF193",
+    "SF194"
    ]
   },
   "rule": "por slice y disposición; orden sha256(salt:id); posiciones pares → TEST, impares → DEV; fija desde el sello r2: un id conserva su lado en re-sellados posteriores",
@@ -334,16 +352,19 @@
    "records": 150,
    "sha256": "1887f7ff39ce3e23e8c9153f6766b05b07a587d5c116804f161e364a71687351"
   },
+  "docs/audits/m2a_conversation/gold/CONTRACT_S19_DEPENDENCIES.json": {
+   "sha256": "86ffb45cbdae6b825422832f64fbf7b1737a1d3db4065e631dbe92f81c4c6128"
+  },
   "docs/audits/m2a_conversation/gold/FOLLOWUP_FRONTIER_synthetic.jsonl": {
    "records": 41,
    "sha256": "8b4924464380bb974cae5f0e003228f8d5a31b8b3d00c7c110350bdf73a5ea1e"
   },
   "docs/audits/m2a_conversation/gold/M2A_GOLD_AND_FRONTIER_INDEX.json": {
-   "sha256": "a16f0ace4733e0b5f64c03195c049d879dd0d7160742f831ac882a9c461ee2ea"
+   "sha256": "ee5d1f813e8dcd870328e0e4ff0bc3272c89512e49db93204c85ec00ee893071"
   },
   "docs/audits/m2a_conversation/gold/M2A_GOLD_synthetic.jsonl": {
-   "records": 150,
-   "sha256": "46228df320930e0ffd274636a2bbee7eaee00cae93939c71f7ffecb14e260be1"
+   "records": 154,
+   "sha256": "ea1c044dc7125400f57391bdc277ebaeebf79618de37a3a07e79344c220666a2"
   }
  },
  "real_private": {
@@ -619,12 +640,16 @@
    "SF188": "a188b103cdb89c9732a207e51423dcb8379aded485aab017a24ef434d4086056",
    "SF189": "1ca0650325e4b44386bbbed9dd43e71c68a266970b45e0720fbc42ecfd5b810d",
    "SF190": "4e2b0a9c7fefe26c8a62246c4a0656ed5b300ac4235b56db38f9de9d69c17842",
-   "SF191": "c9c9aa163a87ea2244855c10e29d2a34f0d95e8f3d085a25c152d2e8108efb81"
+   "SF191": "c9c9aa163a87ea2244855c10e29d2a34f0d95e8f3d085a25c152d2e8108efb81",
+   "SF192": "852b7da9da9ce0798d099768e02ad98536edef53a54f9f52330f54c6052a426c",
+   "SF193": "68f60fea5dc268b87c399f59ec97f031ac9745c3202c3981d1fc250db3f1a168",
+   "SF194": "207f1dc2269e6ef073b404a21e5fb6726bdbbeaadcc524adefe8c7701ddc4624",
+   "SF195": "b767eb83d05e8bac72da134daf198a8e36aa51e28a1e48e797b99bfc5995e83c"
   }
  },
  "seal_schema": "m2a-gold-seal/1",
- "seal_sha256": "bb2e981229ec8263a961994388ee4bae5b84a15ac523d0f0435de7a328cd2216",
- "sealed_on": "2026-10-01",
+ "seal_sha256": "3fdd81df0b9b024f4c3085e60e129f905bdf42ad3880694b07d4f2336cbf9ccc",
+ "sealed_on": "2026-10-02",
  "slices": {
   "FOLLOWUP_FRONTIER": {
    "REAL": {
@@ -1127,8 +1152,8 @@
    },
    "SYNTHETIC": {
     "by_disposition": {
-     "CLARIFY": 12,
-     "EXECUTE": 117,
+     "CLARIFY": 15,
+     "EXECUTE": 118,
      "INFORM": 1,
      "NEW_SEARCH": 16,
      "REASK": 4
@@ -1283,10 +1308,14 @@
      "SF188",
      "SF189",
      "SF190",
-     "SF191"
+     "SF191",
+     "SF192",
+     "SF193",
+     "SF194",
+     "SF195"
     ],
-    "index_sha256": "46228df320930e0ffd274636a2bbee7eaee00cae93939c71f7ffecb14e260be1",
-    "n": 150
+    "index_sha256": "ea1c044dc7125400f57391bdc277ebaeebf79618de37a3a07e79344c220666a2",
+    "n": 154
    }
   }
  },
@@ -1298,8 +1327,8 @@
   },
   "M2A_GOLD": {
    "REAL": 49,
-   "SYNTHETIC": 150,
-   "TOTAL": 199
+   "SYNTHETIC": 154,
+   "TOTAL": 203
   }
  }
 }

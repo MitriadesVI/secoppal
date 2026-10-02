@@ -31,7 +31,7 @@ def _real_dir() -> Path | None:
 
 def test_seal_totals_are_the_adjudicated_ones():
     seal = json.loads(SEAL.read_text(encoding="utf-8"))
-    assert seal["totals"]["M2A_GOLD"] == {"REAL": 49, "SYNTHETIC": 150, "TOTAL": 199}
+    assert seal["totals"]["M2A_GOLD"] == {"REAL": 49, "SYNTHETIC": 154, "TOTAL": 203}  # r3: + SF192–SF195 (U3)
     assert seal["totals"]["FOLLOWUP_FRONTIER"] == {"REAL": 16, "SYNTHETIC": 41, "TOTAL": 57}
     gold = set(seal["slices"]["M2A_GOLD"]["REAL"]["ids"]) | set(seal["slices"]["M2A_GOLD"]["SYNTHETIC"]["ids"])
     frontier = {r["gold_id"] for s in ("REAL", "SYNTHETIC") for r in seal["slices"]["FOLLOWUP_FRONTIER"][s]["records"]}
@@ -45,7 +45,8 @@ def test_seal_totals_are_the_adjudicated_ones():
 # DEV/TEST partition frozen at seal 3aac2a20 (r2 kept it: 0 moves). Independent of the seal file: the seal is sticky and
 # would otherwise only compare the partition with itself. New ids may be added later; then update this pin ONLY after
 # checking that no existing id changed side (``m2a_gold_seal.py`` keeps sides), and declare it in the commit.
-PARTITION_SHA256 = "04197bbd7f0962e7eef5668ced884df071373f7ee4aea7c66935bfec7c754f8e"
+# r3 (2026-10-02): 0 moves, 4 additions (SF192/SF193/SF194 TEST, SF195 DEV); the r2 pin was 04197bbd….
+PARTITION_SHA256 = "a73d77c94d46d425ec271414d15f8d6fdf5a42f27e8f94d1d4bdaf1353e6831f"
 
 
 def test_partition_is_frozen():
@@ -66,7 +67,7 @@ def test_gold_is_representable_by_the_contract():
     checker = _module("check_m2a_gold_contract")
     out = checker.run(_real_dir())
     assert out["violations"] == []
-    assert out["slices"]["SYNTHETIC"] == {"gold": 150, "frontier": 41}
+    assert out["slices"]["SYNTHETIC"] == {"gold": 154, "frontier": 41}
 
 
 def test_sealed_gold_reproduces_from_candidate_and_adjudications():
@@ -79,3 +80,20 @@ def test_sealed_gold_reproduces_from_candidate_and_adjudications():
     assert rows["SF166"]["expected_disposition"] == "CLARIFY"  # U1: 2023 outside the D10 catalog
     assert {rows["SF063"][k]["prior"]["pending"]["asks"] for k in ("label_A", "label_B")} == {2}  # U2
     assert rows["SF168"]["invalid_persisted_state"]  # D1
+    r3 = {gid: rows[gid] for gid in ("SF192", "SF193", "SF194", "SF195")}  # U3: added from the blind labels A/B
+    assert all(r["adjudicated_by"] == ["U3"] and r["primary_agreement"] for r in r3.values())
+    assert {r["label_A"]["labeler"] for r in r3.values()} == {"A"} and {r["label_B"]["labeler"] for r in r3.values()} == {"B"}
+    sf192 = r3["SF192"]
+    c1 = {**sf192["label_A"]["prior"]["ir"], "order": None, "cardinality": None}
+    assert sf192["label_A"]["alternatives"] == sf192["label_B"]["alternatives"] == [c1]  # only C1 is sealed (§19)
+
+
+def test_the_contract_s19_extraction_reproduces_and_is_the_one_authority():
+    """U19: §19 -> one generated, sealed extraction; SF075 depends on FOUNDATION_O1B_EXPLICIT_TIME_PARITY from it."""
+    extractor = _module("extract_contract_dependencies")
+    path = ROOT / "docs/audits/m2a_conversation/gold/CONTRACT_S19_DEPENDENCIES.json"
+    assert path.read_text(encoding="utf-8") == extractor.render()
+    extraction = json.loads(path.read_text(encoding="utf-8"))
+    assert "FOUNDATION_O1B_EXPLICIT_TIME_PARITY" in extraction["case_owners"]["SF075"]
+    assert extraction["source"]["contract_sha256"] == hashlib.sha256(
+        (ROOT / "docs/decisions/M2A_CONVERSATION_CONTRACT_V1.md").read_bytes()).hexdigest()

@@ -8,9 +8,8 @@ R3 se verificó sobre `fa0b6de8` (Paso 0 de la ola M2a).
 **Gold que lo interpreta:** `docs/audits/m2a_conversation/gold/M2A_GOLD_SEAL.json` (`M2A_GOLD` = 49 REAL + 154 SYNTHETIC = 203;
 `FOLLOWUP_FRONTIER` = 16 + 41 = 57; release r3: copia sellada en `docs/audits/m2a_conversation/gold/`, que difiere del
 candidato asesor por las adjudicaciones U1/U2/D1 del 2026-10-02, `gold/ADJUDICATION_2026-10-02.md`, y por las cuatro
-adiciones de U3, `gold/ADJUDICATION_R3.md`). El sello lleva el sha256 de este archivo: cambiar una línea de este
-contrato rompe el sello y exige re-sellar con motivo. Hasta el re-sellado r3 el sello vigente es el r2 (199 casos) y no
-verifica contra este texto (Anexo D).
+adiciones de U3, `gold/ADJUDICATION_R3.md`; sellado en el paso B4 de la enmienda R3, 2026-10-02). El sello lleva el
+sha256 de este archivo: cambiar una línea de este contrato rompe el sello y exige re-sellar con motivo.
 **Evidencia de origen (no normativa):** `docs/audits/m2a_advisory_2026-10-01/` (carril asesor B, importado).
 **Trazabilidad:** `docs/audits/m2a_conversation/M2A_TRACEABILITY_MATRIX.md`. **Plan:** `docs/audits/m2a_conversation/M2A_IMPLEMENTATION_PLAN.md`.
 
@@ -333,7 +332,10 @@ seleccionado o completado (§8). No hay más operaciones; un parche que necesite
      `VALUE_RANGE_REPLACED`.
    - **F16**: `SET` negativo cuyo valor canónico es el **único** positivo vigente de la ranura invierte la polaridad →
      `POLARITY_INVERTED`. Con varios positivos o valor contenido, el `SET` no se acredita en M2a (G-FU-09, M2b):
-     `OP_NOT_ACCREDITED:<DIM>` ⇒ `CLARIFY UNRESOLVED_VALUE:<DIM>`, con la dimensión de la ranura (R3-4).
+     `OP_NOT_ACCREDITED:<DIM>` ⇒ `CLARIFY UNRESOLVED_VALUE:<DIM>`, con la dimensión de la ranura (R3-4). F16 sólo
+     invierte un positivo **arrastrado** de la base; un positivo creado por el mismo parche no cuenta. Un parche que
+     introduce a la vez +X y −X (mismo valor canónico, misma dimensión) no lo resuelve F16: cae en la misma rama
+     fail-closed y con el mismo código (R3, P-3).
    - **F3/F22**: `SET` positivo de TOPIC sobre TOPIC positivo distinto lo sustituye → `TOPIC_REPLACED`.
    - **F9**: con vista derivada, la vista se recalcula sobre la efectiva compuesta → `VIEW_REDERIVED` si cambia.
 6. **Políticas de petición** (ACTOR×STATE, ACTOR×TIME, `universe-c5@1`, top-N, dirección de orden por defecto) se
@@ -820,17 +822,23 @@ contrato (un gate de M2a no puede pasar sin resolverlo), se registra `BLOCKER` y
 
 **Dependencias declaradas de casos del Gold M2a con otros carriles** (no son frontera; son insumos):
 
-| Casos `M2A_GOLD` | Necesitan | Dueño |
-|---|---|---|
-| 3 (A5: referente temporal único) | entrada separada de TIME con `time.relative_to_previous` | D-TIME (E-TIME) |
-| 4 (SMMLV en follow-ups: R0301, R0304, SF165, SF167) | conversión por vigencia de D10 (`unit.smmlv`, `year.*`) dentro del catálogo 2024–2026; SF166 (2023) **no** es dependencia: es control de no extrapolación (CLARIFY) | D-MONEY (E-VALUE) |
-| 8 (formas «entre X y Y», «mayores de», «pasen de») | lectura de la autoridad VALUE del primer turno | D-MONEY (E-VALUE) |
-| 0 (igualdad «exactamente X», §15.2) | lectura como par `>=`/`<=` del mismo turno | D-MONEY (E-VALUE) |
-| herencia de unidad/año (F5–F7) | `unit.inherited`, `year.inherited` por la entrada separada | D-MONEY, D-TIME |
-| F30 | `buyer.territory.<código>` / `buyer.national` | D-BUYER |
-| vista derivada | `HostViewDecision`, `decide_view` | ola F |
-| 1 (SF075: `REPLACE_UNIVERSE` a oportunidades con TIME arrastrado; R3-3) | re-decidir O1B / `opportunity-explicit-state` sobre la efectiva (su representación es de M2A-1b) y TIME explícito sobre oportunidades (`foundation_projection.py:235-237`). Mientras falte, `compose` rechaza con `OP_NOT_ACCREDITED:UNIVERSE` ⇒ `CLARIFY UNRESOLVED_VALUE:UNIVERSE` y el caso es rojo declarado (§20.2) | `FOUNDATION_O1B_EXPLICIT_TIME_PARITY` (+ M2A-1b) |
-| follow-ups con ORDER/CARDINALITY (matriz T07; R3, D-5) | autoridad ORDER/CARDINALITY (`order@1`, `cardinality@2`, `order.direction_defaulted`, `topn.capped`); `main` aún no las admite en el primer turno (`UNRESOLVED_HOST_DIMENSION:ORDER`). Mientras falte, la pendiente de §6.7 (R3-1) es provisional fail-closed: **sólo C1** «quitar orden y límite» y la cancelación, sin candidatos `SET_ORDER` | E-ORDER (núcleo, plan M2A-3c) |
+| Id | Casos `M2A_GOLD` | Necesitan | Dueño |
+|---|---|---|---|
+| `DEP-TIME-RELATIVE` | 3 (A5: referente temporal único) | entrada separada de TIME con `time.relative_to_previous` | D-TIME (E-TIME) |
+| `DEP-SMMLV` | 4 (SMMLV en follow-ups: R0301, R0304, SF165, SF167) | conversión por vigencia de D10 (`unit.smmlv`, `year.*`) dentro del catálogo 2024–2026; SF166 (2023) **no** es dependencia: es control de no extrapolación (CLARIFY) | D-MONEY (E-VALUE) |
+| `DEP-VALUE-FORMS` | 8 (formas «entre X y Y», «mayores de», «pasen de») | lectura de la autoridad VALUE del primer turno | D-MONEY (E-VALUE) |
+| `DEP-VALUE-EQUALITY` | 0 (igualdad «exactamente X», §15.2) | lectura como par `>=`/`<=` del mismo turno | D-MONEY (E-VALUE) |
+| `DEP-INHERITANCE` | herencia de unidad/año (F5–F7) | `unit.inherited`, `year.inherited` por la entrada separada | D-MONEY, D-TIME |
+| `DEP-BUYER-TERRITORY` | F30 | `buyer.territory.<código>` / `buyer.national` | D-BUYER |
+| `DEP-DERIVED-VIEW` | vista derivada | `HostViewDecision`, `decide_view` | ola F |
+| `DEP-O1B-OPPORTUNITIES` | 1 (SF075: `REPLACE_UNIVERSE` a oportunidades con TIME arrastrado; R3-3) | re-decidir O1B / `opportunity-explicit-state` sobre la efectiva (su representación es de M2A-1b) y TIME explícito sobre oportunidades (`foundation_projection.py:235-237`). Mientras falte, `compose` rechaza con `OP_NOT_ACCREDITED:UNIVERSE` ⇒ `CLARIFY UNRESOLVED_VALUE:UNIVERSE` y el caso es rojo declarado (§20.2) | `FOUNDATION_O1B_EXPLICIT_TIME_PARITY` (+ M2A-1b) |
+| `DEP-E-ORDER` | follow-ups con ORDER/CARDINALITY (matriz T07; R3, D-5) | autoridad ORDER/CARDINALITY (`order@1`, `cardinality@2`, `order.direction_defaulted`, `topn.capped`); `main` aún no las admite en el primer turno (`UNRESOLVED_HOST_DIMENSION:ORDER`). Mientras falte, la pendiente de §6.7 (R3-1) es provisional fail-closed: **sólo C1** «quitar orden y límite» y la cancelación, sin candidatos `SET_ORDER` | E-ORDER (núcleo, plan M2A-3c) |
+
+**Una autoridad para las dependencias (R3, U19).** §19 es la única fuente de dependencias y huecos diferidos. Su extracción
+generada y sellada (`docs/audits/m2a_conversation/gold/CONTRACT_S19_DEPENDENCIES.json`, generador
+`scripts/audits/m2a_conversation/extract_contract_dependencies.py`) es lo único que consumen el oráculo, los
+verificadores y los carriles; ninguno mantiene una lista ni un override propio. La extracción falla si estas tablas
+no se pueden leer, si un dueño no está en la lista cerrada del generador o si un caso citado no existe en el Gold.
 
 ---
 
@@ -940,10 +948,14 @@ Retirados: `SMMLV_UNSUPPORTED` (A2), `INHERITED_UNIT_IMPLAUSIBLE` (A1), `TOPN_CA
   extrapolación); **U2** normaliza el preestado de SF063 a uno alcanzable (`asks = 2`, §8.1); **D1** declara SF168
   prueba de estado persistido inválido (un ancla SMMLV plurianual no es alcanzable bajo §15.5; §6.6 falla cerrado).
   Todo preestado del Gold es alcanzable bajo este contrato salvo los declarados así (verificador G11).
-- Release r3 (usuario, 2026-10-02; enmienda R3, Anexo D): **U3** añade cuatro casos sintéticos, SF192–SF195. Los
-  etiquetan dos etiquetadores ciegos contra este contrato enmendado, y el usuario adjudica las discrepancias
-  (`gold/ADJUDICATION_R3.md`). Ningún registro existente cambia y ningún id existente cambia de lado DEV/TEST. Sus
-  preestados son alcanzables (G11).
+- Release r3 (usuario, 2026-10-02; enmienda R3, Anexo D): **U3** añade cuatro casos sintéticos, SF192–SF195.
+  - Los etiquetaron dos etiquetadores ciegos (A y B) contra este contrato enmendado. Sus etiquetas se conservan
+    literales en `docs/audits/m2a_conversation/labeling_r3/labels_{A,B}.jsonl`.
+  - El usuario adjudicó las diferencias (`gold/ADJUDICATION_R3.md`), y `build_sealed_gold.py` reproduce la copia
+    sellada a partir de esas etiquetas más U3.
+  - En SF192 se sella sólo C1: los candidatos `SET_ORDER` los determina E-ORDER (§19, `DEP-E-ORDER`).
+  - Ningún registro existente cambia y ningún id existente cambia de lado DEV/TEST. Sus preestados son alcanzables
+    (G11).
 
 ## Anexo C — Cláusulas sustituidas
 
@@ -993,13 +1005,14 @@ el reducer nunca arregla carencias de otras capas inventando semántica. Una cap
 | P-1 | §6.3, INV-M2A-02 | excepción de `request_ids` al estrechar un ancla dual |
 | P-2 | §19 G-FU-14 | precisión del «11» (deuda de `M2A0_CLOSE.md` §8) |
 | D-5 | §19 | E-ORDER registrado como dependencia |
+| P-3 | §6.5 F16 | F16 sólo invierte un positivo arrastrado; +X y −X en el mismo parche caen en la rama fail-closed de R3-4 (U18) |
+| U19 | §19 | una autoridad para las dependencias: `Id` por fila y extracción generada y sellada (`gold/CONTRACT_S19_DEPENDENCIES.json`) |
 | D-6 | §1.2, §7.1 fila 4b, A.1, A.3 | `OUT_UNSUPPORTED_PROPOSAL` / `INFORM UNSUPPORTED_PROPOSAL:<motivo>`, genérica, con lista cerrada de motivos y dueño por motivo |
 | — | §20.4 | congelación tras R3 |
 | D-4 | cabecera, §20.1, Anexo B | release r3: SF192–SF195 (U3), etiquetado ciego y re-sellado único |
 
-**Estado del sello.** Este texto rompe el sello r2 a propósito. El Gold r3 se sella en el paso B4, tras el etiquetado
-ciego y la adjudicación. Hasta entonces, `m2a_gold_seal.py verify` falla en esta rama sólo por el sha256 de este
-archivo.
+**Estado del sello.** Sellado como release r3 en el paso B4 (2026-10-02): un único re-sellado, después del etiquetado
+ciego y de la adjudicación. Registro en `gold/ADJUDICATION_R3.md`.
 
 **Lado del tipo.** `CLARIFY_CODES`, el `<DIM>` con `UNIVERSE`, `OUT_UNSUPPORTED_PROPOSAL` (con su resolución `INFORM`)
 y `UNSUPPORTED_PROPOSAL:<motivo>` faltan en `app/core/foundation_accepted.py`. Son de M2A-3 (fase 1c, tras el

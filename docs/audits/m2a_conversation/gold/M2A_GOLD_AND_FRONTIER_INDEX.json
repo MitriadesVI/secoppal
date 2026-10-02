@@ -1,8 +1,8 @@
 {
  "sealed": true,
  "schema": "m2a-followup-gold/2.1",
- "rules": "contrato M1 v1.4 + F1-F30 + A1-A9 + A8.1 + A9.1 + U1/U2 (usuario, 2026-10-02) + D1",
- "note": "Copia sellada. Difiere del candidato asesor sólo por U1 (SF166), U2 (SF063) y D1 (SF168); ver docs/audits/m2a_conversation/gold/ADJUDICATION_2026-10-02.md. REAL sin cambios.",
+ "rules": "contrato M1 v1.4 + F1-F30 + A1-A9 + A8.1 + A9.1 + U1/U2 (usuario, 2026-10-02) + D1 + U3 (enmienda R3)",
+ "note": "Copia sellada. Difiere del candidato asesor por U1 (SF166), U2 (SF063) y D1 (SF168), ver docs/audits/m2a_conversation/gold/ADJUDICATION_2026-10-02.md, y por las adiciones U3 (SF192–SF195), ver docs/audits/m2a_conversation/gold/ADJUDICATION_R3.md. REAL sin cambios.",
  "slices": {
   "REAL": {
    "M2A_GOLD": {
@@ -225,8 +225,8 @@
   },
   "SYNTHETIC": {
    "M2A_GOLD": {
-    "n": 150,
-    "sha256": "46228df320930e0ffd274636a2bbee7eaee00cae93939c71f7ffecb14e260be1",
+    "n": 154,
+    "sha256": "ea1c044dc7125400f57391bdc277ebaeebf79618de37a3a07e79344c220666a2",
     "ids": [
      "SF001",
      "SF002",
@@ -377,11 +377,15 @@
      "SF188",
      "SF189",
      "SF190",
-     "SF191"
+     "SF191",
+     "SF192",
+     "SF193",
+     "SF194",
+     "SF195"
     ],
     "by_disposition": {
-     "EXECUTE": 117,
-     "CLARIFY": 12,
+     "EXECUTE": 118,
+     "CLARIFY": 15,
      "NEW_SEARCH": 16,
      "REASK": 4,
      "INFORM": 1
@@ -782,7 +786,7 @@
    }
   }
  },
- "release": "M2A_GOLD r2 (2026-10-02)",
+ "release": "M2A_GOLD r3 (2026-10-02)",
  "patches": {
   "SF063": {
    "before_sha256": "42c84f7d9b8798f6d10a7b9d18a57ae702c507edad507c4d2ae3824188c5f684",
@@ -795,6 +799,20 @@
   "SF168": {
    "before_sha256": "996694e4a1fe152cdd93ac34054d211581ec2c8b97692ab45583152ea0d583d2",
    "after_sha256": "4bf00817ae1a06977e0498442c36edafda280e0eeb0ef9ad71bd68259daaab13"
+  }
+ },
+ "additions": {
+  "SF192": {
+   "sha256": "852b7da9da9ce0798d099768e02ad98536edef53a54f9f52330f54c6052a426c"
+  },
+  "SF193": {
+   "sha256": "68f60fea5dc268b87c399f59ec97f031ac9745c3202c3981d1fc250db3f1a168"
+  },
+  "SF194": {
+   "sha256": "207f1dc2269e6ef073b404a21e5fb6726bdbbeaadcc524adefe8c7701ddc4624"
+  },
+  "SF195": {
+   "sha256": "b767eb83d05e8bac72da134daf198a8e36aa51e28a1e48e797b99bfc5995e83c"
   }
  }
 }
