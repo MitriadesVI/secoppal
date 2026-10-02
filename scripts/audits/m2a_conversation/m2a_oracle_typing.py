@@ -8,7 +8,10 @@ A hint becomes the closed ``ExecutableValue`` of its dimension, deterministicall
 * quantified dimensions are normalised to their canonical content: VALUE to ``amount_cop`` and comparator (the unit goes
   to ``Provenance.unit``), TIME to its half-open interval, ORDER and CARDINALITY to their enumerations. Two hints that
   denote the same canonical content give the same value: that is what a canonical value is;
-* a hint that cannot be typed without guessing raises ``Untypeable`` and the case becomes ``NO_MEDIBLE(<motive>)``.
+* a hint that cannot be typed without guessing raises ``Untypeable`` and the case becomes ``NO_MEDIBLE(<motive>)``: a
+  VALUE hint must hold exactly one number and any unit word in it must agree with the unit the Gold gives; a relative
+  window (``relative_period``) is not an interval the Gold fixes (its labels disagree on the end of the window);
+* a CLEAR names the whole dimension unless the Gold gives it a polarity, and then only that polarity's slot.
 
 Where a datum is typed twice (an op and the resulting IR) both typings must coincide. Only the closed value types are
 used (they are not M2a); the dicts are built by hand from the shapes of contract §3 and §5.
@@ -114,14 +117,26 @@ def _time_value(operator: str, hint, excluded: bool) -> tuple[str, ...]:
         raise Untypeable("TIME_INVALID_INTERVAL") from error
 
 
+def _unit_word(folded: str) -> str | None:
+    for pattern, unit in ((r"mil\s+millones", "MIL_MILLONES"), (r"billon", "BILLONES"), (r"millon", "MILLONES"),
+                          (r"\bmil\b", "MILES"), (r"smmlv", "SMMLV"), (r"\bpesos?\b", "PESOS")):
+        if re.search(pattern, folded):
+            return unit
+    return None
+
+
 def _amount(hint, unit: str) -> int:
     scale = UNIT_SCALE.get(unit or "")
     if scale is None:
         raise Untypeable("VALUE_UNIT_NOT_PESO_SCALE")
-    m = re.search(r"\d[\d.]*(?:,\d+)?", nfc(hint))
-    if not m:
-        raise Untypeable("VALUE_NO_NUMBER")
-    whole, comma, frac = m.group(0).partition(",")
+    text = nfc(hint)
+    numbers = re.findall(r"\d[\d.]*(?:,\d+)?", text)
+    if len(numbers) != 1:  # the first number of «de 50 a 100 millones» would be a guess
+        raise Untypeable("VALUE_NUMBER_COUNT")
+    word = _unit_word(fold(text))
+    if word is not None and word != unit:
+        raise Untypeable("VALUE_UNIT_WORD_DISAGREES")
+    whole, comma, frac = numbers[0].partition(",")
     if "." in whole and not re.fullmatch(r"\d{1,3}(?:\.\d{3})+", whole):
         raise Untypeable("VALUE_NUMBER_AMBIGUOUS")  # «2.5» could be 2,5 or 2500: not guessed
     try:
@@ -131,6 +146,11 @@ def _amount(hint, unit: str) -> int:
     if amount != amount.to_integral_value():
         raise Untypeable("VALUE_NOT_WHOLE_PESOS")
     return int(amount)
+
+
+def money_amount(value) -> int:
+    """``amount_cop`` of an encoded ``money@1`` value."""
+    return int(next(i for i in value if i.startswith("amount_cop=")).partition("=")[2])
 
 
 def _opaque(text: str) -> str:
@@ -274,9 +294,15 @@ def condition_dict(t: dict, cid: str, request_ids: list[str], org: dict) -> dict
                            "inherited_from": None}}
 
 
+def dataset_of(subject: str) -> str:
+    """The dataset a request projects follows its SUBJECT, not its kind (contract §3.2: the one the subject projects);
+    the oracle's placeholder stands for the host table: the real ids are the reducer's (see ``LIMITED_GUARANTEES``)."""
+    return f"oracle.dataset.{subject}"
+
+
 def request_dicts(pairs, trace: str, raw: str) -> list[dict]:
     return [{"request_id": f"r{i}", "scope_id": "s1", "subject": subject, "universe_kind": kind,
-             "universe_origin": origin(trace, raw, 0), "view": None, "dataset": f"oracle.{subject}.{kind}"}
+             "universe_origin": origin(trace, raw, 0), "view": None, "dataset": dataset_of(subject)}
             for i, (subject, kind) in enumerate(pairs, 1)]
 
 
@@ -296,7 +322,8 @@ _OP_RANK = {"CLEAR": 0, "SET": 1, "SET_ORDER": 1, "REPLACE_UNIVERSE": 1, "KEEP":
 
 
 def _slot_of_directive(op: dict) -> str:
-    """Slot key of a CLEAR/KEEP op: CLEAR of a dimension is dimension-wide (contract §5.2); KEEP names a real slot."""
+    """Slot key of a CLEAR/KEEP op. KEEP names a real slot. CLEAR names the whole dimension (contract §5.2) unless the
+    Gold gives a polarity to a polarized dimension: then it is that polarity's slot, never the other one."""
     slot = op["slot"]
     if slot in ("VALUE.lower", "VALUE.upper"):
         return "VALUE/" + slot.partition(".")[2]
@@ -305,6 +332,8 @@ def _slot_of_directive(op: dict) -> str:
             return f"{slot}/{op['polarity']}"
         if slot == "VALUE":
             raise Untypeable("KEEP_DIMENSION_WIDE")
+    if op["op"] == "CLEAR" and slot in POLARIZED and op.get("polarity") in ("POSITIVE", "NEGATIVE"):
+        return f"{slot}/{op['polarity']}"
     return slot
 
 
@@ -322,9 +351,12 @@ def typed_ops(label: dict) -> list[dict]:
             entry["slot"] = _slot_of_directive(op)
         elif kind == "SET_UNIVERSE":
             pair = requests_of(res) if res else []
-            named = fold(str(op["value_hint"] or "")).split()[:1]
+            hint = fold(str(op["value_hint"] or ""))
+            named = hint.split()[:1]
             if len(pair) != 1 or not named or not named[0].startswith(pair[0][0][:4]):
                 raise Untypeable("UNIVERSE_TARGET")
+            if (re.search(r"oportunidad|opportunit", hint) is not None) != (pair[0][1] == "opportunities"):
+                raise Untypeable("UNIVERSE_TARGET_KIND")  # the hint and the typed result must name the same kind
             entry.update(slot="UNIVERSE", universe=list(pair[0]))
         elif kind in ("SET", "SET_ORDER"):
             entry["cond"] = _typed_set_op(op, res, res_conds)
@@ -360,10 +392,22 @@ def _typed_set_op(op: dict, res: dict | None, res_conds: list[dict]) -> dict:
     return t
 
 
-def patch_dict(raw: str, typed: list[dict], rids: list[str]) -> dict | None:
-    """The ``m2a-patch/1`` dict of typed ops (``None`` when the turn is not a patch, e.g. a fresh acceptance)."""
+def fresh_ops(res: dict) -> list[dict]:
+    """P of a fresh acceptance read as the patch it would be (a universe plus one SET per own condition), so that every
+    case has the SAME input shape: the shape never says what §7.2 concludes."""
+    pairs = requests_of(res)
+    if len(pairs) != 1:
+        raise Untypeable("FRESH_DUAL_UNIVERSE")
+    ops = [{"op": "REPLACE_UNIVERSE", "slot": "UNIVERSE", "cond": None, "universe": list(pairs[0])}]
+    ops += [{"op": "SET_ORDER" if t["dimension"] == "ORDER" else "SET", "slot": t["slot"], "cond": t, "universe": None}
+            for t in ir_conditions(res)]
+    return sorted(ops, key=lambda e: (_OP_RANK[e["op"]], e["slot"], e["op"]))
+
+
+def patch_dict(raw: str, typed: list[dict], rids: list[str]) -> dict:
+    """The ``m2a-patch/1`` dict of typed ops: the same shape for every case."""
     if not typed:
-        return None
+        raise Untypeable("EMPTY_PATCH")
     ops = []
     for i, e in enumerate(typed):
         org = origin("t1", raw, i)

@@ -3,9 +3,13 @@
   "SF075": {
    "date": "2026-10-02",
    "decided_by": "user",
-   "note": "capacidad pendiente aguas abajo, no del reducer: rojo declarado hasta que exista",
-   "owner": "FOUNDATION_O1B_EXPLICIT_TIME_PARITY"
+   "owner": "FOUNDATION_O1B_EXPLICIT_TIME_PARITY",
+   "record": {
+    "decision_id": "UD-2026-10-02-SF075",
+    "doc": "docs/audits/m2a_conversation/oracle/USER_DECISIONS.jsonl",
+    "doc_sha256": "292f90463e764823d2cb3509596f9f0224d354fa5e9551c9cb4a8bb39587256b"
+   }
   }
  },
- "schema": "m2a-oracle-applicability-decisions/1"
+ "schema": "m2a-oracle-applicability-decisions/2"
 }

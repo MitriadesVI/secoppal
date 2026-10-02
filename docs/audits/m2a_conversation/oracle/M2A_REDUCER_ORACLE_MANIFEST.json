@@ -1,73 +1,592 @@
 {
  "applicability_decisions": {
-  "ids": [
-   "SF075"
-  ],
   "path": "docs/audits/m2a_conversation/oracle/APPLICABILITY_DECISIONS.json",
-  "sha256": "def210dfc6bacf682f6100166796a309e67c6c703d7aecdfca1f08e5ee817963"
+  "records": {
+   "SF075": {
+    "decision_id": "UD-2026-10-02-SF075",
+    "doc": "docs/audits/m2a_conversation/oracle/USER_DECISIONS.jsonl",
+    "doc_sha256": "292f90463e764823d2cb3509596f9f0224d354fa5e9551c9cb4a8bb39587256b"
+   }
+  },
+  "sha256": "c97f867df485c1d879591f8025354e1c670249b46954a670922d5ef659633959"
  },
  "artifact": {
   "path": "docs/audits/m2a_conversation/oracle/M2A_REDUCER_ORACLE_synthetic.jsonl",
   "records": 150,
-  "sha256": "8225595815c4645a585f71ac6f579e58df5d69cdab5428d402e623ee18a9b5d0"
+  "sha256": "e51de0a0e2ec86e9b015f805fd36a24188d59ee91e9355439a43bf43120e576b"
+ },
+ "declarations": {
+  "applicability_rules": [
+   {
+    "basis": "PLAN",
+    "clause": "§8.3; plan M2A-4",
+    "id": "PENDING_PRIOR",
+    "owners": [
+     "M2A-4"
+    ],
+    "why": "a pending prior, an ANSWER or CANCEL_PENDING op: the response protocol is M2A-4's"
+   },
+   {
+    "basis": "PLAN",
+    "clause": "§7.1 #3, §9; plan M2A-6",
+    "id": "EVENT_OR_PROTOCOL",
+    "owners": [
+     "M2A-6"
+    ],
+    "why": "events and pagination are the runtime protocol of M2A-6"
+   },
+   {
+    "basis": "§19",
+    "clause": "§19 row «vista derivada»; §14",
+    "id": "DERIVED_VIEW",
+    "owners": [
+     "F"
+    ],
+    "why": "HostViewDecision does not exist yet: a request with a derived view is not representable"
+   },
+   {
+    "basis": "§19",
+    "clause": "§19 row 4 (SMMLV en follow-ups); §15.5",
+    "id": "SMMLV",
+    "owners": [
+     "E-VALUE"
+    ],
+    "why": "the conversion by vigencia (D10) is E-VALUE's: the typed value does not exist without it"
+   },
+   {
+    "basis": "§19",
+    "clause": "§19 row «herencia de unidad/año»; §15.4",
+    "id": "UNIT_INHERITED",
+    "owners": [
+     "E-VALUE"
+    ],
+    "why": "unit.inherited comes from the separate input of the host (3b)"
+   },
+   {
+    "basis": "§19",
+    "clause": "§19 rows 3 (A5) and «herencia de unidad/año»; §16.1, §16.3",
+    "id": "YEAR_INHERITED_OR_INFERRED",
+    "owners": [
+     "E-TIME"
+    ],
+    "why": "year.inherited / year.inferred / time.relative_to_previous come from the separate input of the host (3b)"
+   },
+   {
+    "basis": "§19",
+    "clause": "§19 G-FU-07; §6.4 H7",
+    "id": "REGION",
+    "owners": [
+     "E-GEO"
+    ],
+    "why": "the members of a region and the closed list are E-GEO's: a GeoValue REGION cannot be typed without them"
+   },
+   {
+    "basis": "§19",
+    "clause": "§19 row F30; §6.4 H6",
+    "id": "NEW_TERRITORY_NEXT_TO_CARRIED_BUYER",
+    "owners": [
+     "D-BUYER"
+    ],
+    "why": "H6 needs the carried buyer's buyer.territory provenance"
+   },
+   {
+    "basis": "STRUCTURAL",
+    "clause": "§6.4 H8; §14",
+    "id": "STATE_IN_UNIVERSE",
+    "owners": [
+     "E-STATE"
+    ],
+    "why": "StateValue without literals per dataset cannot say whether the state exists in the resulting universe (a reducer that fails closed would turn a Gold EXECUTE into a CLARIFY)"
+   },
+   {
+    "basis": "STRUCTURAL",
+    "clause": "§6.4 H8; §14",
+    "id": "MODALITY_IN_UNIVERSE",
+    "owners": [
+     "E-MODALITY"
+    ],
+    "why": "ModalityValue: same as STATE_IN_UNIVERSE"
+   },
+   {
+    "basis": "STRUCTURAL",
+    "clause": "§6.1",
+    "id": "UNRESOLVED_AUTHORITY_VALUE",
+    "owners": "E-<DIMENSION OF THE UNRESOLVED OP>",
+    "why": "a value the authority of its dimension left unresolved is refused with that authority's code: the patch never carries a typed condition for it"
+   }
+  ],
+  "effects_scope": {
+   "echo": [
+    "ORDER_DIRECTION_DEFAULTED",
+    "TOPN_CAPPED",
+    "TOPN_CARRIED",
+    "UNIVERSE_CHANGED"
+   ],
+   "reducer": [
+    "CONTEXT_RESET",
+    "PENDING_CANCELLED",
+    "POLARITY_INVERTED",
+    "TOPIC_REPLACED",
+    "VALUE_RANGE_REPLACED",
+    "VIEW_REDERIVED"
+   ]
+  },
+  "gold_projection_delegates_to_transition": [
+   {
+    "field": "effective.schema, exact keys of the effective, of requests and of conditions",
+    "killed_by": [
+     "cardinality_without_order",
+     "condition_unknown_request",
+     "dangling_policy",
+     "dual_scope_differs",
+     "duplicate_condition_id",
+     "duplicate_request_id",
+     "effective_extra_key",
+     "malformed_policy",
+     "request_ids_not_rewritten_after_reduction",
+     "two_bounds_same_side"
+    ],
+    "rules": [
+     "T-STRUCT"
+    ],
+    "to": "T-STRUCT"
+   },
+   {
+    "field": "requests[].request_id, scope_id, universe_origin, view, dataset",
+    "killed_by": [
+     "M1_stale_dataset_after_redirect",
+     "M2_stale_origin_after_redirect",
+     "M3_reoriginate_untouched_request",
+     "M4_change_scope_id_untouched",
+     "M5_change_request_id_untouched",
+     "redirect_changes_request_id",
+     "redirect_changes_scope_id",
+     "redirect_changes_view",
+     "untouched_request_dataset_changed"
+    ],
+    "rules": [
+     "T-REQ-UNTOUCHED",
+     "T-REQ-REDIRECT",
+     "T-REQ-ORIGIN",
+     "T-REQ-DATASET"
+    ],
+    "to": "T-REQ-UNTOUCHED / T-REQ-REDIRECT / T-REQ-ORIGIN / T-REQ-DATASET"
+   },
+   {
+    "field": "conditions[].condition_id",
+    "killed_by": [
+     "cardinality_without_order",
+     "condition_unknown_request",
+     "dangling_policy",
+     "dual_scope_differs",
+     "duplicate_condition_id",
+     "duplicate_request_id",
+     "effective_extra_key",
+     "malformed_policy",
+     "rename_carried_condition_id",
+     "request_ids_not_rewritten_after_reduction",
+     "reset_carried_host_fields",
+     "tamper_carried_authority",
+     "tamper_carried_origin",
+     "tamper_carried_policies",
+     "tamper_carried_provenance",
+     "tamper_carried_receipt_rules",
+     "two_bounds_same_side"
+    ],
+    "rules": [
+     "T-COND-CARRIED",
+     "T-STRUCT"
+    ],
+    "to": "T-COND-CARRIED (carried) / T-STRUCT (unique); placed ids are the reducer's"
+   },
+   {
+    "field": "conditions[].request_ids (which requests a condition applies to)",
+    "killed_by": [
+     "carried_request_ids_changed_without_reduction",
+     "placed_applies_to_one_request"
+    ],
+    "rules": [
+     "T-COND-REQUESTS"
+    ],
+    "to": "T-COND-REQUESTS"
+   },
+   {
+    "field": "conditions[].authority, receipt_rules, policies, origin, provenance (but VALUE unit and ORDER direction source)",
+    "killed_by": [
+     "placed_value_changed",
+     "rename_carried_condition_id",
+     "reset_carried_host_fields",
+     "tamper_carried_authority",
+     "tamper_carried_origin",
+     "tamper_carried_policies",
+     "tamper_carried_provenance",
+     "tamper_carried_receipt_rules",
+     "tamper_placed_authority",
+     "tamper_placed_origin",
+     "tamper_placed_policies",
+     "tamper_placed_provenance",
+     "tamper_placed_receipt_rules"
+    ],
+    "rules": [
+     "T-COND-CARRIED",
+     "T-COND-PLACED"
+    ],
+    "to": "T-COND-CARRIED (carried) / T-COND-PLACED (placed)"
+   },
+   {
+    "field": "which conditions are carried and which placed",
+    "killed_by": [
+     "a81_without_collision",
+     "carried_in_written_slot",
+     "clear_dimension_only_positive",
+     "cleared_condition_kept",
+     "f16_any_value",
+     "fabricated_condition",
+     "op_applied_twice",
+     "op_not_applied",
+     "placed_value_changed",
+     "removal_without_op",
+     "rename_carried_condition_id",
+     "reset_carried_host_fields",
+     "set_clears_whole_dimension",
+     "set_order_drops_cardinality",
+     "tamper_carried_authority",
+     "tamper_carried_origin",
+     "tamper_carried_policies",
+     "tamper_carried_provenance",
+     "tamper_carried_receipt_rules",
+     "tamper_placed_authority",
+     "tamper_placed_origin",
+     "tamper_placed_policies",
+     "tamper_placed_provenance",
+     "tamper_placed_receipt_rules"
+    ],
+    "rules": [
+     "T-COND-CARRIED",
+     "T-COND-PLACED",
+     "T-COND-FABRICATED",
+     "T-COND-WRITTEN-SLOT",
+     "T-COND-REMOVAL",
+     "T-COND-ATOMIC"
+    ],
+    "to": "T-COND-CARRIED / T-COND-PLACED / T-COND-FABRICATED / T-COND-WRITTEN-SLOT / T-COND-REMOVAL / T-COND-ATOMIC"
+   },
+   {
+    "field": "effective.policies, base_trace_id, root_trace_id",
+    "killed_by": [
+     "cardinality_without_order",
+     "condition_unknown_request",
+     "dangling_policy",
+     "dual_scope_differs",
+     "duplicate_condition_id",
+     "duplicate_request_id",
+     "effective_extra_key",
+     "malformed_policy",
+     "request_ids_not_rewritten_after_reduction",
+     "two_bounds_same_side"
+    ],
+    "rules": [
+     "T-STRUCT"
+    ],
+    "to": "T-STRUCT (policies well formed); the rest is informative (§3.2, §6.6): LG-REQUEST-POLICIES"
+   }
+  ],
+  "limited_guarantees": [
+   {
+    "closed_by": "M2A-3 properties that call check_transition over GENERATED bases with every field filled, a dual anchor and a view (the oracle invents no content in the Gold's bases)",
+    "id": "LG-BASES-WITHOUT-HOST-FIELDS",
+    "kind": "ORACLE_BLIND_SPOT",
+    "what": "on the Gold's own bases policies, receipt_rules and provenance.{source_amount, year, year_source, buyer_scope, inherited_from} are empty (the Gold carries none), so rebuilding a carried condition with those defaults is invisible there"
+   },
+   {
+    "closed_by": "M2A-3 passes its own subject-to-dataset table as dataset_of",
+    "id": "LG-DATASET-VALUE",
+    "kind": "ORACLE_BLIND_SPOT",
+    "what": "the value of a redirected request's dataset is the host table's: without ``dataset_of`` the check is relational (never the old one, never another subject's)"
+   },
+   {
+    "closed_by": "the authorities' own gates (E-*/F)",
+    "id": "LG-REQUEST-POLICIES",
+    "kind": "ORACLE_BLIND_SPOT",
+    "what": "which policies the host re-decides on the composed effective (§6.6) is not determined by the Gold or the contract text: any well-formed policy list over the effective's conditions passes"
+   },
+   {
+    "closed_by": "M2A-1b / M2A-6",
+    "id": "LG-FRESH-ACCEPTANCE",
+    "kind": "ORACLE_BLIND_SPOT",
+    "what": "the effective of a NEW_SEARCH is built by from_acceptance (M2A-1b), not the reducer: only its meaning is compared and ``audit`` reports it as unverified when it is not supplied; no transition is checked"
+   },
+   {
+    "closed_by": "M2A-8b",
+    "id": "LG-CLASSIFICATION-CERTIFIED-BY-8B",
+    "kind": "SCOPE",
+    "what": "the §20.2 gate «búsqueda nueva y delta confundidos» is certified by M2A-8b with the real producer, not by this oracle: it measures the §7.2 scope only where the facts of P determine it UNIQUELY, reads the absence of every continuation marker as «no evidence» (closed world over the labels) and cannot see the «verb of request» that makes a frame, so every lone content condition is NO_MEDIBLE for classification"
+   },
+   {
+    "closed_by": "check_transition T-COND-REMOVAL on any input that exercises it (killed by f16_any_value)",
+    "id": "GOLD-GAP-F16-ANY-VALUE",
+    "kind": "GOLD_GAP",
+    "what": "a reducer that inverts the polarity of the single positive of a slot whatever the value of the negative SET is not discriminated by the Gold: no applicable case sets a negative of another value over a single positive"
+   },
+   {
+    "closed_by": "check_transition T-COND-REMOVAL (killed by set_clears_whole_dimension)",
+    "id": "GOLD-GAP-SET-CLEARS-WHOLE-DIMENSION",
+    "kind": "GOLD_GAP",
+    "what": "a reducer whose SET of one polarity removes the other polarity of the dimension is not discriminated by the Gold: no applicable case carries both polarities of a dimension through a SET"
+   },
+   {
+    "closed_by": "check_transition T-COND-WRITTEN-SLOT (killed by clear_dimension_only_positive)",
+    "id": "GOLD-GAP-CLEAR-DIMENSION-ONLY-POSITIVE",
+    "kind": "GOLD_GAP",
+    "what": "a reducer whose CLEAR of a dimension leaves its negative conditions is not discriminated by the Gold: no applicable case clears a dimension that holds a negative condition"
+   },
+   {
+    "closed_by": "D-BUYER (buyer.territory) and a Gold case that executes a compatible territory over a carried buyer",
+    "id": "GOLD-GAP-H6-OVERFIRE",
+    "kind": "GOLD_GAP",
+    "what": "a reducer that over-fires H6 (a clarification for any new territory next to a buyer) is not discriminated: no applicable EXECUTE case has a territory next to a carried buyer (the H6 cases, SF123 and SF155, are the D-BUYER and E-GEO lanes')"
+   },
+   {
+    "closed_by": "check_transition T-REQ-TARGET (killed by redirect_keeps_old_kind)",
+    "id": "GOLD-GAP-REPLACE-UNIVERSE-KEEPS-OLD-KIND",
+    "kind": "GOLD_GAP",
+    "what": "a reducer that keeps the old universe kind after REPLACE_UNIVERSE is not discriminated by the Gold: no applicable case changes the kind (SF075, records to opportunities, is declared dependent downstream)"
+   }
+  ],
+  "transition_rules": [
+   {
+    "clause": "§3.2; M2A-1 types",
+    "demands": "the effective has exactly the keys of m2a-accepted/1; unique request and condition ids; every reference to a request resolves; a dual anchor shares its scope; every policy is well formed and names conditions of the effective; at most one condition per VALUE side, ORDER and CARDINALITY; no CARDINALITY without ORDER",
+    "id": "T-STRUCT",
+    "killed_by": [
+     "effective_extra_key",
+     "duplicate_request_id",
+     "duplicate_condition_id",
+     "condition_unknown_request",
+     "dual_scope_differs",
+     "dangling_policy",
+     "malformed_policy",
+     "two_bounds_same_side",
+     "cardinality_without_order",
+     "request_ids_not_rewritten_after_reduction"
+    ]
+   },
+   {
+    "clause": "§6.1, §6.2, §6.4 H12, §6.7 (amendment R3)",
+    "demands": "a patch the contract refuses produces NO effective: two SET on one slot, KEEP and CLEAR of one slot, two REPLACE_UNIVERSE, KEEP of an empty slot, a lone CLEAR of an empty slot, and (amendment R3) a CLEAR of ORDER that leaves a CARDINALITY standing",
+    "id": "T-REFUSAL",
+    "killed_by": [
+     "effective_for_slot_conflict",
+     "effective_for_keep_on_empty_slot",
+     "effective_for_clear_on_empty_slot",
+     "effective_for_clear_order_leaving_cardinality"
+    ]
+   },
+   {
+    "clause": "§5.2 (REPLACE_UNIVERSE), §14",
+    "demands": "without REPLACE_UNIVERSE the effective has exactly the base's requests; with it, exactly one: the named subject's (a dual anchor keeps the named one and the other disappears) or the single one",
+    "id": "T-REQ-SET",
+    "killed_by": [
+     "request_added_without_op",
+     "dual_keeps_both",
+     "dual_keeps_the_other"
+    ]
+   },
+   {
+    "clause": "§6.3 (identity of what no op touches); user decision R3",
+    "demands": "an untouched request is byte-identical to the base's in EVERY field: request_id, scope_id, subject, universe_kind, universe_origin, view, dataset",
+    "id": "T-REQ-UNTOUCHED",
+    "killed_by": [
+     "M3_reoriginate_untouched_request",
+     "M4_change_scope_id_untouched",
+     "M5_change_request_id_untouched",
+     "untouched_request_dataset_changed"
+    ]
+   },
+   {
+    "clause": "§5.2; user decision R3",
+    "demands": "a request touched by REPLACE_UNIVERSE keeps request_id, scope_id and view: only subject, universe_kind, universe_origin and dataset change",
+    "id": "T-REQ-REDIRECT",
+    "killed_by": [
+     "redirect_changes_request_id",
+     "redirect_changes_scope_id",
+     "redirect_changes_view"
+    ]
+   },
+   {
+    "clause": "§5.2",
+    "demands": "the redirected request has the op's subject and universe kind",
+    "id": "T-REQ-TARGET",
+    "killed_by": [
+     "redirect_keeps_old_kind",
+     "redirect_keeps_old_subject"
+    ]
+   },
+   {
+    "clause": "§5.2 (el universo pasa a ser dicho)",
+    "demands": "the redirected request's universe_origin is the origin of the CURRENT PatchOp",
+    "id": "T-REQ-ORIGIN",
+    "killed_by": [
+     "M2_stale_origin_after_redirect"
+    ]
+   },
+   {
+    "clause": "§3.2; §14",
+    "demands": "the redirected request's dataset is the one that corresponds to its new subject",
+    "id": "T-REQ-DATASET",
+    "killed_by": [
+     "M1_stale_dataset_after_redirect"
+    ]
+   },
+   {
+    "clause": "§6.3 (F1), INV-M2A-02",
+    "demands": "a carried condition is byte-identical to the base's (value, authority, policies, origin, provenance, condition_id); only request_ids may be rewritten, and only when a dual anchor is reduced",
+    "id": "T-COND-CARRIED",
+    "killed_by": [
+     "tamper_carried_origin",
+     "tamper_carried_provenance",
+     "tamper_carried_authority",
+     "tamper_carried_policies",
+     "tamper_carried_receipt_rules",
+     "rename_carried_condition_id",
+     "reset_carried_host_fields"
+    ]
+   },
+   {
+    "clause": "§5.2 (SET pone c)",
+    "demands": "a placed condition is the patch's, unchanged but for condition_id and request_ids (ids are the reducer's: a patch condition may collide with a base id)",
+    "id": "T-COND-PLACED",
+    "killed_by": [
+     "tamper_placed_origin",
+     "tamper_placed_provenance",
+     "tamper_placed_authority",
+     "tamper_placed_policies",
+     "tamper_placed_receipt_rules",
+     "placed_value_changed"
+    ]
+   },
+   {
+    "clause": "INV-M2A-02, INV-M2A-16",
+    "demands": "every condition of the effective is carried from the base or placed from the patch: none is fabricated",
+    "id": "T-COND-FABRICATED",
+    "killed_by": [
+     "fabricated_condition"
+    ]
+   },
+   {
+    "clause": "§5.2 (SET sustituye la ranura; CLEAR la quita)",
+    "demands": "a base condition in a slot an op writes is not carried",
+    "id": "T-COND-WRITTEN-SLOT",
+    "killed_by": [
+     "carried_in_written_slot",
+     "cleared_condition_kept",
+     "clear_dimension_only_positive"
+    ]
+   },
+   {
+    "clause": "§6.3, INV-M2A-16; §6.5 (A8.1, F16); §15.2",
+    "demands": "a base condition absent from the effective has an op on its slot, or is a declared substitution checked on the typed values: A8.1 (a VALUE bound against the patch's new opposite bound that leaves the interval empty or degenerate) or F16 (the single positive of a slot against a negative SET of the same value)",
+    "id": "T-COND-REMOVAL",
+    "killed_by": [
+     "removal_without_op",
+     "f16_any_value",
+     "set_order_drops_cardinality",
+     "set_clears_whole_dimension",
+     "a81_without_collision"
+    ]
+   },
+   {
+    "clause": "§6.1, INV-M2A-01",
+    "demands": "every SET / SET_ORDER of the patch is placed exactly once: no op is applied partially or twice",
+    "id": "T-COND-ATOMIC",
+    "killed_by": [
+     "op_not_applied",
+     "op_applied_twice"
+    ]
+   },
+   {
+    "clause": "§6.3; user decision R3 (P-1)",
+    "demands": "a condition's request_ids are the base's when the request ids are unchanged; when a dual anchor is reduced they are rewritten to the effective's request ids; a placed condition applies to all of them",
+    "id": "T-COND-REQUESTS",
+    "killed_by": [
+     "carried_request_ids_changed_without_reduction",
+     "placed_applies_to_one_request"
+    ]
+   },
+   {
+    "clause": "§6.7, §15.2 (A8.1), INV-M2A-18",
+    "demands": "a VALUE interval that is empty or degenerate is never produced by a follow-up with the opposite bound carried (two bounds of the same patch are the user's request; two carried ones are the base's own)",
+    "id": "T-COND-INTERVAL",
+    "killed_by": [
+     "no_a81"
+    ]
+   },
+   {
+    "clause": "§4.2, §5",
+    "demands": "a base without logic (the AND of all) yields an effective without logic: the closed ops create no group",
+    "id": "T-EFF-LOGIC",
+    "killed_by": [
+     "logic_invented"
+    ]
+   }
+  ]
  },
  "gold_seal_sha256": "bb2e981229ec8263a961994388ee4bae5b84a15ac523d0f0435de7a328cd2216",
  "policy": "texto REAL fuera de git; aquí sólo ids, conteos y digests",
  "real": {
   "case_sha256": {
-   "R0075": "be83da1156ecc06bf446b4b764b46fcf884e7cad7f2b1bc6ea04743b2448bf01",
-   "R0079": "b667b626639281822f7f831589da36730265d2956a31998bbd0e7cb69f164df3",
-   "R0083": "c5c26551f81c591e684e5ef98bf05e51137d88e5ddbe4d3103afc3dc6a7ace6d",
-   "R0087": "dddd118a8ff6db348374b21dd31ccc51fdf437958056aeff7a327ec1b03d96ec",
-   "R0089": "69a14ded2f11f2de6b3a646113317cd9e47045926b22dfffe494970affc99e15",
-   "R0092": "9a95c29a06981d2430f14eb19b0d3f082949fc25599a7d3a0e40d59b1499c04e",
-   "R0093": "b7d38f3026ebc753a98af4a639b8561c55acda5ef350630ac824a7db5237eb45",
+   "R0075": "39d172722eeb25d438ea8177b12fa45a4c9ba2809165bd073342ad80e7ded118",
+   "R0079": "637d8782a7c7c0f1255a7ac38f9bc3a818c5a88106cdee8e93d746c63cc131be",
+   "R0083": "9af5cd29cd02d311bc50c74f97a4c511045dc72a1380beef93d28bf73aafde4e",
+   "R0087": "e862cf7c152728b019821a50e07ab3e3ee0de52292bfa910081927ac1a9a61dd",
+   "R0089": "4fd1ab5e3d05c4456967eeb555b41cc98706e1d82d854cf1af2dd8b6377a974b",
+   "R0092": "6e9ea95d6b8a10cc9e7d342269f8ebb0ac080c24294037b89e2f9dc3568cb997",
+   "R0093": "1ed132549cd9b7883919f9aa57b93946917f2ec51702246e505300fc1ab4030a",
    "R0094": "534b64b29404a5b31272622ec0bb788ed5dc6925c7788d0ab6581f6f1cfdf4ec",
-   "R0099": "2c26e3a287bb0299b39920b34137cdb680a903379ba1d5617efe51dad3913bf9",
+   "R0099": "2a1af07441ea0608aa394a1f38db1c5900606035b9087ea58ae7c55bd066c95b",
    "R0106": "f8a10c67fed6f5620a62fdafcae219bdbf5326851a06138363240611f677387a",
    "R0107": "5a9d9a173cd983abdb00275efa103a0b8eea10d5fcb32edb4a4754a6bdc17fd1",
-   "R0180": "15130ddec8b5d68fea3117a4c3f5aa80c020edc422f1cf103cc27fa20d71c218",
-   "R0197": "d7aac69bdbad2e3b1b57ead56f437a1138bd8f24c43925177208b451679ecaf9",
-   "R0201": "65fc3e350aef033131aca4ba843186003606e00f88f9fa814735375d5be3e338",
-   "R0202": "a4f442ba6b9b46576cb85fb079a6359b310053b69c1ae5801761e13f5f2fd668",
-   "R0205": "73a87353a0c51d4bb651b8059d9d8c92b1fb6ca63a61172fb91426ed51e248d9",
-   "R0223": "a9388539176498423833534747737c83839ccf6e21c98d5290a4d41d8a22a279",
-   "R0233": "22ffc54da06eaaa781fe3a8bffa1a61d5fa0f5ae12ab431e3d10ef1de3ea8e2a",
+   "R0180": "9fb902c1f99fcfb5832b9ee4e9115b0462c81fad8464e8fce4f6d32a2b2ce3d7",
+   "R0197": "def2b533ca7cb0338121435ecb1e2e94e9d55975e45932e9d6d7ce04309bdea1",
+   "R0201": "acb339b0b72822f34c433e89508b9111bbc99144ffdbb4434ed0ee0b8f681559",
+   "R0202": "8171cc5b25231b7d307293514481a751d53a0cfcb2e528d1bb9104544fc1de69",
+   "R0205": "55c82dac1f38d0117666c66f15f9108b1d42420710dfd09f876aed27fc390e5f",
+   "R0223": "e42f1322c17f62efccaca87263d4724a2bd6c36e8a1cfe35d88e9008eb21bc61",
+   "R0233": "7a74f6c591bd6dd328e7beed9640993b8e832e284a3991ff8c70beefa9ca67ec",
    "R0274": "6b6ff5ba06f194337f73398f9dc2018f9b2f9c27417e0d66f316bebcebfb9b1b",
    "R0281": "36ad9ae8168e0b7684f0c4c9f9d85987ead57c1d7b0af19185d28b7ee77cbc26",
    "R0282": "93eb25d01a2ee763fc15a784c3a30404e42b92092cf0df18162bcf99fad3f3da",
-   "R0286": "811413d4ae8bff8775cf5bc087bf219fe647b84a43431c1dbaf5e957b9247fc0",
-   "R0295": "015ae8e1abe4c8dd44590848d258f223b5a4908f29421d4b17ecdcb7ded4cbbf",
+   "R0286": "c3ca11f8a7d40656132ca4ce1bc527ef8aaa03b3d2e5271e73311fe2eb0975e0",
+   "R0295": "c382810c9d0ff854b192fed05fac485e1d64ef0226168153f961adc62d9da1ff",
    "R0301": "f0c07f98752937ebc70d5cd742c9f82c77d02b74928b3ad8e78ae93e10986054",
    "R0303": "5bf79469cc7a20872af2df519cb69f20999cfd5e6e8c01a6e3cfe858e7aeb41f",
    "R0304": "1a3900875319945a42f3efd71609a61e6eed77cca795ce5a7c830a34f5cc65d1",
-   "R0308": "df20542a769993177238cc2466b708243eac4b7c4023f5bfd0682e268162b7cb",
-   "R0309": "772ae6a91747998939dc661c78d18cde728c41be75f1b2df49a6378e12b355cf",
-   "R0310": "098fab273f309d1d4b4a0d745161568dd531560f48a17e9eb167f4b96d4a4559",
-   "R0311": "256ecf8fdd212ade988deaa03cf8337b4cf67b4f404557c1b1d672c577e27396",
-   "R0312": "170d487e93e3622860620de6b73e7b615c37142b2afdb5b5f75dd44611439e50",
-   "R0313": "7692b79c80c464a30e411ccdbe135ecd20d6122dc95038b8feefe37579fb0c81",
-   "R0314": "7315a1f63c5beecb241bf60da833e3f2705e412980ff8a6370e6c95a0a4e8b32",
-   "R0336": "3d80a2c5e659c49bcbe2848c0598952bacad2918204f290e9305ca7e1dd1dc33",
-   "R0409": "920833ce5a3dde4ba7e0b4891b2acf27989f40008a6e4336986c9e7486899c6a",
-   "R0431": "e87ba861959d388ecac7a1fc8fc42fa81825a7a5e69c976556e905bb12e2eb5f",
-   "R0432": "5c4f4591277faaa4bb3436f28fa15fac7df4475c6332d0a04120b4296188a8ea",
-   "R0450": "5642d2a7bc33d5e7b1890ad88a824348e3e6e708a006ca42f4ac2c47fb4160e5",
+   "R0308": "4bd202cbfbc8ba917d67d4f2b81fe7ad4a826a5a2cc345886fd10047164fa37f",
+   "R0309": "d1f7f79633fcd61b28d7a46aa5fc0c228407c53cd9b3de786eae526088c2e075",
+   "R0310": "f51588f72dcd790c2f0ea8adc78ea5f46c6452ca1977d52a834a0abc3812977f",
+   "R0311": "4f26fac64992566919f11947a6a7c736777898951c129f8d02a60189aeff1f47",
+   "R0312": "4baad28e9bc9ee1c9a26ed989d01b68d107c11090e531b4856351015e19157ce",
+   "R0313": "27770cc5070541ae23bee7695f0e72f382f397a1d3de2041847ab3a3bda4b885",
+   "R0314": "c7d78b5b00eb92ee97f058ec4635c89d77f0dae0a7919cf2131577fea3539ee8",
+   "R0336": "3a7154ae6e3cf3653900e4688c30407458bab198f0417a0477d4a4778806eec0",
+   "R0409": "f6c54ef22ce583ba42f201d3a97a783447219da982e8c8a8478ebe7c3ddcb74c",
+   "R0431": "56dae35c2cb21dd502d0f43128fe0e71d6715aac1ce8458743d50f6f3e238f44",
+   "R0432": "4388b09403057059cbf8d472431d5c48b3533debb083d4510cec0920c67e9507",
+   "R0450": "79a681d802f6ba43575d6d5da9a97c7f0db3289aa947f7f95dda5d0ef14b4675",
    "R0459": "a69d591acd3bc95eaae230de8de00690729c3bbe71a9cc22f1bfad7a4b4f3721",
-   "R0464": "16560e2542ead953f07be894cb227bf7457bab0f9e876ddf80f886daf3e2dd10",
-   "R0484": "0334936b1ecf4e1612cf8e8994cfdf069e5013bbb968bcf9e1c0ada57ac79eee",
-   "R0496": "f95224ce70fa6911961d9b7d8d65796a6f41c94bef479c4db0c83b99d565e437",
-   "R0497": "989a70c3484d870a70eaadeb6b17ecc0d8356ab8d6f29ccd6d2be2e762d08402",
-   "R0498": "dad92fe8749357b40493a2ac5da52532b3c3a87fd7f53a9f086273e8d205e62f",
-   "R0515": "2c09559cba2a61a44e764f60a1748f8c8f69b7e39d7881013d7e88c811314515",
+   "R0464": "71d514d5a130f7e521ce74f9b11b0aa157462a7a8ef70d6b09d5e1d6d4987e43",
+   "R0484": "2127c39b15f0965a95abadf32a799f8d5ee281803a6a88c3c74ef5214d51b7d9",
+   "R0496": "17d019ba18fd57479d2a5d3509ff61b5edf09b0e94e5063b867a815e254755b8",
+   "R0497": "ad7bb603da7443160251bf9cefa3ec89060900bc1456798e7af536cae8390f77",
+   "R0498": "d64f317599f6639390818d719457924466afcc8188527fccd75e286ea682af96",
+   "R0515": "5de0395672a8af0c5d13605b955b1f0e1f71aebecf56a40b40f4ade294f79ea9",
    "R0529": "a0f9a147d42a54315f1512637f987973556e2f951cbf5f0749ba6dc74d9c2313",
    "R0531": "6571cd95345e0e68ad44d43ec0005b84d2ef1dd68acd4696ac78e2ee63be7549",
    "R0532": "3fe9d764f3533ecca18260b7ca603552b5b5b6f20da239198387ffe4d7938ea9",
-   "R0556": "d108de50896bb6fd318932f8b5f0a4a6c4d95fb6a5ae3808af3d21e3e76daf95"
+   "R0556": "16681aaa38775f072353895397c7384a47d76ed47485855339c76cf7866a492d"
   },
   "ids_by_applicability": {
    "APLICABLE_M2A3": [
-    "R0075",
     "R0079",
     "R0083",
     "R0087",
@@ -91,7 +610,6 @@
     "R0312",
     "R0313",
     "R0314",
-    "R0336",
     "R0409",
     "R0431",
     "R0432",
@@ -128,6 +646,10 @@
     "R0529",
     "R0531",
     "R0532"
+   ],
+   "NO_MEDIBLE(PRIOR_AB_DISAGREE)": [
+    "R0075",
+    "R0336"
    ]
   },
   "summary": {
@@ -137,23 +659,24 @@
    },
    "applicable_by_disposition": {
     "CLARIFY": 2,
-    "EXECUTE": 31
+    "EXECUTE": 29
    },
    "applicable_by_partition": {
     "DEV": 17,
-    "TEST": 16
+    "TEST": 14
    },
    "by_applicability": {
-    "APLICABLE_M2A3": 33,
+    "APLICABLE_M2A3": 31,
     "DEPENDIENTE(E-GEO)": 3,
     "DEPENDIENTE(E-MODALITY)": 1,
     "DEPENDIENTE(E-STATE)": 1,
     "DEPENDIENTE(E-TIME)": 3,
     "DEPENDIENTE(E-VALUE)": 3,
-    "DEPENDIENTE(F)": 5
+    "DEPENDIENTE(F)": 5,
+    "NO_MEDIBLE(PRIOR_AB_DISAGREE)": 2
    },
    "cases": 49,
-   "classification_measurable": 31,
+   "classification_measurable": 29,
    "dependent_by_any_owner": {
     "E-GEO": 3,
     "E-MODALITY": 1,
@@ -165,7 +688,7 @@
    "effects_not_measurable": 0
   }
  },
- "schema": "m2a-reducer-oracle/1",
+ "schema": "m2a-reducer-oracle/2",
  "seal_verified": true,
  "synthetic": {
   "all_by_partition": {
@@ -174,38 +697,39 @@
   },
   "applicable_by_disposition": {
    "CLARIFY": 2,
-   "EXECUTE": 71,
+   "EXECUTE": 72,
    "INFORM": 1,
    "NEW_SEARCH": 4
   },
   "applicable_by_partition": {
-   "DEV": 37,
+   "DEV": 38,
    "TEST": 41
   },
   "by_applicability": {
-   "APLICABLE_M2A3": 78,
+   "APLICABLE_M2A3": 79,
    "DEPENDIENTE(D-BUYER)": 2,
-   "DEPENDIENTE(E-BUYER)": 2,
+   "DEPENDIENTE(E-BUYER)": 1,
    "DEPENDIENTE(E-GEO)": 4,
    "DEPENDIENTE(E-MODALITY)": 4,
    "DEPENDIENTE(E-STATE)": 4,
-   "DEPENDIENTE(E-TIME)": 16,
+   "DEPENDIENTE(E-TIME)": 8,
    "DEPENDIENTE(E-VALUE)": 10,
    "DEPENDIENTE(F)": 4,
    "DEPENDIENTE(FOUNDATION_O1B_EXPLICIT_TIME_PARITY)": 1,
    "DEPENDIENTE(M2A-4)": 19,
-   "DEPENDIENTE(M2A-6)": 6
+   "DEPENDIENTE(M2A-6)": 6,
+   "NO_MEDIBLE(TIME_OPERATOR:relative_period)": 8
   },
   "cases": 150,
-  "classification_measurable": 75,
+  "classification_measurable": 76,
   "dependent_by_any_owner": {
    "D-BUYER": 2,
-   "E-BUYER": 5,
+   "E-BUYER": 4,
    "E-CONTRACT_TYPE": 1,
-   "E-GEO": 8,
+   "E-GEO": 7,
    "E-MODALITY": 4,
    "E-STATE": 5,
-   "E-TIME": 17,
+   "E-TIME": 9,
    "E-VALUE": 11,
    "F": 5,
    "FOUNDATION_O1B_EXPLICIT_TIME_PARITY": 1,
