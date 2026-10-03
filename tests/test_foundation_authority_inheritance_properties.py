@@ -3,7 +3,9 @@
 The tables of ``test_foundation_authority_inheritance`` walk the rules; these generate WORLDS (a spec: bounds by unit, TIME
 conditions by dates/polarity/provenance, OR/NOT placement, dual anchor) and judge the module by three independent routes:
 
-* P1 the ORACLE: written on the spec's raw data (units, ``date`` arithmetic, the logic kind), never on the typed base;
+* P1 the ORACLE: written on the spec's raw data (units, ``date`` arithmetic, the logic kind), never on the typed base. What
+  a relative window is comes from the contract's text (``is_relative_window``: §16 item 4 names its operator), and «sin TIME
+  previo» (§16.1) is a base with no TIME at all: a base with only negative TIME is ambiguous (HERA, ZEUS P2-1);
 * P2 INV-M2A-07: everything that is not a condition (origins, request ids, scope, datasets, subjects, authority, root and
   base trace of the base, dual or single) is noise: two builds of one world give the same inputs, and ``inherited_from`` is
   the caller's ``base_trace_id`` and nothing the base says;
@@ -24,7 +26,8 @@ import app.core.foundation_accepted as fa
 import app.core.foundation_authority_inheritance as inh
 from app.core.foundation_authority_values import TimeValue, decode_value
 from tests.test_foundation_authority_inheritance import (
-    BASE_TRACE, BOUND, OR, AND, NOT, SOURCES, atom, bounds_of, build_base, buyer, expected_unit, group, topic, when,
+    AND, BASE_TRACE, BOUND, NOT, OR, RELATIVE_OPERATORS, SOURCES, TIME_OPERATORS, atom, bounds_of, build_base, buyer,
+    expected_unit, group, is_relative_window, topic, when,
 )
 
 PROPS = settings(max_examples=400, deadline=None, derandomize=True,
@@ -41,6 +44,7 @@ class TimeSpec:
     excluded: bool
     source: fa.YearSource | None
     rules: tuple[str, ...]
+    operator: str = "between_dates"
 
 
 @dataclass(frozen=True)
@@ -56,8 +60,12 @@ class World:
 @st.composite
 def time_specs(draw, cid: str) -> TimeSpec:
     start = draw(DATES)
-    kind = draw(st.sampled_from(["year", "month", "months", "days", "from", "until"]))
-    if kind == "year":
+    kind = draw(st.sampled_from(["year", "month", "months", "rolling", "days", "from", "until"]))
+    if kind == "rolling":  # as long as whole months, but starting on a day other than the 1st: not calendar months
+        start = date(start.year, start.month, draw(st.integers(2, 28)))
+        index = start.year * 12 + start.month - 1 + draw(st.integers(1, 40))
+        end = date(index // 12, index % 12 + 1, start.day)
+    elif kind == "year":
         start, end = date(start.year, 1, 1), date(start.year + draw(st.integers(1, 3)), 1, 1)
     elif kind in ("month", "months"):
         start = date(start.year, start.month, 1)
@@ -68,7 +76,8 @@ def time_specs(draw, cid: str) -> TimeSpec:
         end = start + timedelta(days=draw(st.integers(1, 900)))
     else:
         start, end = (start, None) if kind == "from" else (None, start)
-    return TimeSpec(cid, start, end, draw(st.booleans()), draw(st.sampled_from(SOURCES)), draw(st.sampled_from(RULES)))
+    return TimeSpec(cid, start, end, draw(st.booleans()), draw(st.sampled_from(SOURCES)), draw(st.sampled_from(RULES)),
+                    draw(st.sampled_from(TIME_OPERATORS)))
 
 
 @st.composite
@@ -81,7 +90,8 @@ def worlds(draw) -> World:
 def specs_of(world: World) -> list:
     specs = [topic(f"p{i}") for i in range(world.topics)] + ([buyer("b1")] if world.with_buyer else [])
     specs += bounds_of(world.lower, world.upper)
-    specs += [when(t.start, t.end, cid=t.cid, excluded=t.excluded, source=t.source, rules=t.rules) for t in world.times]
+    specs += [when(t.start, t.end, cid=t.cid, excluded=t.excluded, source=t.source, rules=t.rules, operator=t.operator)
+              for t in world.times]
     return specs
 
 
@@ -112,14 +122,18 @@ def oracle_time(world: World, inside: set[str]) -> tuple[tuple, tuple]:
     if any(t.cid in inside for t in world.times):
         reason = ("AMBIGUOUS", "NONCONJUNCTIVE_TIME")
         return reason, reason
-    positive = [t for t in world.times if not t.excluded]
-    if not positive:
+    if not world.times:  # §16.1 «Sin TIME previo»: the clock decides
         return ("ABSENT",), ("ABSENT",)
+    positive = [t for t in world.times if not t.excluded]
+    if not positive:  # HERA (ZEUS P2-1): an excluded period is a TIME previo that states no period
+        reason = ("AMBIGUOUS", "NEGATIVE_TIME_ONLY")
+        return reason, reason
     if len(positive) > 1:
         reason = ("AMBIGUOUS", "MULTIPLE_TIMES")
         return reason, reason
     only = positive[0]
-    if only.source is fa.YearSource.RELATIVE_TO_CLOCK or "time.relative_to_previous" in only.rules:
+    if is_relative_window(only.operator, only.source is fa.YearSource.RELATIVE_TO_CLOCK,
+                          "time.relative_to_previous" in only.rules):
         reason = ("AMBIGUOUS", "RELATIVE_WINDOW")
         return reason, reason
     if only.start is None or only.end is None:
@@ -192,9 +206,11 @@ def test_p3_a_present_input_never_hides_two_units_several_times_or_several_years
         assert result.unit.status is inh.Presence.AMBIGUOUS
     for item, status in ((result.year, result.year.status), (result.referent, result.referent.status)):
         if status is inh.Presence.PRESENT:
-            (only,) = positive  # exactly one positive TIME
+            (only,) = positive  # exactly one positive TIME, and not a relative window by any of its three marks
             assert item.condition_id == only.condition_id and only.provenance.year_source is not (
                 fa.YearSource.RELATIVE_TO_CLOCK)
+            assert only.operator not in RELATIVE_OPERATORS and "time.relative_to_previous" not in only.receipt_rules
+    assert (result.year.status is inh.Presence.ABSENT) == (not times)  # ABSENT is «no TIME at all», nothing less
     if len(positive) > 1:
         assert result.year.status is inh.Presence.AMBIGUOUS and result.referent.status is inh.Presence.AMBIGUOUS
     if result.year.status is inh.Presence.PRESENT:
@@ -212,16 +228,21 @@ def test_p4_it_is_deterministic_and_never_touches_the_base(world):
 
 
 @PROPS
-@given(DATES, DATES, st.sampled_from(["closed", "from", "until"]), st.booleans())
-def test_p5_a_random_pair_of_dates_against_the_oracle_and_the_closed_codec(first, second, shape, aligned):
-    """Any interval (aligned to months or not, one or several years, open ends) through the oracle; and the referent's value
-    decoded with the closed types equals the base's TimeValue, whose ``months`` the calendar confirms."""
-    if aligned:
+@given(DATES, DATES, st.sampled_from(["closed", "from", "until"]), st.sampled_from(["free", "aligned", "rolling"]),
+       st.sampled_from(TIME_OPERATORS))
+def test_p5_a_random_pair_of_dates_against_the_oracle_and_the_closed_codec(first, second, shape, alignment, operator):
+    """Any interval (calendar months, whole months from a day other than the 1st, or free; one or several years; open
+    ends) through the oracle; and the referent's value decoded with the closed types equals the base's TimeValue, whose
+    ``months`` the calendar confirms."""
+    if alignment == "aligned":
         first, second = date(first.year, first.month, 1), date(second.year, second.month, 1)
+    elif alignment == "rolling":
+        day = min(first.day, 28)
+        first, second = date(first.year, first.month, day), date(second.year, second.month, day)
     low, high = min(first, second), max(first, second)
     assume(low < high)
     bounds = {"closed": (low, high), "from": (low, None), "until": (None, high)}[shape]
-    world = World(None, None, (TimeSpec("c3", *bounds, False, None, ()),), 0, False, "none")
+    world = World(None, None, (TimeSpec("c3", *bounds, False, None, (), operator),), 0, False, "none")
     base, inside = base_of_world(world)
     result = inh.host_inheritance_inputs(base, base_trace_id=BASE_TRACE)
     assert views(result) == oracle_time(world, inside)

@@ -7,9 +7,15 @@ and against every mutant (it must not be). The batteries are module-agnostic: th
 
 * UNIT (§15.4): the first of two units, an unrecorded bound ignored, a default unit, the donor's own origin as provenance,
   only one side read, donors that are not bounds.
-* YEAR / REFERENT (§16.1, §16.3): the first year of a plurianual TIME, a relative window as referent (clock and receipt),
-  the first of several TIME, a negative TIME counted, a TIME under OR/NOT accepted, an open interval as absent, the
-  granularity ignored (days as months), months off by one, the value dropped, years swapped.
+* YEAR / REFERENT (§16.1, §16.3): the first year of a plurianual TIME, a relative window as referent (by each of its three
+  marks: the operator ``relative_period``, the clock marker, the receipt), the first of several TIME, a negative TIME
+  counted, a base with only negative TIME read as «sin TIME previo» (or given another reason), a TIME under OR/NOT
+  accepted, an open interval as absent, the granularity ignored (days, or a rolling month, as months), months off by one,
+  the value dropped, years swapped.
+* THE TYPES (ZEUS P3): inputs of different bases joined, a year and a referent of different TIME conditions joined, a
+  referent whose value is not a canonical ``time@1`` or disagrees with the years and months it states.
+* ZEUS' own mutants (ZM2, ZM3, ZM6, ZM8, and ZM7 as the reason of the negative-only rule) stay as regressions; ZM1 is the
+  REPAIR and must pass (``EQUIVALENT``): the mutant that reverts it, ``time_relative_operator_ignored``, must die.
 * SHAPE: the discriminated union relaxed in each of its five clauses.
 * INV-M2A-07 (the input is derived from the base alone): variants that read the previous record, the anchor, the text's link,
   the chain, the clock or an authority are caught by a PIN of the module's read surface (imports, attributes, signatures).
@@ -32,8 +38,9 @@ import app.core.foundation_authority_inheritance as inh
 from app.core.interpretation_contract import ContractError
 from tests import test_foundation_authority_inheritance_properties as properties
 from tests.test_foundation_authority_inheritance import (
-    ABSOLUTE, BASE_TRACE, BOUND, EXPECTED_SHAPE, LOGICS, REFERENT_PAYLOAD, SHAPES, UNIT_PAYLOAD, YEAR_PAYLOAD,
-    bounds_of, build_base, buyer, expected_unit, topic, when,
+    ABSOLUTE, BASE_TRACE, BOUND, EXPECTED_SHAPE, FORGED_VALUES, LOGICS, REFERENT_PAYLOAD, SHAPES, SOURCES, TIME_OPERATORS,
+    UNIT_PAYLOAD, YEAR_2024, YEAR_PAYLOAD, bounds_of, build_base, buyer, expected_unit, is_relative_window, lower,
+    spelled, topic, when,
 )
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -53,9 +60,23 @@ def _load(source: str) -> types.ModuleType:
     return module
 
 
+def _replace_function(source: str, name: str, definition: str) -> str:
+    """``source`` with the module-level function ``name`` replaced as a WHOLE: a mutant written this way still reverts a
+    rule when a mutation harness has already rewritten a line inside that function (ZEUS' ZM1 writes the operator rule a
+    second time, which would make a one-line «ignore the first copy» mutant equivalent)."""
+    node = next(n for n in ast.parse(source).body if isinstance(n, ast.FunctionDef) and n.name == name)
+    lines = source.splitlines(keepends=True)
+    return "".join(lines[:node.lineno - 1]) + definition + "".join(lines[node.end_lineno:])
+
+
 def mutated_source(*replacements: tuple[str, str]) -> str:
+    """The module's source with each replacement: ``("def:<name>", definition)`` replaces a whole function, anything else
+    is a text anchor that must be unique."""
     source = SOURCE
     for old, new in replacements:
+        if old.startswith("def:"):
+            source = _replace_function(source, old[len("def:"):], new)
+            continue
         assert source.count(old) == 1, f"mutation anchor not unique: {old!r}"
         source = source.replace(old, new)
     return source
@@ -105,35 +126,51 @@ def unit_failures(mod) -> list[str]:
 
 
 def time_cases() -> list[tuple]:
-    """(label, specs, kwargs, expected year view, expected referent view), all from the contract's tables."""
+    """(label, specs, kwargs, expected year view, expected referent view). The expectations come from the same tables as
+    ``test_foundation_authority_inheritance`` (the contract's words), never from the module."""
     relative = ("AMBIGUOUS", "RELATIVE_WINDOW")
-    cases = []
-    for shape, (start_end, (year, referent)) in ((s, (SHAPES[s], EXPECTED_SHAPE[s])) for s in sorted(SHAPES)):
-        for source in ABSOLUTE:
-            cases.append((f"{shape}/{source}", (topic(), when(*start_end, source=source)), {}, plain(year), plain(referent)))
-        cases.append((f"{shape}/clock", (when(*start_end, source=fa.YearSource.RELATIVE_TO_CLOCK),), {}, relative, relative))
-        cases.append((f"{shape}/receipt", (when(*start_end, source=fa.YearSource.PREVIOUS_ACCEPTED_TIME,
-                                                rules=("time.relative_to_previous",)),), {}, relative, relative))
-        cases.append((f"{shape}/inherited-receipt", (when(*start_end, source=fa.YearSource.PREVIOUS_ACCEPTED_TIME,
-                                                          rules=("year.inherited",)),), {}, plain(year), plain(referent)))
+    nonconjunctive = ("AMBIGUOUS", "NONCONJUNCTIVE_TIME")
+    negative_only = ("AMBIGUOUS", "NEGATIVE_TIME_ONLY")
     absent = (("ABSENT",), ("ABSENT",))
+    cases = []
+    for shape in sorted(SHAPES):
+        start_end, (year, referent) = SHAPES[shape], map(plain, EXPECTED_SHAPE[shape])
+        for operator, source, receipt in itertools.product(TIME_OPERATORS, SOURCES, (False, True)):
+            clock = source is fa.YearSource.RELATIVE_TO_CLOCK
+            rules = ("time.relative_to_previous",) if receipt else ()
+            expected = (relative, relative) if is_relative_window(operator, clock, receipt) else (year, referent)
+            cases.append((f"{shape}/{operator}/{source}/receipt={receipt}",
+                          (topic(), when(*start_end, source=source, rules=rules, operator=operator)), {}, *expected))
+        for source in ABSOLUTE:  # the provenance of the year of an absolute TIME never matters
+            cases.append((f"{shape}/{source}", (topic(), when(*start_end, source=source)), {}, year, referent))
+        cases.append((f"{shape}/receipt-previous", (when(*start_end, source=fa.YearSource.PREVIOUS_ACCEPTED_TIME,
+                                                         rules=("time.relative_to_previous",)),), {}, relative, relative))
+        cases.append((f"{shape}/inherited-receipt", (when(*start_end, source=fa.YearSource.PREVIOUS_ACCEPTED_TIME,
+                                                          rules=("year.inherited",)),), {}, year, referent))
+        cases.append((f"negative-only {shape}", (topic(), when(*start_end, excluded=True)), {}, negative_only, negative_only))
     cases += [("none", (topic(),), {}, *absent),
-              ("negative", (topic(), when(*SHAPES["year"], excluded=True)), {}, *absent),
               ("positive+negative", (when(*SHAPES["year"]), when(*SHAPES["month"], cid="c4", excluded=True)), {},
-               ("PRESENT", 2024), ("PRESENT", 2024, 2024, 12))]
+               ("PRESENT", 2024), ("PRESENT", 2024, 2024, 12)),
+              ("two negatives", (when(*SHAPES["year"], excluded=True), when(*SHAPES["month"], cid="c4", excluded=True)), {},
+               negative_only, negative_only),
+              ("negative relative window only", (when(*SHAPES["year"], excluded=True,
+                                                      source=fa.YearSource.RELATIVE_TO_CLOCK),), {}, negative_only,
+               negative_only)]
     several = ("AMBIGUOUS", "MULTIPLE_TIMES")
     for first, second in itertools.combinations_with_replacement(["year", "month", "three_years"], 2):
         cases.append((f"several {first}+{second}", (when(*SHAPES[first]), when(*SHAPES[second], cid="c4")), {}, several,
                       several))
     for name, (logic, inside) in sorted(LOGICS.items()):
         for excluded in (False, True):
-            expected = (("AMBIGUOUS", "NONCONJUNCTIVE_TIME"),) * 2 if inside else (
-                absent if excluded else (("PRESENT", 2024), ("PRESENT", 2024, 2024, 12)))
+            expected = (nonconjunctive,) * 2 if inside else (
+                (negative_only,) * 2 if excluded else (("PRESENT", 2024), ("PRESENT", 2024, 2024, 12)))
             cases.append((f"logic {name}/{excluded}", (topic(), buyer(), when(*SHAPES["year"], excluded=excluded)),
                           {"logic": logic}, *expected))
     cases.append(("relative+several", (when(*SHAPES["year"], source=fa.YearSource.RELATIVE_TO_CLOCK),
                                        when(*SHAPES["month"], cid="c4")), {}, several, several))
-    cases.append(("open+relative", (when(*SHAPES["open_from"], source=fa.YearSource.RELATIVE_TO_CLOCK),), {}, relative, relative))
+    cases.append(("open+relative operator", (when(*SHAPES["open_from"], operator="relative_period"),), {}, relative, relative))
+    cases.append(("open+relative clock", (when(*SHAPES["open_from"], source=fa.YearSource.RELATIVE_TO_CLOCK),), {}, relative,
+                  relative))
     return cases
 
 
@@ -200,8 +237,9 @@ def cross_check_failures(mod) -> list[str]:
             try:
                 getattr(mod, name)(base, base_trace_id=BASE_TRACE)
                 out.append(f"{name}: a disagreement passed")
-            except ContractError:
-                pass
+            except ContractError as error:
+                if "TIME_YEARS_DISAGREE" not in str(error):  # not the type's own check of a referent, masking this one
+                    out.append(f"{name}: wrong code {error}")
             except Exception as error:
                 out.append(f"{name}: {type(error).__name__}")
     finally:
@@ -246,8 +284,75 @@ def shape_failures(mod) -> list[str]:
     return out
 
 
+def parts_of(mod, trace: str, time_id: str = "c3") -> tuple:
+    base = build_base((lower(fa.Unit.MILLONES), when(*SHAPES["month"], cid=time_id)))
+    return (mod.unit_inheritance(base, base_trace_id=trace), mod.year_inheritance(base, base_trace_id=trace),
+            mod.time_referent(base, base_trace_id=trace))
+
+
+def join_failures(mod) -> list[str]:
+    """The three inputs join only if they come from one base and (year and referent) from one TIME; and the join never
+    refuses what ``host_inheritance_inputs`` derives from a base (every base of the time and unit tables)."""
+    out: list[str] = []
+    pool = {"tA": parts_of(mod, "tA"), "tB": parts_of(mod, "tB")}
+    for origins in itertools.product(("tA", "tB"), repeat=3):
+        chosen = [pool[origin][index] for index, origin in enumerate(origins)]
+        try:
+            mod.HostInheritanceInputs(*chosen)
+            built = True
+        except ContractError:
+            built = False
+        if built != (len(set(origins)) == 1):
+            out.append(f"origins {origins}: built={built}")
+    unit, year, _ = parts_of(mod, "tA", "c3")
+    _, _, referent = parts_of(mod, "tA", "c4")
+    try:
+        mod.HostInheritanceInputs(unit, year, referent)
+        out.append("a year and a referent of different TIME conditions joined")
+    except ContractError:
+        pass
+    for label, specs, kwargs, _, _ in time_cases():
+        attempt(out, f"join {label}", mod.host_inheritance_inputs, build_base(specs, **kwargs), base_trace_id=BASE_TRACE)
+    for lower_state, upper_state in itertools.product(BOUND, repeat=2):
+        specs = (topic(), *bounds_of(lower_state, upper_state))
+        attempt(out, f"join unit {lower_state}/{upper_state}", mod.host_inheritance_inputs, build_base(specs),
+                base_trace_id=BASE_TRACE)
+    return out
+
+
+def forged_failures(mod) -> list[str]:
+    """A PRESENT referent's value is a canonical ``time@1`` and agrees with the years and months it states."""
+    out: list[str] = []
+
+    def build(value, years=(2024, 2024), months=12):
+        return mod.TimeReferent(mod.Presence.PRESENT, "c3", value, *years, months, "t")
+
+    for name, value in FORGED_VALUES.items():
+        try:
+            build(value)
+            out.append(f"forged value accepted: {name}")
+        except ContractError as error:
+            if "INHERITANCE_INPUT_PRESENT_SHAPE" not in str(error):
+                out.append(f"forged value {name}: wrong code {error}")
+        except Exception as error:
+            out.append(f"forged value {name}: {type(error).__name__}")
+    for years, months in (((2023, 2024), 12), ((2024, 2025), 12), ((2024, 2024), 11), ((2024, 2024), 13), ((2024, 2024), 24)):
+        try:
+            build(YEAR_2024, years, months)
+            out.append(f"numbers {years}/{months} disagree with the value and were accepted")
+        except ContractError:
+            pass
+        except Exception as error:
+            out.append(f"numbers {years}/{months}: {type(error).__name__}")
+    for value, years, months in ((YEAR_2024, (2024, 2024), 12), (spelled("2024-03-01", "2024-04-01"), (2024, 2024), 1),
+                                 (spelled("2024-11-01", "2025-02-01"), (2024, 2025), 3),
+                                 (spelled("2022-01-01", "2025-01-01"), (2022, 2024), 36)):
+        attempt(out, f"agreeing referent {months}", build, value, years, months)
+    return out
+
+
 BATTERIES = {"unit": unit_failures, "time": time_failures, "check": check_failures, "cross": cross_check_failures,
-             "shape": shape_failures}
+             "shape": shape_failures, "join": join_failures, "forged": forged_failures}
 
 
 def test_the_real_module_passes_every_battery():
@@ -261,16 +366,30 @@ LAST_YEARS = "    if extent[0] != extent[1]:\n        return YearInheritance(Pre
 SEVERAL = "    if len(positive) > 1:\n        return Ambiguity.MULTIPLE_TIMES\n"
 NONCONJ = "    if base.logic is not None and any(base.logic.has_nonconjunctive_atom(c.condition_id) for c in times):"
 RELATIVE = "    return Ambiguity.RELATIVE_WINDOW if _is_relative(positive[0]) else positive[0]"
-RECEIPT = "\n            or RELATIVE_TO_PREVIOUS_RULE in condition.receipt_rules)"
-CLOCK_MARK = "condition.provenance.year_source is YearSource.RELATIVE_TO_CLOCK"
-UNALIGNED = "        return years[0], years[1], None\n"
+OPERATOR_TERM = "condition.operator == RELATIVE_PERIOD_OPERATOR"  # the three marks of a relative window (D4), as terms
+CLOCK_TERM = "condition.provenance.year_source is YearSource.RELATIVE_TO_CLOCK"
+RECEIPT_TERM = "RELATIVE_TO_PREVIOUS_RULE in condition.receipt_rules"
+
+
+def is_relative_with(*terms: str) -> tuple[str, str]:
+    """A whole ``_is_relative`` made of exactly these terms (see ``_replace_function``)."""
+    return "def:_is_relative", ("def _is_relative(condition: AcceptedCondition) -> bool:\n    return ("
+                                + "\n            or ".join(terms) + ")\n")
+ALIGNED = "    if first.day != 1 or after.day != 1:\n        return None\n"
 MONTHS = "(after.year - first.year) * 12 + after.month - first.month"
+NEGATIVE_ONLY = "        return Ambiguity.NEGATIVE_TIME_ONLY if times else None"
+ORIGINS = "        if len(origins) > 1:\n            _fail(\"INHERITANCE_INPUTS_FROM_DIFFERENT_BASES\")\n"
+TIMES = ("        if (self.year.status is Presence.PRESENT and self.referent.status is Presence.PRESENT\n"
+         "                and self.year.condition_id != self.referent.condition_id):\n"
+         "            _fail(\"INHERITANCE_INPUTS_FROM_DIFFERENT_TIMES\")\n")
+REFERENT_VALUE = "               and _referent_value_ok(self.value, self.first_year, self.last_year, self.months)\n"
+CROSS = ("    if first is None or after is None or years != (first.year, (after - timedelta(days=1)).year):\n"
+         "        _fail(\"TIME_YEARS_DISAGREE\")\n")
 OPEN_YEAR = "        return YearInheritance(Presence.AMBIGUOUS, reason=Ambiguity.OPEN_INTERVAL)"
 OPEN_REFERENT = "        return TimeReferent(Presence.AMBIGUOUS, reason=Ambiguity.OPEN_INTERVAL)"
 REFERENT_FIELDS = "active.condition_id, active.value, extent[0], extent[1], extent[2],"
 CHECK_BASE = "    if type(base) is not AcceptedInterpretation:\n        _fail(\"INHERITANCE_BASE_NOT_ACCEPTED\")\n"
 CHECK_TRACE = "    if not _text_ok(base_trace_id):\n        _fail(\"INHERITANCE_BASE_TRACE_ID\")\n"
-CROSS = "    if years != (first.year, (after - timedelta(days=1)).year):\n        _fail(\"TIME_YEARS_DISAGREE\")\n"
 
 MUTANTS = {  # name: (battery, replacements)
     # UNIT §15.4
@@ -289,14 +408,34 @@ MUTANTS = {  # name: (battery, replacements)
     # YEAR §16.1 / REFERENT §16.3
     "year_first_of_a_plurianual_time": ("time", [(LAST_YEARS, "")]),
     "time_relative_window_accepted": ("time", [(RELATIVE, "    return positive[0]")]),
-    "time_relative_receipt_ignored": ("time", [(RECEIPT, ")")]),
-    "time_relative_clock_marker_ignored": ("time", [(CLOCK_MARK, "False")]),
+    "time_relative_receipt_ignored": ("time", [is_relative_with(OPERATOR_TERM, CLOCK_TERM)]),
+    "time_relative_clock_marker_ignored": ("time", [is_relative_with(OPERATOR_TERM, RECEIPT_TERM)]),
+    "time_relative_operator_ignored": ("time", [is_relative_with(CLOCK_TERM, RECEIPT_TERM)]),  # reverts ZEUS P1-1 (ZM1 is the repair)
+    "time_relative_operator_only_when_unmarked": ("time", [is_relative_with(
+        f"({OPERATOR_TERM} and condition.provenance.year_source is None)", CLOCK_TERM, RECEIPT_TERM)]),
+    "time_negative_only_is_no_time": ("time", [(NEGATIVE_ONLY, "        return None")]),  # reverts ZEUS P2-1
+    "time_negative_only_named_multiple": ("time", [(NEGATIVE_ONLY, "        return Ambiguity.MULTIPLE_TIMES if times else None")]),  # ZM7
+    "zeus_zm2_nonconjunctive_only_positive": ("time", [(
+        "any(base.logic.has_nonconjunctive_atom(c.condition_id) for c in times)",
+        "any(base.logic.has_nonconjunctive_atom(c.condition_id) for c in times if c.polarity is Polarity.POSITIVE)")]),
+    "zeus_zm3_peso_scales_are_one_unit": ("unit", [(
+        "    units = {c.provenance.unit for c in bounds if c.provenance.unit is not None}",
+        "    units = {(Unit.SMMLV if c.provenance.unit is Unit.SMMLV else Unit.PESOS) for c in bounds "
+        "if c.provenance.unit is not None}")]),
+    "zeus_zm6_same_day_of_month_counts_as_months": ("time", [("    if first.day != 1 or after.day != 1:", "    if first.day != after.day:")]),
+    "zeus_zm8_year_ignores_relative_window": ("time", [(
+        "    if type(active) is Ambiguity:\n        return YearInheritance(Presence.AMBIGUOUS, reason=active)",
+        "    if active is Ambiguity.RELATIVE_WINDOW:\n        active = [c for c in base.conditions if c.dimension is "
+        "SemanticDimension.TIME and c.polarity is Polarity.POSITIVE][0]\n    if type(active) is Ambiguity:\n"
+        "        return YearInheritance(Presence.AMBIGUOUS, reason=active)")]),
     "time_first_of_several": ("time", [(SEVERAL, "")]),
     "time_negative_counted": ("time", [("    positive = [c for c in times if c.polarity is Polarity.POSITIVE]",
                                         "    positive = list(times)")]),
     "time_nonconjunctive_accepted": ("time", [(NONCONJ, "    if False:")]),
     "year_open_interval_is_absent": ("time", [(OPEN_YEAR, "        return YearInheritance(Presence.ABSENT)")]),
-    "referent_granularity_ignored": ("time", [(UNALIGNED, "        return years[0], years[1], max(1, (after - first).days // 30)\n")]),
+    "referent_granularity_ignored": ("time", [(ALIGNED, "")]),
+    "referent_only_the_start_day_is_aligned": ("time", [("    if first.day != 1 or after.day != 1:", "    if first.day != 1:")]),
+    "referent_only_the_end_day_is_aligned": ("time", [("    if first.day != 1 or after.day != 1:", "    if after.day != 1:")]),
     "referent_months_off_by_one": ("time", [(MONTHS, MONTHS + " + 1")]),
     "referent_open_reason_swapped": ("time", [(OPEN_REFERENT, "        return TimeReferent(Presence.AMBIGUOUS, "
                                                               "reason=Ambiguity.INCOMPATIBLE_GRANULARITY)")]),
@@ -306,6 +445,26 @@ MUTANTS = {  # name: (battery, replacements)
     "base_of_any_type": ("check", [(CHECK_BASE, "")]),
     "base_trace_id_unchecked": ("check", [(CHECK_TRACE, "")]),
     "dates_not_cross_checked": ("cross", [(CROSS, "")]),
+    # THE TYPES (ZEUS P3)
+    "join_accepts_different_bases": ("join", [(ORIGINS, "")]),
+    "join_counts_a_missing_origin": ("join", [("for part in (self.unit, self.year, self.referent)} - {None}",
+                                               "for part in (self.unit, self.year, self.referent)}")]),
+    "join_accepts_different_times": ("join", [(TIMES, "")]),
+    "join_compares_times_even_when_one_is_not_present": ("join", [(
+        "        if (self.year.status is Presence.PRESENT and self.referent.status is Presence.PRESENT\n"
+        "                and self.year.condition_id != self.referent.condition_id):",
+        "        if self.year.condition_id != self.referent.condition_id:")]),
+    "referent_value_unchecked": ("forged", [(REFERENT_VALUE, "               and type(self.value) is tuple and bool(self.value)\n")]),
+    "referent_value_tag_unchecked": ("forged", [("value[0] == _TIME_TAG", "True")]),
+    "referent_value_extra_fields_accepted": ("forged", [("len(value) == 5", "len(value) >= 5")]),
+    "referent_value_excluded_unchecked": ("forged", [(' and value[4] == "excluded=0"', "")]),
+    "referent_value_open_end_accepted": ("forged", [("first is not None and after is not None and value[4]", "value[4]")]),
+    "referent_value_years_unchecked": ("forged", [(
+        "\n            and (first.year, (after - timedelta(days=1)).year) == (first_year, last_year)", "")]),
+    "referent_value_months_unchecked": ("forged", [("\n            and _whole_months(first, after) == months)", ")")]),
+    "referent_value_noncanonical_date_accepted": ("forged", [("    if day is not None and day.isoformat() != raw:", "    if False:")]),
+    "referent_value_must_be_a_tuple_unchecked": ("forged", [("type(value) is tuple and len(value) == 5", "len(value) == 5")]),
+    "referent_value_items_unchecked": ("forged", [(" and all(type(item) is str for item in value)", "")]),
     # SHAPE: the discriminated union relaxed in each clause
     "shape_absent_may_carry_a_payload": ("shape", [("        if reason is not None or payload:", "        if reason is not None:")]),
     "shape_present_may_be_partial": ("shape", [("        if reason is not None or not complete:", "        if reason is not None:")]),
@@ -329,12 +488,16 @@ PROPERTIES = (properties.test_p1_the_inputs_are_what_the_independent_oracle_says
               properties.test_p2b_inherited_from_is_the_callers_and_never_the_bases,
               properties.test_p3_a_present_input_never_hides_two_units_several_times_or_several_years,
               properties.test_p5_a_random_pair_of_dates_against_the_oracle_and_the_closed_codec)
-KILLED_BY_PROPERTIES = (
+KILLED_BY_PROPERTIES = (  # every mutant of the DERIVATION; the type-level ones (join, forged, shape) have no generated input
     "unit_first_of_two_units", "unit_unrecorded_bound_ignored", "unit_defaults_to_pesos", "unit_provenance_from_the_donor_origin",
     "unit_reads_only_the_lower_bound", "unit_donors_are_every_condition", "year_first_of_a_plurianual_time",
     "time_relative_window_accepted", "time_relative_receipt_ignored", "time_relative_clock_marker_ignored",
-    "time_first_of_several", "time_negative_counted", "time_nonconjunctive_accepted", "year_open_interval_is_absent",
-    "referent_granularity_ignored", "referent_months_off_by_one", "referent_value_dropped",
+    "time_relative_operator_ignored", "time_relative_operator_only_when_unmarked", "time_negative_only_is_no_time",
+    "time_negative_only_named_multiple", "time_first_of_several", "time_negative_counted", "time_nonconjunctive_accepted",
+    "year_open_interval_is_absent", "referent_granularity_ignored", "referent_only_the_start_day_is_aligned",
+    "referent_only_the_end_day_is_aligned", "referent_months_off_by_one", "referent_value_dropped",
+    "zeus_zm2_nonconjunctive_only_positive", "zeus_zm3_peso_scales_are_one_unit",
+    "zeus_zm6_same_day_of_month_counts_as_months", "zeus_zm8_year_ignores_relative_window",
 )
 
 
@@ -350,6 +513,44 @@ def test_the_generated_properties_also_kill_the_mutants_of_each_rule(name, monke
     pytest.fail(f"mutant {name} survived every generated property")
 
 
+# ---- ZM1 is the repair: it must PASS (and the mutant that reverts it must die: ``time_relative_operator_ignored``) ----------------
+EQUIVALENT = {  # replacements that change nothing observable: every battery must STILL be empty, and the pin silent
+    "zeus_zm1_relative_period_operator_is_relative": [(
+        "            or RELATIVE_TO_PREVIOUS_RULE in condition.receipt_rules)",
+        "            or RELATIVE_TO_PREVIOUS_RULE in condition.receipt_rules or condition.operator == 'relative_period')")],
+}
+
+
+def equivalent_source(name: str) -> str:
+    """The module with an equivalent variant applied. Idempotent: if the file on disk ALREADY is the variant (a mutation
+    harness wrote it, as ZEUS' ``mutate.py`` does for ZM1), there is nothing to apply."""
+    source = SOURCE
+    for old, new in EQUIVALENT[name]:
+        if new in source:
+            continue
+        assert source.count(old) == 1, f"equivalent variant anchor not unique: {old!r}"
+        source = source.replace(old, new)
+    return source
+
+
+@pytest.mark.parametrize("name", sorted(EQUIVALENT))
+def test_an_equivalent_variant_passes_every_battery_and_the_pin(name):
+    """Positive control of the harness: ZEUS' mutant ZM1 (the operator ``relative_period`` is a relative window) is now what
+    the module already does, so it must not be seen as a defect; otherwise the batteries would be judging text, not behavior."""
+    source = equivalent_source(name)
+    assert "'relative_period'" in source
+    variant = _load(source)
+    failures = {label: battery(variant) for label, battery in BATTERIES.items()}
+    assert {label: found for label, found in failures.items() if found} == {}
+    assert purity_problems(source) == []
+
+
+def test_the_module_names_the_one_operator_the_contract_names():
+    from tests.test_foundation_authority_inheritance import RELATIVE_OPERATORS
+
+    assert {inh.RELATIVE_PERIOD_OPERATOR} == set(RELATIVE_OPERATORS)  # §16 item 4, read from the contract's text
+
+
 # ---- INV-M2A-07: the input is derived from the base alone ---------------------------------------------------------------------
 # The module's whole read surface, pinned. Adding a read (another attribute, import or argument) is a decision to review.
 ALLOWED_IMPORTS = frozenset({
@@ -361,11 +562,11 @@ ALLOWED_IMPORTS = frozenset({
 })
 READ_SURFACE = frozenset({  # attribute names the module may touch: the base's conditions, their typed facts, nothing else
     "ABSENT", "AMBIGUOUS", "INCOMPATIBLE_GRANULARITY", "MULTIPLE_TIMES", "MULTIPLE_UNITS", "MULTI_YEAR",
-    "NONCONJUNCTIVE_TIME", "OPEN_INTERVAL", "POSITIVE", "PRESENT", "RELATIVE_TO_CLOCK", "RELATIVE_WINDOW", "TIME",
-    "UNIT_UNRECORDED", "VALUE", "condition_id", "conditions", "day", "dimension", "first_year", "fromisoformat",
-    "has_nonconjunctive_atom", "inherited_from", "last_year", "logic", "month", "months", "polarity", "provenance",
-    "reason", "receipt_rules", "referent", "source_condition_ids", "startswith", "status", "unit", "value", "year",
-    "year_source",
+    "NEGATIVE_TIME_ONLY", "NONCONJUNCTIVE_TIME", "OPEN_INTERVAL", "POSITIVE", "PRESENT", "RELATIVE_TO_CLOCK",
+    "RELATIVE_WINDOW", "TIME", "UNIT_UNRECORDED", "VALUE", "condition_id", "conditions", "day", "dimension", "first_year",
+    "fromisoformat", "has_nonconjunctive_atom", "inherited_from", "isoformat", "last_year", "logic", "month", "months",
+    "operator", "polarity", "provenance", "reason", "receipt_rules", "referent", "source_condition_ids", "startswith",
+    "status", "unit", "value", "year", "year_source",
 })
 FORBIDDEN_NAMES = frozenset({"open", "eval", "exec", "compile", "input", "__import__", "globals", "getattr", "setattr",
                              "resolve"})

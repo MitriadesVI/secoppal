@@ -6,8 +6,11 @@ a finite table and every table is walked in full, from the contract's words (nev
 * UNIT (§15.4): every pair (lower bound, upper bound) over {absent, each ``Unit``, unrecorded}; PRESENT only with ONE
   active unit; two units are AMBIGUOUS (SF102: MILLONES and MIL_MILLONES are two units, not «peso scale»).
 * YEAR (§16.1) and REFERENT (§16.3): every TIME shape (year, month, semester, quarter across a year, three years, a day,
-  unaligned ranges, open ends) × every ``YearSource`` × the receipts × the number and polarity of TIME conditions × where
-  the TIME sits in the logic (conjunctive, under OR, under NOT).
+  rolling and unaligned ranges, open ends) × every TIME operator × every ``YearSource`` × the receipts × the number and
+  polarity of TIME conditions × where the TIME sits in the logic (conjunctive, under OR, under NOT).
+* What a relative window IS comes from the contract's text (§16 item 4 names its operator), read at test time by
+  ``relative_operators_of_the_contract``; ``test_the_clauses_the_tables_were_written_from_are_in_the_contract`` pins the
+  sentences the expectations paraphrase.
 * The three inputs are discriminated unions: the type refuses every (status, reason, payload) combination that is not one
   of PRESENT / ABSENT / AMBIGUOUS-with-its-own-reason.
 
@@ -18,6 +21,7 @@ from __future__ import annotations
 
 import hashlib
 import itertools
+import re
 from dataclasses import dataclass, field
 from datetime import date
 
@@ -29,8 +33,10 @@ from app.core.foundation_authority_values import (
     BuyerKind, BuyerValue, Comparator, MoneyValue, TimeValue, TopicValue,
 )
 from app.core.foundation_operations import Subject
+from app.core.foundation_operator_table import OPERATORS
 from app.core.interpretation_contract import ConditionExpression, ContractError, LogicOperator, Polarity
 from app.core.semantic_dimensions import SemanticDimension as D
+from scripts.audits.m2a_conversation import m2a_contract_text as contract_text
 
 BASE_TRACE = "t-base"
 DATASETS = {Subject.PROCESSES: "p6dx-8zbt", Subject.CONTRACTS: "jbjy-vk9h"}
@@ -118,11 +124,12 @@ def time_value(start: date | None, end: date | None, excluded: bool = False) -> 
     return TimeValue(start, end, label, excluded)
 
 
-def when(start, end, *, cid="c3", excluded=False, source=None, rules=()) -> Cond:
-    """A TIME condition; ``source`` is the ``year_source`` of its provenance (None: not recorded)."""
+def when(start, end, *, cid="c3", excluded=False, source=None, rules=(), operator=None) -> Cond:
+    """A TIME condition; ``source`` is the ``year_source`` of its provenance (None: not recorded); ``operator`` is the
+    TIME operator of the condition (None: ``between_dates``)."""
     provenance = fa.Provenance(year_source=source,
                                inherited_from="t-prev" if source is fa.YearSource.PREVIOUS_ACCEPTED_TIME else None)
-    return Cond(cid, D.TIME, time_value(start, end, excluded), provenance, tuple(rules))
+    return Cond(cid, D.TIME, time_value(start, end, excluded), provenance, tuple(rules), operator)
 
 
 def topic(cid="c1") -> Cond:
@@ -144,6 +151,8 @@ SHAPES = {  # name: (start, end_exclusive)
     "unaligned_range": (Y(2024, 3, 15), Y(2024, 4, 21)),
     "unaligned_end": (Y(2024, 3, 1), Y(2024, 4, 15)),
     "unaligned_start": (Y(2024, 3, 2), Y(2024, 4, 1)),
+    "rolling_month": (Y(2024, 3, 15), Y(2024, 4, 15)),  # a month long, but not a calendar month
+    "rolling_year": (Y(2024, 3, 15), Y(2025, 3, 15)),
     "open_from": (Y(2024, 1, 1), None),
     "open_until": (None, Y(2025, 1, 1)),
 }
@@ -161,9 +170,57 @@ EXPECTED_SHAPE = {
     "unaligned_range": (("PRESENT", 2024), ("AMBIGUOUS", AMB.INCOMPATIBLE_GRANULARITY)),
     "unaligned_end": (("PRESENT", 2024), ("AMBIGUOUS", AMB.INCOMPATIBLE_GRANULARITY)),
     "unaligned_start": (("PRESENT", 2024), ("AMBIGUOUS", AMB.INCOMPATIBLE_GRANULARITY)),
+    "rolling_month": (("PRESENT", 2024), ("AMBIGUOUS", AMB.INCOMPATIBLE_GRANULARITY)),
+    "rolling_year": (("AMBIGUOUS", AMB.MULTI_YEAR), ("AMBIGUOUS", AMB.INCOMPATIBLE_GRANULARITY)),
     "open_from": (("AMBIGUOUS", AMB.OPEN_INTERVAL), ("AMBIGUOUS", AMB.OPEN_INTERVAL)),
     "open_until": (("AMBIGUOUS", AMB.OPEN_INTERVAL), ("AMBIGUOUS", AMB.OPEN_INTERVAL)),
 }
+
+
+# ---- what the CONTRACT says (read from its text, never from the module under test) ---------------------------------------------
+def _flat(text: str) -> str:
+    return " ".join(text.split())
+
+
+def contract_section_16() -> str:
+    return contract_text.section(contract_text.read(), "## 16. Temporales adjudicados", "## 17. Protocolo de cancelación")
+
+
+def relative_operators_of_the_contract() -> frozenset[str]:
+    """The TIME operators §16 item 4 («Relativos al reloj») names between backticks: what the contract defines as a
+    relative window. An empty answer is a broken extraction, not «no relative operator»."""
+    item = contract_text.section(contract_section_16(), "4. **Relativos al reloj**", "5. **Relativos no temporales**")
+    named = frozenset(re.findall(r"`([a-z_]+)`", item)) & OPERATORS[D.TIME]
+    if not named:
+        raise AssertionError("§16 item 4 names no TIME operator: the extraction is broken")
+    return named
+
+
+TIME_OPERATORS = tuple(sorted(OPERATORS[D.TIME]))
+RELATIVE_OPERATORS = relative_operators_of_the_contract()
+ABSOLUTE_OPERATORS = tuple(op for op in TIME_OPERATORS if op not in RELATIVE_OPERATORS)
+CLAUSES = (  # the sentences the expectations of this file paraphrase, as the contract writes them
+    "una única unidad activa inequívoca",  # §15.4
+    "Sin TIME previo: ocurrencia más reciente no posterior a hoy",  # §16.1
+    "TIME previo plurianual o ventana relativa ⇒ `CLARIFY MONTH_YEAR_AMBIGUOUS`",  # §16.1
+    "se resuelve respecto del **único** TIME positivo activo de la base, de granularidad compatible",  # §16.3
+    "Sin referente activo, con varios, o con un referente que es a su vez una ventana relativa ⇒ "
+    "`CLARIFY RELATIVE_TO_PREVIOUS_VALUE`",  # §16.3
+    "**Relativos al reloj** («este año», «últimos seis meses»): autoridad TIME del primer turno (`relative_period`)",  # §16.4
+)
+
+
+def test_the_clauses_the_tables_were_written_from_are_in_the_contract():
+    flat = _flat(contract_text.read())
+    assert [clause for clause in CLAUSES if _flat(clause) not in flat] == []
+    assert RELATIVE_OPERATORS == frozenset({"relative_period"})  # the contract names exactly one, and it is a TIME operator
+    assert set(ABSOLUTE_OPERATORS) == {"during_year", "during_month", "between_dates"}
+
+
+def is_relative_window(operator: str, clock: bool, receipt: bool) -> bool:
+    """§16.4 (the operator the TIME authority emits for «este año»), §11 (``RELATIVE_TO_CLOCK``) and §16.3 (resolved
+    against the previous TIME, rule ``time.relative_to_previous``): any of the three makes a window relative."""
+    return operator in RELATIVE_OPERATORS or clock or receipt
 
 
 def inputs_of(*specs, **kwargs) -> inh.HostInheritanceInputs:
@@ -263,11 +320,12 @@ ABSOLUTE = tuple(s for s in SOURCES if s is not fa.YearSource.RELATIVE_TO_CLOCK)
 
 
 @pytest.mark.parametrize("shape", sorted(SHAPES))
+@pytest.mark.parametrize("operator", ABSOLUTE_OPERATORS)
 @pytest.mark.parametrize("source", ABSOLUTE)
-def test_every_shape_of_an_absolute_time_year_and_referent(shape, source):
-    """The provenance of the year (stated, inferred by the clock, inherited) never changes the reading of an absolute
-    TIME: the interval is the fact."""
-    result = inputs_of(topic(), when(*SHAPES[shape], source=source))
+def test_every_shape_of_an_absolute_time_year_and_referent(shape, operator, source):
+    """The operator and the provenance of the year (stated, inferred by the clock, inherited) never change the reading of
+    an ABSOLUTE TIME: the interval is the fact."""
+    result = inputs_of(topic(), when(*SHAPES[shape], source=source, operator=operator))
     expected_year, expected_referent = EXPECTED_SHAPE[shape]
     assert year_view(result.year) == expected_year
     assert referent_view(result.referent) == expected_referent
@@ -278,11 +336,20 @@ def test_every_shape_of_an_absolute_time_year_and_referent(shape, source):
 
 
 @pytest.mark.parametrize("shape", sorted(SHAPES))
-def test_a_window_relative_to_the_clock_is_never_a_referent_nor_a_year(shape):
-    """§16.1 and §16.3: «ventana relativa» ⇒ ambiguous, whatever its dates (the shape is irrelevant to the marker)."""
-    result = inputs_of(when(*SHAPES[shape], source=fa.YearSource.RELATIVE_TO_CLOCK))
-    assert year_view(result.year) == ("AMBIGUOUS", AMB.RELATIVE_WINDOW)
-    assert referent_view(result.referent) == ("AMBIGUOUS", AMB.RELATIVE_WINDOW)
+@pytest.mark.parametrize("operator", TIME_OPERATORS)
+@pytest.mark.parametrize("source", SOURCES)
+@pytest.mark.parametrize("receipt", [False, True])
+def test_a_relative_window_is_neither_a_year_nor_a_referent_by_any_of_its_three_marks(shape, operator, source, receipt):
+    """§16.1, §16.3 «ventana relativa» ⇒ ambiguous, whatever its dates: shape × operator × ``year_source`` × receipt. Each
+    mark alone is enough, and the operator ``relative_period`` (§16.4) is a relative window under EVERY ``year_source``,
+    ``None`` included (§3.2 allows it): the base the frozen oracle types for SF033 is exactly that."""
+    rules = ("time.relative_to_previous",) if receipt else ()
+    result = inputs_of(topic(), when(*SHAPES[shape], source=source, rules=rules, operator=operator))
+    if is_relative_window(operator, source is fa.YearSource.RELATIVE_TO_CLOCK, receipt):
+        assert year_view(result.year) == ("AMBIGUOUS", AMB.RELATIVE_WINDOW)
+        assert referent_view(result.referent) == ("AMBIGUOUS", AMB.RELATIVE_WINDOW)
+    else:
+        assert (year_view(result.year), referent_view(result.referent)) == EXPECTED_SHAPE[shape]
 
 
 @pytest.mark.parametrize("shape", sorted(SHAPES))
@@ -298,10 +365,40 @@ def test_a_time_resolved_against_the_previous_one_is_a_relative_window_too(shape
     assert referent_view(inherited.referent) == EXPECTED_SHAPE[shape][1]
 
 
-def test_without_a_positive_time_both_inputs_are_absent():
-    assert inputs_of(topic()).year.status is ABSENT and inputs_of(topic()).referent.status is ABSENT
-    negative = inputs_of(topic(), when(*SHAPES["year"], excluded=True))  # «no en 2024» states no active period
-    assert negative.year.status is ABSENT and negative.referent.status is ABSENT
+@pytest.mark.parametrize("words, first, after", [
+    ("este mes", date(2026, 10, 1), date(2026, 11, 1)),
+    ("este año", date(2026, 1, 1), date(2027, 1, 1)),
+    ("últimos 3 meses", date(2026, 7, 1), date(2026, 10, 1)),
+])
+def test_the_relative_expressions_the_contract_names_typed_as_relative_period_are_never_inherited(words, first, after):
+    """§16.4: «este año», «últimos seis meses» are ``relative_period``. Even a month- or year-aligned one, with NO mark in
+    the provenance, is ambiguous (``words`` only names the case; the module never sees it)."""
+    result = inputs_of(topic(), when(first, after, operator="relative_period"))
+    assert year_view(result.year) == ("AMBIGUOUS", AMB.RELATIVE_WINDOW), words
+    assert referent_view(result.referent) == ("AMBIGUOUS", AMB.RELATIVE_WINDOW), words
+
+
+def test_without_any_time_both_inputs_are_absent():
+    """§16.1 «Sin TIME previo»: the base has no TIME condition at all, so the host's clock decides (``year.inferred``)."""
+    result = inputs_of(topic(), buyer())
+    assert result.year.status is ABSENT and result.referent.status is ABSENT
+
+
+@pytest.mark.parametrize("shape", sorted(SHAPES))
+@pytest.mark.parametrize("operator", TIME_OPERATORS)
+def test_a_base_with_only_negative_time_is_not_a_base_without_time(shape, operator):
+    """M2A3B-D3 (HERA, ZEUS P2-1): «no en 2024» excludes a period and states none. It is NOT «sin TIME previo» (§16.1): the
+    clock would pick a year the user may just have excluded. Neither input is ABSENT, whatever the shape or operator."""
+    result = inputs_of(topic(), when(*SHAPES[shape], excluded=True, operator=operator))
+    assert year_view(result.year) == ("AMBIGUOUS", AMB.NEGATIVE_TIME_ONLY)
+    assert referent_view(result.referent) == ("AMBIGUOUS", AMB.NEGATIVE_TIME_ONLY)
+
+
+def test_several_negative_times_and_a_negative_relative_window_are_still_only_negative():
+    two = inputs_of(when(*SHAPES["year"], excluded=True), when(*SHAPES["month"], cid="c4", excluded=True))
+    assert two.year.reason is AMB.NEGATIVE_TIME_ONLY and two.referent.reason is AMB.NEGATIVE_TIME_ONLY  # not MULTIPLE_TIMES
+    relative = inputs_of(when(*SHAPES["year"], excluded=True, source=fa.YearSource.RELATIVE_TO_CLOCK))
+    assert relative.year.reason is AMB.NEGATIVE_TIME_ONLY  # nothing is active, so nothing is a relative window
 
 
 def test_a_negative_time_next_to_one_positive_time_is_ignored():
@@ -341,20 +438,26 @@ def test_a_time_inside_an_or_or_not_group_is_not_an_active_period(name, polarity
         assert year_view(result.year) == ("AMBIGUOUS", AMB.NONCONJUNCTIVE_TIME)
         assert referent_view(result.referent) == ("AMBIGUOUS", AMB.NONCONJUNCTIVE_TIME)
     elif polarity_excluded:
-        assert result.year.status is ABSENT and result.referent.status is ABSENT
+        assert year_view(result.year) == ("AMBIGUOUS", AMB.NEGATIVE_TIME_ONLY)
+        assert referent_view(result.referent) == ("AMBIGUOUS", AMB.NEGATIVE_TIME_ONLY)
     else:
         assert year_view(result.year) == ("PRESENT", 2024) and referent_view(result.referent) == ("PRESENT", 2024, 2024, 12)
 
 
 def test_the_precedence_of_the_reasons_is_closed():
-    """NONCONJUNCTIVE > MULTIPLE > RELATIVE > OPEN > MULTI_YEAR (year) / INCOMPATIBLE_GRANULARITY (referent)."""
+    """NONCONJUNCTIVE > MULTIPLE > RELATIVE > OPEN > MULTI_YEAR (year) / INCOMPATIBLE_GRANULARITY (referent). NEGATIVE_ONLY
+    needs no positive TIME, so it never meets MULTIPLE, RELATIVE, OPEN or the shape reasons; only NONCONJUNCTIVE precedes it."""
     relative = when(*SHAPES["year"], cid="c3", source=fa.YearSource.RELATIVE_TO_CLOCK)
     both = inputs_of(relative, when(*SHAPES["month"], cid="c4"))
     assert both.year.reason is AMB.MULTIPLE_TIMES and both.referent.reason is AMB.MULTIPLE_TIMES
     under_or = inputs_of(topic(), relative, logic=group(OR, atom("c1"), atom("c3")))
     assert under_or.year.reason is AMB.NONCONJUNCTIVE_TIME and under_or.referent.reason is AMB.NONCONJUNCTIVE_TIME
-    open_relative = inputs_of(when(*SHAPES["open_from"], source=fa.YearSource.RELATIVE_TO_CLOCK))
-    assert open_relative.year.reason is AMB.RELATIVE_WINDOW and open_relative.referent.reason is AMB.RELATIVE_WINDOW
+    for marked in (when(*SHAPES["open_from"], source=fa.YearSource.RELATIVE_TO_CLOCK),
+                   when(*SHAPES["open_from"], operator="relative_period")):
+        open_relative = inputs_of(marked)
+        assert open_relative.year.reason is AMB.RELATIVE_WINDOW and open_relative.referent.reason is AMB.RELATIVE_WINDOW
+    negative_under_or = inputs_of(topic(), when(*SHAPES["year"], excluded=True), logic=group(OR, atom("c1"), atom("c3")))
+    assert negative_under_or.year.reason is AMB.NONCONJUNCTIVE_TIME  # NONCONJUNCTIVE precedes NEGATIVE_ONLY
 
 
 # ---- the referent carries the typed value ----------------------------------------------------------------------------------
@@ -414,7 +517,8 @@ def test_a_time_value_the_module_cannot_read_is_refused_not_guessed(monkeypatch)
 # ---- the types: every (status, reason, payload) combination -----------------------------------------------------------------------
 UNIT_PAYLOAD = dict(unit=fa.Unit.MILLONES, inherited_from="t", source_condition_ids=("v1",))
 YEAR_PAYLOAD = dict(year=2024, condition_id="c3", inherited_from="t")
-REFERENT_PAYLOAD = dict(condition_id="c3", value=("time@1", "x"), first_year=2024, last_year=2024, months=12, inherited_from="t")
+YEAR_2024 = ("time@1", "start=2024-01-01", "end_exclusive=2025-01-01", "precision=year", "excluded=0")  # the codec's spelling
+REFERENT_PAYLOAD = dict(condition_id="c3", value=YEAR_2024, first_year=2024, last_year=2024, months=12, inherited_from="t")
 CASES = [(inh.UnitInheritance, UNIT_PAYLOAD, inh.UNIT_AMBIGUITIES),
          (inh.YearInheritance, YEAR_PAYLOAD, inh.YEAR_AMBIGUITIES),
          (inh.TimeReferent, REFERENT_PAYLOAD, inh.REFERENT_AMBIGUITIES)]
@@ -461,13 +565,106 @@ def test_the_payload_checks_that_are_not_about_types():
     with pytest.raises(ContractError):
         inh.UnitInheritance(PRESENT, fa.Unit.PESOS, "t", ())
     with pytest.raises(ContractError):
-        inh.TimeReferent(PRESENT, "c3", ("time@1",), 2025, 2024, 12, "t")  # years out of order
+        inh.TimeReferent(PRESENT, "c3", YEAR_2024, 2025, 2024, 12, "t")  # years out of order
     with pytest.raises(ContractError):
-        inh.TimeReferent(PRESENT, "c3", ("time@1",), 2024, 2024, 0, "t")  # a referent spans at least one month
+        inh.TimeReferent(PRESENT, "c3", YEAR_2024, 2024, 2024, 0, "t")  # a referent spans at least one month
     with pytest.raises(ContractError):
         inh.HostInheritanceInputs(inh.UnitInheritance(ABSENT), inh.YearInheritance(ABSENT), None)
     with pytest.raises(ContractError):
         inh.UnitInheritance("PRESENT", **UNIT_PAYLOAD)  # the status is the enum, not its text
+
+
+# ---- P3: a referent's value is a real time@1 and agrees with the numbers it states ---------------------------------------------
+def spelled(start: str, end: str, *, precision: str = "range", excluded: str = "0") -> tuple[str, ...]:
+    return ("time@1", f"start={start}", f"end_exclusive={end}", f"precision={precision}", f"excluded={excluded}")
+
+
+FORGED_VALUES = {  # a PRESENT referent whose ``value`` is not the canonical time@1 of an included period: all refused
+    "empty": (),
+    "another tag": ("money@1", "amount_cop=1", "comparator=>="),
+    "another tag with the arity of a time": ("money@1", *YEAR_2024[1:]),
+    "a list, not a tuple": list(YEAR_2024),
+    **{f"an item that is not text at {i}": (*YEAR_2024[:i], 0, *YEAR_2024[i + 1:]) for i in range(5)},
+    "fields out of order": (YEAR_2024[0], YEAR_2024[2], YEAR_2024[1], *YEAR_2024[3:]),
+    "a field missing": YEAR_2024[:4],
+    "an extra field": (*YEAR_2024, "x=1"),
+    "excluded": (*YEAR_2024[:4], "excluded=1"),
+    "excluded neither 0 nor 1": (*YEAR_2024[:4], "excluded=2"),
+    "open end": spelled("2024-01-01", "!"),
+    "open start": spelled("!", "2025-01-01"),
+    "not a date": spelled("2024-13-01", "2025-01-01"),
+    "a date in another spelling": spelled("20240101", "2025-01-01"),
+    "start after end": spelled("2025-01-01", "2024-01-01"),
+    "empty interval": spelled("2024-01-01", "2024-01-01"),
+    "the dates of another year": spelled("2023-01-01", "2024-01-01"),
+    "dates that are not whole months": spelled("2024-01-02", "2025-01-01"),
+}
+
+
+@pytest.mark.parametrize("name", sorted(FORGED_VALUES))
+def test_a_referent_value_that_is_not_a_canonical_time_is_refused(name):
+    with pytest.raises(ContractError, match="INHERITANCE_INPUT_PRESENT_SHAPE"):
+        inh.TimeReferent(PRESENT, "c3", FORGED_VALUES[name], 2024, 2024, 12, "t")
+
+
+@pytest.mark.parametrize("years, months", [((2023, 2024), 12), ((2024, 2025), 12), ((2024, 2024), 11), ((2024, 2024), 13),
+                                           ((2024, 2024), 24)])
+def test_a_referent_whose_numbers_disagree_with_its_value_is_refused(years, months):
+    with pytest.raises(ContractError, match="INHERITANCE_INPUT_PRESENT_SHAPE"):
+        inh.TimeReferent(PRESENT, "c3", YEAR_2024, *years, months, "t")
+
+
+@pytest.mark.parametrize("value, years, months", [
+    (YEAR_2024, (2024, 2024), 12),
+    (spelled("2024-03-01", "2024-04-01"), (2024, 2024), 1),
+    (spelled("2024-11-01", "2025-02-01"), (2024, 2025), 3),
+    (spelled("2022-01-01", "2025-01-01"), (2022, 2024), 36),
+])
+def test_a_referent_whose_numbers_agree_with_its_value_is_accepted(value, years, months):
+    referent = inh.TimeReferent(PRESENT, "c3", value, *years, months, "t")
+    assert (referent.first_year, referent.last_year, referent.months) == (*years, months)
+
+
+def test_every_referent_the_module_builds_is_accepted_by_the_type_that_judges_it():
+    """Positive control of the check above: nothing the module itself derives is refused (the type is not stricter than
+    the derivation), for every shape that has a referent."""
+    for name, (_, referent) in EXPECTED_SHAPE.items():
+        if referent[0] == "PRESENT":
+            assert inputs_of(topic(), when(*SHAPES[name])).referent.status is PRESENT, name
+
+
+# ---- P3: the three inputs of different bases do not join --------------------------------------------------------------------------
+def parts_of(trace: str, *, time_id: str = "c3") -> tuple:
+    base = build_base((lower(fa.Unit.MILLONES), when(*SHAPES["month"], cid=time_id)))
+    return (inh.unit_inheritance(base, base_trace_id=trace), inh.year_inheritance(base, base_trace_id=trace),
+            inh.time_referent(base, base_trace_id=trace))
+
+
+@pytest.mark.parametrize("origins", list(itertools.product(("tA", "tB"), repeat=3)))
+def test_inputs_that_say_they_come_from_different_bases_do_not_join(origins):
+    pool = {"tA": parts_of("tA"), "tB": parts_of("tB")}
+    chosen = [pool[origin][index] for index, origin in enumerate(origins)]
+    if len(set(origins)) == 1:
+        assert inh.HostInheritanceInputs(*chosen).unit.inherited_from == origins[0]
+    else:
+        with pytest.raises(ContractError, match="INHERITANCE_INPUTS_FROM_DIFFERENT_BASES"):
+            inh.HostInheritanceInputs(*chosen)
+
+
+def test_a_year_and_a_referent_of_different_time_conditions_do_not_join():
+    unit, year, _ = parts_of("tA", time_id="c3")
+    _, _, referent = parts_of("tA", time_id="c4")
+    with pytest.raises(ContractError, match="INHERITANCE_INPUTS_FROM_DIFFERENT_TIMES"):
+        inh.HostInheritanceInputs(unit, year, referent)
+
+
+def test_the_declared_limit_an_input_without_a_value_names_no_origin_so_it_cannot_be_checked():
+    """M2A3B-D1, limited guarantee: ABSENT and AMBIGUOUS inputs carry no ``inherited_from``, so a PRESENT unit of one base
+    next to an AMBIGUOUS year of another is not refused. Pinned so that closing it is a decision, not an accident."""
+    unit, _, _ = parts_of("tA")
+    ambiguous = inh.year_inheritance(build_base((when(*SHAPES["three_years"]),)), base_trace_id="tB")
+    assert ambiguous.status is AMBIGUOUS
+    assert inh.HostInheritanceInputs(unit, ambiguous, inh.TimeReferent(ABSENT)).unit.inherited_from == "tA"
 
 
 def test_the_inputs_are_immutable():

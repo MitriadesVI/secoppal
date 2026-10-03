@@ -6,13 +6,12 @@ PRESENT with its value, ABSENT, or AMBIGUOUS with its reason. Never a dispositio
 
 Each case is typed from the Gold's own ``prior`` IR by the frozen oracle's typing (``m2a_oracle_typing``), and its expected
 input is derived from the Gold's OWN LABEL (``ops[].inherited``, ``disposition_reason``, the prior and resulting IR), never
-from this lane's code. Adapter facts, declared (they change nothing the input reads):
+from this lane's code. The bases are the oracle's typing AS IS (ZEUS P1-1: the lane had added a provenance marker to the
+oracle's relative windows, and the harness passed only because of it; that adapter is gone). Adapter facts, declared (they
+change nothing the input reads):
 
 * A1 the oracle cannot type ``UNSPECIFIED`` + Product View (wave F, ``AcceptedRequest.view`` is not representable yet): the
   case is typed with the universe of its records (``CONTRACTS``). The input never reads the universe.
-* A2 the oracle types a ``relative_period`` window as a plain interval (no provenance marker): the base of this test carries
-  ``year_source = RELATIVE_TO_CLOCK`` on it, as a production base does (contract §3.2, §11). Without that marker a relative
-  window is indistinguishable from a range inside one year (see ``test_a_window_without_its_marker...``).
 * A3 the base trace is the oracle's ``t0`` (the record whose effective is the base).
 
 Partition discipline (the repo's, ``test_m2a3_oracle_link``): pytest measures DEV only. TEST is measured ONCE, at freeze,
@@ -78,10 +77,6 @@ def load_rows(real_dir: str | None) -> dict[str, dict]:
 def typed_base(gid: str, prior: dict) -> fa.AcceptedInterpretation:
     ir = {**prior, "universe": "CONTRACTS" if prior["universe"] == "UNSPECIFIED" else prior["universe"]}  # A1
     data = T.accepted_dict(gid, ir)
-    windows = {c["id"] for c in prior["conditions"] if c["dimension"] == "TIME" and c["operator"] == "relative_period"}
-    for condition in data["conditions"]:  # A2
-        if condition["condition_id"] in windows:
-            condition["provenance"] = {**condition["provenance"], "year_source": "RELATIVE_TO_CLOCK"}
     return fa.canonical_interpretation(
         tuple(fa.AcceptedRequest.from_dict(i) for i in data["requests"]),
         tuple(fa.AcceptedCondition.from_dict(i) for i in data["conditions"]), None, (), data["base_trace_id"],
@@ -228,7 +223,8 @@ def test_the_gate_demands_an_input_for_every_dev_case_and_the_expectations_diffe
 @pytest.mark.parametrize("mutant_name, gids", [
     ("year_first_of_a_plurianual_time", ["SF031"]),
     ("time_relative_window_accepted", ["SF033"]),
-    ("time_relative_clock_marker_ignored", ["SF033"]),
+    ("time_relative_operator_ignored", ["SF033"]),  # reverts ZEUS P1-1: the oracle's window carries no provenance marker
+    ("time_negative_only_is_no_time", None),  # no Gold prior holds a negative TIME (probe): the tables and properties kill it
     ("referent_months_off_by_one", ["SF037", "SF042"]),
     ("unit_reads_only_the_lower_bound", ["SF103"]),  # SF103's prior holds an UPPER bound only (SF183's holds a lower one)
 ])
@@ -238,23 +234,60 @@ def test_the_gold_harness_is_not_vacuous_it_sees_the_mutants_of_the_rules(mutant
 
     mutant = mutants._load(mutants.mutated_source(*mutants.MUTANTS[mutant_name][1]))
     rows = load_rows(None)
+    if gids is None:  # nothing in DEV shows this mutant: the harness must NOT claim it, and the real module still passes
+        assert all(not check_case(gid, rows[gid], mutant) for gid in DEV_SYNTHETIC)
+        return
     assert all(not check_case(gid, rows[gid]) for gid in gids)  # the real module passes them
     assert any(check_case(gid, rows[gid], mutant) for gid in gids), f"{mutant_name}: the Gold harness did not see it"
 
 
-def test_a_window_without_its_marker_is_not_distinguishable_from_a_range_inside_one_year():
-    """Why A2 exists, and an obligation for whoever builds bases (M2A-1b ``from_acceptance`` and the TIME authority): the
-    oracle's typing of SF033's window is a plain interval inside 2026. Without ``year_source = RELATIVE_TO_CLOCK`` the input
-    is PRESENT(2026), which the Gold refutes (MONTH_YEAR_AMBIGUOUS)."""
-    row = load_rows(None)["SF033"]
-    data = T.accepted_dict("SF033", row["label_A"]["prior"]["ir"])
-    unmarked = fa.canonical_interpretation(
+def oracle_base(gid: str, mutate=None) -> fa.AcceptedInterpretation:
+    """The oracle's typing of a case's prior, exactly as the frozen oracle gives it (nothing added), optionally mutated."""
+    row = load_rows(None)[gid]
+    data = T.accepted_dict(gid, row["label_A"]["prior"]["ir"])
+    for condition in data["conditions"]:
+        if mutate is not None and condition["dimension"] == "TIME":
+            mutate(condition)
+    return fa.canonical_interpretation(
         tuple(fa.AcceptedRequest.from_dict(i) for i in data["requests"]),
         tuple(fa.AcceptedCondition.from_dict(i) for i in data["conditions"]), None, (), data["base_trace_id"],
         data["root_trace_id"])
-    assert answers(inh.host_inheritance_inputs(unmarked, base_trace_id=BASE))["year"] == ("PRESENT", 2026)
-    assert answers(inh.host_inheritance_inputs(typed_base("SF033", row["label_A"]["prior"]["ir"]),
-                                               base_trace_id=BASE))["year"] == ("AMBIGUOUS", "RELATIVE_WINDOW")
+
+
+def test_sf033_with_the_oracles_own_typing_is_a_relative_window_and_the_label_says_so():
+    """ZEUS P1-1, inverted. The oracle types SF033's «últimos 6 meses» as ``relative_period`` and gives its provenance NO
+    ``year_source`` (§3.2 allows it). §16.4 defines that operator as the relative window, §16.1 asks MONTH_YEAR_AMBIGUOUS:
+    the year input is AMBIGUOUS ``RELATIVE_WINDOW`` and the referent too (§16.3), with nothing added to the oracle's base."""
+    base = oracle_base("SF033")
+    (time_condition,) = [c for c in base.conditions if c.dimension.value == "TIME"]
+    assert (time_condition.operator, time_condition.provenance.year_source, time_condition.receipt_rules) == (
+        "relative_period", None, ())
+    result = answers(inh.host_inheritance_inputs(base, base_trace_id=BASE))
+    assert result["year"] == result["referent"] == ("AMBIGUOUS", "RELATIVE_WINDOW")
+    assert load_rows(None)["SF033"]["label_A"]["disposition_reason"] == "MONTH_YEAR_AMBIGUOUS"
+
+
+def test_the_declared_residual_a_window_typed_as_a_year_with_no_mark_is_not_seen():
+    """What the three marks do NOT mark (M2A3B-D4, residual R2, declared): the same window typed ``during_year`` (a
+    producer that spells «este año» as the calendar year) with no clock marker and no receipt is PRESENT. Nothing in the
+    accepted type distinguishes it from a year the user said; it is the TIME authority's duty to emit ``relative_period``
+    (§16.4). Pinned so that closing the residual is a decision, not an accident."""
+    def as_a_stated_year(condition: dict) -> None:
+        condition["operator"] = "during_year"
+
+    base = oracle_base("SF033", as_a_stated_year)
+    (time_condition,) = [c for c in base.conditions if c.dimension.value == "TIME"]
+    assert (time_condition.operator, time_condition.provenance.year_source) == ("during_year", None)
+    assert answers(inh.host_inheritance_inputs(base, base_trace_id=BASE))["year"][0] == "PRESENT"
+
+
+def test_zeus_zm1_the_repair_itself_passes_the_gold_harness():
+    """The harness does not flag what the module already does: the variant with the operator rule written twice passes."""
+    from tests import test_foundation_authority_inheritance_mutants as mutants
+
+    variant = mutants._load(mutants.equivalent_source("zeus_zm1_relative_period_operator_is_relative"))
+    rows = load_rows(None)
+    assert all(not check_case(gid, rows[gid], variant) for gid in DEV_SYNTHETIC)
 
 
 @pytest.mark.skipif(REAL_DIR is None, reason="M2A_GOLD_REAL_DIR (private GOLD_CANDIDATE) not set")
