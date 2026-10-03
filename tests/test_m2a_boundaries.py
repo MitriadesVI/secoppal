@@ -511,7 +511,8 @@ def test_the_pins_of_a_world_ignore_what_a_real_lane_file_imports(monkeypatch):
     monkeypatch.setitem(globals(), "build_graph", lambda: (index, graph, flagged))
     lanes = {step.name: step for step in STEPS}
     registered = (_real("M2A-1"), _step("M2A-2", (*lanes["M2A-2"].modules, lane), ("M2A-1",)),
-                  _step("M2A-3", lanes["M2A-3"].modules, ("M2A-1",)))
+                  _step("M2A-3", lanes["M2A-3"].modules, ("M2A-1",)),
+                  *(_step(name, lanes[name].modules, ("M2A-3",)) for name in ("M2A-3b", "M2A-4", "M2A-7")))
     monkeypatch.setitem(globals(), "STEPS", registered)
     virtual = {VIRTUAL_A: ON_M2A_1 + f"import {lane}\n"}
     world = (*WORLD, _step("M2A-S1", (VIRTUAL_A,), ("M2A-1",), {VIRTUAL_A, lane}))
