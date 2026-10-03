@@ -481,6 +481,34 @@ def _cases() -> list[Case]:
                [E("CARRIED", "TOPIC/POSITIVE", "f1"), E("CARRIED", "BUYER/POSITIVE", "f2"), E("CARRIED", "VALUE/upper", "f3"), UNI],
                frame=asked_fuel, cancelling=True),
     ]
+    # P's provenance, without an anchor: «aseo de San Pedro entre 100 y 200 millones del último trimestre» asks about San Pedro;
+    # the asking turn echoed nothing, so the answer announces what the frame carries, as the new search would (M2A7-D24)
+    frame_with_provenance = interp(
+        topic("f1", "aseo"), money("f2", 100, Comparator.GTE, unit_source=fa.UnitSource.SIBLING_IN_RANGE),
+        money("f3", 200, Comparator.LT),
+        time("f4", 2026, provenance=fa.Provenance(year_source=fa.YearSource.RELATIVE_TO_CLOCK)), trace=None)
+    out += [
+        answer("answer_to_a_first_turn_pending_announces_the_provenance_of_its_frame", None, (),
+               [set_(buyer("p1", "SANPEDRO", origin=option))],
+               [E("CARRIED", "TOPIC/POSITIVE", "f1"), E("CARRIED", "TIME/POSITIVE", "f4"), E("CARRIED", "VALUE/lower", "f2"),
+                E("CARRIED", "VALUE/upper", "f3"), UNI, E("UNIT_SHARED_IN_RANGE", "VALUE", "f2", "f3"),
+                E("RELATIVE_WINDOW_RESOLVED", "TIME/POSITIVE", "f4")], frame=frame_with_provenance,
+               kind=fa.PatchOriginKind.EVENT),
+        answer("cancelling_delta_over_a_first_turn_frame_announces_its_provenance_too", None, (),
+               [set_(buyer("p1", "SANPEDRO", trace="t1", n=1))],
+               [E("CARRIED", "TOPIC/POSITIVE", "f1"), E("CARRIED", "TIME/POSITIVE", "f4"), E("CARRIED", "VALUE/lower", "f2"),
+                E("CARRIED", "VALUE/upper", "f3"), UNI, E("UNIT_SHARED_IN_RANGE", "VALUE", "f2", "f3"),
+                E("RELATIVE_WINDOW_RESOLVED", "TIME/POSITIVE", "f4")], frame=frame_with_provenance, cancelling=True),
+        # what the frame did is announced only if its result stands in what ran (M2A7-D24)
+        answer("cancelling_clear_of_the_value_over_an_a81_frame_announces_no_replacement", anchored, pending_a81.frame_ops,
+               [clear(wide(D.VALUE))],
+               [E("CARRIED", "TOPIC/POSITIVE", "c1"), E("CARRIED", "ORDER", "c2"), E("CARRIED", "CARDINALITY", "c3"), UNI],
+               cancelling=True),
+        answer("cancelling_clear_of_the_negation_over_an_f16_frame_announces_no_inversion",
+               interp(topic("c1", "aseo"), buyer("c2"), trace="t0"),
+               [set_(topic("p1", "aseo", excluded=True, trace="t1", n=1))], [clear(fa.Slot(D.TOPIC, NEG))],
+               [E("CARRIED", "BUYER/POSITIVE", "c2"), UNI], cancelling=True),
+    ]
     # CONTEXT_EXPIRED: the turn found the anchor expired and neither confirms nor replaces it
     patch = fa.SemanticPatch((set_(topic("p1", "aseo", trace="t1", n=1)),), fa.PatchOriginKind.TEXT)
     pending = expiry_pending(BASE_BT, patch)
@@ -712,6 +740,11 @@ def _answer_refusals() -> list[tuple]:
     foreign = make_record(fa.TurnResolution.PENDING_ANSWER, patch=record.patch, effective=effective, base_trace_id="t-other")
     stated_default = delta("stated", interp(buyer("c1"), trace="t0"), [set_order(order(
         "p1", key=OrderKey.DATE, source=fa.OrderDirectionSource.STATED, rules=(fe.RULE_ORDER_DEFAULTED,), trace="t1", n=1))], [])
+    def relative(source):
+        return delta("relative", interp(buyer("c1"), trace="t0"), [set_(time(
+            "p1", 2026, trace="t1", n=1, rules=(fe.RULE_RELATIVE_TO_PREVIOUS,), provenance=fa.Provenance(year_source=source)))], [])
+
+    relative_stated, relative_none = relative(fa.YearSource.STATED), relative(None)
     return [
         ("echo_items_does_not_take_an_answer", "echo_items", (anchor, effective, record.patch, record), ok,
          "ECHO_ANSWER_HAS_ITS_OWN_ENTRY"),
@@ -721,6 +754,12 @@ def _answer_refusals() -> list[tuple]:
          "ECHO_NEEDS_A_RECORD"),
         ("answer_without_an_anchor_with_frame_operations", "echo_items_for_answer", (None, frame, frame_ops, effective, record),
          ok, "ECHO_FRAME_OPERATIONS_WITHOUT_AN_ANCHOR"),
+        ("answer_without_an_anchor_for_a_frame_composed_over_one", "echo_items_for_answer", (None, frame, (), effective, record),
+         ok, "ECHO_FRAME_OF_AN_ANCHORED_PENDING"),
+        ("relative_receipt_over_a_stated_year", "echo_items", relative_stated.args, relative_stated.kwargs,
+         "ECHO_RECEIPT_CONTRADICTS_PROVENANCE"),
+        ("relative_receipt_without_a_year_source", "echo_items", relative_none.args, relative_none.kwargs,
+         "ECHO_RECEIPT_CONTRADICTS_PROVENANCE"),
         ("answer_without_an_anchor_nor_a_frame", "echo_items_for_answer", (None, None, (), effective, record), ok,
          "ECHO_DIFF_NEEDS_INTERPRETATIONS"),
         ("echo_items_does_not_take_a_cancelling_delta", "echo_items", (anchor, cancel.args[3], cancel.args[4].patch, cancel.args[4]),

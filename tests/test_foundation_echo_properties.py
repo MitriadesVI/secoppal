@@ -17,6 +17,7 @@ universe changed), not from the module's code:
 """
 from __future__ import annotations
 
+import types
 from dataclasses import replace
 
 import pytest
@@ -27,9 +28,9 @@ import app.core.foundation_accepted as fa
 import app.core.foundation_delta as fd
 import app.core.foundation_delta_outcome as fo
 import app.core.foundation_echo as fe
-from app.core.interpretation_contract import Polarity
+from app.core.interpretation_contract import POLARIZED_SLOT_DIMENSIONS, Polarity
 from app.core.semantic_dimensions import SemanticDimension as D
-from tests.test_foundation_delta_properties import st_base, st_case
+from tests.test_foundation_delta_properties import st_base, st_case, st_op
 from app.core.foundation_authority_values import Comparator
 from app.core.foundation_authority_values import OrderKey
 from tests.test_foundation_echo import (
@@ -50,8 +51,10 @@ RELATIVE_RULE = "time.relative_to_previous"
 def contradictory(conditions) -> bool:
     """An ORDER whose receipt says «defaulted» over a direction the user STATED: the echo refuses it (a receipt that
     contradicts the provenance is never echoed). The reducer's generators attach the receipt to every ORDER."""
-    return any(c.dimension is D.ORDER and fe.RULE_ORDER_DEFAULTED in c.receipt_rules
-               and c.provenance.order_direction_source is fa.OrderDirectionSource.STATED for c in conditions)
+    return any((c.dimension is D.ORDER and fe.RULE_ORDER_DEFAULTED in c.receipt_rules
+                and c.provenance.order_direction_source is fa.OrderDirectionSource.STATED)
+               or (fe.RULE_RELATIVE_TO_PREVIOUS in c.receipt_rules
+                   and c.provenance.year_source is not fa.YearSource.PREVIOUS_ACCEPTED_TIME) for c in conditions)
 
 
 def refused_for_its_receipt(call) -> list[str]:
@@ -605,10 +608,16 @@ def differential_problems(module, case) -> list[str]:
     return out
 
 
+PROVENANCE_CLASSES = {"UNIT_INHERITED", "UNIT_SHARED_IN_RANGE", "YEAR_INHERITED", "YEAR_CLOCK_INFERRED",
+                      "RELATIVE_WINDOW_RESOLVED"}
+
+
 def no_anchor_problems(module, case) -> list[str]:
-    """A pending WITHOUT an anchor (M2A7-D22): the «previo» is the frame, so the answer, and the ``DELTA`` that cancels the
-    pending, are read exactly like a delta over that frame (Gold §7 literal): the same echo, whatever they are called."""
+    """A pending WITHOUT an anchor (M2A7-D22, D24): the «previo» is the frame, so the answer, and the ``DELTA`` that cancels the
+    pending, are read like a delta over that frame (Gold §7 literal) EXCEPT for the provenance, which is P's: the asking turn
+    echoed nothing, so every provenance of the effective is announced, as the new search with those conditions would."""
     frame, patch, _ = case
+    frame = replace(frame, base_trace_id=None)  # the frame of a first turn was composed over nothing
     composed = composed_of(frame, patch)
     if composed is None or contradictory(composed.effective.conditions):
         return []
@@ -616,15 +625,154 @@ def no_anchor_problems(module, case) -> list[str]:
     delta = make_record(fa.TurnResolution.DELTA, patch=patch, effective=effective, base_trace_id="t0")
     out = []
     try:
-        want = module.echo_items(frame, effective, patch, delta, **ok)
+        as_delta = summary(module.echo_items(frame, effective, patch, delta, **ok))
+        want = {item for item in as_delta if item[0] not in PROVENANCE_CLASSES} | provenance_owed(effective.conditions)
         for resolution, control in ((fa.TurnResolution.PENDING_ANSWER, None),
                                     (fa.TurnResolution.DELTA, fa.PendingControl.CANCEL_PENDING)):
             record = make_record(resolution, patch=patch, effective=effective, base_trace_id="t0", control=control)
-            if module.echo_items_for_answer(None, frame, (), effective, record, **ok) != want:
-                out.append(f"{resolution.value}/{control}: not the delta over the frame")
+            got = summary(module.echo_items_for_answer(None, frame, (), effective, record, **ok))
+            if set(got) != want or len(got) != len(want):
+                out.append(f"{resolution.value}/{control}: {sorted(set(got) ^ want, key=repr)}")
     except Exception as error:  # noqa: BLE001
         out.append(f"refused: {type(error).__name__}: {error}")
     return out
+
+
+EFFECT_CLASSES = {"VALUE_RANGE_REPLACED", "POLARITY_INVERTED", "TOPIC_REPLACED", "UNIVERSE_CHANGED"}
+
+
+def effect_oracle(anchor, effective, ops, placed_ids) -> set[tuple]:
+    """The effect classes owed for a turn (or two) that took ``anchor`` to ``effective`` by ``ops``, from the STATES and the
+    operations alone (Gold §6, contract §11), never from the module's diff. ``placed_ids``: the ids of the conditions the
+    operations put that stand in ``effective`` (the reducer's own account). A result that does not stand in ``effective``
+    announces nothing: a bound that replaced a side and was then cleared, a negation that inverted a value and was then cleared."""
+    standing = list(effective.conditions)
+    placed = [c for c in standing if c.condition_id in placed_ids]
+    eff_ids = {c.condition_id for c in standing}
+    cleared = {slot for op in ops if op.op is fa.PatchOpKind.CLEAR for slot in fd.covered(op.slot)}
+    written = {op.slot for op in ops if op.op in fd.PLACERS}
+    wide_clear = any(op.op is fa.PatchOpKind.CLEAR and op.slot == fa.Slot(D.VALUE) for op in ops)
+    out = set()
+    placed_value = tuple(c.condition_id for c in placed if c.dimension is D.VALUE)
+    sides = {c.slot for c in standing if c.dimension is D.VALUE}
+    for old in anchor.conditions:
+        if old.condition_id in eff_ids:
+            continue
+        if old.dimension is D.VALUE and old.slot not in sides and placed_value:
+            uncited = old.slot not in cleared and old.slot not in written
+            if uncited or wide_clear:
+                out.add(("VALUE_RANGE_REPLACED", old.slot.key, (old.condition_id, *placed_value)))
+        if (old.dimension in POLARIZED_SLOT_DIMENSIONS and old.slot.polarity is Polarity.POSITIVE
+                and old.slot not in cleared and old.slot not in written):
+            negative = fa.Slot(old.dimension, Polarity.NEGATIVE)
+            taken = tuple(c.condition_id for c in placed if c.slot == negative
+                          and fa.canonical_value(c) == fa.canonical_value(old))
+            if taken:
+                out.add(("POLARITY_INVERTED", negative.key, (old.condition_id, *taken)))
+    positive = fa.Slot(D.TOPIC, Polarity.POSITIVE)
+    new_topics = [c for c in placed if c.slot == positive]
+    gone = [c for c in anchor.conditions if c.slot == positive and c.condition_id not in eff_ids]
+    if new_topics and any(old.value not in {c.value for c in new_topics} for old in gone):
+        out.add(("TOPIC_REPLACED", positive.key, tuple(c.condition_id for c in gone) + tuple(c.condition_id for c in new_topics)))
+    if [(r.subject, r.universe_kind) for r in anchor.requests] != [(r.subject, r.universe_kind) for r in effective.requests]:
+        anchor_ids = {c.condition_id for c in anchor.conditions}
+        out.add(("UNIVERSE_CHANGED", "UNIVERSE", tuple(c.condition_id for c in standing
+                                                       if c.dimension is D.TIME and c.condition_id in anchor_ids
+                                                       and c.condition_id not in placed_ids)))
+    return out
+
+
+@st.composite
+def st_undo_step(draw):
+    """What a frame did and the turn that executes UNDOES: a frame that inverts a value (F16) or substitutes a bound (A8.1)
+    and an answer, or a cancelling delta, that clears the negation or the bound. The result must not be announced."""
+    if draw(st.booleans()):
+        anchor = interp(topic("c1", draw(st.sampled_from(["aseo", "vias"]))), buyer("c2"), trace="t0")
+        frame_ops = (set_(topic("p1", anchor.conditions[0].value[1].split("=")[1], excluded=True, trace="t1", n=1)),)
+        clearing = clear(draw(st.sampled_from([fa.Slot(D.TOPIC), fa.Slot(D.TOPIC, Polarity.NEGATIVE)])))
+    else:
+        anchor = interp(topic("c1", "aseo"), money("c2", 500, Comparator.LT), trace="t0")
+        frame_ops = (set_(money("p1", 900, Comparator.GTE, trace="t1", n=1)),)
+        clearing = clear(draw(st.sampled_from([fa.Slot(D.VALUE), LOWER])))
+    first = fd.compose_ops(anchor, frame_ops, base_trace_id="t0")
+    extra = (set_(buyer("p2", "VALLE", trace="t1", n=2)),) if draw(st.booleans()) else ()
+    return (anchor, frame_ops, first.effective, first.placed_ids, fa.SemanticPatch((clearing, *extra), fa.PatchOriginKind.TEXT),
+            draw(st.booleans()))
+
+
+@st.composite
+def st_arbitrary_two_step(draw):
+    """ARBITRARY turns over an anchor, not only the candidates the reducer builds: 0-2 operations that make the frame and 1-3
+    that answer it (or, as a cancelling delta, compose over it), drawn with the reducer's own operation generator."""
+    anchor = draw(st_base(draw(st.booleans())))
+    frame_ops = tuple(draw(st_op(anchor, i)) for i in range(draw(st.integers(0, 2))))
+    first = fd.compose_ops(anchor, frame_ops, base_trace_id="t0") if frame_ops else None
+    if frame_ops and not isinstance(first, fd.Composed):
+        return None
+    frame = first.effective if first else anchor
+    answer = fa.SemanticPatch(tuple(draw(st_op(frame, 10 + i)) for i in range(draw(st.integers(1, 3)))), fa.PatchOriginKind.TEXT)
+    return anchor, frame_ops, frame, (first.placed_ids if first else frozenset()), answer, draw(st.booleans())
+
+
+def st_two_step():
+    return st.one_of(st_arbitrary_two_step(), st_undo_step())
+
+
+def two_step_problems(module, case) -> list[str]:
+    """An answer or a cancelling delta of ANY operations over a frame of ANY operations: the exact classes (the reference of
+    ``answer_problems``) and the effect classes judged by ``effect_oracle`` over the executed effective."""
+    if case is None:
+        return []
+    anchor, frame_ops, frame, first_placed, answer, cancelling = case
+    second = fd.compose(frame, answer, base_trace_id="t1")
+    if not isinstance(second, fd.Composed):
+        return []
+    effective = second.effective
+    record = make_record(fa.TurnResolution.DELTA if cancelling else fa.TurnResolution.PENDING_ANSWER, patch=answer,
+                         effective=effective, base_trace_id="t1",
+                         control=fa.PendingControl.CANCEL_PENDING if cancelling else None)
+    pending = types.SimpleNamespace(frame=frame, frame_ops=frame_ops)
+    out = answer_problems(module.echo_items_for_answer, anchor, pending, answer, second)
+    if contradictory(effective.conditions):
+        return out
+    try:
+        got = summary(module.echo_items_for_answer(anchor, frame, frame_ops, effective, record, anchor_expired=False))
+    except Exception as error:  # noqa: BLE001
+        return out + [f"refused: {type(error).__name__}: {error}"]
+    standing_ids = {c.condition_id for c in effective.conditions}
+    placed_ids = second.placed_ids | (first_placed & (standing_ids - second.placed_ids))
+    want = effect_oracle(anchor, effective, (*frame_ops, *answer.ops), placed_ids)
+    have = {item for item in got if item[0] in EFFECT_CLASSES}
+    return out + [f"effect missing {item}" for item in sorted(want - have, key=repr)] + [
+        f"effect unjustified {item}" for item in sorted(have - want, key=repr)]
+
+
+@PROPS
+@given(st_two_step())
+def test_an_arbitrary_answer_or_cancelling_delta_is_judged_by_the_states_of_the_executed_effective(case):
+    assert two_step_problems(fe, case) == []
+
+
+def test_the_arbitrary_two_step_generator_reaches_every_effect_class():
+    seen: dict[str, int] = {}
+
+    @settings(max_examples=2500, deadline=None, database=None, derandomize=True,
+              suppress_health_check=[HealthCheck.too_slow, HealthCheck.data_too_large])
+    @given(st_two_step())
+    def count(case):
+        if case is None:
+            return
+        anchor, frame_ops, frame, first_placed, answer, cancelling = case
+        second = fd.compose(frame, answer, base_trace_id="t1")
+        if isinstance(second, fd.Composed):
+            ids = {c.condition_id for c in second.effective.conditions}
+            for item in effect_oracle(anchor, second.effective, (*frame_ops, *answer.ops),
+                                      second.placed_ids | (first_placed & (ids - second.placed_ids))):
+                seen[item[0]] = seen.get(item[0], 0) + 1
+            seen["composed"] = seen.get("composed", 0) + 1
+
+    count()
+    assert seen.get("composed", 0) >= 300 and all(seen.get(name, 0) >= 3 for name in EFFECT_CLASSES), seen
 
 
 def cancelling_problems(module, case) -> list[str]:

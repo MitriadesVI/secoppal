@@ -327,9 +327,8 @@ def measure(partition: str, real_dir: str | None = None) -> dict:
                 None, None, None, make_record(fa.TurnResolution.PROTOCOL_PAGE, base_trace_id="t0"), anchor_expired=False)}
             rows[gid] = (GREEN, "page") if got == wanted else (FAIL, f"a page emitted {sorted(got)} owed {sorted(wanted)}")
             continue
-        if case["disposition"] == "HANDOFF_LEGACY":
-            rows[gid] = (FAIL_EXTERNAL, "HANDOFF_LEGACY: a legacy owner writes no record (§10.2)")
-            continue
+        if case["disposition"] == "HANDOFF_LEGACY":  # no M2A_GOLD case has it (§1.1): a harness error, not a category
+            raise AssertionError(f"{gid}: HANDOFF_LEGACY is not a disposition of M2A_GOLD (a legacy owner writes no record, §10.2)")
         got, why = executed_emitted(case) if case["inputs"] is not None else (None, case["applicability"])
         if got is None:
             rows[gid] = untypable(case, wanted, why)
@@ -359,6 +358,23 @@ def test_the_gold_echo_of_the_stored_labels_is_what_section_7_derives():
     assert differs == ["SF037", "SF042", "SF174"], differs
     for gid in differs:
         assert labels[gid]["echo"] - labels[gid]["stored"] == {"RELATIVE_WINDOW_RESOLVED"}
+
+
+def test_no_gold_case_hands_off_to_legacy_and_the_priors_of_the_pendings_carry_no_provenance():
+    """M2A7-D24: the frames of the Gold's pendings hold no provenance the Gold can state (its IR carries a provenance only as
+    an order direction and a capped top-N): so announcing the frame's provenance, as the new search would, changes no sealed
+    case. And the harness has no HANDOFF_LEGACY case to classify (a legacy owner writes no record)."""
+    records = list(gold.gold_records(Path(REAL_DIR) if REAL_DIR else None))
+    assert all(r["label_B"]["expected_disposition"] != "HANDOFF_LEGACY" for _, r in records)
+    pendings = [r for _, r in records if r["label_B"]["prior"]["state"] == "PENDING"]
+    assert len(pendings) >= 20
+    for record in pendings:
+        for label in ("label_A", "label_B"):
+            ir = record[label]["prior"]["ir"]
+            assert ir is not None
+            assert ir.get("order") is None or ir["order"].get("direction_source") != "DEFAULTED", record["gold_id"]
+            assert ir.get("cardinality") is None or ir["cardinality"]["n_requested"] <= ir["cardinality"]["n"], record["gold_id"]
+            assert ir.get("view_source") != "DERIVED" or ir.get("universe") == "UNSPECIFIED", record["gold_id"]
 
 
 def test_the_expiry_threshold_is_the_one_of_the_sealed_gold():

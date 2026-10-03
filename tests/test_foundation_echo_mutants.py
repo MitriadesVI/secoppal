@@ -29,7 +29,7 @@ from app.core.interpretation_contract import ContractError
 from tests.test_foundation_delta_properties import st_base, st_case
 from tests.test_foundation_echo import CASES, OMISSIONS, REFUSALS
 from tests.test_foundation_echo_properties import (
-    ANSWER_TURNS, PATCHED_RESOLUTIONS, answer_problems, answers_of, cancelling_problems, composed_of, differential_problems,
+    ANSWER_TURNS, PATCHED_RESOLUTIONS, st_two_step, two_step_problems, answer_problems, answers_of, cancelling_problems, composed_of, differential_problems,
     fresh_problems, no_anchor_problems, not_ready_problems, page_problems, problems, silent_problems, st_difference_turn, st_plan_turn, st_value_turn,
 )
 
@@ -76,7 +76,8 @@ DEFAULTED = ("        defaulted = (ORDER_ECHO.get(condition.provenance.order_dir
              "                     or RULE_ORDER_DEFAULTED in condition.receipt_rules)")
 CARRIED_ITEMS = "        items += [_item(EchoClass.CARRIED, condition.slot, (condition.condition_id,)) for condition in diff.carried]"
 UNIVERSE_CARRIED = "        if not diff.universe_replaced:"
-RANGE_CLEAR = "            diff.wide_value_clear and bool(placed) and bool(gone))"
+RANGE_CLEAR = "            diff.wide_value_clear and bool(gone)))  # the bound that replaced it must still stand in what ran"
+RANGE_HEAD = "        replaced = bool(placed) and (any(r.departure is Departure.A81_OPPOSITE_BOUND for r in gone) or ("
 TOPIC_GUARD = "    if not placed or not any(old.value not in {new.value for new in placed} for old in gone):"
 ORDER_BY = "_slot_rank(item.slot))))"
 SHARED_IDS = "[c.condition_id for c in diff.placed if c.dimension is _VALUE]))"
@@ -137,11 +138,24 @@ ECHO_MUTANTS = {
         "            items += _difference_items(effective, diff, carried=resolution is not TurnResolution.PROTOCOL_EVENT)",
         "        items += _difference_items(effective, diff, carried=True)")],
     # by difference
-    "value_range_a81_unannounced": [("        replaced = any(r.departure is Departure.A81_OPPOSITE_BOUND for r in gone) or (",
-                                     "        replaced = False or (")],
-    "value_range_clear_set_unannounced": [(RANGE_CLEAR, "            False)")],
-    "value_range_clear_alone_replaces": [(RANGE_CLEAR, "            diff.wide_value_clear and bool(gone))")],
-    "value_range_any_set_after_a_one_side_clear": [(RANGE_CLEAR, "            bool(placed) and bool(gone))")],
+    "value_range_a81_unannounced": [(RANGE_HEAD, "        replaced = bool(placed) and (False or (")],
+    "value_range_clear_set_unannounced": [(RANGE_CLEAR, "            False))")],
+    "value_range_clear_alone_replaces": [(RANGE_HEAD, "        replaced = (any(r.departure is Departure.A81_OPPOSITE_BOUND for r in gone) or (")],
+    "undone_a81_announced": [(RANGE_HEAD, "        replaced = (any(r.departure is Departure.A81_OPPOSITE_BOUND for r in gone) or (")],
+    "value_range_any_set_after_a_one_side_clear": [(RANGE_CLEAR, "            bool(gone)))")],
+    # round 5 (M2A7-D24): the provenance of a frame without an anchor is P's; a frame's result must stand in what ran
+    "frame_provenance_omitted_without_an_anchor": [(
+        "        provenance = replace(diff, placed=effective.conditions)  # the provenance is P's: nobody announced it yet",
+        "        pass")],
+    "anchored_frame_accepted_without_an_anchor": [(
+        "        if type(frame) is AcceptedInterpretation and frame.base_trace_id is not None:\n"
+        "            raise ContractError(\"ECHO_FRAME_OF_AN_ANCHORED_PENDING\")  # it hides what the asking turn did to an anchor",
+        "        if False:\n            pass")],
+    "undone_inversion_announced": [(
+        "        if not taken:\n            continue  # the negation that inverted it does not stand in what ran\n", "")],
+    "relative_receipt_over_any_year_accepted": [(
+        "        if (RULE_RELATIVE_TO_PREVIOUS in condition.receipt_rules\n"
+        "                and condition.provenance.year_source is not YearSource.PREVIOUS_ACCEPTED_TIME):", "        if False:")],
     "value_range_of_a_restored_side": [("        if gone and side not in standing and replaced:", "        if gone and replaced:")],
     "topic_replaced_unannounced": [(TOPIC_GUARD + "\n        return []", "    return []")],
     "topic_replaced_when_restated": [(TOPIC_GUARD, "    if not placed or not gone:")],
@@ -327,6 +341,8 @@ def killed_by_the_properties(module) -> str | None:
         return "property: a composed turn"
     if _finds(ANSWER_TURNS, answer_bad):
         return "property: an answer against the anchor"
+    if _finds(st_two_step(), lambda case: bool(two_step_problems(module, case))):
+        return "property: an arbitrary answer or cancelling delta, judged by the effective"
     if _finds(ANSWER_TURNS, lambda case: bool(differential_problems(module, case))):
         return "property: the answer is the delta"
     if _finds(ANSWER_TURNS, lambda case: bool(cancelling_problems(module, case))):
@@ -371,6 +387,7 @@ SCENARIO_ONLY = {
     "echo.anchor_expired_default_restored": "a default on a keyword: every generated call passes it; the omissions kill it",
     "echo.answer_anchor_expired_default_restored": "a default on a keyword: every generated call passes it; the omissions kill it",
     "echo.answer_entry_takes_any_turn": "the guard of an incoherent call",
+    "echo.anchored_frame_accepted_without_an_anchor": "the guard of an incoherent call",
     "echo.echo_items_takes_an_answer": "the guard of an incoherent call",
     "echo.answer_frame_operations_without_an_anchor_accepted": "the guard of an incoherent call",
     "diff.answer_set_order_of_the_answer_only": "the R3-1 pending, the one that leaves frame operations today, never holds a "
