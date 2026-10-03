@@ -25,6 +25,7 @@ from app.core.semantic_dimensions import SemanticDimension
 
 SCHEMA_VERSION = 2
 _SHA256 = re.compile(r"[0-9a-f]{64}\Z")
+_HANDOFF_REASON = re.compile(r"OPERATION_HANDOFF:([A-Z][A-Z0-9_]*):([A-Z][A-Z0-9_]*)\Z")
 
 
 class ContractError(ValueError):
@@ -62,6 +63,7 @@ class LogicOperator(str, Enum):
 
 class AcceptanceStatus(str, Enum):
     READY = "READY"
+    HANDOFF = "HANDOFF"
     NEEDS_CLARIFICATION = "NEEDS_CLARIFICATION"
     UNSUPPORTED = "UNSUPPORTED"
     INVALID_PROPOSAL = "INVALID_PROPOSAL"
@@ -557,6 +559,24 @@ class InterpretationAcceptance:
             raise ContractError("INVALID_ACCEPTANCE")
         if self.status is AcceptanceStatus.PROVIDER_ERROR:
             raise ContractError("PROVIDER_ERROR_HAS_PROPOSAL")
+        if self.status is AcceptanceStatus.HANDOFF:
+            if self.resolutions or self.policies:
+                raise ContractError("HANDOFF_HAS_HOST_VALUES")
+            reason = _HANDOFF_REASON.fullmatch(self.reason) if type(self.reason) is str else None
+            if reason is None:
+                raise ContractError("INVALID_HANDOFF_REASON")
+            try:
+                operation = Operation(reason.group(1))
+            except ValueError as exc:
+                raise ContractError("INVALID_HANDOFF_REASON") from exc
+            if len(self.proposal.jobs) != 1:
+                raise ContractError("HANDOFF_SINGLE_JOB_REQUIRED")
+            job_operation = self.proposal.jobs[0].operation
+            if job_operation is Operation.SEARCH:
+                raise ContractError("HANDOFF_SEARCH_FORBIDDEN")
+            if job_operation is not operation:
+                raise ContractError("HANDOFF_OPERATION_MISMATCH")
+            return
         targets = {item.request_id for item in self.proposal.requests} | {
             item.condition_id for item in self.proposal.conditions
         }
