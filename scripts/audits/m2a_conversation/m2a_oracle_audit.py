@@ -33,7 +33,7 @@ from scripts.audits.m2a_conversation.m2a_oracle_expect import (  # noqa: E402
 )
 from scripts.audits.m2a_conversation.m2a_oracle_gold import canon, digest, sha  # noqa: E402
 from scripts.audits.m2a_conversation.m2a_oracle_transition import check_transition  # noqa: E402
-from scripts.audits.m2a_conversation.m2a_oracle_typing import condition_dict, dataset_of, origin  # noqa: E402
+from scripts.audits.m2a_conversation.m2a_oracle_typing import ANCHOR_TRACE, condition_dict, dataset_of, origin  # noqa: E402
 
 ACTUAL_KEYS = frozenset({"disposition", "code", "effective", "effects"})
 
@@ -367,7 +367,7 @@ def realize_effective(case: dict) -> dict | None:
                 condition["request_ids"] = rids
         conditions.append(condition)
     return {"schema": "m2a-accepted/1", "requests": requests, "conditions": conditions, "logic": None, "policies": [],
-            "base_trace_id": "t0", "root_trace_id": "t0"}
+            "base_trace_id": ANCHOR_TRACE, "root_trace_id": ANCHOR_TRACE}
 
 
 def reference_actuals(cases: list[dict]) -> dict:
