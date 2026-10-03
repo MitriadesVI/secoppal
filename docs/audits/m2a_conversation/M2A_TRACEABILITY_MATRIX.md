@@ -1,7 +1,7 @@
 # M2A — Matriz de trazabilidad
 
-**Fecha:** 2026-10-01. **Contrato:** `docs/decisions/M2A_CONVERSATION_CONTRACT_V1.md` (§ = sección del contrato).
-**Gold:** `docs/audits/m2a_conversation/gold/M2A_GOLD_SEAL.json` (199 casos, release r2 con U1/U2/D1; ids `R…` = REAL, texto
+**Fecha:** 2026-10-01; **enmendada 2026-10-02 (R3**, contrato Anexo D: filas T14–T17, N06, P11, M10, M11, X03–X05 y la reconciliación «CLEAR(ORDER) con CARDINALITY»; casos asignados en B4, `379ca3db`; **R3b-1**: filas T18, T19, P12, P13, R07 y X06, y revisadas P11 y X05; **R3b-2** (U25): controles SF196–SF201 asignados, Gold 209). **Contrato:** `docs/decisions/M2A_CONVERSATION_CONTRACT_V1.md` (§ = sección del contrato).
+**Gold:** `docs/audits/m2a_conversation/gold/M2A_GOLD_SEAL.json` (209 casos, release r3b: r2 con U1/U2/D1 + U3 + U25; ids `R…` = REAL, texto
 fuera de git; `SF…` = sintético).
 
 Cada fila responde: *este comportamiento existe porque <decisión> + <casos>, lo representa <estructura> y lo
@@ -19,13 +19,19 @@ verificará.
 | T03 | Arrastre por identidad: lo no tocado pasa byte-idéntico (§6.3) | F1 | 158 (como T02) | `compose` | M2A-3: INV-M2A-02, -16 |
 | T04 | `SET` sobre ranura ocupada reemplaza; unión de valores no expresable (§5.2) | F1; clasificación R0075 | R0075 (+141 con `SET`) | `PatchOp(SET)` | M2A-3: INV-M2A-16 |
 | T05 | `CLEAR` citado quita la ranura (§5.2) | F1, D8 «remoción sólo citada» | R0202, SF023, SF024, SF100, SF109, SF110, SF111, SF112, SF113, SF115, SF156, SF158 | `PatchOp(CLEAR)` | M2A-3: INV-M2A-16 |
-| T06 | `KEEP` da dueño a la cita deíctica (§5.2) | F1, O5 | R0099, R0336, SF024, SF041 | `PatchOp(KEEP)` | M2A-3: `KEEP_ON_EMPTY_SLOT` |
+| T06 | `KEEP` da dueño a la cita deíctica (§5.2) | F1, O5 | R0099, R0336, SF024, SF041 | `PatchOp(KEEP)` | M2A-3: `KEEP_ON_EMPTY_SLOT` ⇒ `CLARIFY KEEP_ON_EMPTY_SLOT` (R3-2) |
 | T07 | `SET_ORDER` re-consulta y conserva CARDINALITY (F10) (§5.2) | F4, F10; ADR-103 Enm. 1 (superlativo singular) | R0079, R0083, R0087, R0089, R0099, R0515, SF015–SF022, SF117–SF120, SF122, SF140, SF160, SF161, SF171, SF172; `TOPN_CARRIED`: SF018, SF019, SF172 | `PatchOp(SET_ORDER)` + `cardinality@2` | M2A-3; M2A-6 (cursor) |
 | T08 | Top-N > 100 ejecuta 100 y anuncia (§2, §11) | A3 = P8 (ADR-103 D9) | SF021 | `cardinality@2(n, n_requested)` | M2A-7: INV-M2A-21 |
 | T09 | Orden por fecha sin dirección = descendente, anunciado (§11) | F21; T11 | SF140, SF171, SF172 | `Provenance.order_direction_source = DEFAULTED` | M2A-7: INV-M2A-21 |
 | T10 | `REPLACE_UNIVERSE`; ancla dual se queda con el nombrado; `UNIVERSE_CHANGED` (§5.2, §14) | F1 (`SET_UNIVERSE`), D7 «REPLACE de universo» | R0094, SF073–SF080, SF131, SF186, SF187 | `PatchOp(REPLACE_UNIVERSE)` | M2A-3: INV-M2A-11 |
 | T11 | Estado/modalidad inexistente en el universo resultante ⇒ CLARIFY (§6 H8) | F27 | SF079 | regla H8 sobre `state@1.literals` por dataset | M2A-3 |
 | T12 | Re-consulta, no filtro de lo mostrado («los de mayor valor», «los que…») (§9) | F4; clasificación SF017 | 47 con `refers_to_result_set` (p. ej. R0079, R0083, R0087, R0089, R0099, R0223, R0459, SF003, SF017…) | `semantic_ref` (no `result_set_ref`) | M2A-3/M2A-6: INV-M2A-22 |
+| T14 | CARDINALITY sin ORDER tras componer ⇒ rechazo `DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER` y `CLARIFY`, base intacta; decidido sobre el estado (§6.7) | usuario 2026-10-02 (STOP-2 de M2A-3; D-1, D-2); `M2A_DESIGN_v2.md:240` | SF192 (+ SF195, control: `CLEAR(ORDER)`+`SET_ORDER` conserva la CARDINALITY) | `DeltaRefusal` + pendiente con un candidato | M2A-3: INV-M2A-01, -16, -25; mutantes «conserva la CARDINALITY sin ORDER» y «la borra sin cita» |
+| T15 | Todo `DeltaRefusal` tiene código de A.3 (§6, tabla) | barrido R3 (R3-2) | SF193 (`KEEP_ON_EMPTY_SLOT`) | tabla `DeltaRefusal` → A.3 | M2A-3/M2A-4: INV-M2A-25 |
+| T16 | `<DIM>` recorre las claves de dimensión de las ranuras, incluida UNIVERSE (A.3) | barrido R3 (R3-3); STOP-1 de M2A-3 | SF075 (rojo declarado, dependencia `FOUNDATION_O1B_EXPLICIT_TIME_PARITY`) | `UNRESOLVED_VALUE:UNIVERSE`, `OP_NOT_ACCREDITED:UNIVERSE` | M2A-3 fase 1c (tipo): INV-M2A-25 |
+| T17 | `REPLACE_UNIVERSE` con ancla dual estrecha `request_ids` de lo arrastrado (§6.3) | barrido R3 (P-1); R5 de M2A-3 | SF076, SF077 | excepción de §6.3 | M2A-3: INV-M2A-02 |
+| T18 | Causas de rechazo con precedencia cerrada, antes de H1: `TARGET_NOT_ADDRESSABLE` > `DELTA_SLOT_CONFLICT` > `KEEP_ON_EMPTY_SLOT` > `OP_NOT_ACCREDITED:<DIM>` > `DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER`; dos o más ⇒ `INFORM` con la de mayor precedencia, sin pendiente (§6 paso 3b) | usuario 2026-10-02 (R3b, U20; ZEUS P1-1) | SF196 (`CLEAR(ORDER)` con top-N + `KEEP` de ranura vacía ⇒ `INFORM KEEP_ON_EMPTY_SLOT`) | `DeltaRefusal` + A.3 «INFORM con un código de CLARIFY» | barrido S10; `tests/test_m2a_contract_r3_multiop.py`; M2A-3 fase 2 sobre el `compose` real |
+| T19 | `KEEP` + `SET`/`SET_ORDER`/`REPLACE_UNIVERSE` de la misma ranura ⇒ `DELTA_SLOT_CONFLICT`, aunque los valores coincidan; un `CLEAR` de la dimensión entera cubre sus ranuras (§6 paso 2) | usuario 2026-10-02 (R3b, U22; ZEUS P2) | SF197 (`KEEP` + `SET` del comprador ⇒ `CLARIFY DELTA_SLOT_CONFLICT`); con el mismo valor, sólo barrido y verificador (SF202 retirado, U25) | regla de §6 paso 2 | barrido S13; verificador G9 y su mutante; barrido multi-op |
 | T13 | Composición determinista; `interpretation_hash` de la efectiva (§4.3, §12) | D7 «Eco y hashes» | los 199 | `_digest(AcceptedInterpretation)` | M2A-1: propiedad de determinismo; INV-M2A-06 (`plan_hash` del primer turno igual) |
 
 ## 2. Búsqueda nueva frente a delta
@@ -36,6 +42,7 @@ verificará.
 | N02 | TOPIC/ACTOR nuevo + marco + admisible sola ⇒ NEW_SEARCH + `CONTEXT_RESET` (§7.2 c) | **A9**; A4 | SF124, SF126, SF128, SF130, SF134, SF184, SF185 | `TurnResolution.NEW_SEARCH`, `base_trace_id = None` | M2A-3/M2A-5: INV-M2A-05 |
 | N03 | Continuación estructural gana (§7.2 a; también ante una pendiente, §8.3 filas 2–3) | A9 («gana la marca»); G-FU-02 | R0094 (adjudicado A9: universo explícito + estado, pero con marca de continuación ⇒ DELTA); SF041 (KEEP), SF120, SF121 (referente de conjunto); con pendiente: SF051, SF053 (⇒ REASK F25, no búsqueda nueva) | `referent_evidence`, directivas `KEEP`/`CLEAR`, job `FOLLOWUP_DELTA` | M2A-3/M2A-5: garantía limitada declarada; prompt v5.1 |
 | N04 | Tema desnudo (una condición sin marco) ⇒ DELTA, TOPIC sustituye (§7.2 d) | F22; F3 | R0286, R0484, SF002, SF133; `TOPIC_REPLACED`: SF041, SF133 | `Marco(P)` | M2A-3/M2A-5 |
+| N06 | Propuesta no admitida con ancla o pendiente ⇒ `INFORM UNSUPPORTED_PROPOSAL:<motivo>`, 0 llamadas, ancla y pendiente intactas (§7.1 fila 4b) | usuario 2026-10-02 (D-6) | — (sin caso en Gold; regla genérica) | `TurnScope.OUT_UNSUPPORTED_PROPOSAL`, lista cerrada de motivos con dueño | M2A-3 (fase 1c el tipo); M2A-5/M2A-6: INV-M2A-20, -25 |
 | N05 | Sin ancla ni pendiente: fragmento ⇒ CLARIFY NO_ANCHOR (§7.1) | F28 | — (casos en frontera G-FU-17: SF137, SF142) | `TurnScope.OUT_NO_ANCHOR` | M2A-3/M2A-5: regresión fail-closed |
 
 ## 3. Pendiente, respuestas y cancelación
@@ -52,6 +59,9 @@ verificará.
 | P08 | Rechazo citado + fragmento ⇒ cancela y aplica sobre el marco (§8.3.2, §17.3) | F23, A7 (base = marco) | SF191 (y SF063 con búsqueda nueva) | directiva `CANCEL_PENDING` | M2A-4: INV-M2A-08, -23 |
 | P09 | Ambigüedad con dos lecturas ⇒ CLARIFY con 2 `candidate_patches` (§6 H5/H6) | F12, F30 | SF163 (BUYER/lugar); SF123, SF155 (territorio) | `CandidatePatch` (pueden tocar varias ranuras) | M2A-4 |
 | P10 | Sin pregunta respondida ni rechazo ⇒ REASK (§8.3.8) | F29 | — (sin caso en Gold; regla de protocolo) | regla de §8.3 | M2A-4 |
+| P11 | Retirar el ORDER con top-N ⇒ pendiente con C1 «quitar orden y límite» + un `SET_ORDER` por cada criterio de orden alternativo del dataset (resueltos al preguntar, sin el vigente), `answer_slots = {ORDER, CARDINALITY}`; «por fecha» selecciona su candidato por identidad semántica (§8.3 «Selección», R3b), «dame 20» no llega a §8.3: el wire lo rechaza ⇒ §7.1 fila 4b `INFORM UNSUPPORTED_PROPOSAL:INVALID_PROPOSAL` con la pendiente intacta (R3b, P1-2), «déjalo como estaba» = `CANCEL_PENDING`; sin E-ORDER, sólo C1 (§6.7, §19). Controles r3b: SF199 («dame 20» ⇒ 4b), SF200 (C1), SF201 (fila 5) | usuario 2026-10-02 (D-1, opción 1 del orquestador) | SF192 (sellado sólo C1 y declarado parcial: `partial_alternatives`, `DEP-E-ORDER-CANDIDATES`, R3b U23; los `SET_ORDER` son de E-ORDER, §19) | `CandidatePatch` (C1 + `SET_ORDER`) | M2A-4: INV-M2A-08, -25 |
+| P12 | Ley de la pendiente posible: `frame` válido y sin operaciones abiertas, cada candidato compone; si no, `INFORM` sin pendiente; con una pendiente vigente no nace otra (§8.4, INV-M2A-26) | usuario 2026-10-02 (R3b, U20; ZEUS P1-1) | SF196, SF198 (causa sin pendiente posible ⇒ `INFORM`) | `PendingClarification` (frame, candidatos) | barrido S11; barrido multi-op; M2A-3 fase 2 (`check_transition` del oráculo) |
+| P13 | Selección de candidato por identidad semántica (op, ranura, valor canónico / destino), nunca por texto ni ids; compone el parche completo; edición de otra ranura ⇒ fila 5 (§8.3 «Selección») | usuario 2026-10-02 (R3b, U22; ZEUS P2) | SF192 (alternativa C1); SF200 (selecciona C1 por identidad); SF201 (respuesta + edición de otra ranura ⇒ fila 5) | `CandidatePatch.patch` | barrido (`test_d1_option1_answers_go_through_the_wire_and_select_by_semantic_identity`); M2A-4 |
 
 ## 4. Referentes, vigencia y fallo de fuente
 
@@ -63,6 +73,9 @@ verificará.
 | R04 | Eventos de orden y «quitar filtro» como parche sin LLM (§5.3) | P7 / Enm. 3 (botones a M2) | SF149, SF150, SF151, SF152 | `SemanticPatch(origin_kind = EVENT)` | M2A-6 |
 | R05 | Vencido ⇒ CLARIFY `CONTEXT_EXPIRED_CONFIRM` (continuar / reset) (§10) | F11 | R0223, R0286, SF138, SF140 | `PendingClarification` con un candidato + `CANCEL_PENDING` | M2A-4/M2A-6 |
 | R06 | `CLEAR` de ranura vacía ⇒ INFORM, ancla intacta (§6 H12) | F18 | SF113 | regla H12 | M2A-3: INV-M2A-20 |
+| R07 | Ancla vencida: `CONTEXT_EXPIRED_CONFIRM` sólo si «continuar» compone y ejecuta (sin causa y sin H3–H12); si no, `INFORM` con la causa o la regla, sin bucle (§6 H1, §10.1) | usuario 2026-10-02 (R3b, U20; ZEUS P1-1) | SF198 (ancla vencida + `KEEP` de ranura vacía ⇒ `INFORM`, sin bucle) | `PendingClarification` con un candidato | barrido S12; barrido multi-op; verificador G9 (pendiente sobre ancla vencida) |
+| R08 | Vencimiento pegajoso: el turno que encuentra el ancla vencida y no la confirma ni la reemplaza lleva `CONTEXT_EXPIRED` en su registro; el ancla sigue vencida hasta «continuar», «reset»/cancelación o búsqueda nueva (§10.1, §11) | usuario 2026-10-02 (R3c, U26; ZEUS P1-1) | SF198 (eco `CONTEXT_EXPIRED`) | eco del último `AcceptedTurnRecord` (sin campos nuevos) | M2A-6/8b por replay (propiedad de varios turnos) |
+| R09 | «Reset» o cancelación de `CONTEXT_EXPIRED_CONFIRM` eliminan el ancla vencida (`anchor_trace_id = None`; siguiente fragmento ⇒ `CLARIFY NO_ANCHOR`); «continuar» sólo por evento (F24) (§10.1, §10.2, §17, §8.3) | usuario 2026-10-02 (R3d, U27; ZEUS focal) | SF138, SF140 (eco `CONTEXT_EXPIRED`, U27) | `anchor_trace_id` del registro | M2A-6/8b por replay (propiedad de varios turnos) |
 
 ## 5. VALUE
 
@@ -94,6 +107,8 @@ verificará.
 | M07 | Negar el único positivo lo invierte (§6.5) | F16 | SF011, SF012 | sustitución declarada `POLARITY_INVERTED` | M2A-3: INV-M2A-19 |
 | M08 | Negar otro valor añade la exclusión (§6.5) | F17 | SF001, SF003, SF005, SF007, SF009, SF014 | `SET` negativo | M2A-3: INV-M2A-19 |
 | M09 | Región fuera de la lista ⇒ CLARIFY (§6 H7) | F13 | SF159 | regla H7 | E-GEO + M2A-3 |
+| M10 | Negar sobre varios positivos o un valor contenido ⇒ `OP_NOT_ACCREDITED:<DIM>` ⇒ `CLARIFY UNRESOLVED_VALUE:<DIM>` (§6.5) | barrido R3 (R3-4; D-3) | SF194 | regla F16, rama fail-closed | M2A-3: INV-M2A-19, -25 |
+| M11 | F16 sólo invierte un positivo **arrastrado**; +X y −X en el mismo parche ⇒ `OP_NOT_ACCREDITED:<DIM>` ⇒ `CLARIFY UNRESOLVED_VALUE:<DIM>` (§6.5) | usuario 2026-10-02 (P-3, U18) | — (sin caso; mutante del verificador `R3_P3_SF001_same_patch_both_polarities`) | regla F16, rama fail-closed | M2A-3: INV-M2A-19, -25 |
 
 ## 7. Frontera (lo que M2a NO hace)
 
@@ -101,6 +116,10 @@ verificará.
 |---|---|---|---|---|---|
 | X01 | 57 casos FRONTIER fuera de los gates de M2a; provisional fail-closed (§19) | ADJUDICATION_T3 punto 11–12, 16; ledger G-FU-04…21 | los 57 del sello (`slices.FOLLOWUP_FRONTIER`) | `TurnScope.OUT_*` + `INFORM`/`CLARIFY` | M2A-8: GOLD ∩ FRONTIER = ∅ en el replay; INV-M2A-20 |
 | X02 | Nada cruza a legacy con ancla Foundation (§3.7) | D7; R-BARRERA | los 199 | — | M2A-1…M2A-9: INV-M2A-04, -15 |
+| X03 | Toda respuesta alcanzable es representable (INV-M2A-25, invariante mayor) | usuario 2026-10-02 (R3-5) | todos | códigos de A.3 admitidos por el tipo | `tests/test_m2a_contract_r3_sweep.py` (barrido generado; lo que falte en el tipo es un xfail estricto) |
+| X04 | Congelación tras R3 (§20.4) | usuario 2026-10-02 | — | — | revisión: toda enmienda posterior cita una inconsistencia del contrato o una extensión/versionado del lenguaje |
+| X05 | Una autoridad para las dependencias: §19 ⇒ extracción generada y sellada; ningún consumidor tiene lista ni override propio. Cada fila: ids explícitos (también `[]`), conteo verificable, dueño de lista cerrada, `impacto_m2a3` = `LECTURA` / `COMPOSICION` (§19) | usuario 2026-10-02 (U19; R3b, U23) | SF075 (`DEP-O1B-OPPORTUNITIES`); R0301, SF165, SF167 (`DEP-SMMLV-READ`); R0304 (`DEP-SMMLV-RECALC`); SF192 (`DEP-E-ORDER-CANDIDATES`) | `gold/CONTRACT_S19_DEPENDENCIES.json` (`extract_contract_dependencies.py`) | `m2a_gold_seal.py verify` (gate `contract_dependencies_reproduce`); `tests/test_m2a_gold_seal.py` |
+| X06 | INV-M2A-25 con varias operaciones: barrido exhaustivo por parejas × ocupación de la base + Hypothesis con N operaciones e invariancia a la permutación, sobre un modelo simbólico del contrato (§8.4, §18) | usuario 2026-10-02 (R3b, U21) | — (modelo simbólico; no lee casos) | modelo de ocupación de ranuras generado de `PatchOpKind` × ranura | `tests/test_m2a_contract_r3_multiop.py`; sobre el `compose` real, gate de M2A-3 fase 2 |
 
 ## 8. Reconciliaciones A↔B registradas
 
@@ -118,3 +137,4 @@ verificará.
 | Preestados del Gold | — | SF063 con `asks = 3`; SF168 ancla SMMLV plurianual | U2 normaliza SF063; D1 declara SF168 estado persistido inválido; G11 exige preestados alcanzables | `gold/ADJUDICATION_2026-10-02.md` |
 | Referente extensional/intensional | C0 l.300 (ambigüedad heredada) | G-FU-14 | señal estructural diferida a M2A-5 (gate de M2A-5 y precondición de activar M2A-6); sin regla provisional por defecto | §7.1 fila 5, §19 |
 | Top-N > 100 | C1.2 (`main`) ya topa y anuncia | A3 | sin conflicto (el mismatch que T3 vio en el worktree c12 ya está corregido en `main`) | §2 |
+| `CLEAR(ORDER)` con CARDINALITY | contrato v1: sin regla ni código (STOP-2 de M2A-3) | `M2A_DESIGN_v2.md:240`: `DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER` | recuperada por el usuario (2026-10-02), decidida sobre el estado | §6.7 (R3-1) |
