@@ -9,8 +9,16 @@ decisiones; no edita el contrato (`docs/decisions/M2A_CONVERSATION_CONTRACT_V1.m
 Los módulos M2a se registran en `tests/m2a_steps/m2a_<n>.py`, uno por paso (`STEP`, `MODULES`, `DEPENDS_ON`,
 `CLOSURE`). Cada carril (M2A-2, M2A-3) escribe **sólo su archivo**: ninguna lista central compartida. `CLOSURE` es el
 cierre transitivo exacto de `MODULES` **menos** el de los pasos de los que depende (su incremento propio). Un cambio en
-M2A-1 no toca el registro de M2A-2, **salvo que ambos crezcan hacia el mismo módulo**: entonces M2A-2 falla de forma
-segura (`closure lost X`, nunca en silencio) y su dueño quita X de su propio `CLOSURE`.
+M2A-1 no toca el registro de M2A-2, **salvo que M2A-1 y M2A-2 alcancen el mismo módulo X, y entonces rige en los dos
+sentidos, no sólo cuando ambos crecen**:
+
+- Si M2A-1 **crece** hacia X (X deja de ser incremento de M2A-2), M2A-2 falla de forma segura con `closure lost X`.
+- Si M2A-1 **encoge** y deja de alcanzar X (X pasa a ser incremento propio de M2A-2), M2A-2 falla de forma segura con
+  `closure reaches X`. Es la dirección que la primera redacción de esta sección no decía (P3 del ZEUS del Paso 0).
+
+En ambos casos el fallo no es silencioso y el arreglo es local: el dueño de M2A-2 quita (o añade) X en su propio
+`CLOSURE`; el registro de M2A-1 no se toca. Ambos sentidos tienen pin
+(`test_when_two_steps_grow_towards_the_same_module_…` y `test_when_the_foundation_step_shrinks_…`).
 
 El registro se valida (`registry_problems`): módulos bajo `app.core.`, existentes, **nuevos** (no figuran en el manifiesto
 de `main` ni en `POST_MAIN_EXISTING`, los 9 módulos que ya existían en la base de esta preparación y no están en él), y
@@ -33,6 +41,19 @@ siendo consumido por legacy. Pin: `tests/test_m2a_boundaries.py`.
 (`importlib.import_module(nombre)` con variable) en un módulo **no registrado**; dentro del cierre registrado este último
 sí falla. La regla «ya existía» del registro lee el manifiesto de `main` y una lista congelada: un módulo creado después
 por otra persona y registrado por un carril no se ve como preexistente.
+
+**Tres evasiones por ofuscación deliberada, también garantía limitada** (la lista negra **no** se amplía; cada grafía se
+corrió contra `source_problems` y contra el grafo). Qué se caza y qué no, verificado:
+
+| Evasión | Forma llana (se caza) | Forma que evade |
+|---|---|---|
+| `importlib.util.spec_from_file_location` | `import importlib.util` y `from importlib.util import spec_from_file_location` fallan como maquinaria de importlib | `sys.modules['importlib.util'].spec_from_file_location(nombre, ruta)`: carga por **ruta de archivo**, sin sentencia de import ni nombre con puntos; ni el escáner ni el grafo lo ven |
+| `getattr(importlib, 'import_module')` | `import importlib` + `getattr(importlib, 'import_module')` falla (maquinaria y literal `import_module`) | `getattr(sys.modules['importlib'], 'imp' + 'ort_module')` o el nombre en una variable: no escribe el nombre que el escáner busca. El grafo sigue resolviendo como arista un destino **literal** con puntos; sólo un destino construido o variable queda invisible |
+| `runpy.run_module` (y `runpy.run_path`) | no hay | `runpy` no está en ninguna lista: `import runpy` no se marca. Con destino literal con puntos el grafo resuelve la arista; con destino construido o variable, nada lo ve |
+
+El cierre estático es completo frente a código honesto y a las grafías llanas, **no** frente a un módulo escrito para
+esconder sus imports: eso es asunto de revisión, no de un pin. Los tres están dichos también en el docstring de
+`tests/test_m2a_boundaries.py`.
 
 ## 3. Enmienda C1.x (`tests/test_foundation_authority_contract.py`)
 
@@ -114,6 +135,15 @@ Ahora la meta-mutación es **sistemática** y se corre sobre el candidato:
 - **Scripts de ZEUS** (`mut.py`, `mut2.py`): 48 de 50 caen; los dos que sobrevivían (`load_steps` no levantaba error y el
   escaneo de `app/` limitado a `app/core`) tienen ahora su test y caen.
 
+**Reproducibilidad de estas cifras (P3 del ZEUS del Paso 0).** Los números de esta sección (363 mutantes por función
+con sus 3 equivalentes, 74 por constante, 48 de 50 de los scripts de ZEUS) son el resultado de una corrida con arneses
+que **no están en el árbol**: ni el generador de mutantes por función ni `mut.py`/`mut2.py` están versionados (se buscó
+en `tests/`, `scripts/` y `docs/`; sólo aparecen citados aquí). **No se pueden reproducir desde el commit.** Lo que el
+árbol sí conserva y puede ejecutarse es lo que está escrito como tests: las baterías de mutantes de
+`tests/test_m2a_boundaries.py` y `tests/test_foundation_authority_contract.py`, y los pines de
+`tests/test_legacy_manifest_frozen.py`. Léase la meta-mutación como evidencia citada de una corrida, no como una
+propiedad verificable hoy.
+
 Lo que la primera pasada sistemática destapó (y ya tiene mutante): argumentos, keywords, alias, `async def`, clases y
 `resolve()` sin atributo en `source_problems`; `**kwargs`, import relativo y fuente vacía sin romper el escáner; el
 indicador de import dinámico de un override; la resolución de imports relativos de paquetes; un paso que depende de uno
@@ -135,7 +165,8 @@ derivaban sus pasos sintéticos de los registros reales y suponían que estaban 
   virtuales (`_only`), nunca el árbol real; los pines del árbol real siguen leyéndolo.
 - **Registros simulados llenos**: un M2A-2 con un módulo que importa `foundation_accepted` y `store_lock`, y un M2A-3 con
   dos módulos sobre el vocabulario del IR v2. Todos los pines quedan en verde (también los archivos de registro, que se
-  generan y se validan), y 24 mutantes siguen cazando lo suyo sobre esos registros.
+  generan y se validan), y 25 mutantes (`len(SIM_MUTANTS)` en `tests/test_m2a_boundaries.py`; una versión anterior de este
+  documento decía 24) siguen cazando lo suyo sobre esos registros.
 - **Composición real** (merge desacoplado de R2 + `c6ca1ac6` + `f30e91ff`, sin commitear nada ajeno): todos los pines de
   esta preparación pasan; los fallos que quedan son los fixtures de `tests/test_foundation_accepted_store.py` frente al tipo
   canónico de M2A-3 y se resuelven en la integración (ver el reporte de R2).

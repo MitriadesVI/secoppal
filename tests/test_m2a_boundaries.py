@@ -10,9 +10,12 @@ M2a modules are registered PER STEP in ``tests/m2a_steps/m2a_<n>.py`` (``STEP``,
 * DAG: the dependency graph of this wave is a REVIEWED constant (``PLANNED_DEPENDENCIES``): a lane cannot widen what its
   step may import by editing its own ``DEPENDS_ON``; widening is an explicit edit of that constant.
 * IMPORTS: per step, the transitive import closure of its modules MINUS the closure of the steps it depends on (its own
-  increment) is EXACTLY its ``CLOSURE``. A change in M2A-1 leaves the registry of M2A-2 alone unless both grow toward
-  the SAME module: then M2A-2 fails safe (``closure lost X``: never silent) and its owner drops X from its own
-  ``CLOSURE``. On the union of all steps no module reaches ``query_router``, ``followup_engine``,
+  increment) is EXACTLY its ``CLOSURE``. A change in M2A-1 leaves the registry of M2A-2 alone unless M2A-1 and M2A-2
+  both reach the SAME module X, and then it holds in BOTH directions, not only when both grow: if M2A-1 GROWS toward X
+  (X leaves M2A-2's increment) M2A-2 fails safe with ``closure lost X``; if M2A-1 SHRINKS and stops reaching X (X becomes
+  M2A-2's own increment) M2A-2 fails safe with ``closure reaches X``. Never silent, and the fix is local either way: the
+  owner of M2A-2 drops or adds X in its own ``CLOSURE``; the registry of M2A-1 is not touched. On the union of all steps
+  no module reaches ``query_router``, ``followup_engine``,
   ``followup_mutations``, the conversation store, the orchestrator, owner detectors or ``accreditation`` (the contract
   allows only the future ``accredited_span`` leaf, which does not exist yet: adding it means adding it, by name, to the
   step that needs it).
@@ -35,6 +38,18 @@ unresolvable dynamic import (``importlib.import_module(name)`` with a variable `
 inside the registered closure the latter does fail (``unresolvable dynamic import``). The registry's «already existed»
 rule reads main's manifest and a frozen list of the post-main modules at the prep base: a module created later by
 someone else and registered by a lane is not seen as pre-existing.
+
+Three evasions by DELIBERATE OBFUSCATION are also declared limited guarantees; the denylist is NOT widened for them
+(each spelling was run against ``source_problems`` and the graph). (1) ``sys.modules['importlib.util']
+.spec_from_file_location(name, path)`` loads a module from a FILE PATH with no import statement and no dotted name:
+neither the scanner nor the graph sees it (the plain ``import importlib.util`` and ``from importlib.util import
+spec_from_file_location`` ARE caught, as importlib machinery). (2) ``getattr(sys.modules['importlib'], 'imp' +
+'ort_module')``, or the name in a variable, reaches ``import_module`` without writing the name the scanner looks for (the
+plain ``getattr(importlib, 'import_module')`` IS caught, as importlib machinery and as the literal); the graph still
+resolves a dotted LITERAL target as an edge, only a built or variable target is invisible. (3) ``runpy.run_module`` and
+``runpy.run_path`` are in no list: ``import runpy`` is not flagged, a dotted literal target is resolved by the graph as an
+edge and a built or variable one is invisible. So the static closure is complete against honest code and plain
+spellings, not against a module written to hide its imports: that is a review matter, not a pin.
 
 Each pin is shown not to be vacuous by a mutant it must catch (and by a positive control where a mutant could be a false
 alarm). The import graph is the AST scanner of ``tests/test_m1_wave1_parity_pins.py`` (static, relative, lazy,
@@ -870,7 +885,8 @@ def test_a_step_inherits_the_closure_of_its_transitive_dependencies():
 
 def test_when_two_steps_grow_towards_the_same_module_the_dependent_one_fails_safe_and_the_fix_is_local():
     """The honest limit of the increment: M2A-1 and M2A-2 both reach ``store_lock``. M2A-2 fails (never silent) with
-    ``lost`` and its owner drops the module from its own CLOSURE; M2A-1's registry is not touched."""
+    ``lost`` and its owner drops the module from its own CLOSURE; M2A-1's registry is not touched. The same limit holds
+    the other way round when M2A-1 SHRINKS (next test): independence is broken by M2A-1 moving, not only by growing."""
     store_lock = "app.core.store_lock"
     virtual = {VIRTUAL_A: ON_M2A_1 + f"import {store_lock}\n"}
     steps = _swap(WORLD, "M2A-2", modules=(VIRTUAL_A,), closure=frozenset({VIRTUAL_A, store_lock}))
@@ -880,6 +896,22 @@ def test_when_two_steps_grow_towards_the_same_module_the_dependent_one_fails_saf
     assert closure_problems(drift, virtual, grown) == [
         f"M2A-2: closure lost {store_lock} (update the registry on purpose)"]
     assert closure_problems(drift, virtual, _swap(grown, "M2A-2", closure=frozenset({VIRTUAL_A}))) == []
+
+
+def test_when_the_foundation_step_shrinks_the_dependent_one_fails_safe_too_and_the_fix_is_local():
+    """The other direction of the same limit: M2A-1 stops reaching ``store_lock`` that M2A-2 also reaches. The module
+    becomes M2A-2's own increment, so M2A-2 (which declared it as inherited) fails with ``reaches`` (never silent) and
+    its owner ADDS it to its own CLOSURE; M2A-1's registry is not touched."""
+    store_lock = "app.core.store_lock"
+    virtual = {VIRTUAL_A: ON_M2A_1 + f"import {store_lock}\n"}
+    declared_as_inherited = _swap(WORLD, "M2A-2", modules=(VIRTUAL_A,), closure=frozenset({VIRTUAL_A}))
+    drift = {MODULE: _source(MODULE) + f"\nimport {store_lock}\n"}
+    grown = _swap(declared_as_inherited, "M2A-1", closure=_real("M2A-1").closure | {store_lock})
+    assert closure_problems(drift, virtual, grown) == []  # while M2A-1 reaches it, M2A-2 inherits it
+    assert closure_problems(None, virtual, declared_as_inherited) == [f"M2A-2: closure reaches {store_lock}"]  # M2A-1 shrank
+    local_fix = _swap(declared_as_inherited, "M2A-2", closure=frozenset({VIRTUAL_A, store_lock}))
+    assert closure_problems(None, virtual, local_fix) == []
+    assert local_fix[0] == _real("M2A-1")
 
 
 def test_the_closure_pin_survives_an_unknown_dependency_that_the_registry_reports():
@@ -912,11 +944,16 @@ def test_mutant_registering_a_legacy_or_forbidden_module_does_not_launder_it(mod
     assert any(module in problem for problem in legacy_reach_problems(steps=steps)) or module == "app.core.orchestrator"
 
 
-@pytest.mark.parametrize("target", [
+# One real module per FORBIDDEN_PREFIX. ``test_every_forbidden_prefix_has_a_representative_above`` derives its coverage
+# from THIS list, so a new prefix needs a representative here (and with it its own mutant).
+PREFIX_REPRESENTATIVES = [
     "app.core.accreditation.coverage", "app.core.workflow.store_epoch", "app.data.smmlv",
     "app.core.host_authorities.state", "app.core.foundation_authority_registry",
     "app.core.foundation_authority_contract", "app.core.foundation_evidence_window", "app.core.foundation_admission",
-])
+]
+
+
+@pytest.mark.parametrize("target", PREFIX_REPRESENTATIVES)
 def test_mutant_a_forbidden_prefix_is_caught_even_when_the_closure_is_declared_exactly(target):
     """One real module per FORBIDDEN_PREFIX that no other clause (module list, suffix) forbids: the step declares its
     own increment exactly, so the prefix clause is the only one that can object."""
@@ -931,10 +968,11 @@ def test_mutant_a_forbidden_prefix_is_caught_even_when_the_closure_is_declared_e
 
 
 def test_every_forbidden_prefix_has_a_representative_above():
-    covered = {"app.core.accreditation", "app.core.workflow", "app.data", "app.core.host_authorities",
-               "app.core.foundation_authority_registry", "app.core.foundation_authority_contract",
-               "app.core.foundation_evidence_window", "app.core.foundation_admission"}
-    assert set(FORBIDDEN_PREFIXES) == covered  # a new prefix needs its own mutant
+    """``covered`` is DERIVED from the parametrized list: a hand-written copy of ``FORBIDDEN_PREFIXES`` could be edited
+    to match a new prefix without any mutant that exercises it."""
+    covered = {prefix for prefix in FORBIDDEN_PREFIXES
+               if any(target.startswith(prefix) for target in PREFIX_REPRESENTATIVES)}
+    assert covered == set(FORBIDDEN_PREFIXES), sorted(set(FORBIDDEN_PREFIXES) - covered)  # a new prefix needs its own mutant
 
 
 @pytest.mark.parametrize("name", ["app.core.m2a_virtual_resolver", "app.core.m2a_virtual_authority",
@@ -1268,7 +1306,8 @@ def test_mutant_bridge_or_lexicon_is_caught(extra):
     "\n\nfrom importlib.util import find_spec\n",
 ])
 def test_mutant_dynamic_import_is_caught(extra):
-    """Forbidden whatever the argument: an ALLOWED literal target and a variable target are caught alike."""
+    """Forbidden whatever the argument: an ALLOWED literal target and a variable target are caught alike. What this does
+    NOT cover (``sys.modules`` access, a built name, ``runpy``) is a declared limited guarantee: see the module docstring."""
     assert any("dynamic import" in problem for problem in source_problems(_source(MODULE) + extra))
 
 
