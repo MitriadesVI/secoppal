@@ -52,6 +52,7 @@ POLARIZED = ("TOPIC", "BUYER", "ACTOR", "GEOGRAPHY", "TIME", "STATE", "MODALITY"
 MONTHS = {"enero": 1, "febrero": 2, "marzo": 3, "abril": 4, "mayo": 5, "junio": 6, "julio": 7, "agosto": 8,
           "septiembre": 9, "setiembre": 9, "octubre": 10, "noviembre": 11, "diciembre": 12}
 AUTHORITY = "oracle.synthetic@1"
+ANCHOR_TRACE = "t0"  # the trace of the record whose effective is the base (the case's anchor): where an inherited value comes from
 
 
 class Untypeable(Exception):
@@ -284,14 +285,21 @@ def tcond(dimension, operator, polarity, level, unit, hint, *, ods=None, unit_so
         value = type_value(dimension, operator, polarity, level, unit, hint, year)
     slot = slot_key(dimension, value)
     smmlv = dimension == "VALUE" and unit == "SMMLV"  # §3.2 Provenance: the amount said and the year the conversion used
+    # §3.2 Provenance keeps a year and its source TOGETHER (the type refuses one without the other): a TIME states its
+    # year_source only with the single civil year it lies in; a SMMLV bound carries the year of its conversion and where that
+    # year comes from (year.from_time = STATED, year.inherited = PREVIOUS_ACCEPTED_TIME, §15.5)
+    prov_year, prov_source = None, None
+    if dimension == "TIME" and year_source is not None and _civil_year(value) is not None:
+        prov_year, prov_source = _civil_year(value), year_source
+    elif smmlv:
+        prov_year, prov_source = year, year_source or "STATED"
     return {"dimension": dimension, "operator": operator, "slot": slot,
             "polarity": "NEGATIVE" if slot.endswith("/NEGATIVE") else "POSITIVE",
             "level": level if dimension == "GEOGRAPHY" else None, "value": list(value),
             "unit": unit if dimension == "VALUE" else None, "ods": ods if dimension == "ORDER" else None,
             "unit_source": (unit_source or "STATED") if dimension == "VALUE" else None,
-            "year_source": year_source if dimension == "TIME" else None,
-            "source_amount": format(_number(hint, unit).normalize(), "f") if smmlv else None,
-            "year": year if smmlv else None}
+            "year_source": prov_source, "source_amount": format(_number(hint, unit).normalize(), "f") if smmlv else None,
+            "year": prov_year}
 
 
 def sem_key(c: dict) -> tuple:
@@ -338,13 +346,17 @@ def origin(trace: str, raw: str, i: int) -> dict:
 
 
 def condition_dict(t: dict, cid: str, request_ids: list[str], org: dict) -> dict:
+    """A condition as ``m2a-accepted/1`` carries it. A provenance that is INHERITED (the unit of a bound from the previous
+    accepted value, §15.4; the year from the previous accepted TIME, §16.1) says where it comes from (§3.2, §11): the anchor
+    of the case. Never otherwise: the type refuses ``inherited_from`` without an inheritance and an inheritance without it."""
+    inherited = t["unit_source"] == "PREVIOUS_ACCEPTED_VALUE" or t.get("year_source") == "PREVIOUS_ACCEPTED_TIME"
     return {"condition_id": cid, "request_ids": sorted(request_ids), "slot": t["slot"], "dimension": t["dimension"],
             "operator": t["operator"], "polarity": t["polarity"], "level": t["level"], "value": list(t["value"]),
             "authority": AUTHORITY, "receipt_rules": [], "policies": [], "origin": org,
             "provenance": {"unit": t["unit"], "source_amount": t.get("source_amount"), "unit_source": t["unit_source"],
                            "year": t.get("year"),
                            "year_source": t.get("year_source"), "buyer_scope": None, "order_direction_source": t["ods"],
-                           "inherited_from": None}}
+                           "inherited_from": ANCHOR_TRACE if inherited else None}}
 
 
 def dataset_of(subject: str) -> str:
@@ -363,10 +375,10 @@ def accepted_dict(gid: str, ir: dict) -> dict:
     """The base: the prior IR of the Gold as an ``m2a-accepted/1`` dict (origins are synthetic digests, never text)."""
     pairs = requests_of(ir)
     rids = [f"r{i}" for i in range(1, len(pairs) + 1)]
-    conditions = [condition_dict(t, t["id"], rids, origin("t0", sha(f"{gid}|prior|{t['id']}"), 0))
+    conditions = [condition_dict(t, t["id"], rids, origin(ANCHOR_TRACE, sha(f"{gid}|prior|{t['id']}"), 0))
                   for t in ir_conditions(ir)]
-    return {"schema": "m2a-accepted/1", "requests": request_dicts(pairs, "t0", sha(f"{gid}|prior")),
-            "conditions": conditions, "logic": None, "policies": [], "base_trace_id": None, "root_trace_id": "t0"}
+    return {"schema": "m2a-accepted/1", "requests": request_dicts(pairs, ANCHOR_TRACE, sha(f"{gid}|prior")),
+            "conditions": conditions, "logic": None, "policies": [], "base_trace_id": None, "root_trace_id": ANCHOR_TRACE}
 
 
 # ---- typing the ops of a label ----------------------------------------------------------------------------------------
@@ -394,6 +406,7 @@ def typed_ops(label: dict) -> list[dict]:
     """The label's ops as typed ops in a canonical order (a patch is an unordered atomic set; contract §5.1)."""
     res = label["resulting_ir"]
     res_conds = ir_conditions(res) if res else []
+    sets_time = any(o["op"] == "SET" and o["slot"] == "TIME" and o["polarity"] != "NEGATIVE" for o in label["ops"])
     typed = []
     for op in label["ops"]:
         kind = op["op"]
@@ -415,7 +428,7 @@ def typed_ops(label: dict) -> list[dict]:
                     raise Untypeable("UNIVERSE_TARGET_KIND" if pair and pair[0][0] == subject else "UNIVERSE_TARGET")
             entry.update(slot="UNIVERSE", universe=[subject, kind_named])
         elif kind in ("SET", "SET_ORDER"):
-            entry["cond"] = _typed_set_op(op, res, res_conds)
+            entry["cond"] = _typed_set_op(op, res, res_conds, sets_time)
             entry["slot"] = entry["cond"]["slot"]
         else:
             raise Untypeable(f"OP:{kind}")
@@ -424,8 +437,10 @@ def typed_ops(label: dict) -> list[dict]:
     return typed
 
 
-def _typed_set_op(op: dict, res: dict | None, res_conds: list[dict]) -> dict:
-    """The condition a SET/SET_ORDER op writes, typed from the op and CHECKED against the typed resulting IR."""
+def _typed_set_op(op: dict, res: dict | None, res_conds: list[dict], sets_time: bool = False) -> dict:
+    """The condition a SET/SET_ORDER op writes, typed from the op and CHECKED against the typed resulting IR. ``sets_time``: the
+    same patch sets a TIME, so the year of a SMMLV bound is stated by it (``year.from_time``); otherwise it comes from the
+    TIME the base carries (``year.inherited``)."""
     dim = "VALUE" if op["slot"].startswith("VALUE") else op["slot"]
     if dim == "VALUE":
         side = "VALUE/" + op["slot"].partition(".")[2]
@@ -433,7 +448,8 @@ def _typed_set_op(op: dict, res: dict | None, res_conds: list[dict]) -> dict:
         if len(on_side) != 1:  # the op carries no unit: the typed result must hold exactly one bound on that side
             raise Untypeable("VALUE_UNIT_FROM_RESULT")
         t = tcond("VALUE", op["operator"], op["polarity"], None, on_side[0]["unit"], op["value_hint"],
-                  unit_source=(op["inherited"] or {}).get("unit_source"), year=ir_year(res))
+                  unit_source=(op["inherited"] or {}).get("unit_source"), year=ir_year(res),
+                  year_source="STATED" if sets_time else "PREVIOUS_ACCEPTED_TIME")
     elif dim == "ORDER":
         ods = res["order"].get("direction_source") if res and res.get("order") else None
         t = tcond("ORDER", op["operator"], "POSITIVE", None, None, None, ods=ods)
