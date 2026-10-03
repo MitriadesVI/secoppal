@@ -151,7 +151,9 @@ def _stale(pending: PendingClarification | None, cancellation: Cancellation | No
 
 
 def _within(pending: PendingClarification, ops: tuple[PatchOp, ...]) -> bool:
-    """§8.3 row 3: every CONDITION of P (what it sets or redirects) falls in ``answer_slots``."""
+    """Whether every typed condition of P (what it sets or redirects) falls in ``answer_slots``. It checks the fact
+    ``within_answer_slots`` (§8.3 row 3), which the CALLER supplies: a new search carries its conditions outside ``ops``
+    (its acceptance is not a patch), so the fact cannot be derived from them."""
     inside = answer_keys(pending)
     return all(covered_keys((op,)) <= inside for op in ops if op.op in _ANSWER_OPS)
 
@@ -220,6 +222,8 @@ def _cancel_turn(pending: PendingClarification, turn: PendingTurn, facts: TurnFa
     """Row 2: P carries ``CANCEL_PENDING`` (§17.2 a); what is left of P is applied on the frame, or is a new search."""
     frame = fragment_base(pending)
     if frame is None:  # M2A4-D1: no base (CONTEXT_EXPIRED_CONFIRM, or no frame): a new search alone, or NO_ANCHOR
+        if not turn.ops and facts.own_conditions == 0:  # no fragment at all: the cancel alone (§17.3 speaks of the fragment)
+            return _pure_cancel(pending, CancelCause.DIRECTIVE, TurnScope.IN)
         if _starts_a_search_alone(facts):
             reset = facts.anchor is AnchorState.FOUNDATION_SEARCH and not facts.anchor_expired and (
                 not holds_expired_anchor(pending))
@@ -258,10 +262,8 @@ def _text(pending: PendingClarification, turn: PendingTurn, trace_id: str, now: 
     facts = turn.facts
     if facts.input_kind is not InputKind.TEXT or facts.pending is not True:
         raise ContractError("INVALID_FACT:pending_turn")
-    within = _within(pending, turn.ops)
-    if facts.within_answer_slots not in (None, within):
+    if facts.within_answer_slots is True and not _within(pending, turn.ops):  # a fact the typed operations contradict
         raise ContractError("INCONSISTENT_FACT:within_answer_slots")
-    facts = replace(facts, within_answer_slots=within)
     # Marco(P) is no part of the rule when there is no base to compose on (M2A4-D1): the probe only reaches the OUT_* rows
     probe = replace(facts, frame=True) if (facts.cancel_directive and facts.frame is None
                                            and fragment_base(pending) is None) else facts
