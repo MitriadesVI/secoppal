@@ -12,13 +12,20 @@ on dicts and the protocol of pendings was not its subject. This adapter types th
   names the option its value equals, ``CANCEL_PENDING`` is the directive, ``gap_codes`` ``ANY_OPTION`` is the label
   ``no_selection`` and an ``unresolved`` value is a slot nobody resolved; «selecciona oN» is the producer emitting the whole
   patch of option N (§6.7: «el productor emite las operaciones completas de C1»);
-* its facts are the closed facts of P: a new search is ¬Continuación ∧ Marco ∧ Admisible sola.
+* its facts are the closed facts of P. The Gold carries NONE of them (the oracle types them only for the cases of M2A-3), so
+  they are not derived from the verdict: an ANSWER (``turn_kind = ANSWER_TO_CLARIFICATION``) takes the declared neutral
+  facts of an answer (¬Continuación, ¬Marco, ¬Admisible sola). A case whose turn is a NEW_SEARCH or a DELTA, or whose
+  verdict is an INFORM from the wire, would need the producer's facts to be told apart from what the label already says:
+  it is **«no medible sin hechos del productor»**, not green. It can still be RUN, with the facts the label implies, only
+  as information (``informational=True``), and is never counted.
 
 Partition discipline (as in M2A-3): pytest MEASURES DEV only. TEST is measured ONCE, at the freeze, with
 ``python -m tests.test_foundation_pending_gold TEST`` (the suite only TYPES the TEST cases, to prove the adapter reaches
-them). Declared red (§19, never dispensed): SF063 (``DEP-DERIVED-VIEW``, wave F) and SF192/SF199/SF200/SF201 (E-ORDER
-enumerates the ``SET_ORDER`` candidates; SF199 also M2A-5). They are RUN here too, only to show what M2A-4 does with the
-pending the Gold describes: the red is the dependency, not the protocol.
+them). Three statuses, no more: MEASURED (an answer, no §19 dependency), NO_MEDIBLE (needs the producer's facts) and
+RED_DECLARED (§19, never dispensed: SF063 ``DEP-DERIVED-VIEW`` of wave F; SF192/SF199/SF200/SF201 ``DEP-E-ORDER-CANDIDATES``,
+E-ORDER enumerates the ``SET_ORDER`` candidates, SF199 also M2A-5). The asking patch (F24) is supplied where the Gold lets
+it be known (the pending of §6.7 asks about ``CLEAR(ORDER)``); elsewhere the harness DECLARES there is none
+(``no_asked_patch``): the Gold has no case that exercises F24, which the direct tests, the sweeps and the model do.
 """
 from __future__ import annotations
 
@@ -44,6 +51,16 @@ RED_DECLARED = {"SF063": "DEP-DERIVED-VIEW (F)", "SF192": "DEP-E-ORDER-CANDIDATE
                 "SF200": "DEP-E-ORDER-CANDIDATES", "SF201": "DEP-E-ORDER-CANDIDATES"}
 UNITS = {"millones": "MILLONES", "mil millones": "MIL_MILLONES", "billones": "BILLONES", "miles": "MILES"}
 TRACE_ASKED, TRACE_ANSWER = "tA", "t1"
+ANSWER_KIND = "ANSWER_TO_CLARIFICATION"
+
+
+def status_of(gid: str) -> str:
+    """``RED_DECLARED`` (§19), ``MEASURED`` (an answer: the facts are the declared neutral ones of an answer) or
+    ``NO_MEDIBLE`` (the turn is a NEW_SEARCH or a DELTA: only the producer's facts could say so, and the Gold has none)."""
+    if gid in RED_DECLARED:
+        return "RED_DECLARED"
+    kinds = {GOLD[gid][which]["turn_kind"] for which in ("label_A", "label_B")}
+    return "MEASURED" if kinds == {ANSWER_KIND} else "NO_MEDIBLE"
 
 
 def owned_ids(partition: str | None = None) -> list[str]:
@@ -101,6 +118,8 @@ def _r31_option(index: int, org: fa.ConditionOrigin) -> tuple[fa.PatchOp, ...]:
 
 
 def typed_pending(gid: str, label: dict) -> tuple[fa.PendingClarification, dict]:
+    """The pending the case starts from, and ``{"options": …, "asked": …}``: the candidate ids by option, and the asking patch
+    where the Gold lets it be known (only the pending of §6.7: its open operation is ``CLEAR(ORDER)``)."""
     prior, pend = label["prior"], label["prior"]["pending"]
     frame = LINK.base_of(TY.accepted_dict(gid, prior["ir"]))
     org = _org(TRACE_ASKED, pend["span"])
@@ -116,11 +135,13 @@ def typed_pending(gid: str, label: dict) -> tuple[fa.PendingClarification, dict]
     pending = fa.PendingClarification(
         f"pending-{TRACE_ASKED}", TRACE_ASKED, T.T0, T.T0 + 30 * T.MINUTE, pend["asks"], frame, "t0",
         (0, len(pend["span"])), TY.sha(pend["span"]), pend["reason"], tuple(candidates), frozenset(slots))
-    return pending, {"options": {o["option_id"]: f"c{i}" for i, o in enumerate(pend["options"], 1)}}
+    asked = _r31_option(1, org)[:1] if pend["reason"] == "DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER" else ()  # CLEAR(ORDER)
+    return pending, {"options": {o["option_id"]: f"c{i}" for i, o in enumerate(pend["options"], 1)}, "asked": asked}
 
 
-def typed_turn(gid: str, label: dict, pending: fa.PendingClarification, options: dict):
-    """``(turn, event)``: the typed turn P (a ``PendingTurn``), or the option event for an event turn."""
+def typed_turn(gid: str, label: dict, pending: fa.PendingClarification, options: dict, informational: bool = False):
+    """``(turn, event)``: the typed turn P (a ``PendingTurn``), or the option event for an event turn. ``informational``: the
+    facts of a NEW_SEARCH, a DELTA or an INFORM are the ones the LABEL implies (never counted as a measurement)."""
     listed = label["prior"]["pending"]["options"]
     directive = any(op["op"] == "CANCEL_PENDING" for op in label["ops"])
     if label["input_kind"] == "EVENT":  # the event names the option the answer equals (O11)
@@ -140,7 +161,9 @@ def typed_turn(gid: str, label: dict, pending: fa.PendingClarification, options:
         else:
             ops.append(_set(op, _org(TRACE_ANSWER, gid, i), f"p{i + 1}"))
     expected = label["expected_disposition"]
-    if expected == "NEW_SEARCH":
+    if not informational:
+        facts = T.facts()  # an answer: ¬Continuación, ¬Marco, ¬Admisible sola (declared, not derived from the verdict)
+    elif expected == "NEW_SEARCH":
         facts = T.new_search_facts(cancel_directive=directive)
     elif label["turn_kind"] == "DELTA":
         facts = T.facts(cancel_directive=directive, continuation=True)
@@ -159,12 +182,16 @@ def expected_values(ir: dict) -> set:
     return {(t["slot"], tuple(t["value"])) for t in TY.ir_conditions(ir)}
 
 
-def run_case(gid: str, which: str = "label_A") -> tuple[bool, str]:
-    """Run one case; ``(agrees with the sealed label, what happened)``. Never reads another case."""
+def run_case(gid: str, which: str = "label_A", informational: bool = False) -> tuple[bool, str]:
+    """Run one case; ``(agrees with the sealed label, what happened)``. Never reads another case. A case that is not
+    MEASURED is refused unless ``informational``: it is no measurement (see the module)."""
+    if status_of(gid) == "NO_MEDIBLE" and not informational:
+        raise ContractError(f"{gid} is not measurable without the producer's facts")
     label = GOLD[gid][which]
     pending, options = typed_pending(gid, label)
-    turn, event = typed_turn(gid, label, pending, options)
-    d = T.P.respond(pending, event or turn, trace_id="t2", now=T.T0 + T.MINUTE, asked_ops=())
+    turn, event = typed_turn(gid, label, pending, options, informational or status_of(gid) != "MEASURED")
+    d = T.P.respond(pending, event or turn, trace_id="t2", now=T.T0 + T.MINUTE, asked_ops=options["asked"],
+                    no_asked_patch=not options["asked"])
     want, reason = label["expected_disposition"], label["disposition_reason"]
     got = {"PENDING_ANSWER": "EXECUTE", "DELTA": "EXECUTE"}.get(d.kind.value, d.kind.value)
     seen = f"{got} {d.code}"
@@ -185,8 +212,16 @@ def run_case(gid: str, which: str = "label_A") -> tuple[bool, str]:
     return True, seen
 
 
+def by_status(partition: str) -> dict[str, list[str]]:
+    out: dict[str, list[str]] = {"MEASURED": [], "NO_MEDIBLE": [], "RED_DECLARED": []}
+    for gid in owned_ids(partition):
+        out[status_of(gid)].append(gid)
+    return out
+
+
 def measure(partition: str) -> dict[str, tuple[bool, str]]:
-    return {gid: run_case(gid) for gid in owned_ids(partition)}
+    """MEASURED cases only: the ones that count."""
+    return {gid: run_case(gid) for gid in by_status(partition)["MEASURED"]}
 
 
 # ---- the adapter reaches every case (TYPING only for TEST) ----------------------------------------------------------
@@ -195,8 +230,9 @@ def test_every_case_of_m2a_4_is_typable_by_the_adapter_in_both_partitions(gid):
     for which in ("label_A", "label_B"):
         label = GOLD[gid][which]
         pending, options = typed_pending(gid, label)
-        turn, event = typed_turn(gid, label, pending, options)
-        assert (turn is None) != (event is None)
+        for informational in (False, True):
+            turn, event = typed_turn(gid, label, pending, options, informational)
+            assert (turn is None) != (event is None)
 
 
 def test_the_cases_owned_by_m2a_4_are_the_ones_the_traceability_matrix_names():
@@ -208,15 +244,45 @@ def test_the_cases_owned_by_m2a_4_are_the_ones_the_traceability_matrix_names():
     assert set(RED_DECLARED) - {"SF192"} <= ids
 
 
+# ---- the status of every case, and honest denominators ------------------------------------------------------------------
+def test_every_case_has_one_status_and_the_denominators_are_these():
+    """MEASURED (answers, no §19 dependency) / NO_MEDIBLE (needs the producer's facts) / RED_DECLARED (§19). A case moves
+    only by an edit of this test."""
+    dev, test = by_status("DEV"), by_status("TEST")
+    assert dev == {"MEASURED": ["SF059", "SF061", "SF189"], "NO_MEDIBLE": ["SF047", "SF048", "SF050", "SF191"],
+                   "RED_DECLARED": ["SF199"]}
+    assert test == {"MEASURED": ["SF051", "SF053", "SF056", "SF058", "SF060", "SF188"],
+                    "NO_MEDIBLE": ["SF049", "SF052", "SF055", "SF057", "SF190"],
+                    "RED_DECLARED": ["SF063", "SF200", "SF201"]}
+    assert sum(len(v) for v in (*dev.values(), *test.values())) == len(owned_ids()) == 22
+    with pytest.raises(ContractError):  # a case that needs the producer's facts cannot be run as a measurement
+        run_case("SF047")
+
+
 # ---- DEV: measured by the suite ---------------------------------------------------------------------------------------
-DEV = owned_ids("DEV")
-
-
-@pytest.mark.parametrize("gid", DEV)
+@pytest.mark.parametrize("gid", by_status("DEV")["MEASURED"])
 def test_dev_the_pending_protocol_agrees_with_the_sealed_label(gid):
     for which in ("label_A", "label_B"):  # the two blind labellers agree on the disposition and the code
         ok, seen = run_case(gid, which)
         assert ok, f"{gid} {which}: {seen}"
+
+
+def test_dev_sf199_is_declared_red_and_never_counted_green():
+    """§19 (DEP-E-ORDER-CANDIDATES, DEP-M2A5-WIRE-CARDINALITY): not asserted green here. What its pending DOES exercise is F24
+    on the pending of §6.7, the one Gold pending whose asking patch is known: CLEAR(ORDER) alone, or with a KEEP of filler,
+    answers nothing (D20); C1 chosen whole, with the filler, does."""
+    assert status_of("SF199") == "RED_DECLARED" and "SF199" not in by_status("DEV")["MEASURED"]
+    label = GOLD["SF199"]["label_A"]
+    pending, options = typed_pending("SF199", label)
+    asked = options["asked"]
+    assert [(o.op.value, o.slot.key) for o in asked] == [("CLEAR", "ORDER")]
+    keep = fa.PatchOp(fa.PatchOpKind.KEEP, fa.Slot.from_dict("TOPIC/POSITIVE"), None, None, _org(TRACE_ANSWER, "x", 5))
+    for ops in ((asked[0],), (keep, asked[0])):
+        d = T.P.respond(pending, T.P.PendingTurn(T.facts(), ops), trace_id="t2", now=T.T0 + T.MINUTE, asked_ops=asked)
+        assert (d.kind.value, d.code) == ("REASK", "ANSWER_UNRESOLVED"), ops
+    c1 = pending.candidate_patches[0].patch.ops
+    d = T.P.respond(pending, T.P.PendingTurn(T.facts(), (keep, *c1)), trace_id="t2", now=T.T0 + T.MINUTE, asked_ops=asked)
+    assert (d.kind.value, d.answer.candidate_id) == ("PENDING_ANSWER", "c1")
 
 
 # ---- creation: the Gold's CLARIFY cases of M2A-3 become pendings ---------------------------------------------------------
@@ -286,20 +352,26 @@ def test_dev_p09_the_f12_case_of_the_gold_is_a_pending_with_its_two_alternatives
 
 
 def main(partition: str) -> int:
+    statuses = by_status(partition)
     rows = measure(partition)
     creations = {gid: creation_problems(gid) for gid in applicable_clarify(partition)}
     if partition == partition_of("SF163"):
         creations["SF163"] = h5_problems("SF163")
     for gid, (ok, seen) in sorted(rows.items()):
-        print(f"{gid} {'OK ' if ok else 'RED'} {seen}" + (f"   [declared red: {RED_DECLARED[gid]}]" if gid in RED_DECLARED else ""))
+        print(f"{gid} {'OK ' if ok else 'RED'} MEASURED     {seen}")
+    for gid in statuses["NO_MEDIBLE"]:
+        ok, seen = run_case(gid, informational=True)
+        print(f"{gid} --- NO_MEDIBLE   (facts of the label, information only: {'agrees' if ok else 'DISAGREES'}: {seen})")
+    for gid in statuses["RED_DECLARED"]:
+        ok, seen = run_case(gid, informational=True)
+        print(f"{gid} --- RED_DECLARED [{RED_DECLARED[gid]}] (run, information only: {'agrees' if ok else 'DISAGREES'}: {seen})")
     for gid, problems in sorted(creations.items()):
         print(f"{gid} creation {'OK' if not problems else problems}")
-    clean = [g for g in rows if g not in RED_DECLARED]
-    green = sum(rows[g][0] for g in clean)
-    print(f"{partition}: {green}/{len(clean)} not declared red; {sum(not rows[g][0] for g in RED_DECLARED if g in rows)} of "
-          f"{sum(g in RED_DECLARED for g in rows)} declared-red cases disagree; creation "
-          f"{sum(not p for p in creations.values())}/{len(creations)}")
-    return 0 if green == len(clean) and not any(creations.values()) else 1
+    green = sum(ok for ok, _ in rows.values())
+    print(f"{partition}: MEASURED {green}/{len(rows)}; NO_MEDIBLE {len(statuses['NO_MEDIBLE'])} (not counted); "
+          f"RED_DECLARED {len(statuses['RED_DECLARED'])} (not counted); of {len(owned_ids(partition))} cases owned; "
+          f"creation {sum(not p for p in creations.values())}/{len(creations)}")
+    return 0 if green == len(rows) and not any(creations.values()) else 1
 
 
 if __name__ == "__main__":
