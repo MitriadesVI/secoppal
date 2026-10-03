@@ -18,8 +18,10 @@ Fail-closed decisions with an owner (inventory §6.6, ``M2A3_PHASE1_CLOSE.md``; 
 
 * REPLACE_UNIVERSE to ``opportunities`` re-decides O1B / ``opportunity-explicit-state``: no owner in M2a ⇒
   ``OP_NOT_ACCREDITED:UNIVERSE`` (§19 DEP-O1B-OPPORTUNITIES, ``FOUNDATION_O1B_EXPLICIT_TIME_PARITY`` + M2A-1b);
-* a request policy carried across a change of universe, or a STATE edit over an opportunities request, would have to be
-  re-decided on the composed effective (§6.6): a policy without owner ⇒ ``OP_NOT_ACCREDITED:<DIM of its condition>``;
+* a policy without owner (§6.6): a SET that places a condition ``main`` projects only with a request policy (a MODALITY
+  family; a negated Terminado over contracts, F16's inversion included), a change of universe that carries a policy or
+  such a condition, or a STATE edit over an opportunities request ⇒ ``OP_NOT_ACCREDITED:<DIM of the operation>``;
+* one cause per operation (§6 step 3b), whatever the number of its reasons;
 * a policy goes with its condition: when every cited condition leaves by a cited op it leaves too (no dangling policy).
 """
 
@@ -31,7 +33,8 @@ from enum import Enum
 
 from app.core.foundation_accepted import (
     CONDITION_SLOT_ORDER, UNIVERSE_SLOT, AcceptedCondition, AcceptedInterpretation, PatchOp, PatchOpKind,
-    SemanticPatch, Slot, UniverseKind, canonical_interpretation, canonical_value, money_bound, unit_class,
+    SemanticPatch, Slot, UniverseKind, canonical_interpretation, canonical_value, modality_family_policy, money_bound,
+    state_class, unit_class,
 )
 from app.core.foundation_operations import Subject
 from app.core.interpretation_contract import (
@@ -248,21 +251,22 @@ def refusal_causes(base: AcceptedInterpretation, ops) -> tuple[Cause, ...]:
     standing = defaultdict(list)
     for c in base.conditions:
         standing[c.slot.key].append(c)
-    for op in ops:  # 1: an op on an atom inside an OR/NOT group (§4.2)
+    for op in ops:  # 1: an op on an atom inside an OR/NOT group (§4.2); one cause per operation (§6 step 3b)
+        hits = []
         if op.op in (PatchOpKind.CLEAR, PatchOpKind.SET, PatchOpKind.KEEP):
-            hit = [s for s in covered(op.slot) if s.key in grouped]
-            if hit:
-                found.append(Cause(Refusal.TARGET_NOT_ADDRESSABLE, min(hit, key=lambda s: SLOT_RANK[s.key]), (op,),
-                                   "§4.2"))
+            hits += [(s, "§4.2") for s in covered(op.slot) if s.key in grouped]
         if op.op is PatchOpKind.SET:  # a declared substitution whose victim sits inside a group is not addressable
             positive = _negative_to_positive(op.slot)
             if positive in grouped and carried(positive) and len(standing[positive]) == 1 and (
                     canonical_value(standing[positive][0]) == canonical_value(op.condition)):
-                found.append(Cause(Refusal.TARGET_NOT_ADDRESSABLE, SLOT_BY_KEY[positive], (op,), "§4.2 + §6.5 F16"))
+                hits.append((SLOT_BY_KEY[positive], "§4.2 + §6.5 F16"))
             opposite = _opposite(op.slot.key)
             if opposite in grouped and carried(opposite) and _comparable(op.condition, standing[opposite][0]) and (
                     _a81_collides(op.condition, standing[opposite][0])):
-                found.append(Cause(Refusal.TARGET_NOT_ADDRESSABLE, SLOT_BY_KEY[opposite], (op,), "§4.2 + §15.2"))
+                hits.append((SLOT_BY_KEY[opposite], "§4.2 + §15.2"))
+        if hits:
+            slot, clause = min(hits, key=lambda hit: SLOT_RANK[hit[0].key])
+            found.append(Cause(Refusal.TARGET_NOT_ADDRESSABLE, slot, (op,), clause))
     for key in set(writers) | set(keeps):  # 2: two writers of one slot; KEEP with a writer or a CLEAR of it
         w, k, c = writers.get(key, []), keeps.get(key, []), clears.get(key, [])
         if len(w) >= 2 or (k and (w or c)):
@@ -276,52 +280,80 @@ def refusal_causes(base: AcceptedInterpretation, ops) -> tuple[Cause, ...]:
 
 
 def _comparable(a: AcceptedCondition, b: AcceptedCondition) -> bool:
-    """§15.2 (A8): two bounds are compared unless their units are known and of different classes."""
-    first, second = unit_class(a), unit_class(b)
-    return first is None or second is None or first == second
+    """§15.2 (A8): two bounds are compared only when both units are known and of the same class (pesos or SMMLV); an
+    unknown unit (None) is comparable with nothing."""
+    first = unit_class(a)
+    return first is not None and first == unit_class(b)
+
+
+def needs_host_policy(condition: AcceptedCondition, subjects) -> bool:
+    """§6.6 (inventory, ``M2A3_PHASE1_CLOSE.md`` §1): a condition ``main`` projects only with a request policy M2a has no
+    owner for: a MODALITY family (``modality-*-family@1``) and a negated Terminado over contracts
+    (``celebrated-state-complement``). ``subjects`` are the subjects of the requests the condition will apply to."""
+    if condition.dimension is SemanticDimension.MODALITY:
+        return condition.operator == "family" or modality_family_policy(condition) is not None
+    if condition.dimension is SemanticDimension.STATE:
+        return (condition.polarity is Polarity.NEGATIVE and state_class(condition) == "terminated"
+                and Subject.CONTRACTS in subjects)
+    return False
 
 
 def _not_accredited(base, ops, carried, standing, writers, clears) -> list[Cause]:
-    """Row 4 of §6 step 3b: F16's fail-closed branch and P-3 (§6.5), A8.1 with incomparable units (§15.2), the O1B lens
-    (§19) and a request policy without owner (§6.6)."""
+    """Row 4 of §6 step 3b, ONE cause per operation (§6 step 3b: «dos operaciones no acreditadas son dos causas»; an
+    operation is never several). Its reasons, the first one naming the clause: F16's fail-closed branch and P-3 (§6.5),
+    A8.1 with incomparable or unknown units (§15.2), a policy without owner (§6.6: a placed condition that needs one, a
+    change of universe that carries a policy or a condition needing one) and the O1B lens (§19)."""
+    redirect = _redirect(ops)
+    single_redirect = redirect is not None and len(writers.get(UNIVERSE_KEY, [])) == 1
+    subjects_after = ({redirect.universe.subject} if single_redirect
+                      else {r.subject for r in base.requests})
+    lens = any(r.universe_kind is UniverseKind.OPPORTUNITIES for r in base.requests)  # O1B reads the STATE
+    present = {c.slot.key for c in base.conditions}
     out = []
     for op in ops:
-        if op.op is PatchOpKind.REPLACE_UNIVERSE and op.universe.universe_kind is UniverseKind.OPPORTUNITIES:
-            out.append(Cause(Refusal.OP_NOT_ACCREDITED, UNIVERSE_SLOT, (op,), "§19 DEP-O1B-OPPORTUNITIES"))
-        if op.op is not PatchOpKind.SET:
-            continue
-        positive = _negative_to_positive(op.slot)
-        if positive is not None:
-            value = canonical_value(op.condition)
-            same_patch = tuple(o for o in ops if o.op is PatchOpKind.SET and o.slot.key == positive
-                               and canonical_value(o.condition) == value)
-            several = carried(positive) and len(standing[positive]) > 1 and any(
-                canonical_value(c) == value for c in standing[positive])
-            if same_patch or several:
-                out.append(Cause(Refusal.OP_NOT_ACCREDITED, op.slot, (op, *same_patch),
-                                 "§6.5 P-3" if same_patch else "§6.5 F16 (R3-4)"))
-        opposite = _opposite(op.slot.key)
-        if opposite is not None and carried(opposite) and not _comparable(op.condition, standing[opposite][0]):
-            out.append(Cause(Refusal.OP_NOT_ACCREDITED, op.slot, (op,), "§15.2 A8"))
-    redirect = _redirect(ops)
-    if redirect is not None and len(writers.get(UNIVERSE_KEY, [])) == 1:
-        touched = _touched_request(base, redirect)
-        target = redirect.universe
-        if (touched.subject, touched.universe_kind) != (target.subject, target.universe_kind):
-            kept = {c.condition_id for c in base.conditions if carried(c.slot.key)}
-            by_id = {c.condition_id: c for c in base.conditions}
-            for policy in base.policies:  # re-decided on the composed effective with no owner in M2a (§6.6)
-                if set(policy.condition_ids) <= kept:
-                    out.append(Cause(Refusal.OP_NOT_ACCREDITED, by_id[policy.condition_ids[0]].slot, (redirect,),
-                                     "§6.6 policy without owner"))
-    if any(r.universe_kind is UniverseKind.OPPORTUNITIES for r in base.requests):  # O1B reads the STATE (§6.6, §19)
-        present = {c.slot.key for c in base.conditions}
-        for op in ops:  # only an op that changes the STATE re-decides the lens (a KEEP or a CLEAR of nothing does not)
-            for slot in covered(op.slot):
-                if slot.dimension is SemanticDimension.STATE and (
-                        op.op is PatchOpKind.SET or (op.op is PatchOpKind.CLEAR and slot.key in present)):
-                    out.append(Cause(Refusal.OP_NOT_ACCREDITED, slot, (op,), "§6.6 + §19 O1B lens"))
+        reasons: list[tuple[Slot, tuple, str]] = []
+        if op.op is PatchOpKind.SET:
+            positive = _negative_to_positive(op.slot)
+            if positive is not None:
+                value = canonical_value(op.condition)
+                same_patch = tuple(o for o in ops if o.op is PatchOpKind.SET and o.slot.key == positive
+                                   and canonical_value(o.condition) == value)
+                several = carried(positive) and len(standing[positive]) > 1 and any(
+                    canonical_value(c) == value for c in standing[positive])
+                if same_patch or several:
+                    reasons.append((op.slot, same_patch, "§6.5 P-3" if same_patch else "§6.5 F16 (R3-4)"))
+            opposite = _opposite(op.slot.key)
+            if opposite is not None and carried(opposite) and not _comparable(op.condition, standing[opposite][0]):
+                reasons.append((op.slot, (), "§15.2 A8"))
+            if needs_host_policy(op.condition, subjects_after):
+                reasons.append((op.slot, (), "§6.6 policy without owner (placed)"))
+        if op.op is PatchOpKind.REPLACE_UNIVERSE:
+            if op.universe.universe_kind is UniverseKind.OPPORTUNITIES:
+                reasons.append((UNIVERSE_SLOT, (), "§19 DEP-O1B-OPPORTUNITIES"))
+            if single_redirect and _redirect_redecides_policies(base, op, carried):
+                reasons.append((UNIVERSE_SLOT, (), "§6.6 policy without owner (carried)"))
+        if lens and op.op in (PatchOpKind.SET, PatchOpKind.CLEAR):  # only a change of the STATE re-decides the lens
+            states = [s for s in covered(op.slot) if s.dimension is SemanticDimension.STATE
+                      and (op.op is PatchOpKind.SET or s.key in present)]  # a CLEAR of nothing changes nothing
+            if states:
+                reasons.append((min(states, key=lambda s: SLOT_RANK[s.key]), (), "§6.6 + §19 O1B lens"))
+        if reasons:
+            slot, extra, clause = reasons[0]
+            out.append(Cause(Refusal.OP_NOT_ACCREDITED, slot, (op, *extra), clause))
     return out
+
+
+def _redirect_redecides_policies(base, redirect: PatchOp, carried) -> bool:
+    """§6.6: a change of universe re-decides, on the composed effective, every policy it carries and every carried
+    condition that needs one in the new universe; none has an owner in M2a."""
+    touched = _touched_request(base, redirect)
+    target = redirect.universe
+    if (touched.subject, touched.universe_kind) == (target.subject, target.universe_kind):
+        return False
+    kept = [c for c in base.conditions if carried(c.slot.key)]
+    kept_ids = {c.condition_id for c in kept}
+    return (any(set(p.condition_ids) <= kept_ids for p in base.policies)
+            or any(needs_host_policy(c, {target.subject}) for c in kept))
 
 
 def _cardinality_without_order(base, ops, present, writers, clears) -> list[Cause]:

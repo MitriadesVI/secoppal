@@ -427,37 +427,60 @@ def test_the_a1_a3_closed_lists_never_widen():
     assert annex_failures(fa) == []
 
 
-# ---- 7. Provenance as the contract writes it (phase 2): year, year_source and inheritance origins --------------------
+# ---- 7. Provenance as the contract writes it (phase 2, narrowed by ZEUS P2-5) -----------------------------------
+def _on(m, dimension: D, **fields):
+    """A Provenance checked against the dimension of its condition (``check_dimension``)."""
+    def build():
+        m.Provenance(**fields).check_dimension(dimension)
+    return build
+
+
 def provenance_failures(m) -> list[str]:
-    """§3.2: ``year`` is the vigencia of a SMMLV conversion, ``year_source`` a year's provenance (also a TIME's, §11):
-    independent. §15.4/§11: an inherited UNIT names its origin; an inherited YEAR may; an origin needs an
-    inheritance."""
+    """§3.2, §11, §15.4–§15.5, §16.1. Relaxed in phase 2, and ONLY this: a TIME carries a ``year_source`` without a SMMLV
+    ``year``, and an inherited year needs no origin. Kept: a SMMLV vigencia (``year``) travels with its source;
+    ``year_source`` and ``inherited_from`` live on VALUE/TIME only; an inherited UNIT names its origin; an origin needs
+    an inheritance."""
     out = []
+    stated = m.YearSource.STATED
     accepted = {
-        "TIME year source without a SMMLV year": lambda: m.Provenance(year_source=m.YearSource.STATED),
-        "TIME year inferred by the clock": lambda: m.Provenance(year_source=m.YearSource.CLOCK_INFERRED),
-        "SMMLV year without a year source": lambda: m.Provenance(unit=m.Unit.SMMLV, source_amount="500",
-                                                                 unit_source=m.UnitSource.STATED, year=2025),
-        "inherited year without origin": lambda: m.Provenance(year_source=m.YearSource.PREVIOUS_ACCEPTED_TIME),
-        "inherited year with origin": lambda: m.Provenance(year_source=m.YearSource.PREVIOUS_ACCEPTED_TIME,
-                                                           inherited_from="t0"),
-        "inherited unit with origin": lambda: m.Provenance(unit=m.Unit.MILLONES, source_amount="5",
-                                                           unit_source=m.UnitSource.PREVIOUS_ACCEPTED_VALUE,
-                                                           inherited_from="t0"),
+        "TIME year source without a SMMLV year": _on(m, D.TIME, year_source=stated),
+        "TIME year inferred by the clock": _on(m, D.TIME, year_source=m.YearSource.CLOCK_INFERRED),
+        "SMMLV year with its source": _on(m, D.VALUE, unit=m.Unit.SMMLV, source_amount="500",
+                                          unit_source=m.UnitSource.STATED, year=2025, year_source=stated),
+        "inherited year without origin": _on(m, D.TIME, year_source=m.YearSource.PREVIOUS_ACCEPTED_TIME),
+        "inherited year with origin": _on(m, D.TIME, year_source=m.YearSource.PREVIOUS_ACCEPTED_TIME,
+                                          inherited_from="t0"),
+        "inherited unit with origin": _on(m, D.VALUE, unit=m.Unit.MILLONES, source_amount="5",
+                                          unit_source=m.UnitSource.PREVIOUS_ACCEPTED_VALUE, inherited_from="t0"),
+        "SMMLV year inherited from the TIME": _on(m, D.VALUE, unit=m.Unit.SMMLV, source_amount="500",
+                                                  unit_source=m.UnitSource.STATED, year=2025,
+                                                  year_source=m.YearSource.PREVIOUS_ACCEPTED_TIME),
     }
     for label, build in accepted.items():
         if (code := _code(build)) is not None:
             out.append(f"refused {label}: {code}")
     refused = {
-        "inherited unit without origin": lambda: m.Provenance(unit=m.Unit.MILLONES, source_amount="5",
-                                                              unit_source=m.UnitSource.PREVIOUS_ACCEPTED_VALUE),
-        "an origin without an inheritance": lambda: m.Provenance(year_source=m.YearSource.STATED, inherited_from="t0"),
-        "SMMLV without its year": lambda: m.Provenance(unit=m.Unit.SMMLV, source_amount="500",
-                                                       unit_source=m.UnitSource.STATED),
+        "inherited unit without origin": _on(m, D.VALUE, unit=m.Unit.MILLONES, source_amount="5",
+                                             unit_source=m.UnitSource.PREVIOUS_ACCEPTED_VALUE),
+        "an origin without an inheritance": _on(m, D.TIME, year_source=stated, inherited_from="t0"),
+        "SMMLV without its year": _on(m, D.VALUE, unit=m.Unit.SMMLV, source_amount="500",
+                                      unit_source=m.UnitSource.STATED),
+        "SMMLV year without a year source": _on(m, D.VALUE, unit=m.Unit.SMMLV, source_amount="500",
+                                                unit_source=m.UnitSource.STATED, year=2025),
+        "a pesos bound with a year and no source": _on(m, D.VALUE, unit=m.Unit.PESOS,
+                                                       unit_source=m.UnitSource.STATED, year=2031),
+        "a VALUE year source without a year": _on(m, D.VALUE, unit=m.Unit.PESOS, unit_source=m.UnitSource.STATED,
+                                                  year_source=stated),
+        **{f"a year source on {d.value}": _on(m, d, year_source=source)
+           for d in (D.TOPIC, D.BUYER, D.ORDER) for source in (m.YearSource.CLOCK_INFERRED, stated)},
     }
     for label, build in refused.items():
         if _code(build) is None:
             out.append(f"accepted {label}")
+    for d in (D.TOPIC, D.BUYER, D.ORDER):  # the origin itself is confined, not only through its year source
+        code = _code(_on(m, d, year_source=m.YearSource.PREVIOUS_ACCEPTED_TIME, inherited_from="t-other"))
+        if code != "INHERITANCE_OUTSIDE_VALUE_OR_TIME":
+            out.append(f"an inherited year on {d.value}: {code}")
     return out
 
 
@@ -548,11 +571,25 @@ MUTANTS = {
         LOGIC, "    return None if _conjunction_only(logic) else ConditionExpression(logic.operator, None, tuple(\n"
                "        g for c in logic.children for g in (c.children if c.operator is LogicOperator.AND "
                "and logic.operator is LogicOperator.AND else (c,))))"),),
-    # Provenance (phase 2)
+    # Provenance (phase 2, narrowed by ZEUS P2-5)
     "year_coupled_to_its_source_again": (provenance_failures, (
-        "        if self.year is not None:\n            _int(self.year, \"PROVENANCE_YEAR\", 1)",
-        "        if (self.year is None) != (self.year_source is None):\n            _fail(\"YEAR_WITHOUT_SOURCE\")\n"
-        "        if self.year is not None:\n            _int(self.year, \"PROVENANCE_YEAR\", 1)"),),
+        "            if self.year_source is None:\n                _fail(\"YEAR_WITHOUT_SOURCE\")",
+        "            if self.year_source is None:\n                _fail(\"YEAR_WITHOUT_SOURCE\")\n"
+        "        if self.year_source is not None and self.year is None:\n            _fail(\"YEAR_WITHOUT_SOURCE\")"),),
+    "smmlv_year_without_source_accepted": (provenance_failures, (
+        "            if self.year_source is None:\n                _fail(\"YEAR_WITHOUT_SOURCE\")",
+        "            pass"),),
+    "year_source_on_any_dimension": (provenance_failures, (
+        "        if self.year_source is not None and dimension not in (SemanticDimension.VALUE, "
+        "SemanticDimension.TIME):",
+        "        if False:"),),
+    "value_year_source_without_year": (provenance_failures, (
+        "        if self.year_source is not None and self.year is None and dimension is SemanticDimension.VALUE:",
+        "        if False:"),),
+    "inheritance_on_any_dimension": (provenance_failures, (
+        "        if self.inherited_from is not None and dimension not in (SemanticDimension.VALUE, "
+        "SemanticDimension.TIME):",
+        "        if False:"),),
     "inherited_unit_without_origin_accepted": (provenance_failures, (
         "        if self.unit_source is UnitSource.PREVIOUS_ACCEPTED_VALUE and self.inherited_from is None:",
         "        if False:"),),

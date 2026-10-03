@@ -17,7 +17,10 @@ universe). H2 (pending, §8.3) is M2A-4's: this function answers a turn with no 
 F5/F7): a resolved value in a ``m2a-patch/1`` already passed them, so ``compose`` never raises them.
 
 The pending is returned as DATA (``PendingQuestion``: frame, open operations, candidates, answer slots); building the
-``PendingClarification`` and its protocol is M2A-4's.
+``PendingClarification`` and its protocol is M2A-4's. §8.4 judges a candidate by the causes of §6 step 3b only, and a
+candidate «executes» with the host rule its pending answers exempted (``executes(..., answered=rule)``): H6's «buscar
+con ambos» is the answer to H6, not a new H6 (ZEUS NO_GO on 15e72829, P1). M2A-4 composes a chosen candidate with the
+same exemption.
 """
 
 from __future__ import annotations
@@ -30,8 +33,8 @@ from app.core.foundation_accepted import (
     UniverseTarget, geo_divipola, state_datasets, time_years, unit_class,
 )
 from app.core.foundation_delta import (
-    CARDINALITY_KEY, ORDER_KEY, SLOT_BY_KEY, SLOT_RANK, Cause, Composed, DeltaEffect, DeltaRefusal, Refusal,
-    compose_ops, grouped_keys, covered, covered_keys, refusal_causes,
+    CARDINALITY_KEY, LOWER_KEY, ORDER_KEY, SLOT_BY_KEY, SLOT_RANK, UPPER_KEY, Cause, Composed, DeltaEffect,
+    DeltaRefusal, Refusal, compose_ops, grouped_keys, covered, covered_keys, refusal_causes,
 )
 from app.core.interpretation_contract import ContractError, Polarity
 from app.core.semantic_dimensions import SemanticDimension
@@ -45,6 +48,7 @@ HOST_CODES = {"H1": "CONTEXT_EXPIRED_CONFIRM", "H3": "SMMLV_YEAR_AMBIGUOUS", "H4
 GEO_POSITIVE = Slot(SemanticDimension.GEOGRAPHY, Polarity.POSITIVE)
 BUYER_POSITIVE = Slot(SemanticDimension.BUYER, Polarity.POSITIVE)
 TIME_POSITIVE = Slot(SemanticDimension.TIME, Polarity.POSITIVE)
+_OPPOSITE_SIDE = {LOWER_KEY: UPPER_KEY, UPPER_KEY: LOWER_KEY}
 
 
 class DeltaDisposition(str, Enum):
@@ -203,12 +207,15 @@ def _questions(base, ops, composed: Composed) -> tuple[Finding, ...]:
     return tuple(f for f in host_findings(base, ops, composed) if f.kind is FindingKind.QUESTION and f.rule != "H11")
 
 
-def executes(frame: AcceptedInterpretation, ops, trace: str) -> bool:
+def executes(frame: AcceptedInterpretation, ops, trace: str, *, answered: str | None = None) -> bool:
     """The answer composes on the frame with no cause and no further question (a §19 dependency is a declared red, not a
-    dead end, as in the contract's model)."""
+    dead end, as in the contract's model). ``answered`` is the host rule the pending answers: its candidates are the
+    options resolved AT ASK TIME (§8.2), so the rule they answer is not raised again by choosing one (§6 H6 «buscar con
+    ambos» executes; the contract's model ties the question to the reading of the asking operation). M2A-4 composes a
+    chosen candidate with the same exemption."""
     composed = _compose(frame, tuple(ops), trace)
     return isinstance(composed, Composed) and all(
-        f.kind is FindingKind.DEPENDENCY for f in host_findings(frame, tuple(ops), composed))
+        f.kind is FindingKind.DEPENDENCY or f.rule == answered for f in host_findings(frame, tuple(ops), composed))
 
 
 def _fresh_set_executes(frame: AcceptedInterpretation, slot: Slot) -> bool:
@@ -221,6 +228,9 @@ def _fresh_set_executes(frame: AcceptedInterpretation, slot: Slot) -> bool:
         return False
     if slot == GEO_POSITIVE and len(_territorial_scopes(frame.conditions, frozenset())) > 1:
         return False
+    if slot.dimension is SemanticDimension.VALUE and any(  # §15.2: no chosen unit compares with an unknown one
+            c.slot.key == _OPPOSITE_SIDE.get(slot.key) and unit_class(c) is None for c in frame.conditions):
+        return False
     rest = [c for c in frame.conditions if c.slot != slot]
     smmlv = _smmlv(rest)
     if not smmlv:
@@ -231,11 +241,13 @@ def _fresh_set_executes(frame: AcceptedInterpretation, slot: Slot) -> bool:
     return _smmlv_status(frame, rest) != "ambiguous"
 
 
-def _has_executing_answer(frame, answer_slots, candidates, trace: str, origin: ConditionOrigin) -> bool:
-    """§8.4 condition 3 (R3c): a candidate executes or, without candidates, some one-operation answer on
-    ``answer_slots`` does (CLEAR, KEEP, REPLACE_UNIVERSE to the frame's universe, or a SET of a chosen value)."""
+def _has_executing_answer(frame, answer_slots, candidates, trace: str, origin: ConditionOrigin,
+                          answered: str | None = None) -> bool:
+    """§8.4 condition 3 (R3c): a candidate executes (the rule it answers exempted) or, without candidates, some
+    one-operation answer on ``answer_slots`` does (CLEAR, KEEP, REPLACE_UNIVERSE to the frame's universe, or a SET of a
+    chosen value)."""
     if candidates:
-        return any(executes(frame, candidate, trace) for candidate in candidates)
+        return any(executes(frame, candidate, trace, answered=answered) for candidate in candidates)
     for slot in sorted(answer_slots, key=lambda s: (min(SLOT_RANK[c.key] for c in covered(s)), s.key)):
         if slot.is_universe:
             request = frame.requests[0]
@@ -254,9 +266,11 @@ def _has_executing_answer(frame, answer_slots, candidates, trace: str, origin: C
     return False
 
 
-def law_violations(base, frame_ops, candidates, answer_slots, trace: str, origin: ConditionOrigin) -> list[str]:
-    """§8.4: the frame is a valid effective with nothing open; every candidate composes on it without causes and is
-    resolved; ``answer_slots`` ⊇ the candidates' slots; and at least one answer executes."""
+def law_violations(base, frame_ops, candidates, answer_slots, trace: str, origin: ConditionOrigin,
+                   answered: str | None = None) -> list[str]:
+    """§8.4: (1) the frame is a valid effective with nothing open; (2) every candidate composes on it without causes of
+    §6 step 3b — the candidates are judged by those causes, never by host questions; ``answer_slots`` ⊇ the
+    candidates' slots; (3) at least one answer executes (``answered``: the host rule the pending answers)."""
     frame_ops = tuple(frame_ops)
     composed = _compose(base, frame_ops, trace)
     if isinstance(composed, DeltaRefusal):
@@ -265,14 +279,11 @@ def law_violations(base, frame_ops, candidates, answer_slots, trace: str, origin
         return ["frame holds an open question"]
     frame, out = composed.effective, []
     for candidate in candidates:
-        made = _compose(frame, candidate, trace)
-        if isinstance(made, DeltaRefusal):
+        if isinstance(_compose(frame, candidate, trace), DeltaRefusal):
             out.append("candidate does not compose on the frame")
-        elif _questions(frame, candidate, made):
-            out.append("candidate not resolved at ask time")
     if not covered_keys(op for candidate in candidates for op in candidate) <= {s.key for s in answer_slots}:
         out.append("answer_slots do not cover the candidates")
-    if not out and not _has_executing_answer(frame, answer_slots, candidates, trace, origin):
+    if not out and not _has_executing_answer(frame, answer_slots, candidates, trace, origin, answered):
         out.append("no answer executes")
     return out
 
@@ -284,10 +295,11 @@ def _slots(ops) -> frozenset[Slot]:
     return frozenset(op.slot for op in ops) | frozenset(SLOT_BY_KEY[key] for key in covered_keys(ops))
 
 
-def _ask(base, code: str, frame_ops, open_ops, candidates, answer_slots, trace, origin) -> DeltaOutcome:
+def _ask(base, code: str, frame_ops, open_ops, candidates, answer_slots, trace, origin,
+         answered: str | None = None) -> DeltaOutcome:
     """CLARIFY with its pending when §8.4 allows it; INFORM with the same code otherwise (never a pending that cannot
     exist)."""
-    if law_violations(base, frame_ops, candidates, answer_slots, trace, origin):
+    if law_violations(base, frame_ops, candidates, answer_slots, trace, origin, answered):
         return DeltaOutcome(DeltaDisposition.INFORM, code)
     frame = _compose(base, tuple(frame_ops), trace).effective
     return DeltaOutcome(DeltaDisposition.CLARIFY, code, pending=PendingQuestion(
@@ -334,7 +346,7 @@ def delta_outcome(base: AcceptedInterpretation, patch: SemanticPatch, *, base_tr
         return DeltaOutcome(DeltaDisposition.INFORM, first.code)
     frame_ops = () if first.rule == "H11" else _without(ops, first.open_ops)
     slots = _slots(first.open_ops) | _slots(op for c in first.candidates for op in c)
-    return _ask(base, first.code, frame_ops, first.open_ops, first.candidates, slots, trace, origin)
+    return _ask(base, first.code, frame_ops, first.open_ops, first.candidates, slots, trace, origin, first.rule)
 
 
 def relative_outcome(base: AcceptedInterpretation, rest: tuple[PatchOp, ...], *, base_trace_id: str,

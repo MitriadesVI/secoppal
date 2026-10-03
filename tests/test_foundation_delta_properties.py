@@ -18,7 +18,12 @@ dual anchors, opportunities requests and OR groups, with the host's real subject
 
 The reducer mutants the Gold does not discriminate (oracle manifest: ``f16_any_value``, ``set_clears_whole_dimension``,
 ``clear_dimension_only_positive``, ``redirect_keeps_old_kind``, H6 over-fire) and one mutant per rule are killed by
-these properties (``test_every_reducer_mutant_is_killed``).
+these properties (``test_every_reducer_mutant_is_killed``). The rules the generator reaches only rarely are pinned one
+by one in ``test_foundation_delta_rules`` (ZEUS NO_GO on 15e72829, P2-7).
+
+Beyond the oracle (ZEUS repair): §8.1/§8.4 the candidates each pending source carries (H1 «continuar», H6's two, R3-1's
+C1) and the A.3 dimension of an UNRESOLVED_VALUE held by its ``answer_slots``; §6.6 nothing that needs a host policy
+without owner executes; §6 step 3b one cause per operation.
 """
 from __future__ import annotations
 
@@ -73,13 +78,15 @@ VALUES = {
     D.ACTOR: lambda ex: [ActorValue("900123456", "NIT", "Acme", ex), ActorValue("800222333", "NIT", "Beta", ex)],
     D.GEOGRAPHY: lambda ex: [GeoValue(GeoLevel.DEPARTMENT, "VALLE", None, "76", (), ex),
                              GeoValue(GeoLevel.DEPARTMENT, "ANTIOQUIA", None, "05", (), ex),
-                             GeoValue(GeoLevel.MUNICIPALITY, "CALI", "VALLE DEL CAUCA", "76001", (), ex)],
+                             GeoValue(GeoLevel.MUNICIPALITY, "CALI", "VALLE DEL CAUCA", "76001", (), ex),
+                             GeoValue(GeoLevel.REGION, "CARIBE", None, None, ("08", "13"), ex)],  # SF123: no code
     D.TIME: lambda ex: [_time(2023, 2023, ex), _time(2025, 2025, ex), _time(2026, 2026, ex), _time(2024, 2025, ex)],
     D.STATE: lambda ex: [StateValue("open", (("p6dx-8zbt", "estado_del_procedimiento", ("Abierto",)),), ex),
                          StateValue("terminated", (("jbjy-vk9h", "estado_contrato", ("Terminado",)),), ex),
                          StateValue("published", (), ex)],
     D.MODALITY: lambda ex: [ModalityValue(("minima_cuantia",), None, ex),
-                            ModalityValue(("licitacion_publica",), None, ex)],
+                            ModalityValue(("licitacion_publica",), None, ex),
+                            ModalityValue(("licitacion_publica",), "modality-lp-family@1", ex)],  # needs a policy
     D.CONTRACT_TYPE_OR_NATURE: lambda ex: [ContractTypeValue(("obra",), ex)],
 }
 POLARIZED = tuple(VALUES)
@@ -107,6 +114,8 @@ def condition(dimension: D, value, cid: str, rids, org: fa.ConditionOrigin, prov
         operator = "whole_token_folded" if value.token_mode else "contains"
     elif dimension is D.TIME:
         operator = "during_year" if value.precision == "year" else "between_dates"
+    elif dimension is D.MODALITY and value.family_policy is not None:
+        operator = "family"
     else:
         operator = "is"
     return fa.AcceptedCondition(
@@ -126,6 +135,8 @@ def st_provenance(draw, dimension: D, value, rich: bool):
         if draw(st.booleans()):
             return fa.Provenance(unit=fa.Unit.SMMLV, source_amount="500", unit_source=fa.UnitSource.STATED,
                                  year=draw(st.sampled_from([2025, 2026])), year_source=fa.YearSource.STATED)
+        if draw(st.integers(0, 3)) == 0:  # a bound of unknown unit (§15.2: comparable with nothing)
+            return fa.Provenance()
         unit_source = draw(st.sampled_from(list(fa.UnitSource)))
         return fa.Provenance(unit=draw(st.sampled_from([fa.Unit.PESOS, fa.Unit.MILLONES])), source_amount="5",
                              unit_source=unit_source,
@@ -302,7 +313,8 @@ def pending_problems(outcome_module, outcome) -> list[str]:
                                 candidates, p.answer_slots)
     except ContractError as error:
         return [f"P5 the CLARIFY's pending is not constructible: {error}"]
-    if p.candidates and not any(outcome_module.executes(p.frame, c, "t0") for c in p.candidates):
+    answered = next((rule for rule, code in fo.HOST_CODES.items() if code == p.reason), None)
+    if p.candidates and not any(outcome_module.executes(p.frame, c, "t0", answered=answered) for c in p.candidates):
         return ["P5 no candidate of the CLARIFY executes"]
     return []
 
@@ -408,7 +420,79 @@ def spec_problems(delta, base, patch, expired, outcome) -> list[str]:
         frame = outcome_frame_problem(base, outcome)
         if frame:
             out.append(frame)
+    out += pending_shape_problems(delta, base, patch, outcome, conflict)
+    out += policy_owner_problems(base, patch, outcome)
+    out += cause_count_problems(causes)
     return out
+
+
+def _multiset(ops) -> list:
+    return sorted(ops, key=repr)
+
+
+def pending_shape_problems(delta, base, patch, outcome, conflict) -> list[str]:
+    """§8.1 and the §8.4 table, from the contract's words: the candidates each source must carry."""
+    if outcome.disposition.value != "CLARIFY":
+        return []
+    p, ops, out = outcome.pending, patch.ops, []
+    if p.reason == "CONTEXT_EXPIRED_CONFIRM" and (  # H1: one candidate, «continuar» = the turn's patch on the anchor
+            p.frame != base or [_multiset(c) for c in p.candidates] != [_multiset(ops)]):
+        out.append("H1 the pending is not «continuar» over the expired anchor")
+    if p.reason == "TERRITORY_VS_CARRIED_BUYER":  # H6 (F30): change the buyer / search with both
+        geo = [op for op in ops if op.op is fa.PatchOpKind.SET and op.slot.key == "GEOGRAPHY/POSITIVE"]
+        change = [op.op.value + op.slot.key for c in p.candidates for op in c if op.op is fa.PatchOpKind.CLEAR]
+        if not conflict or len(p.candidates) != 2 or sorted(len(c) for c in p.candidates) != [1, 2] or (
+                change != ["CLEARBUYER/POSITIVE"]) or any(c[-1] != geo[0] and c[0] != geo[0] for c in p.candidates):
+            out.append("H6 the pending does not carry its two candidates")
+    if p.reason == "DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER":  # R3-1 without E-ORDER: C1 only, slots ⊇ ORDER, CARD.
+        if not {"ORDER", "CARDINALITY"} <= {s.key for s in p.answer_slots}:
+            out.append("R3-1 answer_slots lack ORDER/CARDINALITY")
+        if all(op.op is fa.PatchOpKind.CLEAR for op in p.open_ops) and [
+                sorted((op.op.value, op.slot.key) for op in c) for c in p.candidates] != [
+                [("CLEAR", "CARDINALITY"), ("CLEAR", "ORDER")]]:
+            out.append("R3-1 the pending of a CLEAR(ORDER) is not C1")
+    if p.reason.startswith("UNRESOLVED_VALUE:") and p.reason.partition(":")[2] not in {
+            fd.dimension_key(s) for s in p.answer_slots}:
+        out.append(f"{p.reason} names a dimension its answer_slots do not hold")
+    return out
+
+
+def _needs_policy(c, subjects) -> bool:
+    """The inventory of §6.6 (M2A3_PHASE1_CLOSE.md §1), read from the typed value: a MODALITY family and a negated
+    Terminado over contracts are projected only with a request policy M2a has no owner for."""
+    value = decode_value(c.value)
+    if c.dimension is D.MODALITY:
+        return c.operator == "family" or value.family_policy is not None
+    return (c.dimension is D.STATE and value.excluded and value.canonical_class == "terminated"
+            and Subject.CONTRACTS in subjects)
+
+
+def policy_owner_problems(base, patch, outcome) -> list[str]:
+    """§6.6: what needs a policy without owner never executes, placed or carried into a new universe."""
+    if outcome.disposition.value != "EXECUTE":
+        return []
+    effective, before = outcome.effective, {c.condition_id for c in base.conditions}
+    subjects = {r.subject for r in effective.requests}
+    moved = not {(r.subject, r.universe_kind) for r in effective.requests} <= {  # a dual anchor reduced keeps its own
+        (r.subject, r.universe_kind) for r in base.requests}
+    for c in effective.conditions:
+        if _needs_policy(c, subjects) and (c.condition_id not in before or moved):
+            return [f"§6.6 {c.dimension.value} that needs a host policy executed without an owner"]
+    if moved and any(p in effective.policies for p in base.policies):
+        return ["§6.6 a policy crossed a change of universe"]
+    return []
+
+
+def cause_count_problems(causes) -> list[str]:
+    """§6 step 3b: «una operación no direccionable o no acreditada» is ONE cause, whatever its reasons."""
+    seen = set()
+    for c in causes:
+        if c.refusal.value in ("TARGET_NOT_ADDRESSABLE", "OP_NOT_ACCREDITED"):
+            key = (c.refusal.value, repr(c.ops[0]))
+            if key in seen:
+                return [f"3b one operation counted as several {c.refusal.value} causes"]
+            seen.add(key)
+    return []
 
 
 def outcome_frame_problem(base, outcome) -> str | None:
@@ -544,14 +628,14 @@ REDUCER_MUTANTS = {
         "        if kept and _comparable(op.condition, kept[0]) and _a81_collides(op.condition, kept[0]):  # A8.1",
         "        if False:  # A8.1")], []),
     "a81_ignores_units": ([(
-        "        if opposite is not None and carried(opposite) and not _comparable(op.condition, "
+        "            if opposite is not None and carried(opposite) and not _comparable(op.condition, "
         "standing[opposite][0]):",
-        "        if False:")], []),
+        "            if False:")], []),
     "p3_ignored": ([(
-        "            if same_patch or several:", "            if several:")], []),
+        "                if same_patch or several:", "                if several:")], []),
     "f16_several_inverted": ([(
-        "            several = carried(positive) and len(standing[positive]) > 1 and any(",
-        "            several = False and any(")], []),
+        "                several = carried(positive) and len(standing[positive]) > 1 and any(",
+        "                several = False and any(")], []),
     "dual_request_ids_not_rewritten": ([(
         "    if len(requests) != len(base.requests):  # R3, P-1: the only change a carried condition admits",
         "    if False:  # R3, P-1: the only change a carried condition admits")], []),
@@ -569,13 +653,11 @@ REDUCER_MUTANTS = {
         "    policies = tuple(p for p in base.policies if set(p.condition_ids) <= kept_ids)",
         "    policies = ()")], []),
     "target_not_addressable_ignored": ([(
-        "            if hit:\n                found.append(Cause(Refusal.TARGET_NOT_ADDRESSABLE,",
-        "            if hit and False:\n                found.append(Cause(Refusal.TARGET_NOT_ADDRESSABLE,")], []),
+        '            hits += [(s, "§4.2") for s in covered(op.slot) if s.key in grouped]', "            pass")], []),
     "topic_replaced_not_reported": ([(
         "            effects.add(DeltaEffect.TOPIC_REPLACED)", "            pass")], []),
     "opportunities_accepted": ([(
-        "        if op.op is PatchOpKind.REPLACE_UNIVERSE and op.universe.universe_kind is UniverseKind.OPPORTUNITIES:",
-        "        if False:")], []),
+        "            if op.universe.universe_kind is UniverseKind.OPPORTUNITIES:", "            if False:")], []),
     "placed_ids_follow_op_order": ([(
         "    for op in sets:  # ids are the reducer's: a patch id may collide with a base one",
         "    for op in [o for o in ops if o.op in PLACERS]:  # ids are the reducer's: a patch id may collide with a "
@@ -584,7 +666,7 @@ REDUCER_MUTANTS = {
         "    taken = {c.condition_id for c in base.conditions}  # never reuse an id of the base, even of one that left",
         "    taken = {c.condition_id for c in carried}")], []),
     "law_bypassed": ([], [(
-        "    if law_violations(base, frame_ops, candidates, answer_slots, trace, origin):\n"
+        "    if law_violations(base, frame_ops, candidates, answer_slots, trace, origin, answered):\n"
         "        return DeltaOutcome(DeltaDisposition.INFORM, code)",
         "    if False:\n        return DeltaOutcome(DeltaDisposition.INFORM, code)")]),
     "two_causes_clarify": ([], [(
@@ -595,6 +677,21 @@ REDUCER_MUTANTS = {
     "h3_ignored": ([], [(
         "    if status != \"ok\":  # H3: what opens it is the turn's TIME or VALUE operation",
         "    if False:  # H3: what opens it is the turn's TIME or VALUE operation")]),
+    # the ZEUS repair (NO_GO on 15e72829): also killed by these properties, not only by the direct tests
+    "unknown_unit_comparable": ([(
+        "    return first is not None and first == unit_class(b)",
+        "    second = unit_class(b)\n    return first is None or second is None or first == second")], []),
+    "placed_policy_need_ignored": ([(
+        "            if needs_host_policy(op.condition, subjects_after):", "            if False:")], []),
+    "one_op_several_opna_causes": ([(
+        "        if reasons:\n            slot, extra, clause = reasons[0]\n            out.append(",
+        "        for slot, extra, clause in reasons:\n            out.append(")], []),
+    "one_op_several_target_causes": ([(
+        "        if hits:\n            slot, clause = min(hits, key=lambda hit: SLOT_RANK[hit[0].key])\n            found.append(",
+        "        for slot, clause in hits:\n            found.append(")], []),
+    "h1_without_continuar": ([], [(
+        "HOST_CODES[\"H1\"], base, (), tuple(ops), (tuple(ops),), _slots(ops)))",
+        "HOST_CODES[\"H1\"], base, (), tuple(ops), (), _slots(ops)))")]),
 }
 
 

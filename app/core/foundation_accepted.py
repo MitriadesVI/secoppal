@@ -560,6 +560,22 @@ def state_datasets(condition) -> frozenset[str]:
     return frozenset(entry[0] for entry in decoded.literals)
 
 
+def state_class(condition) -> str:
+    """The closed class of a STATE value (``state@1.canonical_class``)."""
+    decoded = decode_value(condition.value)
+    if type(decoded) is not StateValue:
+        _fail("NOT_A_STATE_VALUE")
+    return decoded.canonical_class
+
+
+def modality_family_policy(condition) -> str | None:
+    """The family policy a MODALITY value names (``modality@1.family_policy``); None for literal procedure ids."""
+    decoded = decode_value(condition.value)
+    if type(decoded) is not ModalityValue:
+        _fail("NOT_A_MODALITY_VALUE")
+    return decoded.family_policy
+
+
 # ---- ConditionOrigin / Provenance (contract §3.2) -----------------------------------------------------------------
 @dataclass(frozen=True, slots=True)
 class ConditionOrigin:
@@ -626,11 +642,13 @@ class Provenance:
                 _instance(value, kind, f"PROVENANCE_{name.upper()}")
         if (self.unit is None) != (self.unit_source is None):
             _fail("UNIT_WITHOUT_SOURCE")
-        # ``year`` is the vigencia of a SMMLV conversion and ``year_source`` the provenance of a year, also of a TIME
-        # (contract §3.2, §11 YEAR_INHERITED / YEAR_CLOCK_INFERRED): independent fields. The M2A-1a coupling of the two
-        # had no clause and refused a TIME whose year source is stated (M2A-3 phase 2).
+        # ``year`` is the vigencia of a SMMLV conversion and travels with its source (§15.5, §11); ``year_source`` alone
+        # is the provenance of a TIME's year (§11 YEAR_INHERITED / YEAR_CLOCK_INFERRED, §16.1). Only that half of the
+        # M2A-1a coupling had no clause (M2A-3 phase 2; ZEUS P2-5 keeps nothing wider).
         if self.year is not None:
             _int(self.year, "PROVENANCE_YEAR", 1)
+            if self.year_source is None:
+                _fail("YEAR_WITHOUT_SOURCE")
         if self.source_amount is not None and not _canonical_decimal(self.source_amount):
             _fail("INVALID_PROVENANCE_SOURCE_AMOUNT")
         if self.source_amount is not None and self.unit is None:
@@ -656,6 +674,12 @@ class Provenance:
             _fail("UNIT_OUTSIDE_VALUE")
         if self.year is not None and dimension not in (SemanticDimension.VALUE, SemanticDimension.TIME):
             _fail("YEAR_OUTSIDE_VALUE_OR_TIME")
+        if self.inherited_from is not None and dimension not in (SemanticDimension.VALUE, SemanticDimension.TIME):
+            _fail("INHERITANCE_OUTSIDE_VALUE_OR_TIME")  # §15.4 a unit, §11/§16 a year: VALUE and TIME only
+        if self.year_source is not None and dimension not in (SemanticDimension.VALUE, SemanticDimension.TIME):
+            _fail("YEAR_SOURCE_OUTSIDE_VALUE_OR_TIME")
+        if self.year_source is not None and self.year is None and dimension is SemanticDimension.VALUE:
+            _fail("YEAR_SOURCE_WITHOUT_YEAR")  # a year source without a year is a TIME's only (§11, §16.1)
         if self.buyer_scope is not None and dimension is not SemanticDimension.BUYER:
             _fail("BUYER_SCOPE_OUTSIDE_BUYER")
         if self.order_direction_source is not None and dimension is not SemanticDimension.ORDER:

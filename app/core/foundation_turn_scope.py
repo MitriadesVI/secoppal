@@ -11,8 +11,9 @@ facts of P (the turn's own proposal and its wire 5.1 directives), the anchor and
   M2A-6 never activates without the signal.
 * A fact the rule needs and the caller did not determine (``None``) is refused (``UNDETERMINED_FACT:<name>``): the rule
   is lazy (a fact it does not read may stay ``None``), and it never defaults one.
-* §7.2 does not decide «Nuevo ≠ ∅ ∧ Marco ∧ ¬Admisible sola» (only an ``unspecified`` universe without Product View
-  makes P non-admissible: wave F): refused as ``UNDECIDED:ADMISSIBLE_ALONE`` (Q-R8-3).
+* «Nuevo ≠ ∅ ∧ Marco ∧ ¬Admisible sola» has no row of §7.2 (only an ``unspecified`` universe without Product View
+  makes P non-admissible: wave F), so §7.2 does not say NEW_SEARCH and §7.1 row 8 («lo demás: delta») closes it:
+  ``IN`` / ``DELTA`` (Q-R8-3; INV-M2A-20: every turn gets exactly one scope).
 
 ``search_effects`` gives the effects of a NEW_SEARCH over a vigente anchor: CONTEXT_RESET (§7.2, §11) and, when its
 positive TOPIC replaces a different one of the anchor, TOPIC_REPLACED (§6.5 F3/F22, as the Gold reads it).
@@ -199,15 +200,7 @@ def _classify(facts: TurnFacts) -> TurnClassification:
         return TurnClassification(TurnScope.IN, TurnResolution.DELTA)
     if _need(facts, "admissible_alone"):  # (c)
         return _new_search(facts, None)
-    raise ContractError("UNDECIDED:ADMISSIBLE_ALONE")  # §7.2 has no row for it (Q-R8-3, wave F)
-
-
-def is_new_content(anchor: AcceptedInterpretation, conditions: tuple[AcceptedCondition, ...]) -> bool:
-    """Nuevo(P, A) (§7.2): an own TOPIC or ACTOR, of either polarity, whose (polarity, canonical value) the anchor
-    lacks. The value already carries its polarity in its encoding, so the pair is the encoded value."""
-    held = {(c.dimension, c.value) for c in anchor.conditions}
-    return any(c.dimension in (SemanticDimension.TOPIC, SemanticDimension.ACTOR) and (c.dimension, c.value) not in held
-               for c in conditions)
+    return TurnClassification(TurnScope.IN, TurnResolution.DELTA)  # no row of §7.2 says NEW_SEARCH: §7.1 row 8
 
 
 def search_effects(anchor: AcceptedInterpretation | None, conditions: tuple[AcceptedCondition, ...], *,
