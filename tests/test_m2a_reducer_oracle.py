@@ -1256,18 +1256,39 @@ def test_state_must_be_a_closed_class_and_order_cardinality_are_enumerations():
         typing_.tcond("CARDINALITY", "top_n", "POSITIVE", None, None, None, n_requested="muchos")
 
 
-def test_the_year_source_of_a_time_op_is_the_golds_and_reaches_the_typed_patch():
-    seen = collections.Counter()
+def test_the_year_source_of_a_time_op_is_the_golds_and_travels_with_the_single_year_it_lies_in():
+    """The year source the Gold gives a TIME op reaches the typed patch together with the year (§3.2 keeps them together: the
+    type refuses one without the other). A TIME that does not lie in one civil year (a window of two years) has no year to
+    carry, so it carries no source either."""
+    seen, dropped = collections.Counter(), 0
     for case in APPLICABLE:
         if case["expected"]["effective_scope"] != "COMPOSED":
             continue
-        golds = sorted(str((o["inherited"] or {}).get("year_source")) for o in SYN[case["gold_id"]]["label_A"]["ops"]
-                       if o["op"] == "SET" and o["slot"] == "TIME")
-        typed = sorted(str(o["condition"]["provenance"]["year_source"]) for o in case["inputs"]["patch"]["ops"]
-                       if o["condition"] is not None and o["condition"]["dimension"] == "TIME")
-        assert golds == typed, case["gold_id"]
-        seen.update(typed)
+        golds = [(o["op"], (o["inherited"] or {}).get("year_source")) for o in SYN[case["gold_id"]]["label_A"]["ops"]
+                 if o["op"] == "SET" and o["slot"] == "TIME"]
+        typed = [o["condition"]["provenance"] for o in case["inputs"]["patch"]["ops"]
+                 if o["condition"] is not None and o["condition"]["dimension"] == "TIME"]
+        assert len(golds) == len(typed), case["gold_id"]
+        for (_, source), prov in zip(golds, typed, strict=True):
+            if prov["year"] is None:
+                assert prov["year_source"] is None, case["gold_id"]
+                dropped += source is not None
+            else:
+                assert prov["year_source"] == source and isinstance(prov["year"], int), case["gold_id"]
+                seen[source] += 1
     assert {"CLOCK_INFERRED", "PREVIOUS_ACCEPTED_TIME", "STATED"} <= set(seen)
+    assert dropped >= 1  # SF029: «últimos 12 meses (2025-10-01..2026-10-01)» lies in two years
+
+
+def test_a_smmlv_bound_says_where_its_year_comes_from():
+    """§15.5: the year of the conversion is stated by the TIME of the same IR (year.from_time = STATED) or, for a bound the
+    patch places over a TIME the base carries, inherited (year.inherited = PREVIOUS_ACCEPTED_TIME, with its origin)."""
+    base = BY_ID["SF165"]["inputs"]["base"]["conditions"]
+    smmlv = next(c for c in base if c["dimension"] == "VALUE")["provenance"]
+    assert (smmlv["unit"], smmlv["year"], smmlv["year_source"], smmlv["inherited_from"]) == ("SMMLV", 2025, "STATED", None)
+    placed = next(o["condition"] for o in BY_ID["SF167"]["inputs"]["patch"]["ops"] if o["condition"])["provenance"]
+    assert (placed["year"], placed["year_source"], placed["unit_source"], placed["inherited_from"]) == (
+        2025, "PREVIOUS_ACCEPTED_TIME", "PREVIOUS_ACCEPTED_VALUE", "t0")
 
 
 def test_a_universe_op_of_a_turn_that_does_not_execute_is_typed_from_its_hint_and_never_guessed():
