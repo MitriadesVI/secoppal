@@ -16,7 +16,7 @@ from copy import deepcopy
 
 from app.core.interpretation_contract import ContractError
 
-UNIVERSE_KIND_VERSIONS = frozenset({"4.2"})
+UNIVERSE_KIND_VERSIONS = frozenset({"4.2", "5"})
 KINDS = ("records", "opportunities")
 
 
@@ -29,7 +29,7 @@ def _with_atom(expression, condition_id: str) -> dict:
     return {"operator": "AND", "children": [atom, expression]}
 
 
-def expand_universe_kind(payload, arm: str):
+def expand_universe_kind(payload, arm: str, *, version: str = "4.2"):
     """The payload in the pre-4.2 wire shape; a malformed one is left for the decoder to reject."""
     if not isinstance(payload, dict) or not isinstance(payload.get("requests"), list):
         return payload
@@ -43,6 +43,10 @@ def expand_universe_kind(payload, arm: str):
     taken = {c.get("condition_id") for c in payload["conditions"] if isinstance(c, dict)}
     for request in payload["requests"]:
         if not isinstance(request, dict):
+            continue
+        if version == "5" and request.get("subject") == "unspecified":
+            if "universe_kind" in request:
+                raise ContractError("UNIVERSE_KIND_ON_UNSPECIFIED")
             continue
         # The claim is mandatory: a missing one must not read as "records" (ADR-101).
         if "universe_kind" not in request:

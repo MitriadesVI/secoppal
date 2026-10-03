@@ -15,7 +15,10 @@ import json
 import re
 import time
 from dataclasses import dataclass, field
+from types import MappingProxyType
 
+from app.core.foundation_decoder_v2 import decode_proposal_v2
+from app.core import foundation_prompts_v5
 from app.core.foundation_lift_v1 import lift_level, lift_operation, lift_subject, v1_dimension, v1_job_specs
 from app.core.foundation_prompts import PRODUCER_ARM, PROMPT_SHA256, PROMPT_VERSION, system_prompt
 from app.core.foundation_universe_kind import expand_universe_kind
@@ -126,6 +129,22 @@ def decode_proposal(payload: dict, raw: str, *, arm: str, candidates=()) -> Inte
     return proposal
 
 
+@dataclass(frozen=True)
+class LinguisticProfile:
+    version: str
+    prompt_sha256: str
+    prompt: object
+    decoder: object
+
+
+PROFILES = MappingProxyType({
+    "foundation_v3": LinguisticProfile(PROMPT_VERSION, PROMPT_SHA256, system_prompt, decode_proposal),
+    "foundation_v5": LinguisticProfile(foundation_prompts_v5.PROMPT_VERSION,
+                                       foundation_prompts_v5.PROMPT_SHA256,
+                                       foundation_prompts_v5.system_prompt, decode_proposal_v2),
+})
+
+
 @dataclass
 class ProducerReceipt:
     """Telemetry of one producer call: no raw text, no provider payload."""
@@ -143,13 +162,20 @@ class ProducerReceipt:
 
 @dataclass
 class LinguisticProducer:
-    """Arm B, prompt v4.2; the provider is the only injected part."""
+    """Explicit closed prompt/decoder profile; the active default remains v3."""
 
     provider: object
+    profile: str = field(default="foundation_v3", kw_only=True)
     receipt: ProducerReceipt = field(default_factory=ProducerReceipt, init=False)
 
+    def __post_init__(self):
+        if type(self.profile) is not str or self.profile not in PROFILES:
+            raise ContractError("INVALID_PRODUCER_PROFILE")
+
     def produce(self, raw: str):
-        self.receipt = ProducerReceipt()
+        self.__post_init__()
+        profile = PROFILES[self.profile]
+        self.receipt = ProducerReceipt(producer_version=profile.version, prompt_sha256=profile.prompt_sha256)
         try:
             candidates = host_candidates(raw)
         except (ContractError, ValueError, TypeError) as exc:
@@ -158,7 +184,7 @@ class LinguisticProducer:
         started = time.perf_counter()
         self.receipt.provider_calls = 1
         try:
-            payload = self.provider(system_prompt(), prompt)
+            payload = self.provider(profile.prompt(), prompt)
         except Exception as exc:
             self.receipt.provider_latency_ms = round((time.perf_counter() - started) * 1000, 1)
             self.receipt.provider_error = type(exc).__name__
@@ -171,7 +197,7 @@ class LinguisticProducer:
         # Anything the provider returned is a proposal to judge, never an outage.
         try:
             payload = json.loads(payload) if isinstance(payload, str) else payload
-            return decode_proposal(payload, raw, arm=PRODUCER_ARM, candidates=candidates)
+            return profile.decoder(payload, raw, arm=PRODUCER_ARM, candidates=candidates)
         except Exception as exc:  # noqa: BLE001 - a malformed answer is INVALID_PROPOSAL, not an outage
             reason = str(exc) if isinstance(exc, ContractError) else f"MALFORMED_PROPOSAL:{type(exc).__name__}"
             return InterpretationAcceptance(None, AcceptanceStatus.INVALID_PROPOSAL, reason=reason)
