@@ -170,3 +170,48 @@ derivaban sus pasos sintéticos de los registros reales y suponían que estaban 
 - **Composición real** (merge desacoplado de R2 + `c6ca1ac6` + `f30e91ff`, sin commitear nada ajeno): todos los pines de
   esta preparación pasan; los fallos que quedan son los fixtures de `tests/test_foundation_accepted_store.py` frente al tipo
   canónico de M2A-3 y se resuelven en la integración (ver el reporte de R2).
+
+## 11. Escáner de privacidad: falso positivo preexistente (F6, integración de la ola 1)
+
+`privacy_scan_public_tree.py <GOLD_CANDIDATE privado> <copia de git diff --name-only 6be95aaf HEAD>` (74 archivos de la
+integración, copiados fuera del repo) sale con **1**, con **dos** bloqueantes y ninguna otra clase (ni `ACTOR`, ni
+`DOCUMENT`, ni `EMAIL`):
+
+| Archivo | Hallazgo |
+|---|---|
+| `app/core/conversation_store.py:11` | `FULL_UTTERANCE:6tok` |
+| `tests/fixtures/conversation_store_main_88653752.py.txt:11` | `FULL_UTTERANCE:6tok` |
+
+Es el argumento `user_query` del ejemplo de uso del docstring de `ConversationStore` (líneas 7–14), **no texto REAL**. El
+texto no se cita aquí: como el escáner, este documento sólo da archivo, línea y número de tokens.
+
+**Evidencia (ejecutada).**
+
+1. **Preexistente.** `git log -S` sitúa la primera aparición del literal en `2479d853` (2026-05-15,
+   «wip: snapshot pre-audit P0»). La línea 11 es idéntica en `2479d853`, en `88653752` (el manifiesto de `main`), en la
+   base `6be95aaf` y en HEAD; la integración no la cambia.
+2. **Anterior al Gold.** Los archivos privados `*_real.jsonl` y el commit que sella el Gold (`88da4e22`) son del 2026-10-01: el texto
+   público es unos cuatro meses y medio anterior, así que no puede derivar del Gold. Lo que el escáner detecta es que un
+   enunciado REAL de 6 tokens coincide palabra a palabra con esa frase del ejemplo, no que M2a la haya sacado del Gold.
+3. **La fixture es una copia.** `git show 88653752:app/core/conversation_store.py | cmp - tests/fixtures/conversation_store_main_88653752.py.txt`:
+   idénticos byte a byte; el hallazgo de la fixture es el mismo texto.
+4. **Por qué sale ahora.** Los cierres anteriores escaneaban «los archivos del commit» (limpio). Aquí el diff contra la
+   base incluye `app/core/conversation_store.py` (M2A-2 sólo cambió el delta de `clear()`) y la fixture (la añadió M2A-2),
+   y la línea 11 viene con ellos.
+
+**Por qué no hay lista de permitidos.** El escáner no admite ninguna: su interfaz es `<privado> <público> [--json]`,
+recorre el directorio entero con `rglob`, sale con 1 ante cualquier bloqueante y sólo informa archivo y número de tokens
+(ni siquiera la línea). No hay permiso por ruta, por línea ni por hash. No se modifica el escáner (sería un cambio de
+herramienta fuera de este alcance) y **no se tocan** `conversation_store.py` ni la fixture: el delta de `clear()` se fija
+por AST contra esa fixture (`tests/test_conversation_store_clear_delta.py`) y el manifiesto de `main` fija los bytes del
+módulo (`tests/test_legacy_manifest_frozen.py`).
+
+**Regla para quien corra el escáner sobre este diff.** El resultado esperado es exactamente esos dos bloqueantes con
+`FULL_UTTERANCE:6tok` y nada más. Cualquier tercer archivo, o una clase `ACTOR`/`DOCUMENT`/`EMAIL`, es un bloqueo real. Los
+dos `FULL_UTTERANCE:4tok` de `docs/audits/m2a_conversation/M2A_TRACEABILITY_MATRIX.md` y
+`docs/decisions/M2A_CONVERSATION_CONTRACT_V1.md` se informan y no bloquean por diseño (≤ 4 tokens, enunciados genéricos);
+ambos archivos ya estaban en la base.
+
+**Deuda (propuesta, sin decidir).** Si este escaneo va a ser un gate recurrente sobre diffs que incluyan archivos
+heredados, el escáner necesitaría una lista explícita y estrecha (ruta + sha256 del archivo, con motivo). Es un cambio de
+herramienta y lo decide quien la mantiene.
