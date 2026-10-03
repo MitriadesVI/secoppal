@@ -8,17 +8,22 @@ RELATIVE_WINDOW_RESOLVED; every turn over an expired anchor that does not confir
 is BOTH bounds: ``emitted`` must equal it, there is no list of allowed extras.
 
 Each case is measured with the typed turn the M2A-3 oracle already gives it (``tests/test_m2a3_oracle_link``: the base, the
-patch and the effective that ``delta_outcome`` composes), through ``echo_items``. Four verdicts, and only four:
+patch and the effective that ``delta_outcome`` composes), through ``echo_items`` (or ``echo_items_for_answer``). Five verdicts, and only five:
 
 * GREEN: ``gold == emitted``;
 * RED_S19: the case is a declared dependency of §19 (the sealed extraction ``CONTRACT_S19_DEPENDENCIES.json`` is the ONLY
   authority: U19/U23) and the echo is proved green once the dependency's owner supplies its input: a SYNTHETIC receipt
   (``topn.capped``: ``DEP-E-ORDER``; ``time.relative_to_previous``: ``DEP-TIME-RELATIVE``), or the case is untypable by the
   oracle because of a ``DEP-*`` row it names (``DEP-DERIVED-VIEW``: ``VIEW_*`` unrepresentable, ``DEP-MODALITY-UNIVERSE``…);
+* MEASURED_AT_INTEGRATION: the oracle cannot type the turn and ITS OWN ``owners`` are the integration lanes (M2A-4 builds
+  the pending, M2A-6 builds the patch of a button event): the measurement exists only where those lanes meet this one, and
+  this lane cannot import them. It is not a defect of a sealed artifact. For the six cases that answer, or cancel, a
+  pending WITHOUT an anchor (SF056, SF058, SF059, SF060, SF188, SF191) ``test_foundation_echo`` carries the equivalent
+  scenario, built with the real reducer, and this file checks its echo against the label (M2A7-D22);
 * FAIL_EXTERNAL: the echo cannot match and the cause is DEMONSTRATED in a sealed artifact outside this lane: the oracle
-  cannot type the turn (its own ``rules``: pendings, protocol events, ``NO_MEDIBLE``…), its typing contradicts the label
-  (a ``year_source`` the Gold op does not state, or omitted), or the sealed checker's ``derive_effects`` contradicts the
-  Gold text. It counts apart and never makes a case green;
+  cannot type the turn for a reason of its own (``NO_MEDIBLE``…), its typing contradicts the label (a ``year_source`` the
+  Gold op does not state, or omitted), or the sealed checker's ``derive_effects`` contradicts the Gold text. It counts
+  apart and never makes a case green;
 * FAIL: a defect of this lane.
 
 Partition discipline (as M2A-3's): pytest measures DEV only. TEST is measured ONCE, at freeze, with
@@ -42,7 +47,7 @@ from app.core.foundation_authority_values import decode_value
 from app.core.semantic_dimensions import SemanticDimension as D
 from scripts.audits.m2a_conversation import m2a_oracle_gold as gold
 from scripts.audits.m2a_conversation import m2a_reducer_oracle as oracle
-from tests.test_foundation_echo import CASES, make_record
+from tests.test_foundation_echo import CASES, GOLD_ANCHORED_PENDINGS, GOLD_FIRST_TURN_PENDINGS, make_record
 from tests.test_m2a3_oracle_link import base_of, run
 
 # §10.1: the plazo is 30 minutes since the previous turn; the sealed Gold (schema §5.3) and the sealed checker
@@ -55,7 +60,9 @@ def expired(gap) -> bool:
     return gap is not None and gap > EXPIRY_SECONDS
 
 
-GREEN, RED_S19, FAIL_EXTERNAL, FAIL = "GREEN", "RED_S19", "FAIL_EXTERNAL", "FAIL"
+GREEN, RED_S19, MEASURED_AT_INTEGRATION, FAIL_EXTERNAL, FAIL = (
+    "GREEN", "RED_S19", "MEASURED_AT_INTEGRATION", "FAIL_EXTERNAL", "FAIL")
+INTEGRATION_OWNERS = frozenset({"M2A-4", "M2A-6"})  # the lanes where a pending / an event patch is built
 # What the owner of a §19 dependency will supply, as a SYNTHETIC input proving the echo maps it when present.
 RECEIPT_OF = {"TOPN_CAPPED": fe.RULE_TOPN_CAPPED}
 S19_OF = {"TOPN_CAPPED": "DEP-E-ORDER", "RELATIVE_WINDOW_RESOLVED": "DEP-TIME-RELATIVE",
@@ -239,8 +246,11 @@ def untypable(case: dict, wanted: set[str], why: str) -> tuple[str, str]:
     FAIL_EXTERNAL otherwise (pendings, protocol events, ``NO_MEDIBLE``…: the sealed oracle's own statement)."""
     named = [rule for rule in case["rules"] if rule.startswith("DEP-") and rule in s19_dependencies(case)]
     owes = ("; owes " + ",".join(sorted(wanted))) if wanted else ""
+    owners = set(case["owners"])
     if named:
         return RED_S19, f"§19 {', '.join(named)} (the oracle cannot type it: {case['applicability']}){owes}"
+    if owners and owners <= INTEGRATION_OWNERS:
+        return MEASURED_AT_INTEGRATION, (f"owners {sorted(owners)} rules={case['rules']}: built by an integration lane{owes}")
     return FAIL_EXTERNAL, f"the sealed oracle cannot type it: {case['applicability']} rules={case['rules']}{owes}"
 
 
@@ -359,7 +369,7 @@ def test_dev_no_case_fails_and_no_case_is_dropped():
     rows = dev()
     assert {gid for gid, row in rows.items() if row[0] == FAIL} == set()
     assert set(rows) == {case["gold_id"] for case in oracle.select_partition(list(cases()), "DEV")}
-    assert all(verdict in (GREEN, RED_S19, FAIL_EXTERNAL) for verdict, _ in rows.values())
+    assert all(verdict in (GREEN, RED_S19, MEASURED_AT_INTEGRATION, FAIL_EXTERNAL) for verdict, _ in rows.values())
 
 
 def test_dev_every_red_is_a_section_19_row_and_every_external_failure_has_its_demonstrated_cause():
@@ -367,8 +377,11 @@ def test_dev_every_red_is_a_section_19_row_and_every_external_failure_has_its_de
     for gid, (verdict, detail) in dev().items():
         if verdict == RED_S19:
             assert detail and s19_dependencies(sealed[gid]), (gid, detail)  # the sealed extraction lists it
+        if verdict == MEASURED_AT_INTEGRATION:
+            assert set(sealed[gid]["owners"]) <= INTEGRATION_OWNERS and sealed[gid]["owners"], gid  # the oracle's own owners
         if verdict == FAIL_EXTERNAL:
-            assert detail, gid
+            owners = set(sealed[gid]["owners"])
+            assert detail and not (owners and owners <= INTEGRATION_OWNERS), gid  # an integration lane's would be MEASURED_AT_INTEGRATION
 
 
 def test_dev_the_greens_are_not_vacuous():
@@ -389,6 +402,27 @@ def test_dev_relative_to_the_previous_referent_is_a_declared_red_of_section_19_p
     assert relative and relative <= owed
     for gid in relative:
         assert rows[gid][0] == RED_S19 and "DEP-TIME-RELATIVE" in rows[gid][1] and "green with the synthetic input" in rows[gid][1]
+
+
+def test_the_six_pendings_without_an_anchor_have_their_scenario_and_it_gives_the_label_echo():
+    """M2A7-D22: the Gold fixes ``CARRIED`` for the answers (and the cancelling delta) over a first-turn pending. Each case
+    is modelled by a scenario built with the real reducer (a frame typed as P resolved it, an answer composed by
+    ``compose``), whose echo is exactly the label's; and each is measured only at integration (not a sealed artifact's
+    defect), never green or red-by-§19 here."""
+    by_name = {case.name: case for case in CASES}
+    labels = gold_labels(None)
+    assert set(GOLD_FIRST_TURN_PENDINGS) == {"SF056", "SF058", "SF059", "SF060", "SF188", "SF191"}
+    for gid, name in GOLD_FIRST_TURN_PENDINGS.items():
+        case = by_name[name]
+        assert case.args[0] is None and case.args[2] == ()  # no anchor, no frame operations
+        assert {item[0] for item in case.run()} == labels[gid]["echo"] == {"CARRIED"}, gid
+    for gid, name in GOLD_ANCHORED_PENDINGS.items():  # the pending WITH an anchor (D15) gives the label's echo as well
+        assert {item[0] for item in by_name[name].run()} == labels[gid]["echo"] == {"CARRIED"}, gid
+    sealed = {c["gold_id"]: c for c in cases()}
+    for gid in GOLD_FIRST_TURN_PENDINGS:
+        assert set(sealed[gid]["owners"]) <= INTEGRATION_OWNERS and "PENDING_PRIOR" in sealed[gid]["rules"], gid
+    in_dev = [gid for gid in GOLD_FIRST_TURN_PENDINGS if sealed[gid]["partition"] == "DEV"]
+    assert in_dev and all(dev()[gid][0] == MEASURED_AT_INTEGRATION for gid in in_dev)
 
 
 def test_the_module_does_what_the_contract_says_where_a_sealed_artifact_does_not():
@@ -418,13 +452,14 @@ def test_dev_with_the_real_slice():
 
 
 def denominators(rows: dict) -> dict:
-    return {verdict: sum(1 for v, _ in rows.values() if v == verdict) for verdict in (GREEN, RED_S19, FAIL_EXTERNAL, FAIL)}
+    return {verdict: sum(1 for v, _ in rows.values() if v == verdict)
+            for verdict in (GREEN, RED_S19, MEASURED_AT_INTEGRATION, FAIL_EXTERNAL, FAIL)}
 
 
 def summary_of(rows: dict) -> str:
     counts = denominators(rows)
     lines = [f"cases {len(rows)}: " + ", ".join(f"{verdict} {n}" for verdict, n in counts.items())]
-    for verdict in (RED_S19, FAIL_EXTERNAL, FAIL):
+    for verdict in (RED_S19, MEASURED_AT_INTEGRATION, FAIL_EXTERNAL, FAIL):
         lines += [f"  {verdict} {gid}: {detail}" for gid, (v, detail) in sorted(rows.items()) if v == verdict]
     return "\n".join(lines)
 

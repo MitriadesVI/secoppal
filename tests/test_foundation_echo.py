@@ -21,9 +21,10 @@ import app.core.foundation_delta as fd
 import app.core.foundation_delta_outcome as fo
 import app.core.foundation_echo as fe
 from app.core.foundation_authority_values import (
-    BuyerKind, BuyerValue, CardinalityBasis, CardinalityValue, Comparator, MoneyValue, OrderDirection, OrderKey,
-    OrderValue, TimeValue, TopicValue,
+    ActorValue, BuyerKind, BuyerValue, CardinalityBasis, CardinalityValue, Comparator, GeoValue, MoneyValue,
+    OrderDirection, OrderKey, OrderValue, TimeValue, TopicValue,
 )
+from app.core.foundation_geo_level import GeoLevel
 from app.core.foundation_operations import Subject
 from app.core.interpretation_contract import ContractError, Polarity, ValueSide
 from app.core.semantic_dimensions import SemanticDimension as D
@@ -62,7 +63,8 @@ def cond(dimension: D, value, cid: str, *, trace: str = "t0", n: int = 0, proven
     encoded = value.encode()
     slot = fa.slot_of(dimension, encoded)
     return fa.AcceptedCondition(
-        cid, tuple(sorted(rids)), slot, dimension, operator_of(dimension, value), slot.polarity or POS, None, encoded,
+        cid, tuple(sorted(rids)), slot, dimension, operator_of(dimension, value), slot.polarity or POS,
+        value.level if dimension is D.GEOGRAPHY else None, encoded,
         "test_authority@1", tuple(sorted(rules)), (), origin or span_origin(trace, n, RAW_BASE if trace == "t0" else RAW_TURN),
         provenance or fa.Provenance())
 
@@ -73,6 +75,14 @@ def topic(cid: str, phrase: str, *, excluded: bool = False, **kw) -> fa.Accepted
 
 def buyer(cid: str, name: str = "ICBF", **kw) -> fa.AcceptedCondition:
     return cond(D.BUYER, BuyerValue(name, BuyerKind.UNIT, (name,), None, False), cid, **kw)
+
+
+def actor(cid: str, name: str = "Acme", **kw) -> fa.AcceptedCondition:
+    return cond(D.ACTOR, ActorValue("900123456", "NIT", name, False), cid, **kw)
+
+
+def place(cid: str, name: str = "SOLEDAD", **kw) -> fa.AcceptedCondition:
+    return cond(D.GEOGRAPHY, GeoValue(GeoLevel.MUNICIPALITY, name, "ATLANTICO", "08758", (), False), cid, **kw)
 
 
 def time(cid: str, first: int = 2025, **kw) -> fa.AcceptedCondition:
@@ -190,14 +200,20 @@ def fresh(name, effective, expected, *, base=None, expired=False, control=None) 
     return Case(name, (base, effective, None, record), {"anchor_expired": expired}, expected)
 
 
-def answer(name, anchor, frame_ops, answer_ops, expected, *, expired=False) -> Case:
-    """The answer to a pending (§8.3 rows 1 and 4): the frame is ``compose(anchor, frame_ops)``, the effective is
-    ``compose(frame, answer)`` (both by the REAL reducer), the entry reads it against the anchor."""
-    frame = fd.compose_ops(anchor, tuple(frame_ops), base_trace_id="t0").effective if frame_ops else anchor
-    patch = fa.SemanticPatch(tuple(answer_ops), fa.PatchOriginKind.TEXT)
+def answer(name, anchor, frame_ops, answer_ops, expected, *, expired=False, frame=None, cancelling=False,
+           kind=fa.PatchOriginKind.TEXT) -> Case:
+    """A turn that composes over the FRAME of a pending (§8.3 rows 1, 2 and 4): the answer, or the ``DELTA`` that cancels
+    the pending (``cancelling``, §17.3). With an ``anchor`` the frame is ``compose(anchor, frame_ops)``; without one the
+    ``frame`` is given (what P resolved in a first turn). The effective is ``compose(frame, answer)``; both compositions are
+    the REAL reducer's."""
+    if frame is None:
+        frame = fd.compose_ops(anchor, tuple(frame_ops), base_trace_id="t0").effective if frame_ops else anchor
+    patch = fa.SemanticPatch(tuple(answer_ops), kind)
     composed = fd.compose(frame, patch, base_trace_id="t1")
     assert isinstance(composed, fd.Composed), f"{name}: the reducer refused {composed}"
-    record = make_record(fa.TurnResolution.PENDING_ANSWER, patch=patch, effective=composed.effective, base_trace_id="t1")
+    record = make_record(fa.TurnResolution.DELTA if cancelling else fa.TurnResolution.PENDING_ANSWER, patch=patch,
+                         effective=composed.effective, base_trace_id="t1",
+                         control=fa.PendingControl.CANCEL_PENDING if cancelling else None)
     return Case(name, (anchor, frame, tuple(frame_ops), composed.effective, record), {"anchor_expired": expired}, expected,
                 entry="echo_items_for_answer")
 
@@ -425,6 +441,46 @@ def _cases() -> list[Case]:
                [E("CARRIED", "BUYER/POSITIVE", "c1"), E("CARRIED", "TIME/POSITIVE", "c2"),
                 E("UNIVERSE_CHANGED", "UNIVERSE", "c2")]),
     ]
+    # SF200 (R3-1, the pending keeps the anchor as its frame: the one operation of the turn is the open one)
+    out.append(asked("answer_to_an_r31_pending_like_sf200", interp(topic("c1", "vigilancia"), buyer("c2", "META"), time("c3"),
+                                                                    order("c4"), top("c5", 10), trace="t0"),
+                     [clear(fa.Slot(D.ORDER))],
+                     [E("CARRIED", "TOPIC/POSITIVE", "c1"), E("CARRIED", "BUYER/POSITIVE", "c2"),
+                      E("CARRIED", "TIME/POSITIVE", "c3"), UNI]))
+    # a turn that cancels the pending and composes over its frame is read like an answer (§8.3 row 2, §17.3)
+    pending_a81 = fo.delta_outcome(anchored, fa.SemanticPatch(
+        (clear(fa.Slot(D.ORDER)), set_(money("p1", 900, Comparator.GTE, trace="t1", n=1))), fa.PatchOriginKind.TEXT),
+        base_trace_id="t0").pending
+    out.append(answer("cancelling_delta_over_the_frame_with_an_anchor", anchored, pending_a81.frame_ops,
+                      [clear(fa.Slot(D.ORDER)), clear(fa.Slot(D.CARDINALITY)), set_(topic("p9", "vias", trace="t1", n=9))],
+                      [UNI, E("VALUE_RANGE_REPLACED", "VALUE/upper", "c4", "p1"), E("TOPIC_REPLACED", "TOPIC/POSITIVE", "c1", "p9")],
+                      cancelling=True))
+    # a pending WITHOUT an anchor (the first turn's, §7.2 c): the «previo» is the frame (Gold §7 literal, M2A7-D22). Each
+    # scenario models a sealed Gold case (``GOLD_FIRST_TURN_PENDINGS`` binds it to its label in the Gold test); the frames
+    # are typed interpretations of what P resolved and the compositions are the REAL reducer's
+    option = event_origin(fa.OriginKind.OPTION_EVENT)
+    asked_value = interp(topic("f1", "interventoria"), buyer("f2", "FLORIDABLANCA"), money("f3", 150, Comparator.GTE), trace=None)
+    asked_fuel = interp(topic("f1", "combustible"), buyer("f2", "GIRARDOT"), money("f3", 80, Comparator.LT), trace=None)
+    out += [
+        answer("answer_to_a_first_turn_pending_by_text_like_sf056", None, (), [set_(time("p1", 2025, trace="t1", n=1))],
+               [E("CARRIED", "TOPIC/POSITIVE", "f1"), E("CARRIED", "BUYER/POSITIVE", "f2"), E("CARRIED", "VALUE/lower", "f3"), UNI],
+               frame=asked_value),
+        answer("answer_to_a_first_turn_pending_by_text_like_sf188", None, (), [set_(time("p1", 2025, trace="t1", n=1))],
+               [E("CARRIED", "TOPIC/POSITIVE", "f1"), E("CARRIED", "BUYER/POSITIVE", "f2"), E("CARRIED", "VALUE/upper", "f3"), UNI],
+               frame=asked_fuel),
+        answer("answer_to_a_first_turn_pending_by_option_like_sf058", None, (), [set_(buyer("p1", "SANPEDRO", origin=option))],
+               [E("CARRIED", "TOPIC/POSITIVE", "f1"), UNI], frame=interp(topic("f1", "aseo"), trace=None),
+               kind=fa.PatchOriginKind.EVENT),
+        answer("answer_to_a_first_turn_pending_by_option_like_sf059", None, (), [set_(buyer("p1", "SOLEDAD", origin=option))],
+               [E("CARRIED", "ACTOR/POSITIVE", "f1"), UNI], frame=interp(actor("f1"), trace=None),
+               kind=fa.PatchOriginKind.EVENT),
+        answer("answer_to_a_first_turn_pending_by_option_like_sf060", None, (), [set_(place("p1", origin=option))],
+               [E("CARRIED", "ACTOR/POSITIVE", "f1"), UNI], frame=interp(actor("f1"), trace=None),
+               kind=fa.PatchOriginKind.EVENT),
+        answer("cancelling_delta_over_a_first_turn_frame_like_sf191", None, (), [set_(money("p1", 10, Comparator.GTE, trace="t1", n=1))],
+               [E("CARRIED", "TOPIC/POSITIVE", "f1"), E("CARRIED", "BUYER/POSITIVE", "f2"), E("CARRIED", "VALUE/upper", "f3"), UNI],
+               frame=asked_fuel, cancelling=True),
+    ]
     # CONTEXT_EXPIRED: the turn found the anchor expired and neither confirms nor replaces it
     patch = fa.SemanticPatch((set_(topic("p1", "aseo", trace="t1", n=1)),), fa.PatchOriginKind.TEXT)
     pending = expiry_pending(BASE_BT, patch)
@@ -448,6 +504,18 @@ def _cases() -> list[Case]:
 
 
 CASES = _cases()
+# The Gold cases that answer (or cancel) a pending WITHOUT an anchor: their labels fix the echo ``["CARRIED"]`` (Gold §7
+# literal; M2A7-D22). The measurement of the cases themselves exists only at integration (M2A-4 creates the pending): these
+# scenarios are their equivalents, and ``test_foundation_echo_gold`` checks each one against its label.
+GOLD_ANCHORED_PENDINGS = {"SF200": "answer_to_an_r31_pending_like_sf200"}  # with an anchor: the two steps of D15 give the label's
+GOLD_FIRST_TURN_PENDINGS = {
+    "SF056": "answer_to_a_first_turn_pending_by_text_like_sf056",
+    "SF058": "answer_to_a_first_turn_pending_by_option_like_sf058",
+    "SF059": "answer_to_a_first_turn_pending_by_option_like_sf059",
+    "SF060": "answer_to_a_first_turn_pending_by_option_like_sf060",
+    "SF188": "answer_to_a_first_turn_pending_by_text_like_sf188",
+    "SF191": "cancelling_delta_over_a_first_turn_frame_like_sf191",
+}
 
 
 @pytest.mark.parametrize("case", CASES, ids=lambda case: case.name)
@@ -637,6 +705,7 @@ def _answer_refusals() -> list[tuple]:
     """The answer entry and the one rule of ``echo_items`` that sends an answer to it, plus the receipt that contradicts
     its provenance (a default the user's own words contradict)."""
     case = next(c for c in CASES if c.name == "answer_announces_the_a81_the_frame_made")
+    cancel = next(c for c in CASES if c.name == "cancelling_delta_over_the_frame_with_an_anchor")
     anchor, frame, frame_ops, effective, record = case.args
     ok = {"anchor_expired": False}
     delta_args = _delta().args
@@ -650,8 +719,12 @@ def _answer_refusals() -> list[tuple]:
          "ECHO_NOT_AN_ANSWER"),
         ("answer_entry_needs_a_record", "echo_items_for_answer", (anchor, frame, frame_ops, effective, None), ok,
          "ECHO_NEEDS_A_RECORD"),
-        ("answer_without_an_anchor_is_not_decided", "echo_items_for_answer", (None, frame, frame_ops, effective, record), ok,
-         "ECHO_ANSWER_WITHOUT_ANCHOR"),
+        ("answer_without_an_anchor_with_frame_operations", "echo_items_for_answer", (None, frame, frame_ops, effective, record),
+         ok, "ECHO_FRAME_OPERATIONS_WITHOUT_AN_ANCHOR"),
+        ("answer_without_an_anchor_nor_a_frame", "echo_items_for_answer", (None, None, (), effective, record), ok,
+         "ECHO_DIFF_NEEDS_INTERPRETATIONS"),
+        ("echo_items_does_not_take_a_cancelling_delta", "echo_items", (anchor, cancel.args[3], cancel.args[4].patch, cancel.args[4]),
+         ok, "ECHO_ANSWER_HAS_ITS_OWN_ENTRY"),
         ("answer_anchor_as_a_dict", "echo_items_for_answer", (anchor.to_dict(), frame, frame_ops, effective, record), ok,
          "ECHO_INVALID_BASE"),
         ("answer_effective_outside_the_record", "echo_items_for_answer", (anchor, frame, frame_ops, frame, record), ok,
@@ -699,7 +772,7 @@ def test_the_expiry_fact_has_no_default(omission):
 def test_every_refusal_has_its_own_name_and_the_codes_are_the_modules():
     assert len({refusal[0] for refusal in REFUSALS}) == len(REFUSALS)
     assert {refusal[4] for refusal in REFUSALS} >= {
-        "ECHO_ANSWER_HAS_ITS_OWN_ENTRY", "ECHO_NOT_AN_ANSWER", "ECHO_ANSWER_WITHOUT_ANCHOR",
+        "ECHO_ANSWER_HAS_ITS_OWN_ENTRY", "ECHO_NOT_AN_ANSWER", "ECHO_FRAME_OPERATIONS_WITHOUT_AN_ANCHOR",
         "ECHO_RECEIPT_CONTRADICTS_PROVENANCE", "ECHO_DIFF_NEEDS_INTERPRETATIONS",
         "ECHO_UNCITED_REMOVAL", "ECHO_CARRIED_CONDITION_CHANGED", "ECHO_PLACED_WITHOUT_OPERATION",
         "ECHO_REQUESTS_CHANGED_WITHOUT_OPERATION", "ECHO_UNIVERSE_NOT_THE_REQUESTED", "ECHO_NEEDS_A_RECORD",

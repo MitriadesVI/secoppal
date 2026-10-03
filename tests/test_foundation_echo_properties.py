@@ -605,6 +605,62 @@ def differential_problems(module, case) -> list[str]:
     return out
 
 
+def no_anchor_problems(module, case) -> list[str]:
+    """A pending WITHOUT an anchor (M2A7-D22): the «previo» is the frame, so the answer, and the ``DELTA`` that cancels the
+    pending, are read exactly like a delta over that frame (Gold §7 literal): the same echo, whatever they are called."""
+    frame, patch, _ = case
+    composed = composed_of(frame, patch)
+    if composed is None or contradictory(composed.effective.conditions):
+        return []
+    effective, ok = composed.effective, {"anchor_expired": False}
+    delta = make_record(fa.TurnResolution.DELTA, patch=patch, effective=effective, base_trace_id="t0")
+    out = []
+    try:
+        want = module.echo_items(frame, effective, patch, delta, **ok)
+        for resolution, control in ((fa.TurnResolution.PENDING_ANSWER, None),
+                                    (fa.TurnResolution.DELTA, fa.PendingControl.CANCEL_PENDING)):
+            record = make_record(resolution, patch=patch, effective=effective, base_trace_id="t0", control=control)
+            if module.echo_items_for_answer(None, frame, (), effective, record, **ok) != want:
+                out.append(f"{resolution.value}/{control}: not the delta over the frame")
+    except Exception as error:  # noqa: BLE001
+        out.append(f"refused: {type(error).__name__}: {error}")
+    return out
+
+
+def cancelling_problems(module, case) -> list[str]:
+    """With an anchor, the ``DELTA`` that cancels the pending is read exactly like the answer: two steps against the anchor."""
+    base, out = case[0], []
+    for pending, answer, second in answers_of(case):
+        if contradictory(second.effective.conditions):
+            continue
+        ok = {"anchor_expired": False}
+        args = (base, pending.frame, pending.frame_ops, second.effective)
+        try:
+            answered = module.echo_items_for_answer(*args, make_record(
+                fa.TurnResolution.PENDING_ANSWER, patch=answer, effective=second.effective, base_trace_id="t1"), **ok)
+            cancelled = module.echo_items_for_answer(*args, make_record(
+                fa.TurnResolution.DELTA, patch=answer, effective=second.effective, base_trace_id="t1",
+                control=fa.PendingControl.CANCEL_PENDING), **ok)
+        except Exception as error:  # noqa: BLE001
+            out.append(f"refused: {type(error).__name__}: {error}")
+            continue
+        if answered != cancelled:
+            out.append("the cancelling delta is not read like the answer")
+    return out
+
+
+@PROPS
+@given(st.one_of(st_difference_turn(), st_case(), st_case(rich=False)))
+def test_a_pending_without_an_anchor_is_read_against_its_frame(case):
+    assert no_anchor_problems(fe, case) == []
+
+
+@PROPS
+@given(ANSWER_TURNS)
+def test_the_cancelling_delta_is_read_like_the_answer(case):
+    assert cancelling_problems(fe, case) == []
+
+
 @PROPS
 @given(ANSWER_TURNS)
 def test_the_answer_is_the_delta_when_one_composition_gives_the_same_effective(case):

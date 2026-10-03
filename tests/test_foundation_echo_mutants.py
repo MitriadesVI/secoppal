@@ -29,8 +29,8 @@ from app.core.interpretation_contract import ContractError
 from tests.test_foundation_delta_properties import st_base, st_case
 from tests.test_foundation_echo import CASES, OMISSIONS, REFUSALS
 from tests.test_foundation_echo_properties import (
-    ANSWER_TURNS, PATCHED_RESOLUTIONS, answer_problems, answers_of, composed_of, differential_problems, fresh_problems,
-    not_ready_problems, page_problems, problems, silent_problems, st_difference_turn, st_plan_turn, st_value_turn,
+    ANSWER_TURNS, PATCHED_RESOLUTIONS, answer_problems, answers_of, cancelling_problems, composed_of, differential_problems,
+    fresh_problems, no_anchor_problems, not_ready_problems, page_problems, problems, silent_problems, st_difference_turn, st_plan_turn, st_value_turn,
 )
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -177,14 +177,36 @@ ECHO_MUTANTS = {
         "                          record: AcceptedTurnRecord, *, anchor_expired: bool) -> tuple[EchoItem, ...]:",
         "                          record: AcceptedTurnRecord, *, anchor_expired: bool = False) -> tuple[EchoItem, ...]:")],
     "answer_read_against_the_frame": [(
-        "    diff = answer_diff(anchor, frame, tuple(frame_ops), effective, record.patch)",
-        "    diff = composed_diff(frame, effective, record.patch)")],
+        "        diff = answer_diff(anchor, frame, tuple(frame_ops), effective, record.patch)",
+        "        diff = composed_diff(frame, effective, record.patch)")],
     "echo_items_takes_an_answer": [(
-        "    if resolution is ANSWERED:\n        raise ContractError(\"ECHO_ANSWER_HAS_ITS_OWN_ENTRY\")  "
-        "# echo_items_for_answer: against the anchor, not the frame", "    if False:\n        pass")],
-    "answer_entry_takes_any_turn": [("    if record.resolution is not ANSWERED:", "    if False:")],
-    "answer_without_an_anchor_accepted": [("    if anchor is None:\n        raise ContractError(\"ECHO_ANSWER_WITHOUT_ANCHOR\")",
-                                           "    if False:\n        pass")],
+        "    if over_a_frame(record):\n        raise ContractError(\"ECHO_ANSWER_HAS_ITS_OWN_ENTRY\")  "
+        "# echo_items_for_answer: the anchor, or the frame without one", "    if False:\n        pass")],
+    "answer_entry_takes_any_turn": [("    if not over_a_frame(record):", "    if False:")],
+    # round 4 (M2A7-D22): the pending WITHOUT an anchor is read against its frame; the cancelling delta is read like an answer
+    "answer_without_an_anchor_refused": [(
+        "        diff = composed_diff(frame, effective, record.patch)  # the «previo» is the frame (Gold §7)",
+        "        raise ContractError(\"ECHO_ANSWER_WITHOUT_ANCHOR\")")],
+    "answer_without_an_anchor_read_as_a_new_search": [(
+        "        diff = composed_diff(frame, effective, record.patch)  # the «previo» is the frame (Gold §7)",
+        "        diff = fresh_diff(effective)")],
+    "answer_without_an_anchor_read_against_the_anchor": [(
+        "    if anchor is None:\n        if frame_ops:", "    if False:\n        if frame_ops:")],
+    "answer_frame_operations_without_an_anchor_accepted": [(
+        "        if frame_ops:\n            raise ContractError(\"ECHO_FRAME_OPERATIONS_WITHOUT_AN_ANCHOR\")  "
+        "# nothing for them to be a difference from", "        pass")],
+    "cancelling_delta_read_against_the_frame": [(
+        "        diff = answer_diff(anchor, frame, tuple(frame_ops), effective, record.patch)",
+        "        diff = (answer_diff(anchor, frame, tuple(frame_ops), effective, record.patch)\n"
+        "                if record.resolution is ANSWERED else composed_diff(frame, effective, record.patch))")],
+    "cancelling_delta_not_routed_to_the_frame_entry": [(
+        "    return record.resolution is ANSWERED or (record.resolution is TurnResolution.DELTA\n"
+        "                                             and record.control is PendingControl.CANCEL_PENDING)",
+        "    return record.resolution is ANSWERED")],
+    "every_delta_is_a_cancelling_delta": [(
+        "    return record.resolution is ANSWERED or (record.resolution is TurnResolution.DELTA\n"
+        "                                             and record.control is PendingControl.CANCEL_PENDING)",
+        "    return record.resolution is ANSWERED or record.resolution is TurnResolution.DELTA")],
     "order_receipt_contradiction_accepted": [(
         "            raise ContractError(\"ECHO_RECEIPT_CONTRADICTS_PROVENANCE\")  # a default the user's own words contradict",
         "            pass")],
@@ -307,6 +329,11 @@ def killed_by_the_properties(module) -> str | None:
         return "property: an answer against the anchor"
     if _finds(ANSWER_TURNS, lambda case: bool(differential_problems(module, case))):
         return "property: the answer is the delta"
+    if _finds(ANSWER_TURNS, lambda case: bool(cancelling_problems(module, case))):
+        return "property: the cancelling delta is read like the answer"
+    if _finds(st.one_of(st_difference_turn(), st_case(), st_case(rich=False)),
+              lambda case: bool(no_anchor_problems(module, case))):
+        return "property: a pending without an anchor"
     if _finds(st.one_of(st_case(), st_case(rich=False)),
               lambda case: bool(not_ready_problems(echo_items, case[0], case[1]))):
         return "property: a delta that is not ready"
@@ -345,7 +372,7 @@ SCENARIO_ONLY = {
     "echo.answer_anchor_expired_default_restored": "a default on a keyword: every generated call passes it; the omissions kill it",
     "echo.answer_entry_takes_any_turn": "the guard of an incoherent call",
     "echo.echo_items_takes_an_answer": "the guard of an incoherent call",
-    "echo.answer_without_an_anchor_accepted": "the guard of an incoherent call (undecided: M2A7_CLOSE.md F-6)",
+    "echo.answer_frame_operations_without_an_anchor_accepted": "the guard of an incoherent call",
     "diff.answer_set_order_of_the_answer_only": "the R3-1 pending, the one that leaves frame operations today, never holds a "
                                                 "SET_ORDER (it would restore the ORDER: no pending); the scenario does",
     "diff.answer_value_clear_of_the_answer_only": "no candidate M2A-3 builds sets a VALUE bound after a frame CLEAR(VALUE); "
