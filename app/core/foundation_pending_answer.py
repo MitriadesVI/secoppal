@@ -183,14 +183,12 @@ def answer_by_event(pending: PendingClarification, candidate_id: str) -> AnswerR
 
 # ---- rows 4–8: an answer in language --------------------------------------------------------------------------------
 def answer_in_language(pending: PendingClarification, ops, *, no_selection: bool,
-                       asked_ops: tuple[PatchOp, ...], unresolved: frozenset[Slot] = frozenset()) -> AnswerResult:
-    """§8.3 «Selección» over P's ``ops`` (typed; the host reads no text). ``asked_ops`` are the operations of the turn that
-    asked (F24): the contract compares with «el parche del registro ``asked_trace_id``», but a ``CLARIFY`` record holds no
-    patch (``AcceptedTurnRecord``), so the caller supplies them (M2A4-D13). F24 is judged twice (M2A4-D20): on P as it
-    stands (the sealed order) and, with candidates, on P without its identity ``KEEP``s."""
+                       unresolved: frozenset[Slot] = frozenset()) -> AnswerResult:
+    """§8.3 «Selección» over P's typed ``ops``. R4 obtains the asking patch exclusively from ``pending.asked_ops``.
+    F24 is judged twice (M2A4-D20): on P as it stands and, with candidates, without identity ``KEEP``s."""
     if type(pending) is not PendingClarification:
         raise ContractError("INVALID_PENDING")
-    ops, asked = tuple(ops), tuple(asked_ops)
+    ops, asked = tuple(ops), pending.asked_ops
     if any(type(op) is not PatchOp for op in (*ops, *asked)):
         raise ContractError("INVALID_ANSWER_OPS")
     inside, said = answer_keys(pending), unresolved_keys(unresolved)  # ``said``: touched by a value nobody resolved

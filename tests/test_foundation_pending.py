@@ -17,6 +17,7 @@ tests. A mutant that no test notices is a test that does not count (``test_every
 from __future__ import annotations
 
 import importlib
+import functools
 import inspect
 import sys
 import types
@@ -72,7 +73,35 @@ def load(mutations: dict[str, list[tuple[str, str]]] | None = None) -> SimpleNam
     names = {}
     for module in modules:
         names.update({k: v for k, v in vars(module).items() if not k.startswith("_")})
+    for name in ("pending_from_question", "ask_authority"):
+        original = names[name]
+
+        @functools.wraps(original)
+        def creating(*args, _original=original, **kwargs):
+            made = _original(*args, **kwargs)
+            if made.pending is not None:
+                _record_context(made.pending, kwargs["base"], kwargs["base_trace_id"])
+            return made
+
+        names[name] = creating
     return SimpleNamespace(**names)
+
+
+# Test-only contextual witness store: original explicit creation inputs, never inferred
+# from the resulting frame or candidates. Clear for every direct test, including mutants.
+BASE_CONTEXTS = {}
+
+
+def _context_key(pending):
+    return fa.digest({"base_ref": pending.base_trace_id, "frame": pending.frame.to_dict() if pending.frame else None,
+                      "frame_ops": [op.to_dict() for op in pending.frame_ops]})
+
+
+def _record_context(pending, base, reference):
+    key = _context_key(pending)
+    if key in BASE_CONTEXTS:
+        assert BASE_CONTEXTS[key] == (base, reference), "ambiguous synthetic base context"
+    BASE_CONTEXTS[key] = (base, reference)
 
 
 P = load()
@@ -81,8 +110,12 @@ DIRECT = []
 
 def direct(function):
     """A test that is also part of the kill-suite of the mutants (no fixtures, no parameters)."""
-    DIRECT.append(function)
-    return function
+    @functools.wraps(function)
+    def run():
+        BASE_CONTEXTS.clear()
+        return function()
+    DIRECT.append(run)
+    return run
 
 
 # ---- typed fixtures --------------------------------------------------------------------------------------------------
@@ -241,11 +274,15 @@ def values_of(composed, key: str) -> list:
     return [c.value for c in composed.effective.conditions if c.slot.key == key]
 
 
-def respond(pending, t, *, now=T0 + MINUTE, trace="t2", asked_ops=None):
-    """``asked_ops`` are the operations of the turn that asked (F24). ``None`` or ``()``: the test says the asking turn had
-    no typed operation to compare with (``no_asked_patch``), as a real caller must say it (M2A4-D22)."""
-    asked = tuple(asked_ops or ())
-    return P.respond(pending, t, trace_id=trace, now=now, asked_ops=asked, no_asked_patch=not asked)
+def respond(pending, t, *, now=T0 + MINUTE, trace="t2", base=None, base_trace_id=None):
+    """Test contextual delivery from explicitly captured ORIGINAL creation inputs. No asking-patch side-channel.
+    New synthetic histories are not historical/Gold reconstructions; missing or ambiguous contexts are refused."""
+    if pending is not None and pending.base_trace_id is not None and base is None:
+        base, base_trace_id = BASE_CONTEXTS[_context_key(pending)]
+    decision = P.respond(pending, t, trace_id=trace, now=now, base=base, base_trace_id=base_trace_id)
+    if decision.created is not None and decision.created.pending is not None and decision.created.pending.base_trace_id:
+        _record_context(decision.created.pending, P.fragment_base(pending), pending.asked_trace_id)
+    return decision
 
 
 # ---- the pendings the tests keep asking about --------------------------------------------------------------------
@@ -282,7 +319,7 @@ def authority_month():
     base = base_of((D.TOPIC, "x"), (D.BUYER, "x"), (D.TIME, "x"))
     resolved = (set_op(D.BUYER, "y", i=1),)
     question = P.AuthorityQuestion("MONTH_YEAR_AMBIGUOUS", origin("t1", 0, RAW_TURN), frozenset({TIME_POS}))
-    made = P.ask_authority(question, base=base, base_trace_id="t0", asked_trace_id="t1", now=T0, frame_ops=resolved)
+    made = P.ask_authority(question, base=base, base_trace_id="t0", asked_trace_id="t1", now=T0, frame_ops=resolved, open_ops=())
     return base, made
 
 
@@ -294,7 +331,7 @@ def h5(label: str = "BUYER"):
     question = P.AuthorityQuestion("BUYER_OR_PLACE_AFTER_ACTOR", origin("t1", 0, RAW_TURN),
                                    frozenset({BUYER_POS, GEO_POS}), ((buyer,), (place,)))
     made = P.ask_authority(question, base=base, base_trace_id="t0", asked_trace_id="t1", now=T0,
-                           open_ops=(buyer if label == "BUYER" else place,))
+                           open_ops=(buyer if label == "BUYER" else place,), frame_ops=())
     return base, made, buyer, place
 
 
@@ -317,7 +354,7 @@ def test_creation_builds_the_pending_of_h6_with_its_span_candidates_and_plazo():
     assert change_buyer == (("CLEAR", "BUYER/POSITIVE"), ("SET", "GEOGRAPHY/POSITIVE")) and both == (
         ("SET", "GEOGRAPHY/POSITIVE"),)
     assert {o.slot for c in p.candidate_patches for o in c.patch.ops} <= p.answer_slots
-    assert [(o.op.value, o.slot.key) for o in made.asked_ops] == [("SET", "GEOGRAPHY/POSITIVE")]
+    assert [(o.op.value, o.slot.key) for o in made.pending.asked_ops] == [("SET", "GEOGRAPHY/POSITIVE")]
 
 
 @direct
@@ -349,7 +386,7 @@ def test_creation_with_resolved_operations_composes_them_into_the_frame():
     assert p.frame != base and p.frame.base_trace_id == "t0"
     assert {c.slot.key: c.value for c in p.frame.conditions}["BUYER/POSITIVE"] == typed_value(D.BUYER, "y").encode()
     assert p.answer_slots == {TIME_POS} and p.candidate_patches == ()
-    assert [(o.op.value, o.slot.key) for o in made.asked_ops] == [("SET", "BUYER/POSITIVE")]  # F24 reads these
+    assert [(o.op.value, o.slot.key) for o in made.pending.asked_ops] == [("SET", "BUYER/POSITIVE")]  # F24 reads these
 
 
 @direct
@@ -455,7 +492,7 @@ def test_h5_has_two_candidates_one_buyer_one_place_and_the_provisional_label_in_
     assert (made.code, p.reason, p.frame, p.base_trace_id) == ("BUYER_OR_PLACE_AFTER_ACTOR",) * 2 + (base, "t0")
     assert [tuple((o.op.value, o.slot.key) for o in c.patch.ops) for c in p.candidate_patches] == [
         (("SET", "BUYER/POSITIVE"),), (("SET", "GEOGRAPHY/POSITIVE"),)]
-    assert p.answer_slots == {BUYER_POS, GEO_POS} and made.asked_ops == (buyer,)
+    assert p.answer_slots == {BUYER_POS, GEO_POS} and made.pending.asked_ops == (buyer,)
 
 
 @direct
@@ -464,7 +501,7 @@ def test_each_authority_rule_builds_its_pending_over_its_open_slots():
     for reason, slots in (("REGION_NOT_IN_LIST", {GEO_POS}), ("UNIT_AMBIGUOUS", {slot(D.VALUE, side=ValueSide.LOWER)}),
                           ("MONTH_YEAR_AMBIGUOUS", {TIME_POS}), ("UNRESOLVED_VALUE:TIME", {TIME_POS})):
         question = P.AuthorityQuestion(reason, origin("t1", 5, RAW_TURN), frozenset(slots))
-        made = P.ask_authority(question, base=base, base_trace_id="t0", asked_trace_id="t1", now=T0)
+        made = P.ask_authority(question, base=base, base_trace_id="t0", asked_trace_id="t1", now=T0, frame_ops=(), open_ops=())
         assert made.disposition.value == "CLARIFY" and made.pending.reason == reason, reason
         assert made.pending.answer_slots == slots and made.pending.candidate_patches == ()
         assert made.pending.ambiguous_span == (5, 7)  # the authority's ambiguous window
@@ -476,7 +513,7 @@ def test_unresolved_value_carries_the_options_the_authority_resolved_at_ask_time
     base = base_of((D.TOPIC, "x"))
     options = tuple((set_op(D.BUYER, t),) for t in ("x", "y", "z"))
     question = P.AuthorityQuestion("UNRESOLVED_VALUE:BUYER", origin("t1", 0, RAW_TURN), frozenset({BUYER_POS}), options)
-    made = P.ask_authority(question, base=base, base_trace_id="t0", asked_trace_id="t1", now=T0)
+    made = P.ask_authority(question, base=base, base_trace_id="t0", asked_trace_id="t1", now=T0, frame_ops=(), open_ops=())
     assert [c.candidate_id for c in made.pending.candidate_patches] == ["c1", "c2", "c3"]
     assert len({c.display_key for c in made.pending.candidate_patches}) == 3
     # a candidate outside the dimension asked about is refused
@@ -489,7 +526,7 @@ def test_unresolved_value_carries_the_options_the_authority_resolved_at_ask_time
 def test_value_without_comparator_answers_on_both_sides_whatever_the_caller_says():
     base = base_of((D.TOPIC, "x"))
     question = P.AuthorityQuestion("VALUE_WITHOUT_COMPARATOR", origin("t1", 0, RAW_TURN), frozenset({TIME_POS}))
-    made = P.ask_authority(question, base=base, base_trace_id="t0", asked_trace_id="t1", now=T0)
+    made = P.ask_authority(question, base=base, base_trace_id="t0", asked_trace_id="t1", now=T0, frame_ops=(), open_ops=())
     assert made.pending.answer_slots == {slot(D.VALUE, side=ValueSide.LOWER), slot(D.VALUE, side=ValueSide.UPPER)}
 
 
@@ -515,7 +552,7 @@ def test_an_authority_question_on_an_expired_anchor_or_with_a_pending_vigente_is
     base = base_of((D.TOPIC, "x"))
     question = P.AuthorityQuestion("MONTH_YEAR_AMBIGUOUS", origin("t1", 0, RAW_TURN), frozenset({TIME_POS}))
     for flag in ("anchor_expired", "pending_present"):
-        made = P.ask_authority(question, base=base, base_trace_id="t0", asked_trace_id="t1", now=T0, **{flag: True})
+        made = P.ask_authority(question, base=base, base_trace_id="t0", asked_trace_id="t1", now=T0, **{flag: True}, frame_ops=(), open_ops=())
         assert (made.disposition.value, made.code, made.pending) == ("INFORM", "MONTH_YEAR_AMBIGUOUS", None)
 
 
@@ -525,7 +562,7 @@ def test_an_authority_question_the_law_forbids_is_an_inform_with_its_code():
     ORDER-less CARDINALITY answer cannot compose): ``INFORM`` with the rule's code and nothing built."""
     base = base_of((D.TOPIC, "x"))
     question = P.AuthorityQuestion("UNRESOLVED_VALUE:CARDINALITY", origin("t1", 0, RAW_TURN), frozenset({CARD_SLOT}))
-    made = P.ask_authority(question, base=base, base_trace_id="t0", asked_trace_id="t1", now=T0)
+    made = P.ask_authority(question, base=base, base_trace_id="t0", asked_trace_id="t1", now=T0, frame_ops=(), open_ops=())
     # CLEAR / KEEP of an empty CARDINALITY: KEEP_ON_EMPTY_SLOT, CLEAR_ON_EMPTY_SLOT (H12), SET without ORDER: refused
     assert (made.disposition.value, made.code, made.pending) == ("INFORM", "UNRESOLVED_VALUE:CARDINALITY", None)
 
@@ -550,7 +587,7 @@ def test_ask_fresh_judges_the_law_on_the_frame_too():
     impossible = P.AuthorityQuestion("UNRESOLVED_VALUE:CARDINALITY", origin("t1", 0, RAW_TURN), frozenset({CARD_SLOT}))
     made = P.ask_fresh(impossible, frame=frame, asked_trace_id="t1", now=T0, asked_ops=(set_op(D.TIME, "x"),))
     assert (made.disposition.value, made.code, made.pending) == ("INFORM", "UNRESOLVED_VALUE:CARDINALITY", None)
-    assert "no answer executes" in made.violations and len(made.asked_ops) == 1
+    assert "no answer executes" in made.violations and made.pending is None
     refused = P.AuthorityQuestion("UNRESOLVED_VALUE:BUYER", origin("t1", 0, RAW_TURN), frozenset({BUYER_POS}),
                                   ((keep_op(BUYER_POS),),))  # KEEP of a slot the frame does not hold
     again = P.ask_fresh(refused, frame=frame, asked_trace_id="t1", now=T0, asked_ops=())
@@ -561,14 +598,14 @@ def test_ask_fresh_judges_the_law_on_the_frame_too():
 def test_ask_fresh_has_no_default_for_the_asking_patch():
     """M2A4-D28 (ZEUS P2-B): ``respond`` refuses ``asked_ops=()`` by omission (D22); ``ask_fresh`` must not reopen it with a
     default of ``()``. The caller of a new search that asks hands over the typed operations of the turn, or an empty tuple
-    it WROTE: ``Creation.asked_ops`` is what F24 reads back."""
+    it WROTE: ``PendingClarification.asked_ops`` is what F24 reads back."""
     assert inspect.signature(P.ask_fresh).parameters["asked_ops"].default is inspect.Parameter.empty
     question = P.AuthorityQuestion("MONTH_YEAR_AMBIGUOUS", origin("t1", 0, RAW_TURN), frozenset({TIME_POS}))
     with pytest.raises(TypeError):
         P.ask_fresh(question, frame=base_of((D.TOPIC, "x")), asked_trace_id="t1", now=T0)
     buyer = set_op(D.BUYER, "y")
     made = P.ask_fresh(question, frame=base_of((D.TOPIC, "x")), asked_trace_id="t1", now=T0, asked_ops=(buyer,))
-    assert made.asked_ops == (buyer,)
+    assert made.pending.asked_ops == (buyer,)
 
 
 @direct
@@ -626,7 +663,7 @@ def test_row_4_compose_on_the_frame_never_the_base():
     """§8.4: the frame is the base plus the resolved part of the asking turn; an answer composes on IT."""
     base, made = authority_month()
     p = made.pending
-    d = respond(p, turn(set_op(D.TIME, "x")), asked_ops=made.asked_ops)
+    d = respond(p, turn(set_op(D.TIME, "x")))
     assert (d.kind.value, d.answer.row, d.resolution.value) == ("PENDING_ANSWER", 4, "PENDING_ANSWER")
     assert values_of(d.answer.composed, "BUYER/POSITIVE") == [typed_value(D.BUYER, "y").encode()]  # the frame's buyer
     assert values_of(d.answer.composed, "BUYER/POSITIVE") != [typed_value(D.BUYER, "x").encode()]  # not the base's
@@ -634,15 +671,13 @@ def test_row_4_compose_on_the_frame_never_the_base():
 
 
 def test_the_answer_composes_through_a_seam_that_takes_the_frame_and_nothing_else():
-    """The answer is never handed the base: ``compose_answer(frame, …)`` is the only composition, and no function of the
-    answer module has a parameter named like a base or an anchor."""
+    """Answer composition still sees only F. The outer protocol additionally validates A→F before deciding."""
     assert list(inspect.signature(P.compose_answer).parameters)[0] == "frame"
-    for name in ("answer_in_language", "answer_by_event", "compose_answer", "respond"):
+    for name in ("answer_in_language", "answer_by_event", "compose_answer"):
         parameters = set(inspect.signature(getattr(P, name)).parameters)
         assert not parameters & {"base", "anchor", "base_effective"}, (name, parameters)
-    # F24 compares with the asking patch: ``respond`` has no default for it (silently off = the product chooses for the user)
-    assert inspect.signature(P.respond).parameters["asked_ops"].default is inspect.Parameter.empty
-    with pytest.raises(TypeError):
+    assert not set(inspect.signature(P.respond).parameters) & {"asked_ops", "no_asked_patch"}
+    with pytest.raises(ContractError, match="INVALID_BASE"):
         P.respond(r31()[1].pending, turn(), trace_id="t2", now=T0)
 
 
@@ -650,7 +685,7 @@ def test_the_answer_composes_through_a_seam_that_takes_the_frame_and_nothing_els
 def test_row_5_an_answer_plus_an_edit_of_another_slot_is_reasked_never_a_hybrid():
     """F25 (SF051, SF053, SF201): the answer is on ``answer_slots`` AND edits another slot."""
     _, made = r31()
-    d = respond(made.pending, turn(clear_op(CARD_SLOT), set_op(D.TIME, "x", i=1)), asked_ops=made.asked_ops)
+    d = respond(made.pending, turn(clear_op(CARD_SLOT), set_op(D.TIME, "x", i=1)))
     assert (d.kind.value, d.code, d.answer.row, d.answer.composed) == ("REASK", "ANSWER_EDITS_OTHER_SLOT", 5, None)
     assert d.pending == replace(made.pending, asks=2) and d.control is None
 
@@ -673,11 +708,11 @@ def test_row_7_an_answer_that_selects_no_candidate_or_two_is_reasked():
     _, made = r31()
     p = made.pending
     for ops in ((clear_op(CARD_SLOT),), (set_op(D.CARDINALITY, TOP_20),), (set_op(D.ORDER, ORDER_DATE),)):
-        d = respond(p, turn(*ops), asked_ops=made.asked_ops)  # «dame 20» never composes on the base's ORDER
+        d = respond(p, turn(*ops))  # «dame 20» never composes on the base's ORDER
         assert (d.kind.value, d.code, d.answer.row) == ("REASK", "ANSWER_UNRESOLVED", 7), ops
     twin = fa.CandidatePatch("c2", "twin", p.candidate_patches[0].patch)
     two = replace(p, candidate_patches=(p.candidate_patches[0], twin))
-    d = respond(two, turn(clear_op(CARD_SLOT), clear_op(ORDER_SLOT, 1)), asked_ops=made.asked_ops)
+    d = respond(two, turn(clear_op(CARD_SLOT), clear_op(ORDER_SLOT, 1)))
     assert (d.code, d.answer.row) == ("ANSWER_UNRESOLVED", 7)  # two candidates equal to P: ≥2 is row 7 too
 
 
@@ -690,7 +725,7 @@ def test_row_7_a_conflict_in_p_is_decided_on_p_as_it_stands():
                 (set_op(D.GEOGRAPHY, "y"), set_op(D.GEOGRAPHY, "z", i=1)),  # two writers
                 (keep_op(BUYER_POS), clear_op(BUYER_POS, 1), set_op(D.GEOGRAPHY, "y", i=2)),  # KEEP + CLEAR
                 (keep_op(BUYER_POS), clear_op(slot(D.BUYER), 1), set_op(D.GEOGRAPHY, "y", i=2))):  # dimension-wide
-        d = respond(p, turn(*ops), asked_ops=made.asked_ops)
+        d = respond(p, turn(*ops))
         assert (d.kind.value, d.code, d.answer.row) == ("REASK", "ANSWER_UNRESOLVED", 7), ops
 
 
@@ -710,7 +745,7 @@ def test_a_value_no_authority_resolved_selects_nothing_but_still_touches_its_slo
     base = base_of((D.TOPIC, "x"))
     options = tuple((set_op(D.BUYER, t),) for t in ("x", "y", "z"))
     question = P.AuthorityQuestion("UNRESOLVED_VALUE:BUYER", origin("t1", 0, RAW_TURN), frozenset({BUYER_POS}), options)
-    p = P.ask_authority(question, base=base, base_trace_id="t0", asked_trace_id="t1", now=T0).pending
+    p = P.ask_authority(question, base=base, base_trace_id="t0", asked_trace_id="t1", now=T0, frame_ops=(), open_ops=()).pending
     said = frozenset({BUYER_POS})
     row_7 = respond(p, turn(unresolved=said))  # «la del Caribe»: inside, nothing resolved
     assert (row_7.kind.value, row_7.code, row_7.answer.row) == ("REASK", "ANSWER_UNRESOLVED", 7)
@@ -742,11 +777,11 @@ def test_normalization_drops_only_the_identity_keeps_and_only_with_candidates():
     _, made = h6()
     p = made.pending
     a = (clear_op(BUYER_POS, 1), set_op(D.GEOGRAPHY, "y", i=2))
-    kept = respond(p, turn(keep_op(TOPIC_POS), *a), asked_ops=made.asked_ops)  # «cambiar de comprador» + a KEEP of filler
+    kept = respond(p, turn(keep_op(TOPIC_POS), *a))  # «cambiar de comprador» + a KEEP of filler
     assert (kept.kind.value, kept.answer.candidate_id) == ("PENDING_ANSWER", "c1")
-    keep_of_nothing = respond(p, turn(keep_op(ACTOR_POS), *a), asked_ops=made.asked_ops)  # a KEEP of an empty slot: no identity
+    keep_of_nothing = respond(p, turn(keep_op(ACTOR_POS), *a))  # a KEEP of an empty slot: no identity
     assert keep_of_nothing.code == "ANSWER_EDITS_OTHER_SLOT"  # touches ACTOR (outside) with BUYER/GEO (inside): row 5
-    twice = respond(p, turn(keep_op(TOPIC_POS), keep_op(TOPIC_POS, 3), *a), asked_ops=made.asked_ops)
+    twice = respond(p, turn(keep_op(TOPIC_POS), keep_op(TOPIC_POS, 3), *a))
     assert twice.code == "ANSWER_EDITS_OTHER_SLOT"  # each KEEP is touched by the other one: none is the identity
 
 
@@ -757,9 +792,9 @@ def test_declared_cost_keep_without_candidates_is_reasked_not_normalized():
     _, made = authority_month()
     p = made.pending
     assert p.candidate_patches == ()
-    d = respond(p, turn(keep_op(TOPIC_POS), set_op(D.TIME, "x", i=1)), asked_ops=made.asked_ops)
+    d = respond(p, turn(keep_op(TOPIC_POS), set_op(D.TIME, "x", i=1)))
     assert (d.kind.value, d.code, d.answer.row) == ("REASK", "ANSWER_EDITS_OTHER_SLOT", 5)
-    assert respond(p, turn(set_op(D.TIME, "x")), asked_ops=made.asked_ops).kind.value == "PENDING_ANSWER"  # no filler
+    assert respond(p, turn(set_op(D.TIME, "x"))).kind.value == "PENDING_ANSWER"  # no filler
 
 
 def _fillers(frame):
@@ -775,39 +810,41 @@ def test_f24_an_answer_identical_to_the_asking_patch_does_not_answer_with_or_wit
     the answer as it stands AND on the answer once the identity KEEPs are gone."""
     base, made = h6()
     p = made.pending
-    same = respond(p, turn(set_op(D.GEOGRAPHY, "y")), asked_ops=made.asked_ops)
+    same = respond(p, turn(set_op(D.GEOGRAPHY, "y")))
     assert (same.kind.value, same.code, same.answer.row) == ("REASK", "ANSWER_UNRESOLVED", 7)
     for filler in _fillers(base):  # H6: «buscar con ambos» is the asking patch (SET GEO), whatever KEEP goes with it
-        d = respond(p, turn(*filler, set_op(D.GEOGRAPHY, "y", i=5)), asked_ops=made.asked_ops)
+        d = respond(p, turn(*filler, set_op(D.GEOGRAPHY, "y", i=5)))
         assert (d.kind.value, d.code, d.answer.row) == ("REASK", "ANSWER_UNRESOLVED", 7), filler
     for label in ("BUYER", "GEOGRAPHY"):  # H5: the option the producer's label names is the asking patch
         base5, made5, buyer, place = h5(label)
         repeated = set_op(D.BUYER, "y", i=5) if label == "BUYER" else set_op(D.GEOGRAPHY, "y", i=5)
         other = set_op(D.GEOGRAPHY, "y", i=5) if label == "BUYER" else set_op(D.BUYER, "y", i=5)
         for filler in ((), *_fillers(base5)):
-            d = respond(made5.pending, turn(*filler, repeated), asked_ops=made5.asked_ops)
+            d = respond(made5.pending, turn(*filler, repeated))
             assert (d.kind.value, d.code) == ("REASK", "ANSWER_UNRESOLVED"), (label, filler)
-            chosen = respond(made5.pending, turn(*filler, other), asked_ops=made5.asked_ops)  # the OTHER option is reachable
+            chosen = respond(made5.pending, turn(*filler, other))  # the OTHER option is reachable
             assert chosen.kind.value == "PENDING_ANSWER", (label, filler)
-    # nothing declared to compare with: F24 has nothing to refuse (the caller said so, M2A4-D22)
-    assert respond(p, turn(set_op(D.GEOGRAPHY, "y")), asked_ops=()).kind.value == "PENDING_ANSWER"
+    # No caller can erase the persisted original asking patch (R4 replaces the old D22 side-channel).
+    with pytest.raises(TypeError):
+        P.respond(p, turn(set_op(D.GEOGRAPHY, "y")), trace_id="t2", now=T0 + MINUTE,
+                  base=base, base_trace_id="t0", asked_ops=())
     # a pending with NO candidate whose asking patch holds the (typed) open operation: repeating it answers nothing either
     question = P.AuthorityQuestion("MONTH_YEAR_AMBIGUOUS", origin("t1", 0, RAW_TURN), frozenset({TIME_POS}))
     month = P.ask_authority(question, base=base_of((D.TOPIC, "x")), base_trace_id="t0", asked_trace_id="t1", now=T0,
-                            open_ops=(set_op(D.TIME, "x"),))
+                            open_ops=(set_op(D.TIME, "x"),), frame_ops=())
     assert month.pending.candidate_patches == ()
-    d = respond(month.pending, turn(set_op(D.TIME, "x", i=5)), asked_ops=month.asked_ops)
+    d = respond(month.pending, turn(set_op(D.TIME, "x", i=5)))
     assert (d.kind.value, d.code, d.answer.row) == ("REASK", "ANSWER_UNRESOLVED", 7)
-    assert respond(month.pending, turn(set_op(D.TIME, "y", i=5)), asked_ops=month.asked_ops).kind.value == "PENDING_ANSWER"
+    assert respond(month.pending, turn(set_op(D.TIME, "y", i=5))).kind.value == "PENDING_ANSWER"
     # the asking patch may itself hold an identity KEEP (the user said «con el mismo comprador, y en …»): repeating it whole
     # is F24 on the answer AS IT STANDS, the sealed order, which holds for every pending (with or without candidates)
     kept = P.ask_authority(question, base=base_of((D.TOPIC, "x"), (D.BUYER, "x")), base_trace_id="t0", asked_trace_id="t1",
                            now=T0, frame_ops=(keep_op(BUYER_POS),), open_ops=(set_op(D.TIME, "x", i=1),))
-    assert [o.op.value for o in kept.asked_ops] == ["KEEP", "SET"]
-    whole = respond(kept.pending, turn(keep_op(BUYER_POS, 5), set_op(D.TIME, "x", i=6)), asked_ops=kept.asked_ops)
+    assert [o.op.value for o in kept.pending.asked_ops] == ["KEEP", "SET"]
+    whole = respond(kept.pending, turn(keep_op(BUYER_POS, 5), set_op(D.TIME, "x", i=6)))
     assert (whole.kind.value, whole.code, whole.answer.row) == ("REASK", "ANSWER_UNRESOLVED", 7)
     # an answer that is the asking patch AND says something more (a value nobody resolved) is not «the same patch»
-    more = respond(p, turn(set_op(D.GEOGRAPHY, "y", i=5), unresolved=frozenset({TIME_POS})), asked_ops=made.asked_ops)
+    more = respond(p, turn(set_op(D.GEOGRAPHY, "y", i=5), unresolved=frozenset({TIME_POS})))
     assert (more.code, more.answer.row) == ("ANSWER_EDITS_OTHER_SLOT", 5)
 
 
@@ -819,13 +856,13 @@ def test_the_normalized_f24_is_only_for_pendings_with_candidates_the_sealed_code
     question = P.AuthorityQuestion("MONTH_YEAR_AMBIGUOUS", origin("t1", 0, RAW_TURN), frozenset({TIME_POS}))
     made = P.ask_authority(question, base=base_of((D.TOPIC, "x"), (D.BUYER, "x")), base_trace_id="t0", asked_trace_id="t1",
                            now=T0, frame_ops=(set_op(D.BUYER, "y", i=1),), open_ops=(set_op(D.TIME, "x"),))
-    p, asked = made.pending, made.asked_ops
+    p, asked = made.pending, made.pending.asked_ops
     assert p.candidate_patches == () and [o.slot.key for o in asked] == ["BUYER/POSITIVE", "TIME/POSITIVE"]
-    row_8 = respond(p, turn(set_op(D.BUYER, "y", i=5), keep_op(TOPIC_POS, 6)), asked_ops=asked)  # nothing of the question
+    row_8 = respond(p, turn(set_op(D.BUYER, "y", i=5), keep_op(TOPIC_POS, 6)))  # nothing of the question
     assert (row_8.kind.value, row_8.code, row_8.answer.row) == ("REASK", "PENDING_UNANSWERED", 8)
-    row_5 = respond(p, turn(set_op(D.BUYER, "y", i=5), set_op(D.TIME, "x", i=6), keep_op(TOPIC_POS, 7)), asked_ops=asked)
+    row_5 = respond(p, turn(set_op(D.BUYER, "y", i=5), set_op(D.TIME, "x", i=6), keep_op(TOPIC_POS, 7)))
     assert (row_5.kind.value, row_5.code, row_5.answer.row) == ("REASK", "ANSWER_EDITS_OTHER_SLOT", 5)  # D4: no candidate
-    whole = respond(p, turn(set_op(D.BUYER, "y", i=5), set_op(D.TIME, "x", i=6)), asked_ops=asked)  # the sealed F24
+    whole = respond(p, turn(set_op(D.BUYER, "y", i=5), set_op(D.TIME, "x", i=6)))  # the sealed F24
     assert (whole.kind.value, whole.code, whole.answer.row) == ("REASK", "ANSWER_UNRESOLVED", 7)
 
 
@@ -836,20 +873,20 @@ def test_f24_a_part_of_the_asking_patch_answers_nothing_either():
     base = h6()[0]
     made = delta_pending(base, set_op(D.TIME, "y"), set_op(D.GEOGRAPHY, "y", i=1))
     p = made.pending
-    assert [(o.op.value, o.slot.key) for o in made.asked_ops] == [("SET", "TIME/POSITIVE"), ("SET", "GEOGRAPHY/POSITIVE")]
+    assert [(o.op.value, o.slot.key) for o in made.pending.asked_ops] == [("SET", "GEOGRAPHY/POSITIVE"), ("SET", "TIME/POSITIVE")]
     part = set_op(D.GEOGRAPHY, "y", i=5)
     for ops in ((part,), (keep_op(TOPIC_POS, 6), part), (part, keep_op(fa.UNIVERSE_SLOT, 6))):  # the open value, with filler
-        d = respond(p, turn(*ops), asked_ops=made.asked_ops)
+        d = respond(p, turn(*ops))
         assert (d.kind.value, d.code, d.answer.row) == ("REASK", "ANSWER_UNRESOLVED", 7), ops
-    whole = respond(p, turn(set_op(D.TIME, "y", i=4), part), asked_ops=made.asked_ops)  # the whole asking patch: F24 itself
+    whole = respond(p, turn(set_op(D.TIME, "y", i=4), part))  # the whole asking patch: F24 itself
     assert (whole.kind.value, whole.code) == ("REASK", "ANSWER_UNRESOLVED")
-    a = respond(p, turn(keep_op(TOPIC_POS, 6), clear_op(BUYER_POS, 7), part), asked_ops=made.asked_ops)  # A is not a part of it
+    a = respond(p, turn(keep_op(TOPIC_POS, 6), clear_op(BUYER_POS, 7), part))  # A is not a part of it
     assert (a.kind.value, a.answer.candidate_id) == ("PENDING_ANSWER", "c1")
     assert values_of(a.answer.composed, "TIME/POSITIVE") == [typed_value(D.TIME, "y").encode()]  # the frame's TIME survives
     assert respond(p, P.OptionEvent(p.pending_id, "c2")).kind.value == "PENDING_ANSWER"  # B by event
-    unsaid = respond(p, turn(part, unresolved=frozenset({TIME_POS})), asked_ops=made.asked_ops)  # it also says something more
+    unsaid = respond(p, turn(part, unresolved=frozenset({TIME_POS})))  # it also says something more
     assert (unsaid.code, unsaid.answer.row) == ("ANSWER_EDITS_OTHER_SLOT", 5)  # not «a part»: it edits another slot too
-    assert respond(p, turn(keep_op(TOPIC_POS, 6)), asked_ops=made.asked_ops).code == "PENDING_UNANSWERED"  # empty: row 8
+    assert respond(p, turn(keep_op(TOPIC_POS, 6))).code == "PENDING_UNANSWERED"  # empty: row 8
 
 
 @direct
@@ -859,14 +896,13 @@ def test_declared_cost_h6_b_only_by_event_a_by_repeating_both_operations():
     a KEEP of filler). Everything else falls safe (REASK)."""
     base, made = h6()
     p = made.pending
-    a = respond(p, turn(clear_op(BUYER_POS), set_op(D.GEOGRAPHY, "y", i=1)), asked_ops=made.asked_ops)
+    a = respond(p, turn(clear_op(BUYER_POS), set_op(D.GEOGRAPHY, "y", i=1)))
     assert (a.kind.value, a.answer.candidate_id) == ("PENDING_ANSWER", "c1")
     assert kinds(a.answer.composed) == kinds(respond(p, P.OptionEvent(p.pending_id, "c1")).answer.composed)
     for filler in _fillers(base):
         if not any(k.slot in (BUYER_POS, GEO_POS) for k in filler):  # a KEEP of BUYER or GEO next to A is a §6 step-2 conflict
-            assert respond(p, turn(*filler, clear_op(BUYER_POS), set_op(D.GEOGRAPHY, "y", i=1)),
-                           asked_ops=made.asked_ops).answer.candidate_id == "c1"
-        assert respond(p, turn(*filler, set_op(D.GEOGRAPHY, "y", i=1)), asked_ops=made.asked_ops).code == "ANSWER_UNRESOLVED"
+            assert respond(p, turn(*filler, clear_op(BUYER_POS), set_op(D.GEOGRAPHY, "y", i=1))).answer.candidate_id == "c1"
+        assert respond(p, turn(*filler, set_op(D.GEOGRAPHY, "y", i=1))).code == "ANSWER_UNRESOLVED"
     assert respond(p, P.OptionEvent(p.pending_id, "c2")).kind.value == "PENDING_ANSWER"
 
 
@@ -880,7 +916,7 @@ def test_declared_cost_h5_the_option_the_producers_label_names_is_reached_only_b
         base, made, buyer, place = h5(label)
         for said, op in (("como comprador", set_op(D.BUYER, "y", i=3)), ("como lugar", set_op(D.GEOGRAPHY, "y", i=3))):
             for filler in ((), *_fillers(base)):
-                d = respond(made.pending, turn(*filler, op), asked_ops=made.asked_ops)
+                d = respond(made.pending, turn(*filler, op))
                 got = "PENDING_ANSWER" if d.kind.value == "PENDING_ANSWER" else d.code
                 assert got == expected[said], (label, said, filler, got)
         for candidate in ("c1", "c2"):  # by event both are reachable, whatever the label
@@ -891,11 +927,11 @@ def test_declared_cost_h5_the_option_the_producers_label_names_is_reached_only_b
 def test_selection_is_by_the_exact_value_never_by_the_slot():
     """§8.3 «Selección» (U22): (op, slot, canonical encoded value). Another value in a candidate's slot selects nothing."""
     _, made, buyer, place = h5()
-    other = respond(made.pending, turn(set_op(D.BUYER, "z", i=2)), asked_ops=made.asked_ops)  # a buyer no option offered
+    other = respond(made.pending, turn(set_op(D.BUYER, "z", i=2)))  # a buyer no option offered
     assert (other.kind.value, other.code, other.answer.row) == ("REASK", "ANSWER_UNRESOLVED", 7)
-    wrong_dimension = respond(made.pending, turn(set_op(D.GEOGRAPHY, "z", i=2)), asked_ops=made.asked_ops)
+    wrong_dimension = respond(made.pending, turn(set_op(D.GEOGRAPHY, "z", i=2)))
     assert wrong_dimension.code == "ANSWER_UNRESOLVED"
-    chosen = respond(made.pending, turn(set_op(D.GEOGRAPHY, "y", i=2)), asked_ops=(buyer,))
+    chosen = respond(made.pending, turn(set_op(D.GEOGRAPHY, "y", i=2)))
     assert chosen.kind.value == "PENDING_ANSWER" and chosen.answer.candidate_id == "c2"
 
 
@@ -908,16 +944,24 @@ def test_h1_a_selection_in_language_is_never_an_execution_over_the_expired_ancho
     fillers = ((), (keep_op(TOPIC_POS, 1),), (keep_op(BUYER_POS, 1),), (keep_op(TOPIC_POS, 1), keep_op(BUYER_POS, 2)))
     for filler in fillers:
         for answer in ((set_op(D.TIME, "y"),), (set_op(D.TIME, "z"),), (clear_op(TIME_POS),), ()):
-            d = respond(p, turn(*answer, *filler), asked_ops=made.asked_ops)
+            d = respond(p, turn(*answer, *filler))
             assert d.kind.value == "REASK" and d.pending.asks == 2, (answer, filler, d.kind)
     assert respond(p, P.OptionEvent(p.pending_id, "c1")).kind.value == "PENDING_ANSWER"  # by event it does
-    # D2 needs no ``asked_ops``: the one candidate IS the asking patch. A caller that passes none, or the wrong ones, still
-    # gets no execution (the F24 comparison is not what stops it here)
+    # Negative/adversarial persisted state, NOT an original asking history or Gold:
+    # inject loss of the asking witness into an H1 payload. The strict local schema
+    # and contextual C2 identity may admit it; independent D2 must still reject text.
+    corrupt = p.to_dict()
+    corrupt["asked_ops"] = []
+    reread = fa.PendingClarification.from_dict(corrupt)
+    for filler in fillers:
+        decision = P.respond(reread, turn(set_op(D.TIME, "y"), *filler), trace_id="t2", now=T0 + MINUTE,
+                             base=base, base_trace_id="t0")
+        assert (decision.kind.value, decision.code) == ("REASK", "ANSWER_UNRESOLVED")
+    # R4 rejects the obsolete caller side-channel, regardless of the proposed override.
     for wrong in ((), (clear_op(TIME_POS, 3),), (set_op(D.ACTOR, "z", i=3),)):
-        for filler in fillers:
-            d = P.respond(p, turn(set_op(D.TIME, "y"), *filler), trace_id="t2", now=T0 + MINUTE, asked_ops=wrong,
-                          no_asked_patch=not wrong)
-            assert d.kind.value == "REASK", (wrong, filler)
+        with pytest.raises(TypeError):
+            P.respond(p, turn(set_op(D.TIME, "y")), trace_id="t2", now=T0 + MINUTE,
+                      base=base, base_trace_id="t0", asked_ops=wrong)
 
 
 @direct
@@ -925,14 +969,14 @@ def test_an_answer_that_composes_but_leaves_a_question_open_is_row_7_never_a_hyb
     """§8.3: «si el resultado sigue ambiguo ⇒ REASK»: the answer composes with no cause, but H11 (an empty search) or H12
     (a lone CLEAR of an empty slot) is still there: nothing executes."""
     _, made = h11()  # frame = the base (TOPIC x); the open span was CLEAR(TOPIC), dimension-wide
-    wipe = respond(made.pending, turn(clear_op(TOPIC_POS, 1)), asked_ops=made.asked_ops)  # TOPIC/POSITIVE only: not F24
+    wipe = respond(made.pending, turn(clear_op(TOPIC_POS, 1)))  # TOPIC/POSITIVE only: not F24
     assert (wipe.kind.value, wipe.code, wipe.answer.row, wipe.answer.composed) == ("REASK", "ANSWER_UNRESOLVED", 7, None)
-    keep = respond(made.pending, turn(keep_op(TOPIC_POS, 1)), asked_ops=made.asked_ops)  # KEEP: nothing left open
+    keep = respond(made.pending, turn(keep_op(TOPIC_POS, 1)))  # KEEP: nothing left open
     assert keep.kind.value == "PENDING_ANSWER" and kinds(keep.answer.composed) == ["TOPIC/POSITIVE"]
     base = base_of((D.TOPIC, "x"))
     question = P.AuthorityQuestion("MONTH_YEAR_AMBIGUOUS", origin("t1", 0, RAW_TURN), frozenset({TIME_POS}))
-    asked = P.ask_authority(question, base=base, base_trace_id="t0", asked_trace_id="t1", now=T0)
-    lone = respond(asked.pending, turn(clear_op(TIME_POS, 1)), asked_ops=asked.asked_ops)  # H12: nothing to clear
+    asked = P.ask_authority(question, base=base, base_trace_id="t0", asked_trace_id="t1", now=T0, frame_ops=(), open_ops=())
+    lone = respond(asked.pending, turn(clear_op(TIME_POS, 1)))  # H12: nothing to clear
     assert (lone.kind.value, lone.code, lone.answer.row) == ("REASK", "ANSWER_UNRESOLVED", 7)
 
 
@@ -942,7 +986,7 @@ def test_a_candidate_is_composed_whole_not_the_answer_that_selected_it():
     the identity KEEPs it was normalized from, and by origin)."""
     _, made = h6()
     p = made.pending
-    d = respond(p, turn(keep_op(TOPIC_POS), clear_op(BUYER_POS, 1), set_op(D.GEOGRAPHY, "y", i=2)), asked_ops=made.asked_ops)
+    d = respond(p, turn(keep_op(TOPIC_POS), clear_op(BUYER_POS, 1), set_op(D.GEOGRAPHY, "y", i=2)))
     assert d.answer.patch == p.candidate_patches[0].patch.ops
     assert all(o.op.value != "KEEP" for o in d.answer.patch)
 
@@ -954,7 +998,7 @@ def test_a_reask_keeps_the_pending_whole_but_asks_and_never_extends_the_plazo():
     p = made.pending
     for ops, code in (((set_op(D.TIME, "x"),), "PENDING_UNANSWERED"), ((clear_op(CARD_SLOT),), "ANSWER_UNRESOLVED"),
                       ((clear_op(CARD_SLOT), set_op(D.TIME, "x", i=1)), "ANSWER_EDITS_OTHER_SLOT")):
-        d = respond(p, turn(*ops), now=T0 + 20 * MINUTE, asked_ops=made.asked_ops)
+        d = respond(p, turn(*ops), now=T0 + 20 * MINUTE)
         kept = d.pending
         assert d.code == code and kept.asks == 2 and d.cancellation is None
         assert replace(kept, asks=1) == p  # frame, question, candidates, ids and plazo untouched
@@ -965,9 +1009,9 @@ def test_a_reask_keeps_the_pending_whole_but_asks_and_never_extends_the_plazo():
 def test_the_cap_of_asks_cancels_the_pending_on_the_failure_after_the_second_ask():
     """§8.3: ``asks`` reaches 2 and the answer fails again ⇒ the pending is cancelled (``CANCEL_PENDING``) and it is said."""
     _, made = r31()
-    first = respond(made.pending, turn(set_op(D.TIME, "x")), asked_ops=made.asked_ops)
+    first = respond(made.pending, turn(set_op(D.TIME, "x")))
     assert first.pending.asks == 2 and first.control is None
-    second = respond(first.pending, turn(clear_op(CARD_SLOT)), asked_ops=made.asked_ops)
+    second = respond(first.pending, turn(clear_op(CARD_SLOT)))
     assert (second.kind.value, second.code, second.pending) == ("REASK", "ANSWER_UNRESOLVED", None)
     assert second.control.value == "CANCEL_PENDING" and second.cancellation.cause.value == "EXHAUSTED"
     assert second.effects == {"PENDING_CANCELLED"} and not second.anchor_eliminated
@@ -983,7 +1027,7 @@ def test_the_cap_of_asks_cancels_the_pending_on_the_failure_after_the_second_ask
 def test_an_answer_that_succeeds_at_the_cap_still_answers():
     _, made = r31()
     last = replace(made.pending, asks=2)
-    d = respond(last, turn(clear_op(CARD_SLOT), clear_op(ORDER_SLOT, 1)), asked_ops=made.asked_ops)
+    d = respond(last, turn(clear_op(CARD_SLOT), clear_op(ORDER_SLOT, 1)))
     assert d.kind.value == "PENDING_ANSWER" and d.control is None
 
 
@@ -1084,7 +1128,8 @@ def test_row_2_the_rest_of_p_may_ask_and_its_pending_replaces_the_cancelled_one(
     other = base_of((D.TOPIC, "x"), (D.BUYER, "y"))
     other = replace(other, conditions=tuple(
         replace(c, provenance=fa.Provenance(buyer_scope="76")) if c.slot == BUYER_POS else c for c in other.conditions))
-    holder = replace(p, frame=other)
+    # New explicit synthetic asking history over other, not a forged reread of p.
+    holder = delta_pending(other, set_op(D.GEOGRAPHY, "y")).pending
     d = respond(holder, turn(set_op(D.GEOGRAPHY, "y"), facts=facts(cancel_directive=True, continuation=True)))
     assert (d.kind.value, d.code, d.control.value) == ("CLARIFY", "TERRITORY_VS_CARRIED_BUYER", "CANCEL_PENDING")
     assert d.created.pending is d.pending and d.pending.asked_trace_id == "t2" != p.asked_trace_id
@@ -1137,7 +1182,7 @@ def test_row_3_a_compatible_answer_is_not_a_new_search_and_a_continuation_never_
     """A7/A9: every condition of P inside ``answer_slots`` is an answer (row 4); a continuation wins over a new search."""
     _, made = r31()
     answer = respond(made.pending, turn(clear_op(CARD_SLOT), clear_op(ORDER_SLOT, 1),
-                                        facts=new_search_facts(within_answer_slots=True)), asked_ops=made.asked_ops)
+                                        facts=new_search_facts(within_answer_slots=True)))
     assert answer.kind.value == "PENDING_ANSWER" and answer.control is None
     kept = respond(made.pending, turn(set_op(D.TIME, "x"), facts=new_search_facts(continuation=True)))
     assert kept.kind.value == "REASK" and kept.code == "PENDING_UNANSWERED"  # never a new search with a mark of continuation
@@ -1238,7 +1283,7 @@ def test_a_declared_dependency_in_an_answer_stops_the_turn_and_keeps_the_pending
     """§19: an answer that composes into a COMPOSICION dependency executes nothing and does not consume the pending."""
     base = base_of((D.TOPIC, "x"), (D.MODALITY, "x"))
     question = P.AuthorityQuestion("UNRESOLVED_VALUE:UNIVERSE", origin("t1", 0, RAW_TURN), frozenset({fa.UNIVERSE_SLOT}))
-    made = P.ask_authority(question, base=base, base_trace_id="t0", asked_trace_id="t1", now=T0)
+    made = P.ask_authority(question, base=base, base_trace_id="t0", asked_trace_id="t1", now=T0, frame_ops=(), open_ops=())
     assert made.disposition.value == "CLARIFY"
     d = respond(made.pending, turn(universe_op(Subject.PROCESSES)))
     assert (d.kind.value, d.dependency.dep_id, d.pending, d.control, d.resolution) == (
@@ -1273,8 +1318,8 @@ def test_a_turn_with_no_pending_is_not_this_modules_and_events_are_validated():
     with pytest.raises(ContractError):
         respond(r31()[1].pending, P.OptionEvent(" ", "c1"))
     with pytest.raises(ContractError):
-        P.respond(r31()[1].pending, turn(), trace_id=" ", now=T0, asked_ops=())
-    with pytest.raises(ContractError):
+        P.respond(r31()[1].pending, turn(), trace_id=" ", now=T0)
+    with pytest.raises(TypeError):
         P.respond(r31()[1].pending, turn(), trace_id="t2", now=T0, asked_ops=("op",))
     with pytest.raises(ContractError):
         respond(r31()[1].pending, turn(facts=facts(input_kind=InputKind.EVENT)))
@@ -1338,27 +1383,23 @@ def test_a_turn_of_rows_4_5_or_6_that_carries_the_cancel_directive_cancels_the_p
 
 @direct
 def test_respond_never_takes_no_asked_patch_in_silence():
-    """M2A4-D22 (ZEUS P2-2): F24 needs the asking patch and the types persist none (§7 of the close: activation gate of
-    M2A-6). ``asked_ops=()`` is not a way to say «none»: a text turn that meets a pending WITH candidates must declare it."""
-    _, made = h6()
+    """R4 replaces D22: schema requires both fields; respond has no legacy override or omission escape hatch."""
+    base, made = h6()
     p, t = made.pending, turn(set_op(D.GEOGRAPHY, "y"))
     now = T0 + MINUTE
-    with pytest.raises(ContractError, match="ASKED_OPS_UNDECLARED"):
-        P.respond(p, t, trace_id="t2", now=now, asked_ops=())
-    declared = P.respond(p, t, trace_id="t2", now=now, asked_ops=(), no_asked_patch=True)
-    assert declared.kind.value == "PENDING_ANSWER"  # declared: F24 has nothing to refuse
-    given = P.respond(p, t, trace_id="t2", now=now, asked_ops=made.asked_ops)
-    assert (given.kind.value, given.code) == ("REASK", "ANSWER_UNRESOLVED")
-    for bad in (dict(asked_ops=made.asked_ops, no_asked_patch=True), dict(asked_ops=(), no_asked_patch="yes")):
-        with pytest.raises(ContractError, match="INVALID_ASKED_OPS"):
-            P.respond(p, t, trace_id="t2", now=now, **bad)
-    # what needs no declaration: no candidate, an expired-anchor confirmation (its candidate IS the asking patch), an event
-    month = authority_month()[1].pending
-    assert P.respond(month, turn(set_op(D.TIME, "x")), trace_id="t2", now=now, asked_ops=()).kind.value == "PENDING_ANSWER"
-    h1p = h1()[1].pending
-    assert P.respond(h1p, turn(set_op(D.TIME, "y")), trace_id="t2", now=now, asked_ops=()).kind.value == "REASK"
-    assert P.respond(p, P.OptionEvent(p.pending_id, "c1"), trace_id="t2", now=now, asked_ops=()).kind.value == (
-        "PENDING_ANSWER")
+    assert (respond(p, t).kind.value, respond(p, t).code) == ("REASK", "ANSWER_UNRESOLVED")
+    for bad in (dict(asked_ops=()), dict(no_asked_patch=True), dict(asked_ops=made.pending.asked_ops)):
+        with pytest.raises(TypeError):
+            P.respond(p, t, trace_id="t2", now=now, base=base, base_trace_id="t0", **bad)
+    # A NEW synthetic creation explicitly has no typed asking operation. This is not an erased old history.
+    buyer, place = set_op(D.BUYER, "y"), set_op(D.GEOGRAPHY, "y", i=1)
+    q = P.AuthorityQuestion("BUYER_OR_PLACE_AFTER_ACTOR", _org(0), frozenset({BUYER_POS, GEO_POS}),
+                            ((buyer,), (place,)))
+    empty_base = base_of((D.TOPIC, "x"), (D.ACTOR, "x"))
+    empty = P.ask_authority(q, base=empty_base, base_trace_id="t0", asked_trace_id="t1", now=T0,
+                            frame_ops=(), open_ops=())
+    assert empty.pending.asked_ops == ()
+    assert respond(empty.pending, t).kind.value == "PENDING_ANSWER"
 
 
 @direct
@@ -1467,23 +1508,19 @@ MUTANTS = {
     "row_4b_cancelled_by_the_directive": {"foundation_pending": [(
         "_CANCELLED_BY_DIRECTIVE = _INFORM_ROWS - {TurnScope.OUT_UNSUPPORTED_PROPOSAL}",
         "_CANCELLED_BY_DIRECTIVE = _INFORM_ROWS")]},
-    "asked_ops_omission_is_silent": {"foundation_pending": [(
-        "    if pending.candidate_patches and not asked_ops and not no_asked_patch and not holds_expired_anchor(pending):",
-        "    if False:")]},
-    "own_conditions_none_accepted": {"foundation_pending": [(
-        "    for name in (\"admissible_alone\", \"continuation\", \"own_conditions\"):",
-        "    for name in (\"admissible_alone\", \"continuation\"):")]},
+    "asked_ops_omission_is_silent": {"foundation_pending_answer": [(
+        "    ops, asked = tuple(ops), pending.asked_ops", "    ops, asked = tuple(ops), ()")]},
     "ask_fresh_asked_ops_defaults_to_nothing": {"foundation_pending_create": [(
         "              now: datetime, asked_ops) -> Creation:", "              now: datetime, asked_ops=()) -> Creation:")]},
     "no_base_search_ignores_the_floor": {"foundation_pending": [(
         "    if facts.admissible_alone is False or facts.continuation is True or facts.own_conditions == 0:",
         "    if facts.admissible_alone is False or facts.continuation is True:")]},
     "fresh_frame_dependency_as_inform": {"foundation_pending_create": [(
-        "    _, refused = _judge(frame, question.reason, (), asked_ops, question.candidates, question.answer_slots,\n"
+        "    _, refused = _judge(frame, question.reason, (), question.candidates, question.answer_slots,\n"
         "                        asked_trace_id, question.origin)\n    if refused is not None:\n        return refused\n",
         "    found = law_violations(frame, (), question.candidates, question.answer_slots, asked_trace_id, question.origin,\n"
         "                           RULE_OF_CODE.get(question.reason))\n    if found:\n"
-        "        return Creation(DeltaDisposition.INFORM, _inform_code(question.reason), asked_ops=asked_ops,\n"
+        "        return Creation(DeltaDisposition.INFORM, _inform_code(question.reason),\n"
         "                        violations=tuple(found))\n")]},
     "span_is_the_first_citation": {"foundation_pending_create": [(
         "                           (min(o.span[0] for o in origins), max(o.span[1] for o in origins)))", "                           first.span)")]},
@@ -1496,11 +1533,9 @@ MUTANTS = {
         "    if not touched & inside:  # step 4 (an empty P included: F29, never a cancellation)\n"
         "        return _reask(8, \"PENDING_UNANSWERED\")\n", "")]},
     "empty_list_cancels": {"foundation_pending": [(
-        "    result = answer_in_language(pending, turn.ops, no_selection=turn.no_selection, asked_ops=asked_ops,\n"
-        "                                unresolved=turn.unresolved)",
+        "    result = answer_in_language(pending, turn.ops, no_selection=turn.no_selection, unresolved=turn.unresolved)",
         "    if not turn.ops and not turn.no_selection:\n        return _pure_cancel(pending, CancelCause.DIRECTIVE, TurnScope.IN)\n"
-        "    result = answer_in_language(pending, turn.ops, no_selection=turn.no_selection, asked_ops=asked_ops,\n"
-        "                                unresolved=turn.unresolved)")]},
+        "    result = answer_in_language(pending, turn.ops, no_selection=turn.no_selection, unresolved=turn.unresolved)")]},
     "answer_on_base_not_frame": {"foundation_pending_answer": [(
         "    made = compose_answer(pending.frame, ops, base_trace_id=pending.asked_trace_id, answered=answered)",
         "    made = compose_answer(BASE_OF[pending.pending_id], ops, base_trace_id=pending.asked_trace_id, "
@@ -1527,7 +1562,7 @@ MUTANTS = {
         "        if obstacle is not None and obstacle.kind is FindingKind.DEPENDENCY:\n            return None, Creation(",
         "        if False:\n            return None, Creation(")]},
     "fresh_frame_not_judged": {"foundation_pending_create": [(
-        "    _, refused = _judge(frame, question.reason, (), asked_ops, question.candidates, question.answer_slots,\n"
+        "    _, refused = _judge(frame, question.reason, (), question.candidates, question.answer_slots,\n"
         "                        asked_trace_id, question.origin)\n    if refused is not None:\n        return refused\n",
         "    refused = None\n")]},
     # the rows

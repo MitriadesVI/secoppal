@@ -291,3 +291,53 @@ la respuesta por evento, no su ruteo de runtime.
 El reducer no se tocó: ni `foundation_delta*.py` ni `foundation_turn_scope.py` ni el contrato ni el sello. Se tocó
 `tests/test_m2a_contract_r3_multiop.py` (modelo simbólico, único escritor en esta ola) sólo en `answer()` y en un testigo de R3c,
 para D20 y D26; la suite focal de M2A-3, incluido el enlace al oráculo en DEV, sigue verde.
+
+
+## R4 — Consumo de la causalidad persistida (2026-10-03)
+
+Este paquete adapta M2A-4 al contrato R4/tipo aprobado en `ddac4ae33e4847754246c231f039a65a84aacd0e` y parte del merge
+`8f2eefa993a05b825c49eb9e02ba6e22d00dd23f`. Las tablas y cifras anteriores conservan la evidencia histórica del M2A-4
+congelado; D13/D22 y la antigua entrega de `Creation.asked_ops` quedan sustituidas por el protocolo R4 que sigue.
+No declara integración, activación runtime ni corrección del eco; el coordinador congela y encarga ZEUS fresco.
+
+- La creación persiste `frame_ops` y `asked_ops` desde los inputs tipados originales. `pending_from_question` toma las
+  dos partes del PendingQuestion; `ask_authority` exige explícitamente ambos inputs `frame_ops` y `open_ops` sin default;
+  `ask_fresh` exige el asking input y guarda frame_ops vacío. `pending_without_anchor` declara ambas tuplas vacías.
+- `Creation` ya no ofrece asked_ops como segunda fuente. Toda API de respuesta elimina los argumentos asked_ops y
+  no_asked_patch. F24 lee únicamente `pending.asked_ops`, incluso después de relectura y REASK. El algoritmo de selección
+  y la distinción evento/lenguaje no cambian; una tupla vacía persistida es un hecho explícito, nunca un campo omitido.
+- Antes de **cualquier** decisión sobre una pendiente anclada, `respond` exige la base histórica acreditada y su referencia.
+  `validate_pending_base` comprueba binding con pending.base_trace_id y replay canónico entero mediante `_frame_of`:
+  vacío significa la identidad exacta de A; un replay rechazado o frame distinto es ContractError. Ni un evento stale,
+  cancelación, vencimiento ni respuesta evita este gate. M2A-6 debe entregar A desde el registro histórico señalado, del
+  chat y store íntegro, con snapshot publicado; este paquete no abre el store desde el protocolo ni busca otra ancla.
+- Los testigos, ids, orígenes, políticas y procedencia sobreviven al codec y al append/read real del store en tmp_path.
+  Los pares F16/A8.1 conservan distinto frame_ops con el mismo frame y respuesta/efectiva. H5 BUYER frente a GEOGRAPHY
+  conserva el mismo frame/opciones pero distinto asked_ops y decide F24 de manera distinta después de persistir/releer.
+- Los fixtures directos capturan el contexto A/referencia **al crear**, desde inputs explícitos. El helper de test lo entrega
+  sin inferir A desde F ni reconstruir operaciones; no es un ledger runtime. El diferencial del modelo conserva cfg.base
+  al generar cada historia sintética, antes de perderla en la proyección a Pending; el modelo independiente sigue fijando
+  disposiciones, códigos y valores esperados. No se altera el modelo R3 ni se enriquecen historias Gold por ese camino.
+- D2 se prueba también con una inyección negativa explícita de asked_ops vacío en un payload H1 legítimo y lectura estricta:
+  es dato adversarial, **no historia original ni Gold**. Aunque el tipo local y C2 admitan esa forma, D2 sigue rechazando
+  una confirmación en lenguaje. El mutante simple D2 permanece en el inventario y es matado, sin mutantes compuestos.
+
+### Cobertura Gold, sin sustituir evidencia ausente
+
+Los 209 casos, sus bytes, labels, expectativas, record hashes, DEV/TEST, contrato R4, sello, extracción y oracle se
+preservan. La decisión humana permite declarar `NO_VERIFICABLES` los casos del arnés con historia causal insuficiente.
+El adapter no interpreta ausencia como vacío ni obtiene el asking patch de candidatos, reason o expected.
+
+En el slice de pendientes previas SYNTHETIC: DEV = 7 NO_VERIFICABLES + SF199 RED_DECLARED; TEST (sólo inventario, sin replay)
+= 11 NO_VERIFICABLES + SF063/SF200/SF201 RED_DECLARED. MEASURED = 0; no se presentan esos casos como green ni como skipped
+PASS. Los cuatro rojos de §19 permanecen separados y sin dispensa; tampoco se ejecutan sobre historia fabricada.
+El inventario REAL de 49 casos no contiene pendientes previas. La creación desde A/patch originales del oracle sigue
+siendo medible en DEV SYNTHETIC y REAL, por un gate separado de creación→pending/2→lectura→C2. P09/SF163 sólo conserva
+alternativas y una operación original marcada unresolved: el adapter declara UNVERIFIABLE_ORIGINAL_TYPED_ASKING_PATCH,
+sin promover una alternativa a original. Las pruebas sintéticas propias acreditan capacidad de H5 sin certificar esa
+historia Gold. El reporte externo GOLD_HISTORY_GAP.md enumera ids, campos y suplemento mínimo; no reetiqueta el Gold.
+
+Gates del paquete R4: tests directos + mutantes, diferencial independiente + Hypothesis, creación Gold DEV SYNTHETIC/REAL,
+append/read/respuesta reales en pytest, tipos/store/sello/boundaries, Ruff y Semgrep con baseline/delta; git diff/check y
+preservación de paths protegidos. No suite global desde el writer. Los resultados y el SHA final se entregan en el
+handoff externo; cualquier certificado de auditoría o integración pertenece al coordinador.

@@ -1,6 +1,6 @@
 """M2A-4: the protocol of a turn that meets a pending (contract §8.3, §10.1, §17; M2A4-D1…D3, D7).
 
-``respond(pending, turn, *, trace_id, now, asked_ops)`` is the one decision of a turn that arrives with a pending in the
+``respond(pending, turn, *, trace_id, now, base, base_trace_id)`` is the one decision of a turn that arrives with a pending in the
 store, over typed values, an injected instant and the pending itself. It never reads text (INV-M2A-24) and changes no
 runtime: nothing outside M2a imports it. The turn is one of
 
@@ -18,8 +18,9 @@ Admisible sola(P), and ``CLARIFY NO_ANCHOR`` otherwise (M2A4-D1, A9: a continuat
 nothing to apply (no operations, no new search) cancels and executes nothing: ``INFORM``, code ``None`` (M2A4-D12).
 
 A turn of §7.1 rows 4, 5 or 6 that carries the directive cancels too (§17.2 a; M2A4-D21, D27): INFORM, the same code, the
-cancellation and no pending; only row 4b leaves the pending intact (§7.1 says so, and says it only there). A text turn that meets a pending WITH candidates must give the asking patch (F24) or
-declare there was none (``no_asked_patch``, M2A4-D22): the empty tuple is never «none» by omission.
+cancellation and no pending; only row 4b leaves the pending intact (§7.1 says so, and says it only there). R4 persists the
+complete asking patch and frame witness in the pending; F24 has no caller side-channel. Before any decision about an
+anchored pending, its accredited base/reference context must match and replay exactly to the full persisted frame.
 
 Rows 5–8 are ``REASK`` over the same pending with ``asks + 1`` (plazo, frame, question and candidates untouched); an answer
 that fails with ``asks`` at the cap CANCELS the pending (§8.3, cause d: control ``CANCEL_PENDING``, the label of the failed
@@ -38,7 +39,7 @@ from datetime import datetime
 from enum import Enum
 
 from app.core.foundation_accepted import (
-    MAX_ASKS, OriginKind, PatchOp, PatchOpKind, PatchOriginKind, PendingClarification, PendingControl, SemanticPatch,
+    MAX_ASKS, AcceptedInterpretation, OriginKind, PatchOp, PatchOpKind, PatchOriginKind, PendingClarification, PendingControl, SemanticPatch,
     Slot, TurnResolution, TurnScope,
 )
 from app.core.foundation_delta import SLOT_RANK, covered_keys, dimension_key
@@ -52,7 +53,7 @@ from app.core.foundation_pending_cancel import (
     CancelCause, Cancellation, cancel_pending, fragment_base, holds_expired_anchor,
 )
 from app.core.foundation_pending_clock import pending_expired
-from app.core.foundation_pending_create import Creation, pending_from_question, pending_without_anchor
+from app.core.foundation_pending_create import Creation, pending_from_question, pending_without_anchor, validate_pending_base
 from app.core.foundation_turn_scope import AnchorState, InputKind, TurnFacts, classify_turn
 from app.core.interpretation_contract import ContractError
 
@@ -271,8 +272,7 @@ def _cancel_turn(pending: PendingClarification, turn: PendingTurn, facts: TurnFa
                            dependency=created.dependency)
 
 
-def _text(pending: PendingClarification, turn: PendingTurn, trace_id: str, now: datetime,
-          asked_ops: tuple[PatchOp, ...]) -> PendingDecision:
+def _text(pending: PendingClarification, turn: PendingTurn, trace_id: str, now: datetime) -> PendingDecision:
     facts = turn.facts
     if facts.input_kind is not InputKind.TEXT or facts.pending is not True:
         raise ContractError("INVALID_FACT:pending_turn")
@@ -299,26 +299,20 @@ def _text(pending: PendingClarification, turn: PendingTurn, trace_id: str, now: 
         return _cancel_turn(pending, turn, facts, scope, classification.context_reset, trace_id, now)
     if scope is TurnScope.IN_NEW_SEARCH:  # row 3: A7/A9, the host writes the cancellation even with no directive
         return _new_search(pending, CancelCause.NEW_SEARCH, classification.context_reset)
-    result = answer_in_language(pending, turn.ops, no_selection=turn.no_selection, asked_ops=asked_ops,
-                                unresolved=turn.unresolved)
+    result = answer_in_language(pending, turn.ops, no_selection=turn.no_selection, unresolved=turn.unresolved)
     return _answered(pending, result, TurnScope.IN)
 
 
 def respond(pending: PendingClarification | None, turn: OptionEvent | ResetEvent | PendingTurn, *, trace_id: str,
-            now: datetime, asked_ops: tuple[PatchOp, ...], no_asked_patch: bool = False) -> PendingDecision:
-    """The decision of a turn that meets ``pending`` (the one the store holds, or ``None`` if none): see the module. ``now``
-    is the injected instant, ``trace_id`` the turn's own trace (the id of the pending it may create), ``asked_ops`` the
-    operations of the turn that asked (F24; ``Creation.asked_ops`` gives them when the pending is created). It has NO
-    default, and an empty tuple is not a way to say «none»: without them F24 is silently off and the product would choose
-    for the user (M2A4-D13, D22). A text turn that meets a pending WITH candidates and brings no ``asked_ops`` must say it
-    (``no_asked_patch=True``: the asking turn had no typed operation), or it is refused (``ASKED_OPS_UNDECLARED``). A
-    ``CONTEXT_EXPIRED_CONFIRM`` needs neither: its one candidate IS the asking patch."""
+            now: datetime, base: AcceptedInterpretation | None = None, base_trace_id: str | None = None) -> PendingDecision:
+    """Decide from the persisted pending and the current typed turn. For an anchored pending, the caller must provide
+    the accredited historical base and its reference; validate their binding and full replay BEFORE any event, expiry,
+    cancellation or answer. An unanchored pending needs no base. F24 reads only ``pending.asked_ops``; omission of a
+    required persisted field is rejected by the strict codec, and an explicitly stored empty tuple is a complete fact."""
     if type(trace_id) is not str or not trace_id.strip():
         raise ContractError("INVALID_TRACE_ID")
-    asked_ops = tuple(asked_ops)
-    if any(type(op) is not PatchOp for op in asked_ops) or type(no_asked_patch) is not bool or (
-            no_asked_patch and asked_ops):
-        raise ContractError("INVALID_ASKED_OPS")
+    if pending is not None:
+        validate_pending_base(pending, base=base, base_trace_id=base_trace_id)
     if type(turn) in (OptionEvent, ResetEvent):
         return _event(pending, turn, now)
     if type(turn) is not PendingTurn:
@@ -327,6 +321,4 @@ def respond(pending: PendingClarification | None, turn: OptionEvent | ResetEvent
         raise ContractError("NO_PENDING")
     if pending_expired(pending, now):  # §17.2 e: the turn proceeds as if there were none; the cancellation is written
         return PendingDecision(DecisionKind.EXPIRED, None, None, cancel_pending(pending, CancelCause.EXPIRED))
-    if pending.candidate_patches and not asked_ops and not no_asked_patch and not holds_expired_anchor(pending):
-        raise ContractError("ASKED_OPS_UNDECLARED")  # M2A4-D22: F24 never off by omission
-    return _text(pending, turn, trace_id, now, asked_ops)
+    return _text(pending, turn, trace_id, now)

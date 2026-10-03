@@ -46,6 +46,7 @@ from tests.test_foundation_delta_properties import st_case
 
 PROPS = settings(max_examples=120, deadline=None, derandomize=True,
                  suppress_health_check=[HealthCheck.too_slow, HealthCheck.data_too_large])
+MODEL_BASES = {}  # original synthetic cfg.base retained at generation; never reverse-engineered from frame
 MODEL_SLOT = M.SLOT  # key -> typed Slot, generated from the code by the model's own module
 NO_SELECTION = M.LABEL_ITEMS[2]  # the A.6 label ``no_selection`` (§8.3 row 6)
 
@@ -133,14 +134,28 @@ def lift_turn(ops, labelled: bool = False):
 
 
 def typed_pending(mp: "M.Pending") -> "M.Pending":
-    return mp._replace(asked=typed_only(mp.asked))
+    typed = mp._replace(asked=typed_only(mp.asked))
+    MODEL_BASES[typed] = MODEL_BASES[mp]
+    return typed
 
 
 def lift_pending(mp: "M.Pending") -> fa.PendingClarification:
+    # These are NEW typed synthetic histories from the model's original generation
+    # inputs. The independent model still owns expected answer disposition/code/values.
+    base = lift_state(MODEL_BASES[mp])
+    frame_ops, asked_ops = lift_ops(mp.frame_ops), lift_ops(mp.asked)
+    if frame_ops:
+        composed = fd.compose_ops(base, frame_ops, base_trace_id="t0")
+        assert isinstance(composed, fd.Composed)
+        frame = composed.effective
+    else:
+        frame = base
+    assert values_by_slot(frame) == model_values(mp.frame)
     candidates = tuple(fa.CandidatePatch(f"c{i}", f"k{i}", fa.SemanticPatch(lift_ops(c), fa.PatchOriginKind.TEXT))
                        for i, c in enumerate(mp.candidates, 1))
-    return fa.PendingClarification("pending-t1", "t1", T.T0, T.T0 + 30 * T.MINUTE, 1, lift_state(mp.frame), "t0", None, None,
-                                   mp.reason, candidates, frozenset(MODEL_SLOT[k] for k in mp.answer_slots))
+    return fa.PendingClarification("pending-t1", "t1", T.T0, T.T0 + 30 * T.MINUTE, 1, frame, "t0", None, None,
+                                   mp.reason, candidates, frozenset(MODEL_SLOT[k] for k in mp.answer_slots),
+                                   frame_ops=frame_ops, asked_ops=asked_ops)
 
 
 def values_by_slot(effective: fa.AcceptedInterpretation) -> dict:
@@ -176,6 +191,7 @@ def model_pendings() -> tuple:
         if cfg.pending is not None and not cfg.expired and _supported(cfg.base) and not cfg.dual:
             seen.setdefault((cfg.pending.reason, cfg.pending.frame, cfg.pending.candidates, cfg.pending.answer_slots),
                             []).append(cfg.pending)
+            MODEL_BASES.setdefault(cfg.pending, cfg.base)
     for cfg in plain:
         if cfg.dual or cfg.profile in ("MULTI", "ORDER_ONLY"):
             continue
@@ -185,6 +201,7 @@ def model_pendings() -> tuple:
                 key = (r.pending.reason, r.pending.frame, r.pending.candidates, r.pending.answer_slots)
                 if len(seen.setdefault(key, [])) < 2 and r.pending not in seen[key]:
                     seen[key].append(r.pending)
+                    MODEL_BASES.setdefault(r.pending, cfg.base)
     per_shape: dict[tuple, list] = {}  # a few pendings of each (reason, answer slots): frames and askers vary
     for (reason, frame, candidates, answer_slots), group in seen.items():
         bucket = per_shape.setdefault((reason, answer_slots, bool(candidates)), [])
@@ -247,8 +264,8 @@ def differential() -> tuple[int, Counter, list]:
             labelled = any(o.kind == "NO_SELECTION" for o in ops)
             plain = tuple(o for o in ops if o.kind != "NO_SELECTION")
             expected = M.answer(cfg, mp, ops)
-            got = T.P.respond(pending, lift_turn(plain, labelled), trace_id="t2", now=T.T0 + T.MINUTE, asked_ops=asked,
-                              no_asked_patch=not asked)
+            got = T.P.respond(pending, lift_turn(plain, labelled), trace_id="t2", now=T.T0 + T.MINUTE,
+                              base=lift_state(MODEL_BASES[mp]), base_trace_id="t0")
             total += 1
             outcomes[(mp.reason, expected.kind, expected.code)] += 1
             bad = compare(expected, got, pending)
@@ -394,9 +411,9 @@ def laundering(base, outcome, made) -> list[str]:
 
 
 def answer_problems(P, pending, creation, base, outcome, answers) -> list[str]:
-    out, asked = [], creation.asked_ops
+    out, asked = [], creation.pending.asked_ops
     for ops in answers:
-        d = T.respond(pending, T.P.PendingTurn(T.facts(), tuple(ops)), asked_ops=asked)
+        d = T.respond(pending, T.P.PendingTurn(T.facts(), tuple(ops)), base=base, base_trace_id="t0")
         row, chosen = spec_row(pending, ops, asked)
         got = (d.answer.row if d.answer is not None else None)
         if d.kind.value == "PENDING_ANSWER":
@@ -450,7 +467,7 @@ def _case_problems(P, case) -> list[str]:
             if d.answer.composed.effective.base_trace_id != "t1":
                 out.append("an event answer names another base than the asking turn")
             out += laundering(base, outcome, d.answer)
-    return out + answer_problems(P, pending, creation, base, outcome, _answers(pending, creation.asked_ops, pending.frame))
+    return out + answer_problems(P, pending, creation, base, outcome, _answers(pending, creation.pending.asked_ops, pending.frame))
 
 
 def seed_cases():
@@ -493,20 +510,22 @@ def _expired(case):
 
 
 def h1_problems(case) -> list[str]:
-    """M2A4-D2: a ``CONTEXT_EXPIRED_CONFIRM`` pending × every answer in language, with or without KEEPs of filler, with the
-    asking patch the caller gives, with NONE of it (it declares no asking patch) and with a wrong one: never an execution."""
+    """D2 on real creations and explicitly adversarial persisted witnesses; never a Gold history reconstruction."""
     got = _created(case)
     if got is None or got[2].pending is None or got[2].pending.reason != "CONTEXT_EXPIRED_CONFIRM":
         return []
     base, outcome, creation = got
     pending, out = creation.pending, []
-    for ops in _answers(pending, creation.asked_ops, base):
-        for asked in (creation.asked_ops, (), (T.clear_op(T.TIME_POS, 60),)):
-            d = T.P.respond(pending, T.P.PendingTurn(T.facts(anchor_expired=True), tuple(ops)), trace_id="t2",
-                            now=T.T0 + T.MINUTE, asked_ops=asked, no_asked_patch=False)
+    for ops in _answers(pending, pending.asked_ops, base):
+        for asked in (pending.asked_ops, (), (T.clear_op(T.TIME_POS, 60),)):
+            # Fault injection is explicitly negative state, not the original asking turn.
+            negative = replace(pending, asked_ops=asked)
+            negative = fa.PendingClarification.from_dict(negative.to_dict())
+            d = T.P.respond(negative, T.P.PendingTurn(T.facts(anchor_expired=True), tuple(ops)), trace_id="t2",
+                            now=T.T0 + T.MINUTE, base=base, base_trace_id="t0")
             if d.kind.value != "REASK":
                 out.append(f"{[(o.op.value, o.slot.key) for o in ops]} -> {d.kind.value}")
-    event = T.respond(pending, T.P.OptionEvent(pending.pending_id, "c1"))
+    event = T.respond(pending, T.P.OptionEvent(pending.pending_id, "c1"), base=base, base_trace_id="t0")
     return out if event.kind.value in ("PENDING_ANSWER", "DEPENDENCY") else out + ["the event does not confirm"]
 
 
@@ -549,7 +568,8 @@ def _differential_problems(mutated) -> list:
         for ops in [o for o in answer_pool(mp) if not repeats_asked_unresolved(mp, o)][::2]:
             turn = lift_turn(ops)
             got = mutated.respond(pending, mutated.PendingTurn(turn.facts, turn.ops, False, turn.unresolved),
-                                  trace_id="t2", now=T.T0 + T.MINUTE, asked_ops=asked, no_asked_patch=not asked)
+                                  trace_id="t2", now=T.T0 + T.MINUTE,
+                                  base=lift_state(MODEL_BASES[mp]), base_trace_id="t0")
             if compare(M.answer(cfg, mp, ops), got, pending):
                 return [(mp.reason, ops)]
     return []

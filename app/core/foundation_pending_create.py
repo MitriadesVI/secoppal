@@ -20,9 +20,10 @@ Entry points, one per source of §8.4's table:
 * ``pending_without_anchor``: §7.1 row 1 (``NO_ANCHOR``, ``ANCHOR_UNREADABLE``): no ``frame``, no candidate; always
   possible.
 
-``asked_ops`` (the operations of the turn that asked) come out with the pending: F24 compares an answer with them, and the
-types persist no patch for a ``CLARIFY`` record (M2A4-D13). ``pending_id`` is derived from the asking turn: one pending
-per asking turn, stable.
+R4 persists ``frame_ops`` and ``asked_ops`` in the pending itself, from the original typed inputs of the asking turn.
+F24 reads the latter after reloading; no caller reconstructs it. ``pending_id`` derives from the asking turn: one pending
+per asking turn, stable. Contextual replay validation uses the accredited base and its historical reference supplied by
+the store/publication owner; a successful strict decode alone does not accredit that context.
 """
 
 from __future__ import annotations
@@ -64,12 +65,11 @@ _DECIDED = (DeltaDisposition.CLARIFY, DeltaDisposition.INFORM, DeltaDisposition.
 @dataclass(frozen=True, slots=True)
 class Creation:
     """What asking comes to: ``CLARIFY`` with its ``pending``, ``INFORM`` (§8.4 forbids the pending: ``violations`` says
-    which condition fails) or ``DEPENDENCY`` (a declared §19 red). ``asked_ops``: the operations of the asking turn."""
+    which condition fails) or ``DEPENDENCY`` (a declared §19 red). The pending is the sole source of causal operations."""
 
     disposition: DeltaDisposition
     code: str | None
     pending: PendingClarification | None = None
-    asked_ops: tuple[PatchOp, ...] = ()
     dependency: Dependency | None = None
     violations: tuple[str, ...] = ()
 
@@ -161,12 +161,13 @@ def hull_origin(ops: tuple[PatchOp, ...]) -> ConditionOrigin | None:
 
 def _build(reason: str, frame: AcceptedInterpretation | None, base_trace_id: str | None, span_origin: ConditionOrigin | None,
            candidates: tuple[tuple[PatchOp, ...], ...], answer_slots: frozenset[Slot], asked_trace_id: str,
-           now: datetime) -> PendingClarification:
+           now: datetime, *, frame_ops: tuple[PatchOp, ...], asked_ops: tuple[PatchOp, ...]) -> PendingClarification:
     span = raw = None
     if span_origin is not None and span_origin.kind is OriginKind.SPAN and reason != EXPIRED_CONFIRM:
         span, raw = span_origin.span, span_origin.raw_sha256  # CONTEXT_EXPIRED_CONFIRM is not born of a span (§8.1)
     return PendingClarification(f"pending-{asked_trace_id}", asked_trace_id, now, expires_at(now), 1, frame,
-                                base_trace_id, span, raw, reason, candidate_patches(candidates), answer_slots)
+                                base_trace_id, span, raw, reason, candidate_patches(candidates), answer_slots,
+                                frame_ops=frame_ops, asked_ops=asked_ops)
 
 
 def _inform_code(reason: str) -> str:
@@ -183,7 +184,26 @@ def _frame_of(base: AcceptedInterpretation, frame_ops: tuple[PatchOp, ...], trac
     return compose_ops(base, frame_ops, base_trace_id=trace) if frame_ops else Composed(base, frozenset(), frozenset(), False)
 
 
-def _judge(base: AcceptedInterpretation, reason: str, frame_ops: tuple[PatchOp, ...], asked_ops: tuple[PatchOp, ...],
+def validate_pending_base(pending: PendingClarification, *, base: AcceptedInterpretation | None,
+                          base_trace_id: str | None) -> None:
+    """C2 before consuming a reread pending. The caller accredits store/chat/publication and supplies A by its
+    persisted reference; this module checks the binding and exact full replay, never searches for a substitute base."""
+    if type(pending) is not PendingClarification:
+        raise ContractError("INVALID_PENDING")
+    if pending.base_trace_id is None:
+        return  # C1 is enforced by the persisted type; no previous chat anchor becomes a fresh frame's base.
+    if type(base) is not AcceptedInterpretation:
+        raise ContractError("INVALID_BASE")
+    if type(base_trace_id) is not str or not base_trace_id.strip():
+        raise ContractError("INVALID_BASE_TRACE_ID")
+    if base_trace_id != pending.base_trace_id:
+        raise ContractError("PENDING_BASE_TRACE_MISMATCH")
+    again = _frame_of(base, pending.frame_ops, base_trace_id)
+    if not isinstance(again, Composed) or again.effective != pending.frame:
+        raise ContractError("PENDING_FRAME_MISMATCH")
+
+
+def _judge(base: AcceptedInterpretation, reason: str, frame_ops: tuple[PatchOp, ...],
            candidates, answer_slots, trace: str,
            origin: ConditionOrigin) -> tuple[AcceptedInterpretation | None, Creation | None]:
     """§8.4 over ``base`` + ``frame_ops``: ``(frame, None)`` when the pending is possible, else ``(None, the Creation that
@@ -192,10 +212,10 @@ def _judge(base: AcceptedInterpretation, reason: str, frame_ops: tuple[PatchOp, 
     if isinstance(composed, Composed):
         obstacle = frame_obstacle(base, frame_ops, composed)
         if obstacle is not None and obstacle.kind is FindingKind.DEPENDENCY:
-            return None, Creation(DeltaDisposition.DEPENDENCY, None, asked_ops=asked_ops, dependency=obstacle.dependency)
+            return None, Creation(DeltaDisposition.DEPENDENCY, None, dependency=obstacle.dependency)
     found = law_violations(base, frame_ops, candidates, answer_slots, trace, origin, RULE_OF_CODE.get(reason))
     if found:
-        return None, Creation(DeltaDisposition.INFORM, _inform_code(reason), asked_ops=asked_ops, violations=tuple(found))
+        return None, Creation(DeltaDisposition.INFORM, _inform_code(reason), violations=tuple(found))
     return composed.effective, None
 
 
@@ -229,18 +249,18 @@ def pending_from_question(question: PendingQuestion, *, base: AcceptedInterpreta
     cited = origin if origin is not None else next((op.origin for op in (*open_ops, *frame_ops)), None)
     if cited is None:
         raise ContractError("QUESTION_WITHOUT_ORIGIN")
-    frame, refused = _judge(base, question.reason, frame_ops, asked_ops, question.candidates, question.answer_slots,
+    frame, refused = _judge(base, question.reason, frame_ops, question.candidates, question.answer_slots,
                             base_trace_id, cited)
     if refused is not None:
         return refused
     span_origin = hull_origin(open_ops) if open_ops else origin
     pending = _build(question.reason, frame, base_trace_id, span_origin, question.candidates, question.answer_slots,
-                     asked_trace_id, now)
-    return Creation(DeltaDisposition.CLARIFY, question.reason, pending, asked_ops)
+                     asked_trace_id, now, frame_ops=frame_ops, asked_ops=asked_ops)
+    return Creation(DeltaDisposition.CLARIFY, question.reason, pending)
 
 
 def ask_authority(question: AuthorityQuestion, *, base: AcceptedInterpretation, base_trace_id: str,
-                  asked_trace_id: str, now: datetime, frame_ops=(), open_ops=(), anchor_expired: bool = False,
+                  asked_trace_id: str, now: datetime, frame_ops, open_ops, anchor_expired: bool = False,
                   pending_present: bool = False) -> Creation:
     """The pending of a rule an authority or the host fired over ``base`` (M2A4-D6). ``frame_ops`` are the operations of P
     that were resolved (they compose into the ``frame``), ``open_ops`` the typed form of what the authority left open, if
@@ -255,14 +275,14 @@ def ask_authority(question: AuthorityQuestion, *, base: AcceptedInterpretation, 
         raise ContractError("INVALID_AUTHORITY_QUESTION_INPUT")
     asked_ops = (*frame_ops, *open_ops)
     if anchor_expired or pending_present:
-        return Creation(DeltaDisposition.INFORM, _inform_code(question.reason), asked_ops=asked_ops)
-    frame, refused = _judge(base, question.reason, frame_ops, asked_ops, question.candidates, question.answer_slots,
+        return Creation(DeltaDisposition.INFORM, _inform_code(question.reason))
+    frame, refused = _judge(base, question.reason, frame_ops, question.candidates, question.answer_slots,
                             base_trace_id, question.origin)
     if refused is not None:
         return refused
     pending = _build(question.reason, frame, base_trace_id, question.origin, question.candidates,
-                     question.answer_slots, asked_trace_id, now)
-    return Creation(DeltaDisposition.CLARIFY, question.reason, pending, asked_ops)
+                     question.answer_slots, asked_trace_id, now, frame_ops=frame_ops, asked_ops=asked_ops)
+    return Creation(DeltaDisposition.CLARIFY, question.reason, pending)
 
 
 def ask_fresh(question: AuthorityQuestion, *, frame: AcceptedInterpretation | None, asked_trace_id: str,
@@ -270,8 +290,8 @@ def ask_fresh(question: AuthorityQuestion, *, frame: AcceptedInterpretation | No
     """The pending of a new search that asks (§7.2 c): ``frame`` is what P resolved, with no base
     (``base_trace_id = None``). It comes from ``from_acceptance`` (M2A-1b); ``None``, or a frame M2a cannot judge, is the
     declared red ``DEP-M1-PENDING-FRAME``. The previous anchor stays until the pending is resolved or cancelled (§10.2).
-    ``asked_ops`` are the typed operations of the asking turn, with NO default (M2A4-D28): F24 reads them back from here
-    (``Creation.asked_ops``), and a default of ``()`` would be the silent omission ``respond`` refuses (D22)."""
+    ``asked_ops`` are the typed operations of the asking turn, with NO default (M2A4-D28): they are persisted and F24
+    reads them exclusively from the pending. An explicit empty tuple is the complete declared input, never an omission."""
     if type(question) is not AuthorityQuestion:
         raise ContractError("INVALID_AUTHORITY_QUESTION")
     asked_ops = tuple(asked_ops)
@@ -279,17 +299,17 @@ def ask_fresh(question: AuthorityQuestion, *, frame: AcceptedInterpretation | No
         raise ContractError("INVALID_ASKED_TRACE_ID")
     expires_at(now)
     if frame is None:
-        return Creation(DeltaDisposition.DEPENDENCY, None, asked_ops=asked_ops, dependency=DEP_M1_PENDING_FRAME)
+        return Creation(DeltaDisposition.DEPENDENCY, None, dependency=DEP_M1_PENDING_FRAME)
     if type(frame) is not AcceptedInterpretation or frame.base_trace_id is not None:
         raise ContractError("INVALID_FRESH_FRAME")  # a new search has no base
     # the same judgement as every other pending: a frame that raises a §19 dependency is that DEPENDENCY (U29), then §8.4
-    _, refused = _judge(frame, question.reason, (), asked_ops, question.candidates, question.answer_slots,
+    _, refused = _judge(frame, question.reason, (), question.candidates, question.answer_slots,
                         asked_trace_id, question.origin)
     if refused is not None:
         return refused
     pending = _build(question.reason, frame, None, question.origin, question.candidates, question.answer_slots,
-                     asked_trace_id, now)
-    return Creation(DeltaDisposition.CLARIFY, question.reason, pending, asked_ops)
+                     asked_trace_id, now, frame_ops=(), asked_ops=asked_ops)
+    return Creation(DeltaDisposition.CLARIFY, question.reason, pending)
 
 
 def pending_without_anchor(reason: str, *, asked_trace_id: str, now: datetime) -> Creation:
@@ -299,5 +319,5 @@ def pending_without_anchor(reason: str, *, asked_trace_id: str, now: datetime) -
         raise ContractError("NOT_A_NO_ANCHOR_REASON")
     if type(asked_trace_id) is not str or not asked_trace_id.strip():
         raise ContractError("INVALID_ASKED_TRACE_ID")
-    pending = _build(reason, None, None, None, (), frozenset(), asked_trace_id, now)
+    pending = _build(reason, None, None, None, (), frozenset(), asked_trace_id, now, frame_ops=(), asked_ops=())
     return Creation(DeltaDisposition.CLARIFY, reason, pending)

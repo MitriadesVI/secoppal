@@ -61,15 +61,9 @@ GAP_DERIVED_INPUT = ("ANY_OPTION",)
 
 
 def status_of(gid: str) -> str:
-    """``RED_DECLARED`` (§19), ``MEASURED`` (an answer: the facts are the declared neutral ones of an answer, and every input
-    is a typed op of the Gold) or ``NO_MEDIBLE``: the turn is a NEW_SEARCH or a DELTA (only the producer's facts could say so,
-    and the Gold has none) or its decisive input comes from the label's ``gap_codes`` (SF061: ``no_selection``)."""
-    if gid in RED_DECLARED:
-        return "RED_DECLARED"
-    labels = [GOLD[gid][which] for which in ("label_A", "label_B")]
-    if any(label["turn_kind"] != ANSWER_KIND or any(g in GAP_DERIVED_INPUT for g in label["gap_codes"]) for label in labels):
-        return "NO_MEDIBLE"
-    return "MEASURED"
+    """Honest R4 coverage: sealed prior pendings lack original causal history. Section19 reds stay separate.
+    No label, expected result, partition or case bytes are changed by this adapter status."""
+    return "RED_DECLARED" if gid in RED_DECLARED else "NO_VERIFICABLES"
 
 
 def owned_ids(partition: str | None = None) -> list[str]:
@@ -127,25 +121,10 @@ def _r31_option(index: int, org: fa.ConditionOrigin) -> tuple[fa.PatchOp, ...]:
 
 
 def typed_pending(gid: str, label: dict) -> tuple[fa.PendingClarification, dict]:
-    """The pending the case starts from, and ``{"options": …, "asked": …}``: the candidate ids by option, and the asking patch
-    where the Gold lets it be known (only the pending of §6.7: its open operation is ``CLEAR(ORDER)``)."""
-    prior, pend = label["prior"], label["prior"]["pending"]
-    frame = LINK.base_of(TY.accepted_dict(gid, prior["ir"]))
-    org = _org(TRACE_ASKED, pend["span"])
-    candidates = []
-    for i, option in enumerate(pend["options"], 1):
-        if pend["reason"] == "DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER":
-            ops = _r31_option(i, org)
-        else:
-            ops = (_set({"slot": option["slot"], "operator": "is", "polarity": "POSITIVE", "value_hint": option["value_hint"]},
-                        org, f"o{i}"),)
-        candidates.append(fa.CandidatePatch(f"c{i}", option["option_id"], fa.SemanticPatch(ops, fa.PatchOriginKind.TEXT)))
-    slots = {_slot(d) for d in pend["candidate_slots"]} | {s for c in candidates for s in c.patch.slots}
-    pending = fa.PendingClarification(
-        f"pending-{TRACE_ASKED}", TRACE_ASKED, T.T0, T.T0 + 30 * T.MINUTE, pend["asks"], frame, "t0",
-        (0, len(pend["span"])), TY.sha(pend["span"]), pend["reason"], tuple(candidates), frozenset(slots))
-    asked = _r31_option(1, org)[:1] if pend["reason"] == "DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER" else ()  # CLEAR(ORDER)
-    return pending, {"options": {o["option_id"]: f"c{i}" for i, o in enumerate(pend["options"], 1)}, "asked": asked}
+    """The sealed prior-pending format has no original frame_ops/asked_ops or accredited historical base.
+    R4 must not reconstruct them from frame/options/reason or interpret absence as empty. This corpus can be
+    inventoried, but its original prior pendings cannot be promoted to pending/2 by this adapter."""
+    raise ContractError("GOLD_CAUSAL_HISTORY_UNVERIFIABLE")
 
 
 def typed_turn(gid: str, label: dict, pending: fa.PendingClarification, options: dict, informational: bool = False):
@@ -192,37 +171,13 @@ def expected_values(ir: dict) -> set:
 
 
 def run_case(gid: str, which: str = "label_A", informational: bool = False) -> tuple[bool, str]:
-    """Run one case; ``(agrees with the sealed label, what happened)``. Never reads another case. A case that is not
-    MEASURED is refused unless ``informational``: it is no measurement (see the module)."""
-    if status_of(gid) == "NO_MEDIBLE" and not informational:
-        raise ContractError(f"{gid} is not measurable without the producer's facts")
-    label = GOLD[gid][which]
-    pending, options = typed_pending(gid, label)
-    turn, event = typed_turn(gid, label, pending, options, informational or status_of(gid) != "MEASURED")
-    d = T.P.respond(pending, event or turn, trace_id="t2", now=T.T0 + T.MINUTE, asked_ops=options["asked"],
-                    no_asked_patch=not options["asked"])
-    want, reason = label["expected_disposition"], label["disposition_reason"]
-    got = {"PENDING_ANSWER": "EXECUTE", "DELTA": "EXECUTE"}.get(d.kind.value, d.kind.value)
-    seen = f"{got} {d.code}"
-    if got != want:
-        return False, seen
-    if want in ("REASK", "INFORM") and d.code != reason:
-        return False, seen
-    if want == "NEW_SEARCH" and (d.control is None or d.control.value != "CANCEL_PENDING" or d.pending is not None):
-        return False, f"{seen} without its cancellation"
-    if want == "EXECUTE":
-        effective = d.answer.composed.effective if d.kind.value == "PENDING_ANSWER" else d.outcome.effective
-        if effective_values(effective) != expected_values(label["resulting_ir"]):
-            return False, f"{seen}: the effective is not the resulting IR of the Gold"
-        if effective.base_trace_id != TRACE_ASKED:
-            return False, f"{seen}: not composed on the asking turn's frame"
-    if want in ("REASK", "INFORM") and d.pending != (replace(pending, asks=pending.asks + 1) if want == "REASK" else pending):
-        return False, f"{seen}: the pending is not kept as the contract says"
-    return True, seen
+    """No original v2 causal input exists in this sealed prior-pending slice; informational mode cannot invent it."""
+    typed_pending(gid, GOLD[gid][which])  # explicit closed refusal; neither expected label nor an option supplies history
+    raise ContractError("GOLD_CAUSAL_HISTORY_UNVERIFIABLE")
 
 
 def by_status(partition: str) -> dict[str, list[str]]:
-    out: dict[str, list[str]] = {"MEASURED": [], "NO_MEDIBLE": [], "RED_DECLARED": []}
+    out: dict[str, list[str]] = {"MEASURED": [], "NO_MEDIBLE": [], "NO_VERIFICABLES": [], "RED_DECLARED": []}
     for gid in owned_ids(partition):
         out[status_of(gid)].append(gid)
     return out
@@ -235,13 +190,13 @@ def measure(partition: str) -> dict[str, tuple[bool, str]]:
 
 # ---- the adapter reaches every case (TYPING only for TEST) ----------------------------------------------------------
 @pytest.mark.parametrize("gid", owned_ids())
-def test_every_case_of_m2a_4_is_typable_by_the_adapter_in_both_partitions(gid):
+def test_prior_gold_histories_are_refused_without_fabricating_v2_inputs(gid):
+    # Metadata/refusal gate only, never a successful Gold consuming replay.
     for which in ("label_A", "label_B"):
         label = GOLD[gid][which]
-        pending, options = typed_pending(gid, label)
-        for informational in (False, True):
-            turn, event = typed_turn(gid, label, pending, options, informational)
-            assert (turn is None) != (event is None)
+        assert "frame_ops" not in label["prior"]["pending"] and "asked_ops" not in label["prior"]["pending"]
+        with pytest.raises(ContractError, match="GOLD_CAUSAL_HISTORY_UNVERIFIABLE"):
+            typed_pending(gid, label)
 
 
 def test_the_cases_owned_by_m2a_4_are_the_ones_the_traceability_matrix_names():
@@ -255,43 +210,32 @@ def test_the_cases_owned_by_m2a_4_are_the_ones_the_traceability_matrix_names():
 
 # ---- the status of every case, and honest denominators ------------------------------------------------------------------
 def test_every_case_has_one_status_and_the_denominators_are_these():
-    """MEASURED (answers, no §19 dependency) / NO_MEDIBLE (needs the producer's facts) / RED_DECLARED (§19). A case moves
-    only by an edit of this test."""
+    """R4 reports uncovered history explicitly. Section19 reds are not converted into green or unverifiable labels."""
     dev, test = by_status("DEV"), by_status("TEST")
-    assert dev == {"MEASURED": ["SF059", "SF189"], "NO_MEDIBLE": ["SF047", "SF048", "SF050", "SF061", "SF191"],
+    assert dev == {"MEASURED": [], "NO_MEDIBLE": [],
+                   "NO_VERIFICABLES": ["SF047", "SF048", "SF050", "SF059", "SF061", "SF189", "SF191"],
                    "RED_DECLARED": ["SF199"]}
-    assert test == {"MEASURED": ["SF051", "SF053", "SF056", "SF058", "SF060", "SF188"],
-                    "NO_MEDIBLE": ["SF049", "SF052", "SF055", "SF057", "SF190"],
+    assert test == {"MEASURED": [], "NO_MEDIBLE": [],
+                    "NO_VERIFICABLES": ["SF049", "SF051", "SF052", "SF053", "SF055", "SF056", "SF057", "SF058",
+                                       "SF060", "SF188", "SF190"],
                     "RED_DECLARED": ["SF063", "SF200", "SF201"]}
     assert sum(len(v) for v in (*dev.values(), *test.values())) == len(owned_ids()) == 22
-    with pytest.raises(ContractError):  # a case that needs the producer's facts cannot be run as a measurement
+    with pytest.raises(ContractError, match="GOLD_CAUSAL_HISTORY_UNVERIFIABLE"):
         run_case("SF047")
 
 
-# ---- DEV: measured by the suite ---------------------------------------------------------------------------------------
-@pytest.mark.parametrize("gid", by_status("DEV")["MEASURED"])
-def test_dev_the_pending_protocol_agrees_with_the_sealed_label(gid):
-    for which in ("label_A", "label_B"):  # the two blind labellers agree on the disposition and the code
-        ok, seen = run_case(gid, which)
-        assert ok, f"{gid} {which}: {seen}"
+def test_dev_gold_pending_consumption_has_zero_measured_cases_and_no_silent_passes():
+    assert measure("DEV") == {}
+    for gid in by_status("DEV")["NO_VERIFICABLES"]:
+        for informational in (False, True):
+            with pytest.raises(ContractError, match="GOLD_CAUSAL_HISTORY_UNVERIFIABLE"):
+                run_case(gid, informational=informational)
 
 
-def test_dev_sf199_is_declared_red_and_never_counted_green():
-    """§19 (DEP-E-ORDER-CANDIDATES, DEP-M2A5-WIRE-CARDINALITY): not asserted green here. What its pending DOES exercise is F24
-    on the pending of §6.7, the one Gold pending whose asking patch is known: CLEAR(ORDER) alone, or with a KEEP of filler,
-    answers nothing (D20); C1 chosen whole, with the filler, does."""
+def test_dev_sf199_stays_declared_red_and_its_missing_history_is_not_filled():
     assert status_of("SF199") == "RED_DECLARED" and "SF199" not in by_status("DEV")["MEASURED"]
-    label = GOLD["SF199"]["label_A"]
-    pending, options = typed_pending("SF199", label)
-    asked = options["asked"]
-    assert [(o.op.value, o.slot.key) for o in asked] == [("CLEAR", "ORDER")]
-    keep = fa.PatchOp(fa.PatchOpKind.KEEP, fa.Slot.from_dict("TOPIC/POSITIVE"), None, None, _org(TRACE_ANSWER, "x", 5))
-    for ops in ((asked[0],), (keep, asked[0])):
-        d = T.P.respond(pending, T.P.PendingTurn(T.facts(), ops), trace_id="t2", now=T.T0 + T.MINUTE, asked_ops=asked)
-        assert (d.kind.value, d.code) == ("REASK", "ANSWER_UNRESOLVED"), ops
-    c1 = pending.candidate_patches[0].patch.ops
-    d = T.P.respond(pending, T.P.PendingTurn(T.facts(), (keep, *c1)), trace_id="t2", now=T.T0 + T.MINUTE, asked_ops=asked)
-    assert (d.kind.value, d.answer.candidate_id) == ("PENDING_ANSWER", "c1")
+    with pytest.raises(ContractError, match="GOLD_CAUSAL_HISTORY_UNVERIFIABLE"):
+        typed_pending("SF199", GOLD["SF199"]["label_A"])
 
 
 # ---- creation: the Gold's CLARIFY cases of M2A-3 become pendings ---------------------------------------------------------
@@ -332,32 +276,15 @@ def test_dev_every_applicable_clarify_of_the_gold_becomes_a_possible_pending(gid
 
 
 def h5_problems(gid: str) -> list[str]:
-    """P09 on the Gold's F12 case (SF163, «con Soacha» after an ACTOR): the question has the Gold's two alternatives as
-    candidates, resolved at ask time, and each of them, chosen by event, composes to the Gold's alternative IR."""
+    """F12 has alternatives, but its original asking op is unresolved in the sealed producer input.
+    An alternative is not the original typed operation. No causal asking patch is invented here."""
     label = GOLD[gid]["label_A"]
-    base = LINK.base_of(TY.accepted_dict(gid, label["prior"]["ir"]))
-    held = {(c["dimension"], c["value_hint"]) for c in label["prior"]["ir"]["conditions"]}
-    org = _org(TRACE_ASKED, label["ops"][0]["quote"])
-    options = []
-    for i, alternative in enumerate(label["alternatives"], 1):
-        (extra,) = [c for c in alternative["conditions"] if (c["dimension"], c["value_hint"]) not in held]
-        options.append((_set({"slot": extra["dimension"], "operator": extra["operator"], "polarity": extra["polarity"],
-                              "value_hint": extra["value_hint"]}, org, f"o{i}"),))
-    question = T.P.AuthorityQuestion("BUYER_OR_PLACE_AFTER_ACTOR", org, frozenset({T.BUYER_POS, T.GEO_POS}), tuple(options))
-    made = T.P.ask_authority(question, base=base, base_trace_id="t0", asked_trace_id=TRACE_ASKED, now=T.T0)
-    if made.disposition.value != "CLARIFY" or len(made.pending.candidate_patches) != len(label["alternatives"]):
-        return [f"the creation says {made.disposition.value}"]
-    out = []
-    for candidate, alternative in zip(made.pending.candidate_patches, label["alternatives"]):
-        d = T.P.respond(made.pending, T.P.OptionEvent(made.pending.pending_id, candidate.candidate_id), trace_id="t2",
-                        now=T.T0 + T.MINUTE, asked_ops=())
-        if d.kind.value != "PENDING_ANSWER" or effective_values(d.answer.composed.effective) != expected_values(alternative):
-            out.append(f"{candidate.candidate_id} does not compose to the Gold's alternative")
-    return out
+    assert all(op["unresolved"] for op in label["ops"])
+    return ["UNVERIFIABLE_ORIGINAL_TYPED_ASKING_PATCH"]
 
 
-def test_dev_p09_the_f12_case_of_the_gold_is_a_pending_with_its_two_alternatives():
-    assert h5_problems("SF163") == []
+def test_dev_p09_reports_missing_typed_original_without_promoting_an_alternative():
+    assert h5_problems("SF163") == ["UNVERIFIABLE_ORIGINAL_TYPED_ASKING_PATCH"]
 
 
 def main(partition: str) -> int:
@@ -368,16 +295,15 @@ def main(partition: str) -> int:
         creations["SF163"] = h5_problems("SF163")
     for gid, (ok, seen) in sorted(rows.items()):
         print(f"{gid} {'OK ' if ok else 'RED'} MEASURED     {seen}")
-    for gid in statuses["NO_MEDIBLE"]:
-        ok, seen = run_case(gid, informational=True)
-        print(f"{gid} --- NO_MEDIBLE   (facts of the label, information only: {'agrees' if ok else 'DISAGREES'}: {seen})")
+    for gid in statuses["NO_VERIFICABLES"]:
+        print(f"{gid} --- NO_VERIFICABLES (original causal history absent; not run, not counted green)")
     for gid in statuses["RED_DECLARED"]:
-        ok, seen = run_case(gid, informational=True)
-        print(f"{gid} --- RED_DECLARED [{RED_DECLARED[gid]}] (run, information only: {'agrees' if ok else 'DISAGREES'}: {seen})")
+        print(f"{gid} --- RED_DECLARED [{RED_DECLARED[gid]}] (prior causal history absent; not run)")
     for gid, problems in sorted(creations.items()):
         print(f"{gid} creation {'OK' if not problems else problems}")
     green = sum(ok for ok, _ in rows.values())
     print(f"{partition}: MEASURED {green}/{len(rows)}; NO_MEDIBLE {len(statuses['NO_MEDIBLE'])} (not counted); "
+          f"NO_VERIFICABLES {len(statuses['NO_VERIFICABLES'])} (not run, not counted); "
           f"RED_DECLARED {len(statuses['RED_DECLARED'])} (not counted); of {len(owned_ids(partition))} cases owned; "
           f"creation {sum(not p for p in creations.values())}/{len(creations)}")
     return 0 if green == len(rows) and not any(creations.values()) else 1
