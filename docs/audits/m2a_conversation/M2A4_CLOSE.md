@@ -186,7 +186,7 @@ Sondas de ZEUS R1 (`scratchpad/zeus_m2a4_r1/`), re-ejecutadas sobre `5730aabb`:
   ahora da `TypeError: ask_fresh() missing 1 required keyword-only argument: 'asked_ops'` (D28).
 - `probe_nocand.py` (su `R1` es ahora el código real; se corrió contra el comportamiento anterior, D20 en toda pendiente): 166
   respuestas difieren y **todas** son un código de `REASK` por otro, nunca una ejecución: el código real da los sellados (fila 5
-  `ANSWER_EDITS_OTHER_SLOT` ×158 y fila 8 `PENDING_UNANSWERED` ×4 donde antes salía fila 7 `ANSWER_UNRESOLVED`).
+  `ANSWER_EDITS_OTHER_SLOT` ×162 y fila 8 `PENDING_UNANSWERED` ×4 donde antes salía fila 7 `ANSWER_UNRESOLVED`).
 - `probe_d21.py`: filas 4 (`OPERATION_CHANGE:COUNT`) y 5 (`REFERENT_EXTENSIONAL`) con directiva ⇒ `control=CANCEL_PENDING cause=DIRECTIVE`
   (`elim_anchor=True` sólo en H1); fila 6 ⇒ igual; **4b (`UNSUPPORTED_PROPOSAL:MULTI_REQUEST`) con directiva ⇒ `control=None`**, pendiente intacta.
 - `probe_inv23_d21.py` (INV-M2A-23, 20.000 turnos al azar con las cuatro filas y la directiva): `violations 0 []`,
