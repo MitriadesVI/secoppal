@@ -1,0 +1,219 @@
+"""M2A-7: the pure ``echo_items`` and the coverage rule of contract §11 (INV-M2A-12, INV-M2A-21).
+
+``echo_items(base, effective, patch, record, *, anchor_expired=False)`` turns what is ALREADY typed (the composition base,
+the effective accepted interpretation, the patch, the turn's record, and the provenance and receipt rules each condition
+carries) into the ``EchoItem``s the record stores. It never reads the turn's text, resolves nothing and decides no
+semantics (INV-M2A-24): what the types do not say, it does not invent. The echo is the account of the execution, so it
+is exactly what the typed difference and the provenance say, no more, no less (the stored echo is compared with
+``echo_items`` over the same inputs: same inputs, same tuple).
+
+Inputs. ``record`` is the turn's record (``AcceptedTurnRecord``; its own ``echo`` is the field this computes and is not
+read); ``patch`` and ``effective`` are the record's own (a mismatch is refused). ``base`` is the interpretation the turn
+composed over (the anchor, or the frame of the pending it answers) for a turn with a patch, and the anchor the turn found
+standing (``None`` without one) for a new search. ``anchor_expired`` is the injected fact of §10 (as in
+``delta_outcome``): the anchor the turn found is expired, sticky expiry included; deciding it is M2A-6's.
+
+Which turn echoes what (§11, Gold schema 2.1 §7 «sí y sólo sí», plus the two additions of the contract):
+
+* the execution echo exists only for a turn that executes an effective (``NEW_SEARCH``, ``DELTA``, ``PENDING_ANSWER``,
+  ``PROTOCOL_EVENT``); a page (``PROTOCOL_PAGE``) is the same plan again and a ``CLARIFY`` / ``REASK`` / ``INFORM`` /
+  ``HANDOFF_LEGACY`` executes nothing: they echo nothing but ``CONTEXT_EXPIRED``;
+* ``CONTEXT_EXPIRED``: the turn found the anchor expired and neither confirms nor replaces it, whatever its scope or
+  disposition (§10.1, R3c/R3d): ``anchor_expired`` and the turn executes no effective;
+* ``CONTEXT_RESET``: a new search that executes over a standing (not expired) anchor;
+* by DIFFERENCE (turns with a patch; ``foundation_echo_diff``): ``CARRIED`` (each condition that survives untouched, and
+  the said universe when no ``REPLACE_UNIVERSE`` touches it), ``VALUE_RANGE_REPLACED`` (A8.1, or a ``CLEAR`` of the whole
+  VALUE dimension followed by a ``SET`` that leaves a side unreplaced), ``TOPIC_REPLACED`` (F3/F22),
+  ``POLARITY_INVERTED`` (F16), ``UNIVERSE_CHANGED`` (with the carried TIME, which date field it now applies to),
+  ``TOPN_CARRIED`` (a carried CARDINALITY and a ``SET_ORDER``, F10);
+* by PROVENANCE of the conditions this turn placed (its operations; a carried condition's provenance was announced by the
+  turn that produced it): ``UNIT_INHERITED``, ``UNIT_SHARED_IN_RANGE`` (the whole range), ``YEAR_INHERITED``,
+  ``YEAR_CLOCK_INFERRED``, ``RELATIVE_WINDOW_RESOLVED`` (a clock-relative period, or a year inherited by the receipt rule
+  ``time.relative_to_previous``);
+* by the executed plan, on EVERY condition of the effective (INV-M2A-21: a cap and a default hold at each execution):
+  ``TOPN_CAPPED`` (receipt rule ``topn.capped``) and ``ORDER_DIRECTION_DEFAULTED`` (``order_direction_source =
+  DEFAULTED`` or receipt rule ``order.direction_defaulted``).
+
+Not representable today (declared, never dispensed): ``VIEW_DERIVED`` / ``VIEW_REDERIVED``. ``AcceptedRequest.view`` only
+admits ``None`` and a derived view needs ``subject = unspecified``, which the type refuses until wave F lands
+(``HostViewDecision``; §19 ``DEP-DERIVED-VIEW``). Items are ordered by class (the order of §11), then by slot (§4.2).
+"""
+
+from __future__ import annotations
+
+from app.core.foundation_accepted import (
+    CONDITION_SLOT_ORDER, UNIVERSE_SLOT, AcceptedInterpretation, AcceptedTurnRecord, EchoClass, EchoItem,
+    OrderDirectionSource, SemanticPatch, Slot, TurnResolution, UnitSource, YearSource, canonical_value,
+)
+from app.core.foundation_echo_diff import Departure, TurnDiff, composed_diff, fresh_diff
+from app.core.interpretation_contract import ContractError, Polarity, ValueSide
+from app.core.semantic_dimensions import SemanticDimension
+
+# What each source of provenance announces. ``STATED`` is the one source of each kind that the user said himself and
+# announces nothing; every other member is in its table, and the tests enumerate the enums so a new member forces a
+# decision (a source that is in neither a table nor ``SILENT_SOURCES`` is an unannounced provenance).
+UNIT_ECHO = {UnitSource.PREVIOUS_ACCEPTED_VALUE: EchoClass.UNIT_INHERITED,
+             UnitSource.SIBLING_IN_RANGE: EchoClass.UNIT_SHARED_IN_RANGE}
+YEAR_ECHO = {YearSource.PREVIOUS_ACCEPTED_TIME: EchoClass.YEAR_INHERITED,
+             YearSource.CLOCK_INFERRED: EchoClass.YEAR_CLOCK_INFERRED,
+             YearSource.RELATIVE_TO_CLOCK: EchoClass.RELATIVE_WINDOW_RESOLVED}
+ORDER_ECHO = {OrderDirectionSource.DEFAULTED: EchoClass.ORDER_DIRECTION_DEFAULTED}
+SILENT_SOURCES = frozenset({UnitSource.STATED, YearSource.STATED, OrderDirectionSource.STATED})
+RULE_RELATIVE_TO_PREVIOUS = "time.relative_to_previous"  # A.7: the year inherited as a relative window (§16.3, D7)
+RULE_TOPN_CAPPED = "topn.capped"  # A.7: P8, the cap that ran is smaller than the figure asked
+RULE_ORDER_DEFAULTED = "order.direction_defaulted"  # A.7: F21 (the provenance field says it too)
+# The classes no typed state can require today (module docstring): the tests pin the premise, wave F removes this.
+NOT_REPRESENTABLE = frozenset({EchoClass.VIEW_DERIVED, EchoClass.VIEW_REDERIVED})
+
+PATCHED = frozenset({TurnResolution.DELTA, TurnResolution.PENDING_ANSWER, TurnResolution.PROTOCOL_EVENT})
+EXECUTING = PATCHED | {TurnResolution.NEW_SEARCH, TurnResolution.PROTOCOL_PAGE}
+CLASS_RANK = {echo_class: rank for rank, echo_class in enumerate(EchoClass)}
+_VALUE, _TOPIC = SemanticDimension.VALUE, SemanticDimension.TOPIC
+_VALUE_WIDE = Slot(_VALUE)
+_SLOT_RANK = {slot: rank for rank, slot in enumerate(CONDITION_SLOT_ORDER)}
+_CARDINALITY = Slot(SemanticDimension.CARDINALITY)
+_TOPIC_POSITIVE = Slot(_TOPIC, Polarity.POSITIVE)
+_LOWER, _UPPER = Slot(_VALUE, side=ValueSide.LOWER), Slot(_VALUE, side=ValueSide.UPPER)
+
+
+def _slot_rank(slot: Slot | None) -> int:
+    if slot is None:
+        return -1
+    if slot.is_universe:
+        return len(_SLOT_RANK) + 1
+    return _SLOT_RANK.get(slot, _SLOT_RANK[_LOWER])  # only the whole-VALUE slot of UNIT_SHARED_IN_RANGE is not a rank
+
+
+def _item(echo_class: EchoClass, slot: Slot | None, condition_ids) -> EchoItem:
+    """The display is the presentation's, from the typed value the ids name; the key only selects what to show."""
+    key = echo_class.value if slot is None else f"{echo_class.value}:{slot.key}"
+    return EchoItem(echo_class, slot, tuple(condition_ids), key)
+
+
+def _check(base, effective, patch, record, anchor_expired) -> None:
+    if type(record) is not AcceptedTurnRecord:
+        raise ContractError("ECHO_NEEDS_A_RECORD")
+    if type(anchor_expired) is not bool:
+        raise ContractError("ECHO_INVALID_ANCHOR_EXPIRED")
+    if base is not None and type(base) is not AcceptedInterpretation:
+        raise ContractError("ECHO_INVALID_BASE")
+    if patch != record.patch or effective != record.effective:
+        raise ContractError("ECHO_ARGUMENTS_OUTSIDE_THE_RECORD")  # the record is the authority on what it recorded
+    asks_expiry = record.pending is not None and record.pending.reason == "CONTEXT_EXPIRED_CONFIRM"
+    if asks_expiry and not anchor_expired:
+        raise ContractError("ECHO_EXPIRED_PENDING_WITHOUT_EXPIRY")  # the question exists only over an expired anchor
+    if record.resolution in PATCHED and effective is not None:
+        if base is None:
+            raise ContractError("ECHO_COMPOSITION_WITHOUT_BASE")
+        if effective.base_trace_id != record.base_trace_id:
+            raise ContractError("ECHO_EFFECTIVE_OF_ANOTHER_BASE")
+
+
+def echo_items(base: AcceptedInterpretation | None, effective: AcceptedInterpretation | None,
+               patch: SemanticPatch | None, record: AcceptedTurnRecord, *,
+               anchor_expired: bool = False) -> tuple[EchoItem, ...]:
+    """Contract §11: the echo of one turn, ordered by class (the order of §11) and slot (§4.2); ``ContractError`` when
+    the arguments are not one coherent turn."""
+    _check(base, effective, patch, record, anchor_expired)
+    resolution = record.resolution
+    executes = resolution in EXECUTING and (effective is not None or resolution is TurnResolution.PROTOCOL_PAGE)
+    items: list[EchoItem] = []
+    if executes and resolution is not TurnResolution.PROTOCOL_PAGE:
+        diff = composed_diff(base, effective, patch) if resolution in PATCHED else fresh_diff(effective)
+        if resolution is TurnResolution.NEW_SEARCH and base is not None and not anchor_expired:
+            items.append(_item(EchoClass.CONTEXT_RESET, None, ()))
+        items += _provenance_items(diff)
+        items += _plan_items(effective)
+        if resolution in PATCHED:
+            items += _difference_items(effective, diff)
+    if anchor_expired and not executes:
+        items.append(_item(EchoClass.CONTEXT_EXPIRED, None, ()))
+    return tuple(sorted(items, key=lambda item: (CLASS_RANK[item.echo_class], _slot_rank(item.slot))))
+
+
+# ---- by the provenance of what the turn placed ----------------------------------------------------------------------
+def _provenance_items(diff: TurnDiff) -> list[EchoItem]:
+    items: list[EchoItem] = []
+    for condition in diff.placed:
+        provenance = condition.provenance
+        echoed = [UNIT_ECHO.get(provenance.unit_source), YEAR_ECHO.get(provenance.year_source)]
+        if (provenance.year_source is YearSource.PREVIOUS_ACCEPTED_TIME
+                and RULE_RELATIVE_TO_PREVIOUS in condition.receipt_rules):
+            echoed.append(EchoClass.RELATIVE_WINDOW_RESOLVED)
+        items += [_item(echo_class, condition.slot, (condition.condition_id,)) for echo_class in echoed
+                  if echo_class is not None and echo_class is not EchoClass.UNIT_SHARED_IN_RANGE]
+    shared = [c for c in diff.placed if UNIT_ECHO.get(c.provenance.unit_source) is EchoClass.UNIT_SHARED_IN_RANGE]
+    if shared:  # the unit said once covers the range: the echo shows both bounds with it
+        items.append(_item(EchoClass.UNIT_SHARED_IN_RANGE, _VALUE_WIDE,
+                           [c.condition_id for c in diff.placed if c.dimension is _VALUE]))
+    return items
+
+
+# ---- by the executed plan: every condition of the effective ---------------------------------------------------------
+def _plan_items(effective: AcceptedInterpretation) -> list[EchoItem]:
+    items: list[EchoItem] = []
+    for condition in effective.conditions:
+        if condition.dimension is SemanticDimension.CARDINALITY and RULE_TOPN_CAPPED in condition.receipt_rules:
+            items.append(_item(EchoClass.TOPN_CAPPED, condition.slot, (condition.condition_id,)))
+        defaulted = (ORDER_ECHO.get(condition.provenance.order_direction_source) is not None
+                     or RULE_ORDER_DEFAULTED in condition.receipt_rules)
+        if condition.dimension is SemanticDimension.ORDER and defaulted:
+            items.append(_item(EchoClass.ORDER_DIRECTION_DEFAULTED, condition.slot, (condition.condition_id,)))
+    return items
+
+
+# ---- by the difference between the base and the effective -----------------------------------------------------------
+def _difference_items(effective: AcceptedInterpretation, diff: TurnDiff) -> list[EchoItem]:
+    items = [_item(EchoClass.CARRIED, condition.slot, (condition.condition_id,)) for condition in diff.carried]
+    if not diff.universe_replaced:
+        items.append(_item(EchoClass.CARRIED, UNIVERSE_SLOT, ()))  # the said universe survives untouched
+    items += _value_range_items(effective, diff)
+    items += _topic_items(diff)
+    items += _polarity_items(diff)
+    if diff.universe_changed:
+        carried_time = [c.condition_id for c in diff.carried if c.dimension is SemanticDimension.TIME]
+        items.append(_item(EchoClass.UNIVERSE_CHANGED, UNIVERSE_SLOT, carried_time))
+    if diff.set_order:
+        items += [_item(EchoClass.TOPN_CARRIED, condition.slot, (condition.condition_id,))
+                  for condition in diff.carried if condition.slot == _CARDINALITY]
+    return items
+
+
+def _value_range_items(effective: AcceptedInterpretation, diff: TurnDiff) -> list[EchoItem]:
+    """A VALUE side the base had and the effective lacks, replaced by A8.1 or by a whole-VALUE ``CLEAR`` followed by a
+    ``SET`` (Gold §6 (b): ``CLEAR(VALUE)`` alone, or a ``CLEAR`` of the one side, is no replacement)."""
+    standing = {c.slot for c in effective.conditions if c.dimension is _VALUE}
+    placed = [c.condition_id for c in diff.placed if c.dimension is _VALUE]
+    items = []
+    for side in (_LOWER, _UPPER):
+        gone = [r for r in diff.removed if r.condition.slot == side]
+        replaced = any(r.departure is Departure.A81_OPPOSITE_BOUND for r in gone) or (
+            diff.wide_value_clear and bool(placed) and bool(gone))
+        if gone and side not in standing and replaced:
+            items.append(_item(EchoClass.VALUE_RANGE_REPLACED, side, [r.condition.condition_id for r in gone] + placed))
+    return items
+
+
+def _topic_items(diff: TurnDiff) -> list[EchoItem]:
+    """F3/F22: a positive TOPIC the patch put leaves a different positive TOPIC of the base without its value."""
+    placed = [c for c in diff.placed if c.slot == _TOPIC_POSITIVE]
+    gone = [r.condition for r in diff.removed if r.condition.slot == _TOPIC_POSITIVE]
+    if not placed or not any(old.value not in {new.value for new in placed} for old in gone):
+        return []
+    return [_item(EchoClass.TOPIC_REPLACED, _TOPIC_POSITIVE, [old.condition_id for old in gone]
+                  + [new.condition_id for new in placed])]
+
+
+def _polarity_items(diff: TurnDiff) -> list[EchoItem]:
+    """F16: the positive that left and the negative that took its place, per inverted value."""
+    items = []
+    for removal in diff.removed:
+        if removal.departure is not Departure.F16_POSITIVE_INVERTED:
+            continue
+        old = removal.condition
+        negative = Slot(old.slot.dimension, Polarity.NEGATIVE)
+        taken = [c.condition_id for c in diff.placed
+                 if c.slot == negative and canonical_value(c) == canonical_value(old)]
+        items.append(_item(EchoClass.POLARITY_INVERTED, negative, [old.condition_id] + taken))
+    return items
+
