@@ -18,11 +18,12 @@ the anchor, calls no authority, reads no clock, converts nothing, does no period
 the expression of a new turn fits the referent. ``base_trace_id`` is the id of the record whose effective is the base
 (the fact ``compose`` receives too): provenance (``Provenance.inherited_from``), never meaning.
 
-Declared choices (``docs/audits/m2a_conversation/M2A3B_CLOSE.md``, M2A3B-D1..D9): a relative window is a TIME whose
-``year_source`` is ``RELATIVE_TO_CLOCK`` or whose receipt is ``time.relative_to_previous`` (D4); a TIME inside an OR/NOT
-group is not an active period (D3); a referent fits period arithmetic only as a whole number of calendar months, and
-whether it fits the new expression is the authority's, from ``months`` (D6). Values are read only through the
-accessors of ``foundation_accepted`` (R1, D8); the one exception is the two date fields of the canonical ``time@1``
+Declared choices (``docs/audits/m2a_conversation/M2A3B_CLOSE.md``, M2A3B-D1..D9): a relative window is a TIME with the
+operator ``relative_period`` (§16.4), or whose ``year_source`` is ``RELATIVE_TO_CLOCK``, or whose receipt is
+``time.relative_to_previous`` (D4); a TIME inside an OR/NOT group is not an active period, and a base with only
+negative TIME is not a base without TIME (D3); a referent fits period arithmetic only as a whole number of calendar
+months, and whether it fits the new expression is the authority's, from ``months`` (D6). Values are read only through
+the accessors of ``foundation_accepted`` (R1, D8); the one exception is the two date fields of the canonical ``time@1``
 encoding, read strictly and cross-checked against ``time_years`` (D7).
 """
 
@@ -39,7 +40,8 @@ from app.core.interpretation_contract import ContractError, Polarity
 from app.core.semantic_dimensions import SemanticDimension
 
 RELATIVE_TO_PREVIOUS_RULE = "time.relative_to_previous"
-_TIME_TAG, _START, _END = "time@1", "start=", "end_exclusive="
+RELATIVE_PERIOD_OPERATOR = "relative_period"  # §16.4: the TIME operator of a window relative to the clock
+_TIME_TAG, _START, _END, _OPEN = "time@1", "start=", "end_exclusive=", "!"  # «!»: the codec's open end
 
 
 class Presence(str, Enum):
@@ -54,6 +56,7 @@ class Ambiguity(str, Enum):
     MULTIPLE_UNITS = "MULTIPLE_UNITS"  # §15.4: two or more active units («una única unidad activa inequívoca»)
     UNIT_UNRECORDED = "UNIT_UNRECORDED"  # §15.4: a VALUE bound whose unit the base does not record
     NONCONJUNCTIVE_TIME = "NONCONJUNCTIVE_TIME"  # a TIME inside an OR/NOT group is not an active period
+    NEGATIVE_TIME_ONLY = "NEGATIVE_TIME_ONLY"  # §16.1: it excludes a period and states none: not «sin TIME previo»
     MULTIPLE_TIMES = "MULTIPLE_TIMES"  # §16.1, §16.3: several TIME conditions («varios referentes»)
     RELATIVE_WINDOW = "RELATIVE_WINDOW"  # §16.1, §16.3: the TIME is a relative window («ventana relativa»)
     OPEN_INTERVAL = "OPEN_INTERVAL"  # one end of the TIME is open: no year and no period to shift
@@ -62,8 +65,8 @@ class Ambiguity(str, Enum):
 
 
 UNIT_AMBIGUITIES = frozenset({Ambiguity.MULTIPLE_UNITS, Ambiguity.UNIT_UNRECORDED})
-_TIME_AMBIGUITIES = frozenset({Ambiguity.NONCONJUNCTIVE_TIME, Ambiguity.MULTIPLE_TIMES, Ambiguity.RELATIVE_WINDOW,
-                               Ambiguity.OPEN_INTERVAL})
+_TIME_AMBIGUITIES = frozenset({Ambiguity.NONCONJUNCTIVE_TIME, Ambiguity.NEGATIVE_TIME_ONLY, Ambiguity.MULTIPLE_TIMES,
+                               Ambiguity.RELATIVE_WINDOW, Ambiguity.OPEN_INTERVAL})
 YEAR_AMBIGUITIES = _TIME_AMBIGUITIES | {Ambiguity.MULTI_YEAR}
 REFERENT_AMBIGUITIES = _TIME_AMBIGUITIES | {Ambiguity.INCOMPATIBLE_GRANULARITY}
 
@@ -93,6 +96,47 @@ def _shape(status, reason, allowed, payload: bool, complete: bool) -> None:
             _fail("INHERITANCE_INPUT_ABSENT_SHAPE")
     elif type(reason) is not Ambiguity or reason not in allowed or payload:
         _fail("INHERITANCE_INPUT_AMBIGUOUS_SHAPE")
+
+
+# ---- the canonical ``time@1`` tuple (D7: the one reading beyond the accessors of ``foundation_accepted``) -----------
+def _one_date(raw: str) -> date | None:
+    try:
+        day = None if raw == _OPEN else date.fromisoformat(raw)
+    except ValueError:
+        _fail("TIME_VALUE_UNREADABLE")
+    if day is not None and day.isoformat() != raw:  # only the canonical spelling of the codec
+        _fail("TIME_VALUE_UNREADABLE")
+    return day
+
+
+def _time_dates(value) -> tuple[date | None, date | None]:
+    """The two dates of a canonical ``time@1`` tuple (``None``: an open end); anything else is unreadable."""
+    shape = (type(value) is tuple and len(value) == 5 and all(type(item) is str for item in value)
+             and value[0] == _TIME_TAG and value[1].startswith(_START) and value[2].startswith(_END)
+             and value[3].startswith("precision=") and value[4] in ("excluded=0", "excluded=1"))
+    if not shape:
+        _fail("TIME_VALUE_UNREADABLE")
+    return _one_date(value[1][len(_START):]), _one_date(value[2][len(_END):])
+
+
+def _whole_months(first: date, after: date) -> int | None:
+    """The calendar months from ``first`` to ``after``, or None unless both fall on the first of a month."""
+    if first.day != 1 or after.day != 1:
+        return None
+    return (after.year - first.year) * 12 + after.month - first.month
+
+
+def _referent_value_ok(value, first_year, last_year, months) -> bool:
+    """A PRESENT referent's ``value`` is a canonical ``time@1`` of an included period whose own dates give exactly the
+    years and the whole months the referent states (``months >= 1`` makes the interval non-empty and ordered): its
+    numbers cannot disagree with its value."""
+    try:
+        first, after = _time_dates(value)
+    except ContractError:
+        return False
+    return (first is not None and after is not None and value[4] == "excluded=0"
+            and (first.year, (after - timedelta(days=1)).year) == (first_year, last_year)
+            and _whole_months(first, after) == months)
 
 
 @dataclass(frozen=True, slots=True)
@@ -146,18 +190,23 @@ class TimeReferent:
     reason: Ambiguity | None = None
 
     def __post_init__(self) -> None:
-        value_ok = type(self.value) is tuple and bool(self.value) and all(type(item) is str for item in self.value)
         years_ok = _int_ok(self.first_year, 1) and _int_ok(self.last_year, 1) and self.first_year <= self.last_year
         fields = (self.condition_id, self.value, self.first_year, self.last_year, self.months, self.inherited_from)
         payload = fields != (None, (), None, None, None, None)
         _shape(self.status, self.reason, REFERENT_AMBIGUITIES, payload,
-               _text_ok(self.condition_id) and value_ok and years_ok and _int_ok(self.months, 1)
+               _text_ok(self.condition_id) and years_ok and _int_ok(self.months, 1)
+               and _referent_value_ok(self.value, self.first_year, self.last_year, self.months)
                and _text_ok(self.inherited_from))
 
 
 @dataclass(frozen=True, slots=True)
 class HostInheritanceInputs:
-    """The separate entry of the host's inputs: the three of one base, derived together from it and nothing else."""
+    """The separate entry of the host's inputs: the three of one base, derived together from it and nothing else.
+
+    The type refuses to join inputs that say they come from different bases: the PRESENT inputs name the one record they
+    are inherited from, and a year and a referent that are both PRESENT are the same TIME condition. Limited guarantee
+    (M2A3B-D1): an ABSENT or AMBIGUOUS input carries no origin, so a mix of those with a PRESENT input of another
+    base is not detectable here; ``host_inheritance_inputs`` is the way to build all three together."""
 
     unit: UnitInheritance
     year: YearInheritance
@@ -167,6 +216,12 @@ class HostInheritanceInputs:
         if (type(self.unit) is not UnitInheritance or type(self.year) is not YearInheritance
                 or type(self.referent) is not TimeReferent):
             _fail("INHERITANCE_INPUTS_TYPES")
+        origins = {part.inherited_from for part in (self.unit, self.year, self.referent)} - {None}
+        if len(origins) > 1:
+            _fail("INHERITANCE_INPUTS_FROM_DIFFERENT_BASES")
+        if (self.year.status is Presence.PRESENT and self.referent.status is Presence.PRESENT
+                and self.year.condition_id != self.referent.condition_id):
+            _fail("INHERITANCE_INPUTS_FROM_DIFFERENT_TIMES")
 
 
 # ---- reading the base ---------------------------------------------------------------------------------------------
@@ -178,8 +233,11 @@ def _check(base, base_trace_id) -> None:
 
 
 def _is_relative(condition: AcceptedCondition) -> bool:
-    """A relative window (§16.1, §16.3): resolved against the clock or against the previous TIME (M2A3B-D4)."""
-    return (condition.provenance.year_source is YearSource.RELATIVE_TO_CLOCK
+    """A relative window (§16.1, §16.3, §16.4, M2A3B-D4): the TIME operator ``relative_period`` (§16.4: what the
+    TIME authority emits for «este año», «últimos seis meses»), or a window resolved against the clock or the
+    previous TIME."""
+    return (condition.operator == RELATIVE_PERIOD_OPERATOR
+            or condition.provenance.year_source is YearSource.RELATIVE_TO_CLOCK
             or RELATIVE_TO_PREVIOUS_RULE in condition.receipt_rules)
 
 
@@ -189,22 +247,14 @@ def _extent(condition: AcceptedCondition) -> tuple[int, int, int | None] | None:
     years = time_years(condition)
     if years is None:
         return None
-    value = condition.value
-    if len(value) < 3 or value[0] != _TIME_TAG or not value[1].startswith(_START) or not value[2].startswith(_END):
-        _fail("TIME_VALUE_UNREADABLE")
-    try:
-        first, after = date.fromisoformat(value[1][len(_START):]), date.fromisoformat(value[2][len(_END):])
-    except ValueError:
-        _fail("TIME_VALUE_UNREADABLE")
-    if years != (first.year, (after - timedelta(days=1)).year):
+    first, after = _time_dates(condition.value)
+    if first is None or after is None or years != (first.year, (after - timedelta(days=1)).year):
         _fail("TIME_YEARS_DISAGREE")
-    if first.day != 1 or after.day != 1:
-        return years[0], years[1], None
-    return years[0], years[1], (after.year - first.year) * 12 + after.month - first.month
+    return years[0], years[1], _whole_months(first, after)
 
 
 def _active_time(base: AcceptedInterpretation) -> AcceptedCondition | Ambiguity | None:
-    """The base's one active TIME: the condition; ``None`` if no positive TIME; or why there is not exactly one."""
+    """The base's one active TIME: the condition; ``None`` if the base has no TIME at all; or why there is not one."""
     times = [c for c in base.conditions if c.dimension is SemanticDimension.TIME]
     if base.logic is not None and any(base.logic.has_nonconjunctive_atom(c.condition_id) for c in times):
         return Ambiguity.NONCONJUNCTIVE_TIME
@@ -212,7 +262,7 @@ def _active_time(base: AcceptedInterpretation) -> AcceptedCondition | Ambiguity 
     if len(positive) > 1:
         return Ambiguity.MULTIPLE_TIMES
     if not positive:
-        return None
+        return Ambiguity.NEGATIVE_TIME_ONLY if times else None
     return Ambiguity.RELATIVE_WINDOW if _is_relative(positive[0]) else positive[0]
 
 
