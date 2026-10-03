@@ -15,8 +15,10 @@ relational on the Gold's bases (their datasets are placeholders, ``LG-DATASET-VA
 """
 from __future__ import annotations
 
+import os
 import sys
 from functools import lru_cache
+from pathlib import Path
 
 import pytest
 
@@ -78,12 +80,14 @@ def run(inputs: dict) -> tuple[dict | None, str | None, str | None]:
 
 
 @lru_cache(maxsize=None)
-def cases() -> tuple:
-    return tuple(oracle.load_cases())
+def cases(real_dir: str | None = None) -> tuple:
+    """The oracle's cases; with the private REAL directory (never in git) the REAL slice too (ids and digests only
+    ever leave this function: the oracle's reports never carry REAL content)."""
+    return tuple(oracle.load_cases(None if real_dir is None else Path(real_dir)))
 
 
-def measure(partition: str) -> dict:
-    chosen = oracle.select_partition(list(cases()), partition)
+def measure(partition: str, real_dir: str | None = None) -> dict:
+    chosen = oracle.select_partition(list(cases(real_dir)), partition)
     actuals, scopes, problems = {}, {}, {}
     for case in chosen:
         if case["applicability"] != oracle.APPLICABLE:
@@ -96,7 +100,8 @@ def measure(partition: str) -> dict:
             continue
         actuals[case["gold_id"]] = actual
     return {"cases": chosen, "actuals": actuals, "scopes": scopes, "problems": problems,
-            "audit": oracle.audit(actuals, chosen),
+            "audit": oracle.audit(actuals, chosen,
+                                  require_sources=("SYNTHETIC", "REAL") if real_dir else ("SYNTHETIC",)),
             "transitions": oracle.audit_transitions(actuals, chosen),
             "classification": oracle.audit_classification(scopes, chosen)}
 
@@ -106,21 +111,8 @@ def dev() -> dict:
     return measure("DEV")
 
 
-# BLOCKER (reported, not decided here): the oracle types an inherited UNIT (``unit_source = PREVIOUS_ACCEPTED_VALUE``)
-# without ``inherited_from``; contract §15.4 («con regla unit.inherited, unit_source = PREVIOUS_ACCEPTED_VALUE,
-# inherited_from y eco UNIT_INHERITED») and §11 (UNIT_INHERITED: «de dónde sale») require the origin, and the type keeps
-# requiring it. Those inputs cannot be built, so these cases cannot be composed until the user decides.
-BLOCKED_BY_INHERITED_FROM = {"SF103", "SF104", "SF106", "SF167", "SF183"}
-BLOCKER = ("BLOCKER M2A-3 fase 2: el oráculo tipa una unidad heredada sin inherited_from (§15.4, §11); el tipo la "
-           "rechaza: SF103, SF104, SF106, SF167, SF183 (DEV) y SF101 (TEST)")
-
-
-def test_dev_the_only_inputs_that_cannot_be_built_are_the_declared_blocker():
-    assert dev()["problems"] == {gid: "UNREPRESENTABLE_INPUT:INHERITANCE_WITHOUT_ORIGIN"
-                                 for gid in BLOCKED_BY_INHERITED_FROM}
-
-
-@pytest.mark.xfail(strict=True, reason=BLOCKER)
+# The BLOCKER of phase 2 (an inherited unit typed without ``inherited_from``, §15.4) was fixed by the oracle in
+# ``f95275b4``: every applicable input is built by the strict readers, and the audit is complete.
 def test_dev_every_applicable_case_runs():
     assert dev()["problems"] == {}
 
@@ -128,10 +120,8 @@ def test_dev_every_applicable_case_runs():
 def test_dev_gold_audit_has_no_mismatch():
     report = dev()["audit"]
     assert report["mismatches"] == [] and report["extra"] == [] and report["s19_problems"] == []
-    assert set(report["missing"]) == BLOCKED_BY_INHERITED_FROM
 
 
-@pytest.mark.xfail(strict=True, reason=BLOCKER)
 def test_dev_gold_audit_is_complete():
     assert dev()["audit"]["missing"] == [] and dev()["audit"]["ok"]
 
@@ -146,11 +136,23 @@ def test_dev_classification_matches():
     assert report["ok"], report
 
 
+REAL_DIR = os.environ.get("M2A_GOLD_REAL_DIR")
+
+
+@pytest.mark.skipif(REAL_DIR is None, reason="M2A_GOLD_REAL_DIR (private GOLD_CANDIDATE) not set")
+def test_dev_with_the_real_slice():
+    report = measure("DEV", REAL_DIR)
+    assert report["problems"] == {} and report["audit"]["ok"]
+    assert report["audit"]["coverage"]["applicable_expected"]["REAL"] > 0
+    assert report["transitions"]["ok"] and report["classification"]["ok"]
+
+
 def summary(report: dict) -> str:
     audit, transitions, classification = report["audit"], report["transitions"], report["classification"]
     applicable = audit["expected"]
     matched = applicable - len(audit["missing"]) - len({m["gold_id"] for m in audit["mismatches"]})
-    lines = [f"applicable {applicable}: matched {matched}, missing {len(audit['missing'])}, "
+    lines = [f"sources {audit['coverage']['applicable_expected']} complete={audit['complete']}",
+             f"applicable {applicable}: matched {matched}, missing {len(audit['missing'])}, "
              f"mismatches {len(audit['mismatches'])}, ok={audit['ok']}",
              f"transitions: ok={transitions['ok']} checked={transitions['checked']} refusals="
              f"{transitions['refusals_checked']} violations={len(transitions['violations'])}",
@@ -164,5 +166,4 @@ def summary(report: dict) -> str:
 
 
 if __name__ == "__main__":
-    print(summary(measure(sys.argv[1] if len(sys.argv) > 1 else "DEV")))
-    pytest  # the module is also a pytest file
+    print(summary(measure(sys.argv[1] if len(sys.argv) > 1 else "DEV", os.environ.get("M2A_GOLD_REAL_DIR"))))
