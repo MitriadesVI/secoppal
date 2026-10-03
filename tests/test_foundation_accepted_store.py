@@ -12,14 +12,21 @@ every mutant listed for it must fail it by assertion.
  5. EMPTY is not CORRUPT (typed apart) ......... check_empty_is_not_unreadable
  6. anchor: exactly one readable record, published (F5), never a fallback ... check_anchor_*
  7. clear() deletes the store with the history under the same lock, F4 race ... check_clear_*, check_stale_epoch
- 8. byte identity: identical or invalid, never reordered ............. check_byte_identity
+ 8. byte identity: identical or invalid, never reordered ............. check_byte_identity,
+                                                                       check_a_reorder_inside_a_slot_is_never_read_as_written
  9. no heuristic recovery ................................ (3), (4), (8) and the byte-flip property
 10. personal data: no logs, no content in errors ............ check_no_content_leaks, AST pin
 
-Fixtures: ``make_record`` is the ONLY place that builds a record (minimal shapes: 1 request, <= 2 conditions, 0 policies).
-If M2A-3 hardens the canonical order in ``foundation_accepted`` adjust THAT helper, nothing else (and, for the reorder
-mutants, keep >= 2 conditions in an order the canonical form still accepts). Everything is synthetic and lives in
-``tmp_path``; nothing here touches ``data/``.
+Fixtures: ``make_record`` is the ONLY place that builds a record (minimal shapes: 1 request, <= 3 conditions, 0 policies)
+and it builds the effective with ``fa.canonical_interpretation`` (M2A-3: the type REJECTS a condition order that is not
+the canonical one, it never rewrites it, so a fixture can no longer hand it conditions in any order; the constructor
+groups them by slot and keeps the order given inside a slot). Consequence for the invariant «identical or invalid»:
+a reorder ACROSS slots (``topic, buyer`` -> ``buyer, topic``) is no longer a different record, it is an INVALID one
+(``NONCANONICAL_CONDITION_ORDER``), so a reader that does it fails closed instead of returning another record;
+a reorder INSIDE a slot (two TOPIC conditions) is still valid and observable, and only the byte identity of the store
+catches it. Both are proved: ``check_byte_identity`` (invalid) and ``check_a_reorder_inside_a_slot_is_never_read_as_written``
+(valid but different), and each reorder mutant must die in both. Everything is synthetic and lives in ``tmp_path``;
+nothing here touches ``data/``.
 """
 from __future__ import annotations
 
@@ -77,10 +84,13 @@ def _origin(trace: str) -> fa.ConditionOrigin:
 
 
 def _condition(kind: str, trace: str, actor: str = SENTINEL) -> fa.AcceptedCondition:
-    """``topic`` has id c2 and ``buyer`` id c1 ON PURPOSE: (topic, buyer) is NOT sorted by id, so a reader that
-    orders conditions is visible."""
+    """``topic`` has id c2 and ``buyer`` id c1 ON PURPOSE: (topic, buyer) is canonical (TOPIC before BUYER) and NOT
+    sorted by id, so a reader that sorts by id is visible (and, under the canonical type, invalid). ``topic2`` (c3) shares
+    the TOPIC/POSITIVE slot with ``topic``: (topic, topic2) and (topic2, topic) are BOTH canonical and two different
+    records, because inside a slot the order given is kept (and observable)."""
     dimension, value, operator, cid = {
         "topic": (D.TOPIC, TopicValue("obras", True, False), "contains", "c2"),
+        "topic2": (D.TOPIC, TopicValue("salud", True, False), "contains", "c3"),
         "buyer": (D.BUYER, BuyerValue("ICBF", BuyerKind.UNIT, ("ICBF",), None, False), "is", "c1"),
         "actor": (D.ACTOR, ActorValue("900123456", "NIT", actor, False), "is", "a1"),
     }[kind]
@@ -94,7 +104,9 @@ def make_record(trace_id: str = "t1", *, chat_id: str = CHAT, kind: str = "searc
                 conditions: tuple[str, ...] = ("topic",), actor: str | None = None, anchor=SELF,
                 turn_id: str | None = None) -> fa.AcceptedTurnRecord:
     """``search``: a READY new search that executed (its effective); ``clarify``: a turn that asked and made no call
-    (no effective). ``anchor``: SELF (default for a search), another trace id, or None."""
+    (no effective). ``anchor``: SELF (default for a search), another trace id, or None. ``conditions`` may be given in
+    any order: the effective is built with ``canonical_interpretation`` (grouped by slot, the order given kept inside
+    a slot), the one constructor path M2A-3 allows."""
     turn_id = turn_id or f"turn-{trace_id}"
     if kind == "clarify":
         return fa.AcceptedTurnRecord(
@@ -104,7 +116,7 @@ def make_record(trace_id: str = "t1", *, chat_id: str = CHAT, kind: str = "searc
     kinds = (*conditions, *(("actor",) if actor is not None else ()))
     request = fa.AcceptedRequest("r1", "s1", Subject.PROCESSES, fa.UniverseKind.RECORDS, _origin(trace_id), None,
                                  "ds-processes")
-    effective = fa.AcceptedInterpretation(
+    effective = fa.canonical_interpretation(
         (request,), tuple(_condition(k, trace_id, actor or SENTINEL) for k in kinds), None, (), None, trace_id)
     return fa.AcceptedTurnRecord(
         trace_id, chat_id, turn_id, T0, T0, "foundation_v5_1", RAW, fa.TurnScope.IN_NEW_SEARCH,
@@ -164,6 +176,16 @@ def raised(fn, *args, **kwargs):
     except Exception as error:  # noqa: BLE001 - the checks assert on WHAT was raised
         return error
     return None
+
+
+def read_or_fail(w: World):
+    """``read`` returns a ``StoreRead`` whatever the file holds (CORRUPT carries the reason). An exception escaping it
+    is a reader that stopped failing closed: a violation of the contract (an assertion), not an error of the test.
+    Under the canonical type that is exactly what a reader that reorders conditions across slots does."""
+    try:
+        return w.read()
+    except Exception as error:  # noqa: BLE001 - whatever escapes is the violation being reported
+        raise AssertionError(f"read() raised {type(error).__name__}: {error} instead of returning a StoreRead") from error
 
 
 CHECKS: dict = {}
@@ -335,7 +357,7 @@ def check_byte_identity(m, root):
     # non-ASCII, an astral character, a lone surrogate and U+2028 all survive as plain ASCII escapes
     rec = make_record("t1", conditions=("topic", "buyer"), turn_id="turno-ñandú-✓ \U0001F600 \ud800 \u2028")
     w.put(rec)
-    got = w.read()
+    got = read_or_fail(w)
     assert got.status is m.StoreStatus.OK and got.records == (rec,)  # exactly what was written ...
     assert [c.condition_id for c in got.records[0].effective.conditions] == ["c2", "c1"]  # ... in its order
     assert store.serialize_record(got.records[0]) == store.serialize_record(rec)
@@ -350,8 +372,39 @@ def check_byte_identity(m, root):
     for label, raw in non_canonical.items():
         assert raw != text, label
         w.path.write_bytes(raw.encode("ascii") + b"\n")  # decodes to the SAME record, but it is not what was written
-        got = w.read()
+        got = read_or_fail(w)
         assert (got.status, got.reason) == (m.StoreStatus.CORRUPT, "NOT_BYTE_IDENTICAL"), (label, got)
+    # A reorder ACROSS slots is not a different record under the canonical type, it is an INVALID one: a self-consistent
+    # line (digests recomputed, so the order is its only defect) whose conditions are out of the canonical order is
+    # refused by the type, never read as is and never read rewritten into the canonical order.
+    disordered = json.loads(text)
+    disordered["effective"]["conditions"].reverse()
+    disordered["semantic_ref"] = fa.digest(disordered["effective"])
+    disordered["record_sha256"] = fa.digest({k: v for k, v in disordered.items() if k != "record_sha256"})
+    assert [c["condition_id"] for c in disordered["effective"]["conditions"]] == ["c1", "c2"]
+    w.path.write_bytes(canonical(disordered))
+    got = read_or_fail(w)
+    assert (got.status, got.records, got.reason) == (
+        m.StoreStatus.CORRUPT, (), "RECORD_REJECTED:NONCANONICAL_CONDITION_ORDER"), got
+    assert m.anchor_of(got, {"t1"}).status is m.AnchorStatus.ANCHOR_UNREADABLE
+
+
+@check
+def check_a_reorder_inside_a_slot_is_never_read_as_written(m, root):
+    """Inside a slot the order of the acceptance is kept AND observable (two TOPIC conditions), so reversing them is
+    still a VALID record and a DIFFERENT one: only the store can tell. It must come back exactly as written, and a
+    store that reads another order must be CORRUPT, never OK. A reader that reorders and keeps the identity check dies
+    on the status (NOT_BYTE_IDENTICAL); one that reorders and has no identity check dies on the order it returns."""
+    w = World(m, root)
+    for kinds, ids in ((("topic", "topic2"), ["c2", "c3"]), (("topic2", "topic"), ["c3", "c2"])):
+        rec = make_record("t1", conditions=kinds)
+        assert [c.condition_id for c in rec.effective.conditions] == ids  # the constructor kept the order given
+        w.put(rec)
+        got = read_or_fail(w)
+        assert got.status is m.StoreStatus.OK, (kinds, got)
+        assert got.records == (rec,), kinds  # exactly what was written ...
+        assert [c.condition_id for c in got.records[0].effective.conditions] == ids, kinds  # ... in its order
+    assert make_record("t1", conditions=("topic", "topic2")) != make_record("t1", conditions=("topic2", "topic"))
 
 
 # ---- 6. anchor ---------------------------------------------------------------------------------------------------------
@@ -934,11 +987,14 @@ MUTANTS = {
         (("        if _read_epoch(location.envelope_path) != epoch:",
           "        if _read_epoch(location.envelope_path) > epoch:"),), ("check_stale_epoch",)),
     # brief: el store reordena condiciones al leer
+    # Under the canonical type a reorder across slots is INVALID (the mutant raises: check_byte_identity), and a reorder
+    # inside a slot is valid and different (the status or the order read back: the second check). Each dies in both.
     "reader_reorders_conditions_but_keeps_the_identity_check": (
-        ((IDENTICAL_TRY, REORDER + IDENTICAL_TRY),), ("check_byte_identity",)),
+        ((IDENTICAL_TRY, REORDER + IDENTICAL_TRY),),
+        ("check_byte_identity", "check_a_reorder_inside_a_slot_is_never_read_as_written")),
     "reader_reorders_conditions_and_has_no_identity_check": (
         ((IDENTICAL_TRY, REORDER + IDENTICAL_TRY), (IDENTICAL_RETURN, "    return record\n")),
-        ("check_byte_identity",)),
+        ("check_byte_identity", "check_a_reorder_inside_a_slot_is_never_read_as_written")),
     "reader_has_no_identity_check": (((IDENTICAL_RETURN, "    return record\n"),), ("check_byte_identity",)),
     # the rest of the invariants
     "append_rewrites_the_file": (
@@ -1341,7 +1397,9 @@ def st_history(draw):
     out = []
     for i in range(count):
         kind = draw(st.sampled_from(["search", "clarify"]))
-        conditions = draw(st.sampled_from([(), ("topic",), ("topic", "buyer"), ("buyer", "topic")]))
+        # ("buyer", "topic") is canonicalized by the constructor; the two same-slot orders stay two distinct valid records
+        conditions = draw(st.sampled_from([(), ("topic",), ("topic", "buyer"), ("buyer", "topic"),
+                                           ("topic", "topic2"), ("topic2", "topic")]))
         turn_id = draw(st.text(st.characters(blacklist_categories=("Cs",)), min_size=1, max_size=6).filter(str.strip))
         anchor = f"t{i}" if kind == "search" else (f"t{i - 1}" if i else None)
         out.append(make_record(f"t{i}", kind=kind, conditions=conditions, turn_id=turn_id, anchor=anchor))
