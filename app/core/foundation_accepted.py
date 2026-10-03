@@ -19,6 +19,13 @@ Canonicality: one meaning, one persisted form. Set-like lists (``request_ids``, 
 order is REJECTED, never reordered on read. Every persisted datetime is ``timezone.utc`` and every integer is a real
 ``int`` (``bool`` is not).
 
+M2A-3 (``docs/audits/m2a_conversation/M2A3_CANONICAL_FORM.md``; user decisions 2026-10-02): only an order PROVEN
+unobservable is canonicalized. ``conditions`` are grouped by slot in the closed table ``CONDITION_SLOT_ORDER`` and keep
+the acceptance order inside a slot (observable: the projection's TOPIC terms); ``policies`` are split (one condition
+each) and sorted; a pure conjunction is ``logic = None`` and any tree with OR/NOT is kept as given; ``requests`` keep
+their order (the runtime's groups). ``canonical_interpretation`` is the one constructor path of every effective
+(``compose`` and the future ``from_acceptance``); the type itself rejects any other form.
+
 Barriers (INV-M2A-04, INV-M2A-24): nothing here translates to ``parsed_params`` or to any legacy input, imports a
 legacy reader or a lexicon, or reads the turn's text. Values exist only as ``ExecutableValue.encode()`` tuples.
 """
@@ -70,6 +77,7 @@ class TurnScope(str, Enum):
     OUT_NO_ANCHOR = "OUT_NO_ANCHOR"
     OUT_ANCHOR_NOT_SEARCH = "OUT_ANCHOR_NOT_SEARCH"
     OUT_OPERATION_CHANGE = "OUT_OPERATION_CHANGE"
+    OUT_UNSUPPORTED_PROPOSAL = "OUT_UNSUPPORTED_PROPOSAL"  # §7.1 row 4b (R3, D-6)
     OUT_REFERENT_EXTENSIONAL = "OUT_REFERENT_EXTENSIONAL"
     OUT_RELATIVE_TO_PREVIOUS = "OUT_RELATIVE_TO_PREVIOUS"
 
@@ -176,16 +184,32 @@ class TotalQuality(str, Enum):
     NOT_APPLICABLE = "not_applicable"
 
 
-# Contract annex A.3. Parameterized codes: ``UNRESOLVED_VALUE:<DIM>``, ``OPERATION_CHANGE:<op>``,
-# ``ANCHOR_NOT_SEARCH:<op>``.
+# Contract annex A.3 (amended R3/R3b/R3c). Parameterized codes: ``UNRESOLVED_VALUE:<DIM>``, ``OPERATION_CHANGE:<op>``,
+# ``UNSUPPORTED_PROPOSAL:<motivo>``, ``ANCHOR_NOT_SEARCH:<op>``.
 CLARIFY_CODES = frozenset({
     "CONTEXT_EXPIRED_CONFIRM", "BUYER_OR_PLACE_AFTER_ACTOR", "REGION_NOT_IN_LIST", "SMMLV_YEAR_AMBIGUOUS",
     "RELATIVE_TO_PREVIOUS_VALUE", "UNIT_AMBIGUOUS", "MONTH_YEAR_AMBIGUOUS", "EMPTY_SEARCH_AFTER_DELTA",
     "STATE_NOT_IN_UNIVERSE", "TERRITORY_VS_CARRIED_BUYER", "NO_ANCHOR", "ANCHOR_UNREADABLE",
-    "TARGET_NOT_ADDRESSABLE", "VALUE_WITHOUT_COMPARATOR",
+    "TARGET_NOT_ADDRESSABLE", "VALUE_WITHOUT_COMPARATOR", "DELTA_SLOT_CONFLICT", "KEEP_ON_EMPTY_SLOT",
+    "DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER",
 })
 REASK_CODES = frozenset({"OPTION_NOT_CHOSEN", "ANSWER_EDITS_OTHER_SLOT", "PENDING_UNANSWERED", "ANSWER_UNRESOLVED"})
-INFORM_CODES = frozenset({"CLEAR_ON_EMPTY_SLOT", "REFERENT_EXTENSIONAL"})
+INFORM_CODES = frozenset({"CLEAR_ON_EMPTY_SLOT", "REFERENT_EXTENSIONAL", "STALE_OPTION"})
+# A.3 «INFORM con un código de CLARIFY» (R3b, U20): the only CLARIFY codes also valid with INFORM (their pending may be
+# impossible, §8.4; or §6 step 3b gathers several causes; or H1). Plus ``UNRESOLVED_VALUE:<DIM>``. Never
+# ``CONTEXT_EXPIRED_CONFIRM``, ``NO_ANCHOR`` nor ``ANCHOR_UNREADABLE``: their pending is always possible.
+INFORM_CAPABLE_CLARIFY_CODES = frozenset({
+    "DELTA_SLOT_CONFLICT", "TARGET_NOT_ADDRESSABLE", "KEEP_ON_EMPTY_SLOT", "DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER",
+    "SMMLV_YEAR_AMBIGUOUS", "RELATIVE_TO_PREVIOUS_VALUE", "BUYER_OR_PLACE_AFTER_ACTOR", "TERRITORY_VS_CARRIED_BUYER",
+    "REGION_NOT_IN_LIST", "STATE_NOT_IN_UNIVERSE", "UNIT_AMBIGUOUS", "MONTH_YEAR_AMBIGUOUS",
+    "EMPTY_SEARCH_AFTER_DELTA", "VALUE_WITHOUT_COMPARATOR",
+})
+# ``<DIM>`` (A.3, R3-3): the dimension keys of the §4.2 slots — the eleven slot dimensions and UNIVERSE; never a
+# dimension that is not a slot. ``<motivo>`` (§7.1 row 4b, D-6): its closed list.
+DIMENSION_KEYS = frozenset({dimension.value for dimension in SLOT_DIMENSIONS} | {"UNIVERSE"})
+UNSUPPORTED_PROPOSAL_MOTIVES = frozenset({
+    "MULTI_REQUEST", "UNSUPPORTED_CONDITION", "UNSUPPORTED_SOURCE", "INVALID_PROPOSAL", "NO_ACTION",
+})
 
 
 def reason_code_allowed(code: str, resolution: TurnResolution) -> bool:
@@ -193,14 +217,15 @@ def reason_code_allowed(code: str, resolution: TurnResolution) -> bool:
     if type(code) is not str:
         return False
     head, sep, tail = code.partition(":")
+    unresolved = sep == ":" and head == "UNRESOLVED_VALUE" and tail in DIMENSION_KEYS
     if resolution is TurnResolution.CLARIFY:
-        return code in CLARIFY_CODES or (sep == ":" and head == "UNRESOLVED_VALUE"
-                                         and tail in {d.value for d in SLOT_DIMENSIONS})
+        return code in CLARIFY_CODES or unresolved
     if resolution is TurnResolution.REASK:
         return code in REASK_CODES
     if resolution is TurnResolution.INFORM:
-        return code in INFORM_CODES or (sep == ":" and head == "OPERATION_CHANGE"
-                                        and tail in {op.value for op in Operation})
+        return (code in INFORM_CODES or code in INFORM_CAPABLE_CLARIFY_CODES or unresolved
+                or (sep == ":" and head == "OPERATION_CHANGE" and tail in {op.value for op in Operation})
+                or (sep == ":" and head == "UNSUPPORTED_PROPOSAL" and tail in UNSUPPORTED_PROPOSAL_MOTIVES))
     if resolution is TurnResolution.HANDOFF_LEGACY:
         return sep == ":" and head == "ANCHOR_NOT_SEARCH" and tail in {op.value for op in Operation}
     return False
@@ -450,6 +475,26 @@ class Slot:
 
 UNIVERSE_SLOT = Slot(None)
 
+_POS, _NEG = Polarity.POSITIVE, Polarity.NEGATIVE
+# The canonical order of an interpretation's conditions BY SLOT (user decision 2026-10-02, D-CANON-1): closed, explicit
+# and in the order contract §4.2 lists the slots; never alphabetical. Within one slot the acceptance order is kept: it
+# is observable (TOPIC/POSITIVE terms change the soql; M2A3_CANONICAL_FORM.md). UNIVERSE is the request-level slot of
+# §4.2: no condition occupies it (``slot_of`` never returns it), so it has no rank here.
+CONDITION_SLOT_ORDER = (
+    Slot(SemanticDimension.TOPIC, _POS), Slot(SemanticDimension.TOPIC, _NEG),
+    Slot(SemanticDimension.BUYER, _POS), Slot(SemanticDimension.BUYER, _NEG),
+    Slot(SemanticDimension.ACTOR, _POS), Slot(SemanticDimension.ACTOR, _NEG),
+    Slot(SemanticDimension.GEOGRAPHY, _POS), Slot(SemanticDimension.GEOGRAPHY, _NEG),
+    Slot(SemanticDimension.TIME, _POS), Slot(SemanticDimension.TIME, _NEG),
+    Slot(SemanticDimension.STATE, _POS), Slot(SemanticDimension.STATE, _NEG),
+    Slot(SemanticDimension.MODALITY, _POS), Slot(SemanticDimension.MODALITY, _NEG),
+    Slot(SemanticDimension.CONTRACT_TYPE_OR_NATURE, _POS), Slot(SemanticDimension.CONTRACT_TYPE_OR_NATURE, _NEG),
+    Slot(SemanticDimension.VALUE, side=ValueSide.LOWER), Slot(SemanticDimension.VALUE, side=ValueSide.UPPER),
+    Slot(SemanticDimension.ORDER),
+    Slot(SemanticDimension.CARDINALITY),
+)
+_SLOT_RANK = {slot: rank for rank, slot in enumerate(CONDITION_SLOT_ORDER)}
+
 
 def slot_of(dimension: SemanticDimension, value: tuple[str, ...]) -> Slot:
     """The slot a typed value occupies: VALUE by its comparator, polarized dimensions by ``excluded``."""
@@ -602,10 +647,13 @@ def policy_to_dict(policy: HostPolicy) -> dict:
 
 
 def _canonical_policy(policy: HostPolicy) -> HostPolicy:
-    """A ``HostPolicy`` persisted here names its conditions as a set: sorted (``HostPolicy`` already forbids
-    duplicates). The IR v2 type itself is not narrowed; only its persisted form inside M2a is."""
-    if list(policy.condition_ids) != sorted(policy.condition_ids):
-        _fail("UNSORTED_POLICY_CONDITION_IDS")
+    """A ``HostPolicy`` persisted here is ONE application of a policy to ONE condition: the split form ``main`` emits
+    (every ``HostPolicy`` of ``foundation_admission`` cites one condition). Independent applications are never merged
+    by projection equivalence; a genuinely joint policy would need an express declaration by its owner and none exists,
+    so it is refused (user decision 2026-10-02, D-CANON-2). The IR v2 type itself is not narrowed; only its persisted
+    form inside M2a is."""
+    if len(policy.condition_ids) != 1:
+        _fail("MULTI_CONDITION_POLICY")
     return policy
 
 
@@ -614,6 +662,69 @@ def policy_from_dict(data) -> HostPolicy:
     return _canonical_policy(HostPolicy(
         data["policy_id"], data["version"], _read_texts(data["condition_ids"], "POLICY_CONDITION_IDS"),
         _enum_of(Effect, data["effect"], "POLICY_EFFECT")))
+
+
+# ---- canonical form shared by every constructor of an effective (M2A-3; M2A3_CANONICAL_FORM.md) --------------------
+def _policy_key(policy: HostPolicy) -> tuple:
+    return policy.policy_id, policy.version, policy.condition_ids, policy.effect.value
+
+
+def _check_policies(policies: tuple[HostPolicy, ...], condition_ids: set[str]) -> None:
+    """An interpretation's ``HostPolicy`` list (contract §3.2, §6.6), the way the projection reads it.
+
+    Every cited condition exists (a ``CLEAR`` never leaves a dangling policy). An application (policy ref, condition)
+    appears once (``(p1, p1)`` included): the projection admits exactly one policy per condition and ref. One ref, one
+    effect: the projection maps ``policy_id@version`` to ONE effect, so two effects would make the persisted order
+    observable in ``plan_hash``. With those, the list is set-like and is sorted.
+    """
+    effects: dict[str, Effect] = {}
+    cited: set[tuple[str, str]] = set()
+    for policy in policies:
+        if not set(policy.condition_ids) <= condition_ids:
+            _fail("FOREIGN_POLICY_CONDITION")
+        ref = f"{policy.policy_id}@{policy.version}"
+        if effects.setdefault(ref, policy.effect) is not policy.effect:
+            _fail("CONFLICTING_POLICY_EFFECT")
+        for condition_id in policy.condition_ids:
+            if (ref, condition_id) in cited:
+                _fail("DUPLICATE_POLICY")
+            cited.add((ref, condition_id))
+    if list(policies) != sorted(policies, key=_policy_key):
+        _fail("UNSORTED_POLICIES")
+
+
+def canonical_policies(policies: tuple[HostPolicy, ...]) -> tuple[HostPolicy, ...]:
+    """The one order of a set-like policy list. Nothing is merged or dropped: a duplicate is refused by the type."""
+    _records(policies, HostPolicy, "POLICIES")
+    return tuple(sorted(policies, key=_policy_key))
+
+
+def _slot_rank(slot: Slot) -> int:
+    rank = _SLOT_RANK.get(slot)
+    if rank is None:
+        _fail("SLOT_WITHOUT_RANK")
+    return rank
+
+
+def canonical_conditions(conditions: tuple[AcceptedCondition, ...]) -> tuple[AcceptedCondition, ...]:
+    """Conditions grouped by slot in ``CONDITION_SLOT_ORDER``; inside a slot, the order given (stable: never sorted)."""
+    _records(conditions, AcceptedCondition, "CONDITIONS")
+    return tuple(sorted(conditions, key=lambda condition: _slot_rank(condition.slot)))
+
+
+def _conjunction_only(node: ConditionExpression) -> bool:
+    return node.operator is LogicOperator.ATOM or (
+        node.operator is LogicOperator.AND and all(_conjunction_only(child) for child in node.children))
+
+
+def canonical_logic(logic: ConditionExpression | None) -> ConditionExpression | None:
+    """Contract §3.2: a pure conjunction is ``None`` (the AND of all). Any tree with OR/NOT is kept as given, its
+    structure and order untouched: nothing executes it, so «same meaning ⇒ same bytes» is NOT guaranteed inside
+    OR/NOT until a consumer proves which rewrites are safe (limited guarantee, user decision 2026-10-02)."""
+    if logic is None:
+        return None
+    _instance(logic, ConditionExpression, "LOGIC")
+    return None if _conjunction_only(logic) else logic
 
 
 # ---- AcceptedRequest / AcceptedCondition / AcceptedInterpretation (contract §3.2, §4) ----------------------------
@@ -784,6 +895,10 @@ class AcceptedInterpretation:
         for condition in self.conditions:
             if not set(condition.request_ids) <= set(request_ids):
                 _fail("FOREIGN_CONDITION_REQUEST")
+        _check_policies(self.policies, set(condition_ids))
+        ranks = [_slot_rank(condition.slot) for condition in self.conditions]
+        if ranks != sorted(ranks):
+            _fail("NONCANONICAL_CONDITION_ORDER")  # rejected, never rewritten: build with ``canonical_interpretation``
         for request_id in request_ids:
             taken: set[Slot] = set()
             for condition in self.conditions:
@@ -801,6 +916,8 @@ class AcceptedInterpretation:
             if any(self.logic.has_nonconjunctive_atom(c.condition_id)
                    for c in self.conditions if c.dimension is SemanticDimension.ORDER):
                 _fail("NONCONJUNCTIVE_ORDER")
+            if canonical_logic(self.logic) != self.logic:
+                _fail("NONCANONICAL_LOGIC")  # rejected, never rewritten: build it with ``canonical_interpretation``
 
     def to_dict(self) -> dict:
         return {"schema": ACCEPTED_SCHEMA, "requests": [request.to_dict() for request in self.requests],
@@ -820,6 +937,20 @@ class AcceptedInterpretation:
             tuple(policy_from_dict(item) for item in _list(data["policies"], "POLICIES")),
             data["base_trace_id"], data["root_trace_id"],
         )
+
+
+def canonical_interpretation(requests: tuple[AcceptedRequest, ...], conditions: tuple[AcceptedCondition, ...],
+                             logic: ConditionExpression | None, policies: tuple[HostPolicy, ...],
+                             base_trace_id: str | None, root_trace_id: str) -> AcceptedInterpretation:
+    """THE constructor path of every effective (contract §4.1: ``compose`` and ``from_acceptance``).
+
+    It reorders only what is proven unobservable: conditions across slots (``CONDITION_SLOT_ORDER``; inside a slot the
+    order given is kept) and the split ``policies``; a pure conjunction becomes ``logic = None``. ``requests`` and any
+    OR/NOT tree are kept as given. It never deduplicates, merges or drops: the type validates the result and refuses
+    anything else. A cross-slot or policy permutation gives the same bytes and the same ``interpretation_hash``.
+    """
+    return AcceptedInterpretation(requests, canonical_conditions(conditions), canonical_logic(logic),
+                                  canonical_policies(policies), base_trace_id, root_trace_id)
 
 
 def interpretation_hash(effective: AcceptedInterpretation) -> str:
@@ -1202,6 +1333,7 @@ OUT_SCOPE_RESOLUTION = {
     TurnScope.OUT_NO_ANCHOR: TurnResolution.CLARIFY,
     TurnScope.OUT_ANCHOR_NOT_SEARCH: TurnResolution.HANDOFF_LEGACY,
     TurnScope.OUT_OPERATION_CHANGE: TurnResolution.INFORM,
+    TurnScope.OUT_UNSUPPORTED_PROPOSAL: TurnResolution.INFORM,
     TurnScope.OUT_REFERENT_EXTENSIONAL: TurnResolution.INFORM,
     TurnScope.OUT_RELATIVE_TO_PREVIOUS: TurnResolution.CLARIFY,
 }

@@ -362,8 +362,10 @@ def st_interpretation(draw):
             LogicOperator.OR, None, atoms[:2]), *atoms[2:])) if len(atoms) > 2 else ConditionExpression(
             LogicOperator.OR, None, atoms)
     requests = (request(),) if not dual else (request(), request(fa, "r2", Subject.CONTRACTS))
-    return fa.AcceptedInterpretation(requests, tuple(conds), logic, (), draw(st.none() | st.just("t0")),
-                                     draw(st.text(min_size=1, max_size=6).filter(str.strip)))
+    # M2A-3 (M2A3_CANONICAL_FORM.md): conditions are drawn in any slot order; the one constructor path groups them by
+    # slot (``CONDITION_SLOT_ORDER``), as ``compose`` and ``from_acceptance`` will.
+    return fa.canonical_interpretation(requests, tuple(conds), logic, (), draw(st.none() | st.just("t0")),
+                                       draw(st.text(min_size=1, max_size=6).filter(str.strip)))
 
 
 @st.composite
@@ -585,9 +587,9 @@ def test_reason_codes_are_the_closed_annex_lists():
     for retired in ("SMMLV_UNSUPPORTED", "INHERITED_UNIT_IMPLAUSIBLE", "TOPN_CAP_EXCEEDED",
                     "DELTA_OR_NEW_AMBIGUOUS", "SELF_CONTAINED_REQUEST"):
         assert not any(fa.reason_code_allowed(retired, r) for r in fa.TurnResolution)
-    assert {e.value for e in fa.TurnScope} == {
+    assert {e.value for e in fa.TurnScope} == {  # A.1 amended by R3 (D-6): OUT_UNSUPPORTED_PROPOSAL, row 4b
         "IN", "IN_NEW_SEARCH", "IN_PROTOCOL", "OUT_NO_ANCHOR", "OUT_ANCHOR_NOT_SEARCH", "OUT_OPERATION_CHANGE",
-        "OUT_REFERENT_EXTENSIONAL", "OUT_RELATIVE_TO_PREVIOUS"}
+        "OUT_UNSUPPORTED_PROPOSAL", "OUT_REFERENT_EXTENSIONAL", "OUT_RELATIVE_TO_PREVIOUS"}
     assert {e.value for e in fa.PatchOpKind} == {"SET", "CLEAR", "KEEP", "SET_ORDER", "REPLACE_UNIVERSE"}
 
 
