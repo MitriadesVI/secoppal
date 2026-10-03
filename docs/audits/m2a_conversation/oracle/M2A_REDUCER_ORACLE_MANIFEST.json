@@ -1,0 +1,1086 @@
+{
+ "artifact": {
+  "path": "docs/audits/m2a_conversation/oracle/M2A_REDUCER_ORACLE_synthetic.jsonl",
+  "records": 160,
+  "sha256": "4aa343c7488ecff31c96e1f56d2e82559aa7deeff6fc441497a97171a28c699b"
+ },
+ "declarations": {
+  "applicability_rules": [
+   {
+    "basis": "STRUCTURAL",
+    "clause": "§8.3; plan M2A-4",
+    "id": "PENDING_PRIOR",
+    "owners": [
+     "M2A-4"
+    ],
+    "why": "a pending prior, an ANSWER or CANCEL_PENDING op: the response protocol is M2A-4's, and §19 does not cover it"
+   },
+   {
+    "basis": "STRUCTURAL",
+    "clause": "§7.1 #3, §9; plan M2A-6",
+    "id": "EVENT_OR_PROTOCOL",
+    "owners": [
+     "M2A-6"
+    ],
+    "why": "events and pagination are the runtime protocol of M2A-6, and §19 does not cover them"
+   },
+   {
+    "basis": "§19",
+    "blocks": false,
+    "cases": 3,
+    "clause": "§19 DEP-TIME-RELATIVE: A5: relativo al referente temporal único (§16.3)",
+    "id": "DEP-TIME-RELATIVE",
+    "impacto_m2a3": "LECTURA",
+    "needs": "entrada separada de TIME con `time.relative_to_previous`",
+    "owners": [
+     "D-TIME",
+     "E-TIME"
+    ]
+   },
+   {
+    "basis": "§19",
+    "blocks": false,
+    "cases": 16,
+    "clause": "§19 DEP-INHERITANCE: herencia de unidad o año y mes sin año (F5–F7, §15.4, §16.1)",
+    "id": "DEP-INHERITANCE",
+    "impacto_m2a3": "LECTURA",
+    "needs": "`unit.inherited`, `year.inherited`, `year.inferred` por la entrada separada; lectura del mes",
+    "owners": [
+     "D-MONEY",
+     "D-TIME"
+    ]
+   },
+   {
+    "basis": "§19",
+    "blocks": false,
+    "cases": 3,
+    "clause": "§19 DEP-SMMLV-READ: SMMLV en follow-ups: leer o tipar una cota SMMLV (§15.5)",
+    "id": "DEP-SMMLV-READ",
+    "impacto_m2a3": "LECTURA",
+    "needs": "conversión por vigencia de D10 dentro del catálogo 2024–2026",
+    "owners": [
+     "D-MONEY",
+     "E-VALUE"
+    ]
+   },
+   {
+    "basis": "§19",
+    "blocks": true,
+    "cases": 1,
+    "clause": "§19 DEP-SMMLV-RECALC: SMMLV arrastrado cuando cambia el año (§15.5)",
+    "id": "DEP-SMMLV-RECALC",
+    "impacto_m2a3": "COMPOSICION",
+    "needs": "recálculo de la cota arrastrada a partir de `source_amount` sobre la nueva vigencia",
+    "owners": [
+     "D-MONEY",
+     "E-VALUE"
+    ]
+   },
+   {
+    "basis": "§19",
+    "blocks": false,
+    "cases": 8,
+    "clause": "§19 DEP-VALUE-FORMS: formas «entre X y Y», «mayores de», «pasen de»",
+    "id": "DEP-VALUE-FORMS",
+    "impacto_m2a3": "LECTURA",
+    "needs": "lectura de la autoridad VALUE del primer turno",
+    "owners": [
+     "D-MONEY",
+     "E-VALUE"
+    ]
+   },
+   {
+    "basis": "§19",
+    "blocks": false,
+    "cases": 0,
+    "clause": "§19 DEP-VALUE-EQUALITY: igualdad «exactamente X» (§15.2)",
+    "id": "DEP-VALUE-EQUALITY",
+    "impacto_m2a3": "LECTURA",
+    "needs": "lectura como par `>=`/`<=` del mismo turno",
+    "owners": [
+     "D-MONEY",
+     "E-VALUE"
+    ]
+   },
+   {
+    "basis": "§19",
+    "blocks": false,
+    "cases": 2,
+    "clause": "§19 DEP-BUYER-TERRITORY: F30: territorio nuevo con comprador arrastrado (H6)",
+    "id": "DEP-BUYER-TERRITORY",
+    "impacto_m2a3": "LECTURA",
+    "needs": "`buyer.territory.<código>` / `buyer.national`",
+    "owners": [
+     "D-BUYER"
+    ]
+   },
+   {
+    "basis": "§19",
+    "blocks": true,
+    "cases": 10,
+    "clause": "§19 DEP-DERIVED-VIEW: vista derivada (§14)",
+    "id": "DEP-DERIVED-VIEW",
+    "impacto_m2a3": "COMPOSICION",
+    "needs": "`HostViewDecision`, `decide_view`",
+    "owners": [
+     "F"
+    ]
+   },
+   {
+    "basis": "§19",
+    "blocks": false,
+    "cases": 8,
+    "clause": "§19 DEP-REGION: región (`GeoValue` REGION; H7)",
+    "id": "DEP-REGION",
+    "impacto_m2a3": "LECTURA",
+    "needs": "miembros y lista cerrada de regiones",
+    "owners": [
+     "E-GEO"
+    ]
+   },
+   {
+    "basis": "§19",
+    "blocks": false,
+    "cases": 6,
+    "clause": "§19 DEP-STATE-LITERALS: estado sobre el universo de la petición (H8)",
+    "id": "DEP-STATE-LITERALS",
+    "impacto_m2a3": "LECTURA",
+    "needs": "`state@1.literals` por dataset",
+    "owners": [
+     "E-STATE"
+    ]
+   },
+   {
+    "basis": "§19",
+    "blocks": true,
+    "cases": 5,
+    "clause": "§19 DEP-MODALITY-UNIVERSE: modalidad sobre el universo resultante (H8)",
+    "id": "DEP-MODALITY-UNIVERSE",
+    "impacto_m2a3": "COMPOSICION",
+    "needs": "catálogo de modalidad por dataset (`modality@1` no lleva el dataset)",
+    "owners": [
+     "E-MODALITY"
+    ]
+   },
+   {
+    "basis": "§19",
+    "blocks": true,
+    "cases": 1,
+    "clause": "§19 DEP-O1B-OPPORTUNITIES: SF075: `REPLACE_UNIVERSE` a oportunidades con TIME arrastrado (R3-3)",
+    "id": "DEP-O1B-OPPORTUNITIES",
+    "impacto_m2a3": "COMPOSICION",
+    "needs": "re-decidir O1B / `opportunity-explicit-state` sobre la efectiva (su representación es de M2A-1b) y TIME explícito sobre oportunidades (`foundation_projection.py:235-237`). Mientras falte, `compose` rechaza con `OP_NOT_ACCREDITED:UNIVERSE` ⇒ `CLARIFY UNRESOLVED_VALUE:UNIVERSE` y el caso es rojo declarado (§20.2)",
+    "owners": [
+     "FOUNDATION_O1B_EXPLICIT_TIME_PARITY",
+     "M2A-1b"
+    ]
+   },
+   {
+    "basis": "§19",
+    "blocks": false,
+    "cases": 25,
+    "clause": "§19 DEP-E-ORDER: follow-ups con ORDER/CARDINALITY: leer el criterio o la cifra (R3, D-5)",
+    "id": "DEP-E-ORDER",
+    "impacto_m2a3": "LECTURA",
+    "needs": "autoridad ORDER/CARDINALITY (`order@1`, `cardinality@2`, `order.direction_defaulted`, `topn.capped`); `main` aún no las admite en el primer turno (`UNRESOLVED_HOST_DIMENSION:ORDER`). Mientras falte, la pendiente de §6.7 (R3-1) es provisional fail-closed: **sólo C1** «quitar orden y límite» y la cancelación, sin candidatos `SET_ORDER`",
+    "owners": [
+     "E-ORDER"
+    ]
+   },
+   {
+    "basis": "§19",
+    "blocks": true,
+    "cases": 4,
+    "clause": "§19 DEP-E-ORDER-CANDIDATES: candidatos `SET_ORDER` de la pendiente de R3-1 (§6.7)",
+    "id": "DEP-E-ORDER-CANDIDATES",
+    "impacto_m2a3": "COMPOSICION",
+    "needs": "enumerar al preguntar los criterios de orden alternativos del dataset; SF199–SF201 traen esa opción `SET_ORDER` en su pendiente previa (R3c). Las alternativas selladas de SF192 son **PARCIALES** (sólo C1) y el registro lo declara (`partial_alternatives`); los `SET_ORDER` no se sellan",
+    "owners": [
+     "E-ORDER"
+    ]
+   },
+   {
+    "basis": "§19",
+    "blocks": false,
+    "cases": 1,
+    "clause": "§19 DEP-M2A5-WIRE-CARDINALITY: «dame 20» con la pendiente de R3-1: IR v2 rechaza un `FOLLOWUP_DELTA` que sólo trae CARDINALITY (`interpretation_contract.py:438-439`), §7.1 fila 4b `INVALID_PROPOSAL` (§6.7; R3c)",
+    "id": "DEP-M2A5-WIRE-CARDINALITY",
+    "impacto_m2a3": "LECTURA",
+    "needs": "que el wire admita una CARDINALITY sola en un `FOLLOWUP_DELTA`; mientras no lo haga, la etiqueta sellada es la fila 4b",
+    "owners": [
+     "M2A-5"
+    ]
+   },
+   {
+    "basis": "§19",
+    "blocks": true,
+    "cases": 0,
+    "clause": "§19 DEP-M1-PENDING-FRAME: primer turno sin ancla cuya pendiente de M1 no tiene `frame` construible (§8.4)",
+    "id": "DEP-M1-PENDING-FRAME",
+    "impacto_m2a3": "COMPOSICION",
+    "needs": "representar la pendiente de M1 en `from_acceptance`",
+    "owners": [
+     "M2A-1b"
+    ]
+   }
+  ],
+  "effects_scope": {
+   "echo": [
+    "ORDER_DIRECTION_DEFAULTED",
+    "TOPN_CAPPED",
+    "TOPN_CARRIED",
+    "UNIVERSE_CHANGED"
+   ],
+   "reducer": [
+    "CONTEXT_RESET",
+    "PENDING_CANCELLED",
+    "POLARITY_INVERTED",
+    "TOPIC_REPLACED",
+    "VALUE_RANGE_REPLACED",
+    "VIEW_REDERIVED"
+   ]
+  },
+  "gold_projection_delegates_to_transition": [
+   {
+    "field": "effective.schema, exact keys of the effective, of requests and of conditions",
+    "killed_by": [
+     "cardinality_without_order",
+     "condition_unknown_request",
+     "dangling_policy",
+     "dual_scope_differs",
+     "duplicate_condition_id",
+     "duplicate_request_id",
+     "effective_extra_key",
+     "malformed_policy",
+     "request_ids_not_rewritten_after_reduction",
+     "two_bounds_same_side"
+    ],
+    "rules": [
+     "T-STRUCT"
+    ],
+    "to": "T-STRUCT"
+   },
+   {
+    "field": "requests[].request_id, scope_id, universe_origin, view, dataset",
+    "killed_by": [
+     "M1_stale_dataset_after_redirect",
+     "M2_stale_origin_after_redirect",
+     "M3_reoriginate_untouched_request",
+     "M4_change_scope_id_untouched",
+     "M5_change_request_id_untouched",
+     "redirect_changes_request_id",
+     "redirect_changes_scope_id",
+     "redirect_changes_view",
+     "untouched_request_dataset_changed"
+    ],
+    "rules": [
+     "T-REQ-UNTOUCHED",
+     "T-REQ-REDIRECT",
+     "T-REQ-ORIGIN",
+     "T-REQ-DATASET"
+    ],
+    "to": "T-REQ-UNTOUCHED / T-REQ-REDIRECT / T-REQ-ORIGIN / T-REQ-DATASET"
+   },
+   {
+    "field": "conditions[].condition_id",
+    "killed_by": [
+     "cardinality_without_order",
+     "condition_unknown_request",
+     "dangling_policy",
+     "dual_scope_differs",
+     "duplicate_condition_id",
+     "duplicate_request_id",
+     "effective_extra_key",
+     "malformed_policy",
+     "rename_carried_condition_id",
+     "request_ids_not_rewritten_after_reduction",
+     "reset_carried_host_fields",
+     "tamper_carried_authority",
+     "tamper_carried_origin",
+     "tamper_carried_policies",
+     "tamper_carried_provenance",
+     "tamper_carried_receipt_rules",
+     "two_bounds_same_side"
+    ],
+    "rules": [
+     "T-COND-CARRIED",
+     "T-STRUCT"
+    ],
+    "to": "T-COND-CARRIED (carried) / T-STRUCT (unique); placed ids are the reducer's"
+   },
+   {
+    "field": "conditions[].request_ids (which requests a condition applies to)",
+    "killed_by": [
+     "carried_request_ids_changed_without_reduction",
+     "placed_applies_to_one_request"
+    ],
+    "rules": [
+     "T-COND-REQUESTS"
+    ],
+    "to": "T-COND-REQUESTS"
+   },
+   {
+    "field": "conditions[].authority, receipt_rules, policies, origin, provenance (but VALUE unit and ORDER direction source)",
+    "killed_by": [
+     "placed_value_changed",
+     "rename_carried_condition_id",
+     "reset_carried_host_fields",
+     "tamper_carried_authority",
+     "tamper_carried_origin",
+     "tamper_carried_policies",
+     "tamper_carried_provenance",
+     "tamper_carried_receipt_rules",
+     "tamper_placed_authority",
+     "tamper_placed_origin",
+     "tamper_placed_policies",
+     "tamper_placed_provenance",
+     "tamper_placed_receipt_rules"
+    ],
+    "rules": [
+     "T-COND-CARRIED",
+     "T-COND-PLACED"
+    ],
+    "to": "T-COND-CARRIED (carried) / T-COND-PLACED (placed)"
+   },
+   {
+    "field": "which conditions are carried and which placed",
+    "killed_by": [
+     "a81_without_collision",
+     "carried_in_written_slot",
+     "clear_dimension_only_positive",
+     "cleared_condition_kept",
+     "f16_any_value",
+     "fabricated_condition",
+     "op_applied_twice",
+     "op_not_applied",
+     "placed_value_changed",
+     "removal_without_op",
+     "rename_carried_condition_id",
+     "reset_carried_host_fields",
+     "set_clears_whole_dimension",
+     "set_order_drops_cardinality",
+     "tamper_carried_authority",
+     "tamper_carried_origin",
+     "tamper_carried_policies",
+     "tamper_carried_provenance",
+     "tamper_carried_receipt_rules",
+     "tamper_placed_authority",
+     "tamper_placed_origin",
+     "tamper_placed_policies",
+     "tamper_placed_provenance",
+     "tamper_placed_receipt_rules"
+    ],
+    "rules": [
+     "T-COND-CARRIED",
+     "T-COND-PLACED",
+     "T-COND-FABRICATED",
+     "T-COND-WRITTEN-SLOT",
+     "T-COND-REMOVAL",
+     "T-COND-ATOMIC"
+    ],
+    "to": "T-COND-CARRIED / T-COND-PLACED / T-COND-FABRICATED / T-COND-WRITTEN-SLOT / T-COND-REMOVAL / T-COND-ATOMIC"
+   },
+   {
+    "field": "effective.policies, base_trace_id, root_trace_id",
+    "killed_by": [
+     "cardinality_without_order",
+     "condition_unknown_request",
+     "dangling_policy",
+     "dual_scope_differs",
+     "duplicate_condition_id",
+     "duplicate_request_id",
+     "effective_extra_key",
+     "malformed_policy",
+     "request_ids_not_rewritten_after_reduction",
+     "two_bounds_same_side"
+    ],
+    "rules": [
+     "T-STRUCT"
+    ],
+    "to": "T-STRUCT (policies well formed); the rest is informative (§3.2, §6.6): LG-REQUEST-POLICIES"
+   }
+  ],
+  "limited_guarantees": [
+   {
+    "closed_by": "M2A-3 properties that call check_transition over GENERATED bases with every field filled, a dual anchor and a view (the oracle invents no content in the Gold's bases)",
+    "id": "LG-BASES-WITHOUT-HOST-FIELDS",
+    "kind": "ORACLE_BLIND_SPOT",
+    "what": "on the Gold's own bases policies, receipt_rules and provenance.{source_amount, year, year_source, buyer_scope, inherited_from} are empty (the Gold carries none), so rebuilding a carried condition with those defaults is invisible there"
+   },
+   {
+    "closed_by": "M2A-3 passes its own subject-to-dataset table as dataset_of",
+    "id": "LG-DATASET-VALUE",
+    "kind": "ORACLE_BLIND_SPOT",
+    "what": "the value of a redirected request's dataset is the host table's: without ``dataset_of`` the check is relational (never the old one, never another subject's)"
+   },
+   {
+    "closed_by": "the authorities' own gates (E-*/F)",
+    "id": "LG-REQUEST-POLICIES",
+    "kind": "ORACLE_BLIND_SPOT",
+    "what": "which policies the host re-decides on the composed effective (§6.6) is not determined by the Gold or the contract text: any well-formed policy list over the effective's conditions passes"
+   },
+   {
+    "closed_by": "M2A-1b / M2A-6",
+    "id": "LG-FRESH-ACCEPTANCE",
+    "kind": "ORACLE_BLIND_SPOT",
+    "what": "the effective of a NEW_SEARCH is built by from_acceptance (M2A-1b), not the reducer: only its meaning is compared and ``audit`` reports it as unverified when it is not supplied; no transition is checked"
+   },
+   {
+    "closed_by": "M2A-8b",
+    "id": "LG-CLASSIFICATION-CERTIFIED-BY-8B",
+    "kind": "SCOPE",
+    "what": "the §20.2 gate «búsqueda nueva y delta confundidos» is certified by M2A-8b with the real producer, not by this oracle: it measures the §7.2 scope only where the facts of P determine it UNIQUELY, reads the absence of every continuation marker as «no evidence» (closed world over the labels) and cannot see the «verb of request» that makes a frame, so every lone content condition is NO_MEDIBLE for classification"
+   },
+   {
+    "closed_by": "check_transition T-COND-REMOVAL on any input that exercises it (killed by f16_any_value)",
+    "id": "GOLD-GAP-F16-ANY-VALUE",
+    "kind": "GOLD_GAP",
+    "what": "a reducer that inverts the polarity of the single positive of a slot whatever the value of the negative SET is not discriminated by the Gold: no applicable case sets a negative of another value over a single positive"
+   },
+   {
+    "closed_by": "check_transition T-COND-REMOVAL (killed by set_clears_whole_dimension)",
+    "id": "GOLD-GAP-SET-CLEARS-WHOLE-DIMENSION",
+    "kind": "GOLD_GAP",
+    "what": "a reducer whose SET of one polarity removes the other polarity of the dimension is not discriminated by the Gold: no applicable case carries both polarities of a dimension through a SET"
+   },
+   {
+    "closed_by": "check_transition T-COND-WRITTEN-SLOT (killed by clear_dimension_only_positive)",
+    "id": "GOLD-GAP-CLEAR-DIMENSION-ONLY-POSITIVE",
+    "kind": "GOLD_GAP",
+    "what": "a reducer whose CLEAR of a dimension leaves its negative conditions is not discriminated by the Gold: no applicable case clears a dimension that holds a negative condition"
+   },
+   {
+    "closed_by": "a Gold case that executes a compatible territory over a carried buyer, with the buyer's territory typed",
+    "id": "GOLD-GAP-H6-OVERFIRE",
+    "kind": "GOLD_GAP",
+    "what": "a reducer that over-fires H6 (a clarification for any new territory next to a buyer) is not discriminated: no applicable EXECUTE case has a territory next to a carried buyer, and the two cases where H6 fires are NO_MEDIBLE(HOST_FACT_NOT_IN_GOLD:CARRIED_BUYER_TERRITORY)"
+   },
+   {
+    "closed_by": "a Gold that carries the typed fact in its IR, or a decision to derive it from the adjudicated outcome",
+    "id": "LG-HOST-FACTS-NOT-IN-GOLD",
+    "kind": "SCOPE",
+    "what": "H6, H7 and H8 decide on a fact the Gold's typed values do not carry: the carried buyer's territory (H6), whether a region's NAME is in E-GEO's closed list (H7: the Gold types the name, so a region that executes is in the list by construction and the region the Gold says is outside it has no typed value), the states of the resulting universe (H8). Section 19 says LECTURA for them, so they are not reds, but the oracle will not type the fact by guessing. A case where the Gold expects the rule to FIRE is NO_MEDIBLE with the fact named, and so is every case where H8 READS the literals whatever the outcome: a change of universe with a STATE or MODALITY standing (§14). An EXECUTE control stays measurable only when no rule reads a missing fact"
+   },
+   {
+    "closed_by": "E-STATE's typed literals per dataset in the Gold's IR (§19 DEP-STATE-LITERALS)",
+    "id": "LG-H8-ONLY-AFTER-A-UNIVERSE-CHANGE",
+    "kind": "ORACLE_BLIND_SPOT",
+    "what": "H8 is measured only after a change of universe (§14). A STATE is typed WITHOUT literals, and every applicable case that sets or carries a STATE over an UNCHANGED universe (SF009 and SF010 among them) is measured on the assumption that the authority resolved the state against that dataset, so it exists there; a reducer that applied H8 to an unchanged universe would fail them for lack of literals, not for a defect"
+   },
+   {
+    "closed_by": "E-VALUE and E-TIME typed values in the Gold's IR",
+    "id": "LG-LECTURA-WITHOUT-TYPED-VALUE",
+    "kind": "SCOPE",
+    "what": "a §19 dependency with impacto LECTURA does not block, but a case whose value the Gold does not give typed stays NO_MEDIBLE with the typing motive: a month without a year (TIME_MONTH_HINT), a SMMLV amount whose IR has no single catalogued year (SMMLV_YEAR_NOT_SINGLE, SMMLV_YEAR_NOT_CATALOGUED: the clock is not in the Gold, the catalogue is closed), a relative window the hint does not state (TIME_RELATIVE_WINDOW_NOT_EXPLICIT)"
+   },
+   {
+    "closed_by": "E-GEO's closed list of regions and members in the Gold's IR",
+    "id": "LG-REGION-MEMBERS-SYNTHETIC",
+    "kind": "ORACLE_BLIND_SPOT",
+    "what": "a REGION is typed with ONE synthetic member derived from its name (the Gold carries no members; compose never reads them, §19 DEP-REGION is LECTURA). H7 reads the region by its NAME, the canonical the Gold types, which is the key of E-GEO's closed list (app/data/colombia_geography.py): only a reducer that validated the member list instead of the name would reject the synthetic member"
+   },
+   {
+    "closed_by": "M2A-3 properties over bases with a logic expression, using the IR v2 shape",
+    "id": "LG-TARGET-NOT-ADDRESSABLE",
+    "kind": "ORACLE_BLIND_SPOT",
+    "what": "TARGET_NOT_ADDRESSABLE (precedence 1) needs the shape of the IR v2 logic expression to know that an op targets an atom inside an OR/NOT group: check_transition never finds it, and accepts it unjudged over a base with a logic"
+   },
+   {
+    "closed_by": "the authorities' own gates and the Gold cases",
+    "id": "LG-AUTHORITY-REFUSALS",
+    "kind": "ORACLE_BLIND_SPOT",
+    "what": "OP_NOT_ACCREDITED of an op whose authority did not resolve cannot be written in a m2a-patch/1 (it carries only resolved conditions): check_transition finds the causes the dicts show (F16 fail-closed, P-3, incomparable units). With ``refusal=`` it rejects a code outside annex A.3 and an OP_NOT_ACCREDITED over a dimension that neither an op touches nor the base holds. What remains is accepted unjudged: an authority refusal over a dimension an op touches or the base holds (§6 step 3b row 4 also admits a policy without owner, §6.6, re-decided on the composed effective: a REPLACE_UNIVERSE with a STATE or an ACTOR in the base, ACTOR x TIME), and any A.3 code of a host rule or of the protocol (the Gold decides them by case; SF194's mark is compose's, not an authority's)"
+   },
+   {
+    "closed_by": "M2b (G-FU-09)",
+    "id": "LG-F16-CONTAINED-VALUE",
+    "kind": "ORACLE_BLIND_SPOT",
+    "what": "F16's other fail-closed branch, a negated value CONTAINED in a positive (G-FU-09), needs a notion of containment no typed value gives: check_transition decides the several-positives and same-patch branches only"
+   },
+   {
+    "closed_by": "the Gold cases and M2A-4",
+    "id": "LG-HOST-RULES-NOT-DECIDED-HERE",
+    "kind": "SCOPE",
+    "what": "the host rules H1-H11 need the conversational context (expiry, pending, authority readings): the transition oracle only checks that a host-rule code never replaces a refusal cause; the Gold decides them by case"
+   },
+   {
+    "closed_by": "check_transition T-REQ-TARGET (killed by redirect_keeps_old_kind)",
+    "id": "GOLD-GAP-REPLACE-UNIVERSE-KEEPS-OLD-KIND",
+    "kind": "GOLD_GAP",
+    "what": "a reducer that keeps the old universe kind after REPLACE_UNIVERSE is not discriminated by the Gold: no applicable case changes the kind (SF075, records to opportunities, is declared dependent downstream)"
+   }
+  ],
+  "transition_rules": [
+   {
+    "clause": "§3.2; M2A-1 types",
+    "demands": "the effective has exactly the keys of m2a-accepted/1; unique request and condition ids; every reference to a request resolves; a dual anchor shares its scope; every policy is well formed and names conditions of the effective; at most one condition per VALUE side, ORDER and CARDINALITY; no CARDINALITY without ORDER",
+    "id": "T-STRUCT",
+    "killed_by": [
+     "effective_extra_key",
+     "duplicate_request_id",
+     "duplicate_condition_id",
+     "condition_unknown_request",
+     "dual_scope_differs",
+     "dangling_policy",
+     "malformed_policy",
+     "two_bounds_same_side",
+     "cardinality_without_order",
+     "request_ids_not_rewritten_after_reduction"
+    ]
+   },
+   {
+    "clause": "§6 steps 2, 3b and 5 (F16, P-3, A8.1), §6.7 (R3-1), §6.4 H12",
+    "demands": "a patch with a refusal cause produces NO effective: two SET (or two SET_ORDER, or two REPLACE_UNIVERSE) on one slot; KEEP with CLEAR, or KEEP with SET/SET_ORDER/REPLACE_UNIVERSE, of one slot EVEN WHEN THE VALUES COINCIDE (R3b, U22); KEEP of an empty slot; a negative SET of a value that is one of several carried positives, or whose positive the same patch creates (F16 fail-closed, R3-4, P-3); a VALUE bound against a carried opposite bound of incomparable units (§15.2); a composed state that leaves a CARDINALITY standing without ORDER (R3-1, decided on the STATE, not on the op); and a lone CLEAR of an empty slot (H12)",
+    "id": "T-REFUSAL",
+    "killed_by": [
+     "effective_for_two_set_one_slot",
+     "effective_for_keep_and_clear_one_slot",
+     "effective_for_keep_and_set_same_value",
+     "effective_for_keep_and_set_order",
+     "effective_for_keep_and_replace_universe",
+     "effective_for_two_replace_universe",
+     "effective_for_keep_on_empty_slot",
+     "effective_for_f16_several_positives",
+     "effective_for_f16_same_patch_positive",
+     "effective_for_a81_incomparable_units",
+     "effective_for_clear_order_leaving_cardinality",
+     "effective_for_set_cardinality_without_order",
+     "effective_for_clear_on_empty_slot"
+    ]
+   },
+   {
+    "clause": "§6 step 3b (closed precedence of causes), §6 table (A.3 code per DeltaRefusal)",
+    "demands": "a refused patch is refused with the code of the HIGHEST-precedence cause (TARGET_NOT_ADDRESSABLE > DELTA_SLOT_CONFLICT > KEEP_ON_EMPTY_SLOT > OP_NOT_ACCREDITED:<DIM> > DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER), with ties decided by the §4.2 slot order and the dimension of the slot named in OP_NOT_ACCREDITED; a host-rule code never replaces a cause (causes precede §6 step 4); a code outside the vocabulary of annex A.3 and the DeltaRefusal list is no refusal at all",
+    "id": "T-REFUSAL-CODE",
+    "killed_by": [
+     "refusal_conflict_reported_as_keep_on_empty",
+     "refusal_keep_on_empty_reported_as_opna",
+     "refusal_opna_reported_as_cardinality",
+     "refusal_conflict_reported_as_cardinality",
+     "refusal_precedence_reversed",
+     "refusal_slot_order_ignored",
+     "refusal_wrong_dimension",
+     "refusal_replaced_by_a_host_rule",
+     "refusal_code_outside_the_vocabulary"
+    ]
+   },
+   {
+    "clause": "§6 step 3b (a refusal needs a cause), §6.1",
+    "demands": "a structural refusal (DELTA_SLOT_CONFLICT, KEEP_ON_EMPTY_SLOT, DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER, TARGET_NOT_ADDRESSABLE over a base without logic) over a patch with no such cause refuses a lawful transition; OP_NOT_ACCREDITED:<DIM> (or its A.3 publication) names a dimension some op of the patch touches or the base holds (§6 step 3b row 4 also admits a policy without owner, §6.6, which is re-decided on the composed effective)",
+    "id": "T-REFUSAL-UNJUSTIFIED",
+    "killed_by": [
+     "refuse_lawful_as_slot_conflict",
+     "refuse_lawful_as_keep_on_empty",
+     "refuse_lawful_as_cardinality_without_order",
+     "refuse_lawful_as_target_not_addressable",
+     "refuse_op_not_accredited_on_a_dimension_neither_touched_nor_held"
+    ]
+   },
+   {
+    "clause": "§5.2 (REPLACE_UNIVERSE), §14",
+    "demands": "without REPLACE_UNIVERSE the effective has exactly the base's requests; with it, exactly one: the named subject's (a dual anchor keeps the named one and the other disappears) or the single one",
+    "id": "T-REQ-SET",
+    "killed_by": [
+     "request_added_without_op",
+     "dual_keeps_both",
+     "dual_keeps_the_other"
+    ]
+   },
+   {
+    "clause": "§6.3 (identity of what no op touches); user decision R3",
+    "demands": "an untouched request is byte-identical to the base's in EVERY field: request_id, scope_id, subject, universe_kind, universe_origin, view, dataset",
+    "id": "T-REQ-UNTOUCHED",
+    "killed_by": [
+     "M3_reoriginate_untouched_request",
+     "M4_change_scope_id_untouched",
+     "M5_change_request_id_untouched",
+     "untouched_request_dataset_changed"
+    ]
+   },
+   {
+    "clause": "§5.2 (REPLACE_UNIVERSE changes subject and kind; the universe becomes said, the view not derived), §3.2 (view is required iff the subject is unspecified); user decision R3 (request_id, scope_id)",
+    "demands": "a request touched by REPLACE_UNIVERSE keeps request_id, scope_id and view: only subject, universe_kind, universe_origin and dataset change. Known limit: a redirect FROM an unspecified request must drop its view (§3.2, §5.2); this check does not demand it because the oracle's bases are specified (the Gold's requests carry view None), so the case is latent",
+    "id": "T-REQ-REDIRECT",
+    "killed_by": [
+     "redirect_changes_request_id",
+     "redirect_changes_scope_id",
+     "redirect_changes_view"
+    ]
+   },
+   {
+    "clause": "§5.2",
+    "demands": "the redirected request has the op's subject and universe kind",
+    "id": "T-REQ-TARGET",
+    "killed_by": [
+     "redirect_keeps_old_kind",
+     "redirect_keeps_old_subject"
+    ]
+   },
+   {
+    "clause": "§5.2 (el universo pasa a ser dicho)",
+    "demands": "the redirected request's universe_origin is the origin of the CURRENT PatchOp",
+    "id": "T-REQ-ORIGIN",
+    "killed_by": [
+     "M2_stale_origin_after_redirect"
+    ]
+   },
+   {
+    "clause": "§3.2; §14",
+    "demands": "the redirected request's dataset is the one that corresponds to its new subject",
+    "id": "T-REQ-DATASET",
+    "killed_by": [
+     "M1_stale_dataset_after_redirect"
+    ]
+   },
+   {
+    "clause": "§6.3 (F1), INV-M2A-02",
+    "demands": "a carried condition is byte-identical to the base's (value, authority, policies, origin, provenance, condition_id); only request_ids may be rewritten, and only when a dual anchor is reduced",
+    "id": "T-COND-CARRIED",
+    "killed_by": [
+     "tamper_carried_origin",
+     "tamper_carried_provenance",
+     "tamper_carried_authority",
+     "tamper_carried_policies",
+     "tamper_carried_receipt_rules",
+     "rename_carried_condition_id",
+     "reset_carried_host_fields"
+    ]
+   },
+   {
+    "clause": "§5.2 (SET pone c)",
+    "demands": "a placed condition is the patch's, unchanged but for condition_id and request_ids (ids are the reducer's: a patch condition may collide with a base id)",
+    "id": "T-COND-PLACED",
+    "killed_by": [
+     "tamper_placed_origin",
+     "tamper_placed_provenance",
+     "tamper_placed_authority",
+     "tamper_placed_policies",
+     "tamper_placed_receipt_rules",
+     "placed_value_changed"
+    ]
+   },
+   {
+    "clause": "INV-M2A-02, INV-M2A-16",
+    "demands": "every condition of the effective is carried from the base or placed from the patch: none is fabricated",
+    "id": "T-COND-FABRICATED",
+    "killed_by": [
+     "fabricated_condition"
+    ]
+   },
+   {
+    "clause": "§5.2 (SET sustituye la ranura; CLEAR la quita)",
+    "demands": "a base condition in a slot an op writes is not carried",
+    "id": "T-COND-WRITTEN-SLOT",
+    "killed_by": [
+     "carried_in_written_slot",
+     "cleared_condition_kept",
+     "clear_dimension_only_positive"
+    ]
+   },
+   {
+    "clause": "§6.3, INV-M2A-16; §6.5 (A8.1, F16); §15.2",
+    "demands": "a base condition absent from the effective has an op on its slot, or is a declared substitution checked on the typed values: A8.1 (a VALUE bound against the patch's new opposite bound that leaves the interval empty or degenerate) or F16 (the single positive of a slot against a negative SET of the same value)",
+    "id": "T-COND-REMOVAL",
+    "killed_by": [
+     "removal_without_op",
+     "f16_any_value",
+     "set_order_drops_cardinality",
+     "set_clears_whole_dimension",
+     "a81_without_collision"
+    ]
+   },
+   {
+    "clause": "§6.5 (F16), INV-M2A-19",
+    "demands": "a negative SET whose canonical value is the single carried positive of its slot INVERTS it: the positive does not survive next to its own negation (an effective with +X and -X of one canonical value)",
+    "id": "T-COND-F16",
+    "killed_by": [
+     "f16_positive_kept_next_to_its_negation"
+    ]
+   },
+   {
+    "clause": "§6.1, INV-M2A-01",
+    "demands": "every SET / SET_ORDER of the patch is placed exactly once: no op is applied partially or twice",
+    "id": "T-COND-ATOMIC",
+    "killed_by": [
+     "op_not_applied",
+     "op_applied_twice"
+    ]
+   },
+   {
+    "clause": "§6.3; user decision R3 (P-1)",
+    "demands": "a condition's request_ids are the base's when the request ids are unchanged; when a dual anchor is reduced they are rewritten to the effective's request ids; a placed condition applies to all of them",
+    "id": "T-COND-REQUESTS",
+    "killed_by": [
+     "carried_request_ids_changed_without_reduction",
+     "placed_applies_to_one_request"
+    ]
+   },
+   {
+    "clause": "§6.7, §15.2 (A8.1), INV-M2A-18",
+    "demands": "a VALUE interval that is empty or degenerate is never produced by a follow-up with the opposite bound carried (two bounds of the same patch are the user's request; two carried ones are the base's own)",
+    "id": "T-COND-INTERVAL",
+    "killed_by": [
+     "no_a81"
+    ]
+   },
+   {
+    "clause": "§4.2, §5",
+    "demands": "a base without logic (the AND of all) yields an effective without logic: the closed ops create no group",
+    "id": "T-EFF-LOGIC",
+    "killed_by": [
+     "logic_invented"
+    ]
+   }
+  ]
+ },
+ "dependencies_authority": {
+  "contract_sha256": "182a2e10d8821d2c4abe8e212c90bf1eaa0f48e42c0ceb16f3d2ec926edeca2c",
+  "dependencies": {
+   "DEP-BUYER-TERRITORY": {
+    "cases": 2,
+    "impacto_m2a3": "LECTURA",
+    "owners": [
+     "D-BUYER"
+    ]
+   },
+   "DEP-DERIVED-VIEW": {
+    "cases": 10,
+    "impacto_m2a3": "COMPOSICION",
+    "owners": [
+     "F"
+    ]
+   },
+   "DEP-E-ORDER": {
+    "cases": 25,
+    "impacto_m2a3": "LECTURA",
+    "owners": [
+     "E-ORDER"
+    ]
+   },
+   "DEP-E-ORDER-CANDIDATES": {
+    "cases": 4,
+    "impacto_m2a3": "COMPOSICION",
+    "owners": [
+     "E-ORDER"
+    ]
+   },
+   "DEP-INHERITANCE": {
+    "cases": 16,
+    "impacto_m2a3": "LECTURA",
+    "owners": [
+     "D-MONEY",
+     "D-TIME"
+    ]
+   },
+   "DEP-M1-PENDING-FRAME": {
+    "cases": 0,
+    "impacto_m2a3": "COMPOSICION",
+    "owners": [
+     "M2A-1b"
+    ]
+   },
+   "DEP-M2A5-WIRE-CARDINALITY": {
+    "cases": 1,
+    "impacto_m2a3": "LECTURA",
+    "owners": [
+     "M2A-5"
+    ]
+   },
+   "DEP-MODALITY-UNIVERSE": {
+    "cases": 5,
+    "impacto_m2a3": "COMPOSICION",
+    "owners": [
+     "E-MODALITY"
+    ]
+   },
+   "DEP-O1B-OPPORTUNITIES": {
+    "cases": 1,
+    "impacto_m2a3": "COMPOSICION",
+    "owners": [
+     "FOUNDATION_O1B_EXPLICIT_TIME_PARITY",
+     "M2A-1b"
+    ]
+   },
+   "DEP-REGION": {
+    "cases": 8,
+    "impacto_m2a3": "LECTURA",
+    "owners": [
+     "E-GEO"
+    ]
+   },
+   "DEP-SMMLV-READ": {
+    "cases": 3,
+    "impacto_m2a3": "LECTURA",
+    "owners": [
+     "D-MONEY",
+     "E-VALUE"
+    ]
+   },
+   "DEP-SMMLV-RECALC": {
+    "cases": 1,
+    "impacto_m2a3": "COMPOSICION",
+    "owners": [
+     "D-MONEY",
+     "E-VALUE"
+    ]
+   },
+   "DEP-STATE-LITERALS": {
+    "cases": 6,
+    "impacto_m2a3": "LECTURA",
+    "owners": [
+     "E-STATE"
+    ]
+   },
+   "DEP-TIME-RELATIVE": {
+    "cases": 3,
+    "impacto_m2a3": "LECTURA",
+    "owners": [
+     "D-TIME",
+     "E-TIME"
+    ]
+   },
+   "DEP-VALUE-EQUALITY": {
+    "cases": 0,
+    "impacto_m2a3": "LECTURA",
+    "owners": [
+     "D-MONEY",
+     "E-VALUE"
+    ]
+   },
+   "DEP-VALUE-FORMS": {
+    "cases": 8,
+    "impacto_m2a3": "LECTURA",
+    "owners": [
+     "D-MONEY",
+     "E-VALUE"
+    ]
+   }
+  },
+  "impacts": [
+   "LECTURA",
+   "COMPOSICION"
+  ],
+  "owners": [
+   "CONTRATO_M1",
+   "D-BUYER",
+   "D-MONEY",
+   "D-TIME",
+   "E-BUYER",
+   "E-GEO",
+   "E-MODALITY",
+   "E-ORDER",
+   "E-STATE",
+   "E-TIME",
+   "E-VALUE",
+   "F",
+   "FOUNDATION_O1B_EXPLICIT_TIME_PARITY",
+   "M2A-1b",
+   "M2A-5",
+   "M2A-6",
+   "M2b",
+   "M3",
+   "PROTOCOLO_M2A"
+  ],
+  "path": "docs/audits/m2a_conversation/gold/CONTRACT_S19_DEPENDENCIES.json",
+  "schema": "m2a-contract-s19/2",
+  "sha256": "4f6c3bf29f8bd8f735d211e08b620aaa4ff69a71b280ccc2dc7ff50409ae704e"
+ },
+ "gold_seal_sha256": "7dd39b4b322990925c5138b6492df909803da3fdc98f7a771e07bc17bd2a03b3",
+ "policy": "texto REAL fuera de git; aquí sólo ids, conteos y digests",
+ "real": {
+  "case_sha256": {
+   "R0075": "300bebfae35fd524edffdd603cbef64c01df07977f9e6db18d018c1f66100015",
+   "R0079": "fa2854db8fd16962d8f0f2c286b1d4974c7accd87684aaba54ec56b9cde00443",
+   "R0083": "4f93edf0b8f3000869c9548261fdb0e8a8649bf3f8a79e86c9c926cee95cef17",
+   "R0087": "e5f9a35c2978f6fd165304631d47a7a095145f9081aaecb05c423def4ce5dd9a",
+   "R0089": "299509c751a0d017b78b8727c3e9a5db9fd7cc352db52a2128eac3e34ace1f4b",
+   "R0092": "30c941a0cd940e4c571ab9981ea0eb5822318c0f1990bd2992f3a45fc9daaa3f",
+   "R0093": "19dc40432874caffe2b482af83698a3f4472a6247e7ff99277f692555222357f",
+   "R0094": "28689c9d9cf9b8c06589e06fa8ae0df94af27d51b6139fe8f09b8b5095c030c4",
+   "R0099": "bb54531db586a17b6d096baa25f4a5baf1a6a8def0b01d73310426c87881dad3",
+   "R0106": "3979e43960c5fe1326229efd60bbe49681653072fbfe2d094e6b5e52a8ed4b1c",
+   "R0107": "07fd93c4201a2444f057c54177a2dd1058fa8ee919cdbd68e882a95b754bdbf2",
+   "R0180": "53ed5f41902be6b41c92dad947117168acb6e3f3ca406ed4d2d8e22afe426c78",
+   "R0197": "1948e832b3fbe65ce2efc59413e946a59f1efb764ff0da9939eff35a2be47bf5",
+   "R0201": "40cc4f33b3b5c4bcaa79c00dad6141fe43c793fed9ea277fd8913fb626f0e0dc",
+   "R0202": "fe4da3d0a5daf9303b66a3946455d1e2b790af855fdf3d3612fc999f2cf4daf9",
+   "R0205": "e4f402e7c549d2a1aab2a550ada5d0d99c15256ddcb700c7443f0fda9b393b55",
+   "R0223": "8f204149db276d53ac8c49b38bd9bd2010da6101f189b6408528effdc2e53619",
+   "R0233": "9cc73b68be8b266e7b31784db7973dfb7ad27e96fcfc2c2a0614eae671dcb0a1",
+   "R0274": "e1dd1d26d43c0ea1d2f9e427207f299930a5eab0f657b82f07d9ffca5798ffba",
+   "R0281": "ad5eafb8833dd6afe4d9c810427a60abc4e8697929c0c25af3ac0fe27d82c254",
+   "R0282": "4175856120a6f546bdab1fbdbc6a4cc71c27e0e22017abde3316205f188103e5",
+   "R0286": "32afae77a1f51bc38b5f552df1920acfc57e32d1efc1e6fca4499fcb630a847d",
+   "R0295": "a2b99b8f74057eef49c2a0873631e0661e277b5bb7bdf1bcfd2fe31dc66f054d",
+   "R0301": "a0f90eb6cbb9e7223867b8989771466706fb745ba9975d95662412ba430b2682",
+   "R0303": "0cc6764e1f64ac9b1254aa177092a08a202e44d323936c1f43a8f5fd05f667ab",
+   "R0304": "1c91589bb0fcc7f98efbd5087cddb78c11d23ca8899b3ee11e214150697da52c",
+   "R0308": "c5969a0de846e5344abb9bbd0e663fe9826b1bba1aef7da5c06f329a3d305f60",
+   "R0309": "c2350f707f85042377286f34f8b00f2b14007c1de4d9be61655d1de3388506f2",
+   "R0310": "20126c06c5d3d3d06c08c3fc3d5bab0b3d151032c68b85513abfcb19634edf03",
+   "R0311": "eece89e8a5228c1cf54ba82cd99859f515186b028b72384d650874a0de5e2692",
+   "R0312": "0e52701cc111ea437716f20cb8c227aab22ed0cbda60c86124f176d437ad0558",
+   "R0313": "3b1ab5647158c55e207a8e4c6196fbe50b8020fb9c25de1f62fce298e5fbf64e",
+   "R0314": "fb89e068adbc7e97445d8ac1e9a03fc9e53bd91e4b90ca8878f4c7239922e1fd",
+   "R0336": "7cf410f183d1db470a9b4201c34ae67f91c35037b987e190f45d300ad0b4ef27",
+   "R0409": "5684abcca8f895700111c4d336ad50a33cb1c51dc4fc3335b5ab687c32ddbae1",
+   "R0431": "03f9e739b20fae05253754a4bef26d31dd7eeff5e6b16b21b331cb7c7b1d7be7",
+   "R0432": "ad4525c3c1eb1120894559189342d2c43359074deb0eca1f5bff0c5272cf5cee",
+   "R0450": "82d53a1491b9a72ca383fec670011e79fff7cb8063886b2b91311825937b74f1",
+   "R0459": "58fd60466fd62140c7febdce12b7e46079494f78ca670d7418a0eca108413174",
+   "R0464": "f235b8879cbfd651e9772f394829ac23edce0792845ec964338166654aa5fedf",
+   "R0484": "7fea4a22f58437802ef9e0b0f9fca77e2f5e3c8474b847ad6c56522c4da1fedf",
+   "R0496": "6f37d6a7bb0e723dbe419eeed82cd0e8f2d4b542ef884cadfbd0830e5d4b8919",
+   "R0497": "447c28ffe651d61707c2f8e4868a17ef3fdb64c22f8924b3162df3cc7ea3d541",
+   "R0498": "932b3d3eb4d56f75b037f8786c1bbdeb81f99381f36b46c939fa264fc2085f32",
+   "R0515": "e8830712ea011bb9d5adb5d8695539cad3ba8bdf77f56f97133460a70d1c58b3",
+   "R0529": "d7cf513bcefdcf5a6c03e716871a34528eb65f26ed0bcd3726b804bb47ebd6f9",
+   "R0531": "2db146fb45d22e6e21d9d7d873c7f579ac423f83bad860c58e8ccd7fa1aef611",
+   "R0532": "4edabb11c4b9dc17346a977ea42e9ddd360ee35afad1295a1441dd4b970166fb",
+   "R0556": "c97816b9c03b26cf51f320379127b790cc001eeb7bebbf4df026a20055ca9eb3"
+  },
+  "ids_by_applicability": {
+   "APLICABLE_M2A3": [
+    "R0079",
+    "R0083",
+    "R0087",
+    "R0089",
+    "R0092",
+    "R0093",
+    "R0099",
+    "R0180",
+    "R0197",
+    "R0201",
+    "R0202",
+    "R0205",
+    "R0223",
+    "R0233",
+    "R0286",
+    "R0295",
+    "R0301",
+    "R0303",
+    "R0308",
+    "R0309",
+    "R0310",
+    "R0311",
+    "R0312",
+    "R0313",
+    "R0314",
+    "R0409",
+    "R0431",
+    "R0432",
+    "R0450",
+    "R0464",
+    "R0484",
+    "R0496",
+    "R0497",
+    "R0498",
+    "R0515",
+    "R0556"
+   ],
+   "DEPENDIENTE(D-MONEY)": [
+    "R0304"
+   ],
+   "DEPENDIENTE(E-MODALITY)": [
+    "R0459"
+   ],
+   "DEPENDIENTE(F)": [
+    "R0106",
+    "R0107",
+    "R0529",
+    "R0531",
+    "R0532"
+   ],
+   "NO_MEDIBLE(HOST_FACT_NOT_IN_GOLD:STATE_LITERALS_OF_THE_UNIVERSE)": [
+    "R0094"
+   ],
+   "NO_MEDIBLE(OPS_AB_DISAGREE)": [
+    "R0274",
+    "R0281"
+   ],
+   "NO_MEDIBLE(PRIOR_AB_DISAGREE)": [
+    "R0075",
+    "R0282",
+    "R0336"
+   ]
+  },
+  "summary": {
+   "all_by_partition": {
+    "DEV": 24,
+    "TEST": 25
+   },
+   "applicable_by_disposition": {
+    "CLARIFY": 3,
+    "EXECUTE": 33
+   },
+   "applicable_by_partition": {
+    "DEV": 18,
+    "TEST": 18
+   },
+   "by_applicability": {
+    "APLICABLE_M2A3": 36,
+    "DEPENDIENTE(D-MONEY)": 1,
+    "DEPENDIENTE(E-MODALITY)": 1,
+    "DEPENDIENTE(F)": 5,
+    "NO_MEDIBLE(HOST_FACT_NOT_IN_GOLD:STATE_LITERALS_OF_THE_UNIVERSE)": 1,
+    "NO_MEDIBLE(OPS_AB_DISAGREE)": 2,
+    "NO_MEDIBLE(PRIOR_AB_DISAGREE)": 3
+   },
+   "cases": 49,
+   "classification_measurable": 34,
+   "dependent_by_any_owner": {
+    "D-MONEY": 1,
+    "E-MODALITY": 1,
+    "E-VALUE": 1,
+    "F": 5
+   },
+   "effects_not_measurable": 0
+  }
+ },
+ "schema": "m2a-reducer-oracle/3",
+ "seal_verified": true,
+ "synthetic": {
+  "all_by_partition": {
+   "DEV": 77,
+   "TEST": 83
+  },
+  "applicable_by_disposition": {
+   "CLARIFY": 6,
+   "EXECUTE": 93,
+   "INFORM": 3,
+   "NEW_SEARCH": 5
+  },
+  "applicable_by_partition": {
+   "DEV": 54,
+   "TEST": 53
+  },
+  "by_applicability": {
+   "APLICABLE_M2A3": 107,
+   "DEPENDIENTE(E-MODALITY)": 4,
+   "DEPENDIENTE(E-ORDER)": 1,
+   "DEPENDIENTE(F)": 4,
+   "DEPENDIENTE(FOUNDATION_O1B_EXPLICIT_TIME_PARITY)": 1,
+   "DEPENDIENTE(M2A-4)": 22,
+   "DEPENDIENTE(M2A-6)": 6,
+   "NO_MEDIBLE(HOST_FACT_NOT_IN_GOLD:CARRIED_BUYER_TERRITORY)": 2,
+   "NO_MEDIBLE(HOST_FACT_NOT_IN_GOLD:REGION_CLOSED_LIST)": 1,
+   "NO_MEDIBLE(HOST_FACT_NOT_IN_GOLD:STATE_LITERALS_OF_THE_UNIVERSE)": 2,
+   "NO_MEDIBLE(OPS_AB_DISAGREE)": 6,
+   "NO_MEDIBLE(SMMLV_YEAR_NOT_SINGLE)": 1,
+   "NO_MEDIBLE(TIME_MONTH_HINT)": 2,
+   "NO_MEDIBLE(VALUE_UNIT_FROM_RESULT)": 1
+  },
+  "cases": 160,
+  "classification_measurable": 103,
+  "dependent_by_any_owner": {
+   "E-MODALITY": 4,
+   "E-ORDER": 4,
+   "F": 5,
+   "FOUNDATION_O1B_EXPLICIT_TIME_PARITY": 1,
+   "M2A-1b": 1,
+   "M2A-4": 22,
+   "M2A-6": 9
+  },
+  "effects_not_measurable": 0
+ }
+}
