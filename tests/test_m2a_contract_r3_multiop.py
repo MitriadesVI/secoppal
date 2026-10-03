@@ -397,11 +397,20 @@ def open_operations(base: State, ops) -> list[Op]:
     return sorted(op for op in ops if op in asked or op.status in ("unresolved", "label"))
 
 
-def law_violations(base: State, frame_ops, candidates, answer_slots) -> list[str]:
-    """§8.4: the frame is valid and has nothing open; every candidate composes on it without causes."""
+def frame_dependency(base: State, frame_ops, view_derived: bool = False) -> str | None:
+    """The §19 COMPOSICION row a frame raises when composed from the base (§8.2/§8.4: nothing open enters a frame;
+    §19 fail-closed). Such a frame is not lawful: the turn answers that DEPENDENCY (U29, F1)."""
+    frame = apply(base, frame_ops)
+    return next((f.dependency for f in findings(base, frame_ops, frame, view_derived) if f.kind == "dependency"), None)
+
+
+def law_violations(base: State, frame_ops, candidates, answer_slots, view_derived: bool = False) -> list[str]:
+    """§8.4: the frame is valid, has nothing open and raises no §19 dependency; every candidate composes on it."""
     out = []
     if causes(base, frame_ops):
         out.append("frame has a refusal cause")
+    if frame_dependency(base, frame_ops, view_derived):
+        out.append("frame raises a §19 dependency")
     if open_operations(base, frame_ops):
         out.append("frame holds an open operation")
     frame = apply(base, frame_ops)
@@ -477,6 +486,9 @@ def respond(cfg: Config, ops, *, law: bool = True) -> Response:
     if relative:  # §7.1 row 6 (F15)
         code, rest = HOST["H4"][1], _without(ops, relative)
         made = _pending(base, code, relative, rest, ())
+        dependency = None if pending is not None or cfg.expired else frame_dependency(base, rest, cfg.view_derived)
+        if law and dependency:
+            return Response("DEPENDENCY", dependency=dependency, clause="§7.1 6 + §8.4 + §19")
         if law and (pending is not None or cfg.expired or law_violations(base, rest, (), made.answer_slots)):
             return Response("INFORM", code, pending=pending, clause="§7.1 6 + §8.4")
         return Response("CLARIFY", code, pending=made, clause="§7.1 6")
@@ -493,6 +505,9 @@ def respond(cfg: Config, ops, *, law: bool = True) -> Response:
         candidates = r31_candidates(frame, cfg.e_order) if r31 else ()
         extra = frozenset({"ORDER", "CARDINALITY"}) if top.refusal == LEAVES else frozenset()
         made = _pending(base, top.code, top.open_ops, frame_ops, candidates, extra)
+        dependency = frame_dependency(base, frame_ops, cfg.view_derived)
+        if law and dependency:
+            return Response("DEPENDENCY", dependency=dependency, clause="§6 3b + §8.4 + §19")
         if law and law_violations(base, frame_ops, made.candidates, made.answer_slots):
             return Response("INFORM", top.code, clause="§6 3b + §8.4")
         return Response("CLARIFY", top.code, pending=made, clause="§6 3b")
@@ -513,6 +528,9 @@ def respond(cfg: Config, ops, *, law: bool = True) -> Response:
         return Response("INFORM", code, clause=first.rule)
     frame_ops = () if first.rule == "H11" else _without(ops, first.open_ops)
     made = _pending(base, code, first.open_ops, frame_ops, first.candidates)
+    dependency = frame_dependency(base, frame_ops, cfg.view_derived)
+    if law and dependency:
+        return Response("DEPENDENCY", dependency=dependency, clause=f"{first.rule} + §8.4 + §19")
     if law and law_violations(base, frame_ops, made.candidates, made.answer_slots):
         return Response("INFORM", code, clause=f"{first.rule} + §8.4")
     return Response("CLARIFY", code, pending=made, clause=first.rule)
@@ -589,6 +607,9 @@ def frame_defects(base: State, frame_ops) -> list[str]:
         out.append("frame keeps an empty slot")
     if any(set(COVER[op.slot]) & base.or_grouped for op in frame_ops if op.kind in ("CLEAR", "SET", "KEEP")):
         out.append("frame targets an atom inside OR/NOT")
+    changes_universe = any(op.kind == "REPLACE_UNIVERSE" for op in frame_ops) and state.universe != base.universe
+    if changes_universe and any(state.slots[IDX[k]] for k in ("MODALITY/POSITIVE", "MODALITY/NEGATIVE")):
+        out.append("frame changes the universe with a carried MODALITY: §19 DEP-MODALITY-UNIVERSE (U29)")
     for op in frame_ops:
         how = op.status.partition(":")[0]
         if op.status in ("unresolved", "label") or how == "asks" or op.value == "opportunities":
@@ -620,7 +641,7 @@ def violations(cfg: Config, ops, r: Response) -> list[str]:
                 out.append("a pending other than CONTEXT_EXPIRED_CONFIRM on an expired anchor")
             if p.frame != apply(cfg.base, p.frame_ops):
                 out.append("frame is not base + frame_ops")
-            out += law_violations(cfg.base, p.frame_ops, p.candidates, p.answer_slots)
+            out += law_violations(cfg.base, p.frame_ops, p.candidates, p.answer_slots, cfg.view_derived)
             out += frame_defects(cfg.base, p.frame_ops)
             if r.code == EXPIRED_CODE:
                 if len(p.candidates) != 1 or p.frame_ops:
@@ -839,6 +860,29 @@ def test_the_r3b_controls_answer_as_the_contract_says():
     assert respond(r31, (Op("CLEAR", "CARDINALITY"),)).code == "ANSWER_UNRESOLVED"
     assert respond(r31, (Op("CLEAR", "CARDINALITY"), Op("SET", "TIME/POSITIVE", "w"))).code == "ANSWER_EDITS_OTHER_SLOT"
     assert respond(r31, (Op("SET_ORDER", "ORDER", OrderKey.VALUE.value),)).code == "ANSWER_UNRESOLVED"
+
+
+def test_u29_a_frame_that_raises_a_section_19_dependency_answers_that_dependency():
+    """ZEUS on the integration (F1; zeus_int/probes/p3_model.py): a §19 COMPOSICION dependency must not be laundered
+    through a pending's frame (§8.2/§8.4, §19 fail-closed). One case per pending kind, then the whole pairwise sweep."""
+    full = next(c for c in configs(wires=("normal",)) if c.profile == "FULL" and not c.dual and not c.expired
+                and c.pending is None)
+    redirect = Op("REPLACE_UNIVERSE", "UNIVERSE", "processes")  # FULL carries MODALITY: DEP-MODALITY-UNIVERSE
+    assert respond(full, (redirect,)).dependency == "DEP-MODALITY-UNIVERSE"
+    for kind, asking in (("H6", Op("SET", "GEOGRAPHY/POSITIVE", "x", "asks2:H6")), ("R3-1", Op("CLEAR", "ORDER")),
+                         ("one cause", Op("SET", "BUYER/POSITIVE", "x", "unresolved")), ("H4", LABEL_ITEMS[0])):
+        r = respond(full, (asking, redirect))
+        assert (r.kind, r.dependency, r.pending) == ("DEPENDENCY", "DEP-MODALITY-UNIVERSE", None), (kind, r)
+    clarified = 0
+    for cfg in configs(wires=("normal",), views=(False, True)):
+        if cfg.pending is not None or cfg.expired:
+            continue
+        for pair in itertools.combinations_with_replacement(OPS, 2):
+            r = respond(cfg, pair)
+            if r.kind == "CLARIFY":
+                clarified += 1
+                assert frame_dependency(cfg.base, r.pending.frame_ops, cfg.view_derived) is None, (cfg.profile, pair)
+    assert clarified
 
 
 def test_r3d_a_step2_conflict_in_an_answer_never_executes():

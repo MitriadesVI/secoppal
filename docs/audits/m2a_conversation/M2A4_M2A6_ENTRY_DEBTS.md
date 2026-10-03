@@ -95,6 +95,16 @@ debe cerrar. **No bloquean M2A-3.**
 - **Dueño.** M2A-4.
 - **Reparación sugerida.** Declarar el coste, o limitar F24 a H1.
 
+## F2 (M2A-6, gate de activación): H6 no dispara con `buyer_scope` nulo
+
+- **Hecho.** H6 («territorio nuevo con comprador territorial de otro territorio arrastrado», F30) necesita saber el
+  territorio del comprador arrastrado. Si `buyer_scope` es nulo, H6 no dispara y el delta se compone sin preguntar.
+- **Evidencia.** ZEUS conjunto sobre la integración (2026-10-03), hallazgo F2. Sondas en
+  `/private/tmp/claude-501/-Users-rodrigoortiz-Documents-secoppal/427b208d-4550-4c0a-ad09-5659440e95d9/scratchpad/zeus_int/probes/`
+  (`p5_scope_none.py`).
+- **Dueño.** M2A-6 (activación en runtime), con D-BUYER.
+- **Reparación.** Gate de activación: D-BUYER debe tipar `buyer_scope` antes de activar M2a en runtime (U29).
+
 ## Gates ya declarados en el contrato
 
 | Gate | Dueño | Dónde |
