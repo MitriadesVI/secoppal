@@ -209,8 +209,9 @@ def frame_obstacle(base, frame_ops, composed: Composed) -> Finding | None:
     COMPOSICION dependency. A frame judged on its own would launder the dependency: a candidate composed on a frame
     that already changed the universe or dropped the TIME no longer sees H8 or DEP-SMMLV-RECALC (ZEUS NO_GO on the
     integration 8066e03d, F1)."""
-    return next((f for f in host_findings(base, tuple(frame_ops), composed)
-                 if f.kind is FindingKind.DEPENDENCY or (f.kind is FindingKind.QUESTION and f.rule != "H11")), None)
+    return next(iter(sorted((f for f in host_findings(base, tuple(frame_ops), composed)
+                             if f.kind is FindingKind.DEPENDENCY or (f.kind is FindingKind.QUESTION and f.rule != "H11")),
+                            key=lambda f: f.kind is not FindingKind.DEPENDENCY)), None)
 
 
 def executes(frame: AcceptedInterpretation, ops, trace: str, *, answered: str | None = None) -> bool:

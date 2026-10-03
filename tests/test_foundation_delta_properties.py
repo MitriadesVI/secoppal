@@ -719,9 +719,8 @@ REDUCER_MUTANTS = {
         "        if hits:\n            slot, clause = min(hits, key=lambda hit: SLOT_RANK[hit[0].key])\n            found.append(",
         "        for slot, clause in hits:\n            found.append(")], []),
     "frame_dependency_laundered": ([], [(  # ZEUS on the integration 8066e03d, F1
-        "                 if f.kind is FindingKind.DEPENDENCY or (f.kind is FindingKind.QUESTION and f.rule != \"H11\")), "
-        "None)",
-        "                 if (f.kind is FindingKind.QUESTION and f.rule != \"H11\")), None)")]),
+        "                             if f.kind is FindingKind.DEPENDENCY or (f.kind is FindingKind.QUESTION and f.rule != \"H11\")),",
+        "                             if (f.kind is FindingKind.QUESTION and f.rule != \"H11\")),")]),
     "h1_without_continuar": ([], [(
         "HOST_CODES[\"H1\"], base, (), tuple(ops), (tuple(ops),), _slots(ops)))",
         "HOST_CODES[\"H1\"], base, (), tuple(ops), (), _slots(ops)))")]),
