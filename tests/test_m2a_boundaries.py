@@ -101,7 +101,15 @@ LEGACY_MUST_STAY_OUT = "app.core.interpretation_contract"  # the touched wire mo
 # REVIEWED DAG of wave 1 (user decision 2026-10-02): the steps and what each may depend on. Each lane writes its own
 # registry file, so its ``DEPENDS_ON`` cannot be the authority on what it may import: widening this is an explicit
 # edit HERE (a reviewed decision), never a side effect. ``M2A-3`` (the reducer) never depends on ``M2A-2`` (the store).
-PLANNED_DEPENDENCIES = {"M2A-1": (), "M2A-2": ("M2A-1",), "M2A-3": ("M2A-1",)}
+PLANNED_DEPENDENCIES = {
+    "M2A-1": (),
+    "M2A-2": ("M2A-1",),
+    "M2A-3": ("M2A-1",),
+    # Wave 2 (M2A_IMPLEMENTATION_PLAN §1 «Depende de» and §2 «tras M2A-3»): M2A-1 arrives transitively through M2A-3.
+    "M2A-3b": ("M2A-3",),
+    "M2A-4": ("M2A-3",),
+    "M2A-7": ("M2A-3",),
+}
 
 # ``app.core`` modules that existed at the prep base (6be95aaf) without being in main's manifest (88653752), except
 # ``foundation_accepted`` (M2A-1's own). With the manifest they are every module a step may NOT register.
@@ -420,10 +428,12 @@ def _real(name: str) -> Step:
     return next(step for step in STEPS if step.name == name)
 
 
-# The synthetic world of every mutant: M2A-1 (the one registry a test may assume: it is the foundation) and two EMPTY
-# lane steps with their reviewed DAG. The real lane steps are never reused: a lane fills its own registry file, and no
-# pin of this file may depend on what it holds (``_graph`` blanks the real lane modules a world does not register).
-WORLD = (_real("M2A-1"), _step("M2A-2", (), ("M2A-1",)), _step("M2A-3", (), ("M2A-1",)))
+# The synthetic world of every mutant: M2A-1 (the one registry a test may assume: it is the foundation) and the EMPTY
+# lane steps (wave 1 and wave 2) with their reviewed DAG. The real lane steps are never reused: a lane fills its own
+# registry file, and no pin of this file may depend on what it holds (``_graph`` blanks the real lane modules a world
+# does not register).
+WAVE2 = (_step("M2A-3b", (), ("M2A-3",)), _step("M2A-4", (), ("M2A-3",)), _step("M2A-7", (), ("M2A-3",)))
+WORLD = (_real("M2A-1"), _step("M2A-2", (), ("M2A-1",)), _step("M2A-3", (), ("M2A-1",)), *WAVE2)
 
 _DISK_MODULES = frozenset(build_graph()[0])
 
@@ -734,7 +744,7 @@ def test_mutant_a_lane_widening_or_dropping_its_own_depends_on_is_caught(name, d
 
 
 def test_mutant_an_unreviewed_step_and_a_missing_reviewed_step_are_caught():
-    assert dag_problems((*WORLD, _step("M2A-4", (), ("M2A-1",)))) == ["M2A-4 is not in the reviewed DAG"]
+    assert dag_problems((*WORLD, _step("M2A-S9", (), ("M2A-1",)))) == ["M2A-S9 is not in the reviewed DAG"]
     assert dag_problems(tuple(step for step in WORLD if step.name != "M2A-3")) == [
         "reviewed step M2A-3 has no registry file"]
 
@@ -1096,7 +1106,7 @@ SIM_VIRTUAL = {
     SIM_SCOPE: ON_M2A_1 + "from app.core import interpretation_contract\n",
 }
 SIM = (_real("M2A-1"), _step("M2A-2", (SIM_STORE,), ("M2A-1",), {SIM_STORE, "app.core.store_lock"}),
-       _step("M2A-3", (SIM_DELTA, SIM_SCOPE), ("M2A-1",), {SIM_DELTA, SIM_SCOPE}))
+       _step("M2A-3", (SIM_DELTA, SIM_SCOPE), ("M2A-1",), {SIM_DELTA, SIM_SCOPE}), *WAVE2)
 PIN_NAMES = ("registry", "closure", "direction", "consumer", "legacy")
 
 
@@ -1159,7 +1169,7 @@ def test_robustness_the_simulated_registries_are_well_formed_files():
         assert file_problems(source) == [], source
         namespaces[step.stem] = _namespace_of(source)
         assert step_from_namespace(step.stem, namespaces[step.stem]) == (step, [])
-    assert steps_from_namespaces(namespaces) == SIM  # file order: m2a_1, m2a_2, m2a_3
+    assert steps_from_namespaces(namespaces) == SIM  # file order: m2a_1, m2a_2, m2a_3, m2a_3b, m2a_4, m2a_7
 
 
 def test_robustness_the_same_mutant_gets_the_same_verdict_over_empty_and_over_filled_lanes():
