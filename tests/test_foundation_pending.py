@@ -216,7 +216,7 @@ def new_search_facts(**kw) -> TurnFacts:
 
 
 def turn(*ops, **kw) -> object:
-    flags = {k: kw.pop(k) for k in ("no_selection",) if k in kw}
+    flags = {k: kw.pop(k) for k in ("no_selection", "unresolved") if k in kw}
     return P.PendingTurn(kw.pop("facts", None) or facts(), tuple(ops), **flags)
 
 
@@ -679,6 +679,29 @@ def test_row_8_an_answer_that_touches_nothing_of_the_question_is_reasked_f29():
     d = respond(p, turn(set_op(D.TIME, "x")))  # outside answer_slots and nothing inside
     assert (d.kind.value, d.code, d.answer.row, d.pending) == ("REASK", "PENDING_UNANSWERED", 8, replace(p, asks=2))
     assert respond(p, turn(keep_op(TOPIC_POS))).code == "PENDING_UNANSWERED"  # a KEEP of identity: empty after normalizing
+
+
+@direct
+def test_a_value_no_authority_resolved_selects_nothing_but_still_touches_its_slot():
+    """§8.3 row 7 («autoridad no RESOLVED»), SF189: there is no typed operation, but P said something in that slot: it
+    touches it (rows 5 and 8 count it), writes it (a second writer is a conflict) and selects no candidate."""
+    base = base_of((D.TOPIC, "x"))
+    options = tuple((set_op(D.BUYER, t),) for t in ("x", "y", "z"))
+    question = P.AuthorityQuestion("UNRESOLVED_VALUE:BUYER", origin("t1", 0, RAW_TURN), frozenset({BUYER_POS}), options)
+    p = P.ask_authority(question, base=base, base_trace_id="t0", asked_trace_id="t1", now=T0).pending
+    said = frozenset({BUYER_POS})
+    row_7 = respond(p, turn(unresolved=said))  # «la del Caribe»: inside, nothing resolved
+    assert (row_7.kind.value, row_7.code, row_7.answer.row) == ("REASK", "ANSWER_UNRESOLVED", 7)
+    row_8 = respond(p, turn(unresolved=frozenset({TIME_POS})))  # an unresolved value OUTSIDE and nothing inside
+    assert (row_8.code, row_8.answer.row) == ("PENDING_UNANSWERED", 8)
+    row_5 = respond(p, turn(set_op(D.BUYER, "y"), unresolved=frozenset({TIME_POS})))  # an answer plus an unresolved edit
+    assert (row_5.code, row_5.answer.row) == ("ANSWER_EDITS_OTHER_SLOT", 5)
+    clash = respond(p, turn(set_op(D.BUYER, "y"), unresolved=said))  # two writers of BUYER: decided on P, row 7
+    assert (clash.code, clash.answer.row) == ("ANSWER_UNRESOLVED", 7)
+    chosen = respond(p, turn(set_op(D.BUYER, "y")))
+    assert chosen.kind.value == "PENDING_ANSWER" and chosen.answer.candidate_id == "c2"
+    with pytest.raises(ContractError):  # a dimension-wide slot is no slot a value can be said in
+        turn(unresolved=frozenset({slot(D.BUYER)}))
 
 
 @direct
@@ -1169,24 +1192,27 @@ def test_the_modules_pin_the_closed_vocabularies_they_copy():
 MUTANTS = {
     # the minimum the lane promises
     "f24_off": {"foundation_pending_answer": [(
-        "    if ops and ops_identity(ops) == ops_identity(asked):  # step 2, F24: before normalizing",
-        "    if False:  # step 2, F24: before normalizing")]},
+        "    if ops and not said and ops_identity(ops) == ops_identity(asked):  # step 2, F24: before normalizing (P is not",
+        "    if False:  # step 2, F24: before normalizing (P is not")]},
     "f24_after_normalizing": {"foundation_pending_answer": [(
-        "    if ops and ops_identity(ops) == ops_identity(asked):  # step 2, F24: before normalizing\n"
+        "    if ops and not said and ops_identity(ops) == ops_identity(asked):  # step 2, F24: before normalizing (P is not\n"
+        "        # identical to the asking patch if it also says something no authority resolved)\n"
         "        return _reask(7, \"ANSWER_UNRESOLVED\")\n    if pending.candidate_patches:  # step 3\n"
-        "        ops = without_identity_keeps(pending.frame, ops)\n",
-        "    if pending.candidate_patches:  # step 3\n        ops = without_identity_keeps(pending.frame, ops)\n"
+        "        ops = without_identity_keeps(pending.frame, ops, unresolved)\n",
+        "    if pending.candidate_patches:  # step 3\n        ops = without_identity_keeps(pending.frame, ops, unresolved)\n"
         "    if ops and ops_identity(ops) == ops_identity(asked):\n        return _reask(7, \"ANSWER_UNRESOLVED\")\n")]},
     "f25_executes": {"foundation_pending_answer": [(
-        "    if touched - inside:\n        return _reask(5, \"ANSWER_EDITS_OTHER_SLOT\")\n    if pending.reason == EXPIRED_CONFIRM:",
-        "    if pending.reason == EXPIRED_CONFIRM:")]},
+        "    if touched - inside:\n        return _reask(5, \"ANSWER_EDITS_OTHER_SLOT\")\n    if said or pending.reason == EXPIRED_CONFIRM:",
+        "    if said or pending.reason == EXPIRED_CONFIRM:")]},
     "f29_executes": {"foundation_pending_answer": [(
         "    if not touched & inside:  # step 4 (an empty P included: F29, never a cancellation)\n"
         "        return _reask(8, \"PENDING_UNANSWERED\")\n", "")]},
     "empty_list_cancels": {"foundation_pending": [(
-        "    result = answer_in_language(pending, turn.ops, no_selection=turn.no_selection, asked_ops=asked_ops)",
+        "    result = answer_in_language(pending, turn.ops, no_selection=turn.no_selection, asked_ops=asked_ops,\n"
+        "                                unresolved=turn.unresolved)",
         "    if not turn.ops and not turn.no_selection:\n        return _pure_cancel(pending, CancelCause.DIRECTIVE, TurnScope.IN)\n"
-        "    result = answer_in_language(pending, turn.ops, no_selection=turn.no_selection, asked_ops=asked_ops)")]},
+        "    result = answer_in_language(pending, turn.ops, no_selection=turn.no_selection, asked_ops=asked_ops,\n"
+        "                                unresolved=turn.unresolved)")]},
     "answer_on_base_not_frame": {"foundation_pending_answer": [(
         "    made = compose_answer(pending.frame, ops, base_trace_id=pending.asked_trace_id, answered=answered)",
         "    made = compose_answer(BASE_OF[pending.pending_id], ops, base_trace_id=pending.asked_trace_id, "
@@ -1221,10 +1247,10 @@ MUTANTS = {
         "        if touched & inside and touched - inside:\n            return _reask(5, \"ANSWER_EDITS_OTHER_SLOT\")\n"
         "        return _reask(6, \"OPTION_NOT_CHOSEN\")", "        return _reask(6, \"OPTION_NOT_CHOSEN\")")]},
     "conflict_not_decided_on_p": {"foundation_pending_answer": [(
-        "    if slot_conflicts(ops):  # step 1", "    if False:  # step 1")]},
+        "    if slot_conflicts(ops, unresolved):  # step 1", "    if False:  # step 1")]},
     "normalization_without_candidates": {"foundation_pending_answer": [(
-        "    if pending.candidate_patches:  # step 3\n        ops = without_identity_keeps(pending.frame, ops)",
-        "    if True:  # step 3\n        ops = without_identity_keeps(pending.frame, ops)")]},
+        "    if pending.candidate_patches:  # step 3\n        ops = without_identity_keeps(pending.frame, ops, unresolved)",
+        "    if True:  # step 3\n        ops = without_identity_keeps(pending.frame, ops, unresolved)")]},
     "normalization_drops_every_keep": {"foundation_pending_answer": [(
         "        if op.op is PatchOpKind.KEEP and op.slot.key in present and op.slot.key not in others:",
         "        if op.op is PatchOpKind.KEEP:")]},
@@ -1247,10 +1273,14 @@ MUTANTS = {
     "dependency_swallowed": {"foundation_pending_answer": [(
         "    if first.kind is FindingKind.DEPENDENCY:\n        return AnswerResult(AnswerKind.DEPENDENCY, 4, None, None, first.dependency, ops)\n    return _reask(7, \"ANSWER_UNRESOLVED\")",
         "    return _reask(7, \"ANSWER_UNRESOLVED\")")]},
+    "unresolved_value_ignored": {"foundation_pending_answer": [(
+        "    touched = covered_keys(ops) | said\n    if not touched & inside:  # step 4",
+        "    touched = covered_keys(ops)\n    if not touched & inside:  # step 4")]},
     # D2 (P1-2)
     "expired_confirm_selected_in_language": {"foundation_pending_answer": [(
-        "    if pending.reason == EXPIRED_CONFIRM:  # M2A4-D2: «continuar» is confirmed only by event\n"
-        "        return _reask(7, \"ANSWER_UNRESOLVED\")\n", "")]},
+        "    if said or pending.reason == EXPIRED_CONFIRM:  # a value no authority resolved selects nothing (row 7); M2A4-D2:\n"
+        "        return _reask(7, \"ANSWER_UNRESOLVED\")  # «continuar» is confirmed only by event\n",
+        "    if said:\n        return _reask(7, \"ANSWER_UNRESOLVED\")\n")]},
     # D1 (P1-1)
     "reset_fragment_ignores_continuation": {"foundation_pending": [(
         "    if facts.admissible_alone is False or facts.continuation is True:", "    if facts.admissible_alone is False:")]},

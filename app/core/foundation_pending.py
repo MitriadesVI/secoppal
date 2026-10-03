@@ -35,14 +35,14 @@ from enum import Enum
 
 from app.core.foundation_accepted import (
     MAX_ASKS, OriginKind, PatchOp, PatchOpKind, PatchOriginKind, PendingClarification, PendingControl, SemanticPatch,
-    TurnResolution, TurnScope,
+    Slot, TurnResolution, TurnScope,
 )
 from app.core.foundation_delta import covered_keys
 from app.core.foundation_delta_outcome import (
     HOST_CODES, DeltaDisposition, DeltaOutcome, Dependency, delta_outcome,
 )
 from app.core.foundation_pending_answer import (
-    AnswerKind, AnswerResult, answer_by_event, answer_in_language, answer_keys,
+    AnswerKind, AnswerResult, answer_by_event, answer_in_language, answer_keys, unresolved_keys,
 )
 from app.core.foundation_pending_cancel import (
     CancelCause, Cancellation, cancel_pending, fragment_base, holds_expired_anchor,
@@ -78,10 +78,12 @@ class PendingTurn:
     facts: TurnFacts
     ops: tuple[PatchOp, ...] = ()
     no_selection: bool = False
+    unresolved: frozenset[Slot] = frozenset()  # slots of P's conditions no authority resolved (§8.3 row 7)
 
     def __post_init__(self) -> None:
         if type(self.facts) is not TurnFacts or type(self.no_selection) is not bool:
             raise ContractError("INVALID_PENDING_TURN")
+        unresolved_keys(self.unresolved)
         if type(self.ops) is not tuple or any(type(op) is not PatchOp for op in self.ops):
             raise ContractError("INVALID_PENDING_TURN_OPS")
 
@@ -278,7 +280,8 @@ def _text(pending: PendingClarification, turn: PendingTurn, trace_id: str, now: 
         return _cancel_turn(pending, turn, facts, scope, classification.context_reset, trace_id, now)
     if scope is TurnScope.IN_NEW_SEARCH:  # row 3: A7/A9, the host writes the cancellation even with no directive
         return _new_search(pending, CancelCause.NEW_SEARCH, classification.context_reset)
-    result = answer_in_language(pending, turn.ops, no_selection=turn.no_selection, asked_ops=asked_ops)
+    result = answer_in_language(pending, turn.ops, no_selection=turn.no_selection, asked_ops=asked_ops,
+                                unresolved=turn.unresolved)
     return _answered(pending, result, TurnScope.IN)
 
 

@@ -29,7 +29,7 @@ from dataclasses import dataclass
 from enum import Enum
 
 from app.core.foundation_accepted import (
-    AcceptedInterpretation, PatchOp, PatchOpKind, PendingClarification,
+    AcceptedInterpretation, PatchOp, PatchOpKind, PendingClarification, Slot,
 )
 from app.core.foundation_delta import (
     UNIVERSE_KEY, WRITERS, Composed, DeltaRefusal, compose_ops, covered, covered_keys,
@@ -90,10 +90,21 @@ def answer_keys(pending: PendingClarification) -> frozenset[str]:
     return frozenset(s.key for slot in pending.answer_slots for s in covered(slot))
 
 
-def slot_conflicts(ops) -> bool:
+def unresolved_keys(unresolved) -> frozenset[str]:
+    """The slots of P's conditions whose value no authority resolved (§8.3 row 7: «autoridad no RESOLVED»). They are not a
+    ``PatchOp`` (there is no typed value to carry), but they are still what P says: they touch their slot and write it."""
+    if type(unresolved) is not frozenset or any(type(slot) is not Slot or slot.dimension_wide for slot in unresolved):
+        raise ContractError("INVALID_UNRESOLVED_SLOTS")
+    return frozenset(slot.key for slot in unresolved)
+
+
+def slot_conflicts(ops, unresolved: frozenset[Slot] = frozenset()) -> bool:
     """§6 step 2 on ``ops`` as they stand: two writers of one slot, or a ``KEEP`` with a writer or a ``CLEAR`` of the
-    same slot (a dimension-wide ``CLEAR`` covers each of its slots). Independent of any base."""
+    same slot (a dimension-wide ``CLEAR`` covers each of its slots). An unresolved condition writes its slot. Independent
+    of any base."""
     writers, keeps, clears = defaultdict(int), set(), set()
+    for key in unresolved_keys(unresolved):
+        writers[key] += 1
     for op in ops:
         if op.op in WRITERS:
             writers[op.slot.key] += 1
@@ -104,13 +115,14 @@ def slot_conflicts(ops) -> bool:
     return any(n >= 2 for n in writers.values()) or any(key in writers or key in clears for key in keeps)
 
 
-def without_identity_keeps(frame: AcceptedInterpretation | None, ops) -> tuple[PatchOp, ...]:
+def without_identity_keeps(frame: AcceptedInterpretation | None, ops,
+                           unresolved: frozenset[Slot] = frozenset()) -> tuple[PatchOp, ...]:
     """The ``KEEP``s of a slot the ``frame`` holds that no OTHER operation of P touches are the identity (§8.3)."""
-    ops = tuple(ops)
+    ops, extra = tuple(ops), unresolved_keys(unresolved)
     present = {UNIVERSE_KEY} | ({c.slot.key for c in frame.conditions} if frame is not None else set())
     kept = []
     for i, op in enumerate(ops):
-        others = covered_keys(o for j, o in enumerate(ops) if j != i)
+        others = covered_keys(o for j, o in enumerate(ops) if j != i) | extra
         if op.op is PatchOpKind.KEEP and op.slot.key in present and op.slot.key not in others:
             continue
         kept.append(op)
@@ -158,7 +170,7 @@ def answer_by_event(pending: PendingClarification, candidate_id: str) -> AnswerR
 
 # ---- rows 4–8: an answer in language --------------------------------------------------------------------------------
 def answer_in_language(pending: PendingClarification, ops, *, no_selection: bool,
-                       asked_ops: tuple[PatchOp, ...]) -> AnswerResult:
+                       asked_ops: tuple[PatchOp, ...], unresolved: frozenset[Slot] = frozenset()) -> AnswerResult:
     """§8.3 «Selección» over P's ``ops`` (typed; the host reads no text). ``asked_ops`` are the operations of the turn that
     asked (F24): the contract compares with «el parche del registro ``asked_trace_id``», but a ``CLARIFY`` record holds no
     patch (``AcceptedTurnRecord``), so the caller supplies them (M2A4-D13)."""
@@ -167,25 +179,26 @@ def answer_in_language(pending: PendingClarification, ops, *, no_selection: bool
     ops, asked = tuple(ops), tuple(asked_ops)
     if any(type(op) is not PatchOp for op in (*ops, *asked)):
         raise ContractError("INVALID_ANSWER_OPS")
-    inside = answer_keys(pending)
+    inside, said = answer_keys(pending), unresolved_keys(unresolved)  # ``said``: touched by a value nobody resolved
     if no_selection:  # row 6 (the label), after row 5: an answer plus an edit of another slot is re-asked as such
-        touched = covered_keys(ops)
+        touched = covered_keys(ops) | said
         if touched & inside and touched - inside:
             return _reask(5, "ANSWER_EDITS_OTHER_SLOT")
         return _reask(6, "OPTION_NOT_CHOSEN")
-    if slot_conflicts(ops):  # step 1
+    if slot_conflicts(ops, unresolved):  # step 1
         return _reask(7, "ANSWER_UNRESOLVED")
-    if ops and ops_identity(ops) == ops_identity(asked):  # step 2, F24: before normalizing
+    if ops and not said and ops_identity(ops) == ops_identity(asked):  # step 2, F24: before normalizing (P is not
+        # identical to the asking patch if it also says something no authority resolved)
         return _reask(7, "ANSWER_UNRESOLVED")
     if pending.candidate_patches:  # step 3
-        ops = without_identity_keeps(pending.frame, ops)
-    touched = covered_keys(ops)
+        ops = without_identity_keeps(pending.frame, ops, unresolved)
+    touched = covered_keys(ops) | said
     if not touched & inside:  # step 4 (an empty P included: F29, never a cancellation)
         return _reask(8, "PENDING_UNANSWERED")
     if touched - inside:
         return _reask(5, "ANSWER_EDITS_OTHER_SLOT")
-    if pending.reason == EXPIRED_CONFIRM:  # M2A4-D2: «continuar» is confirmed only by event
-        return _reask(7, "ANSWER_UNRESOLVED")
+    if said or pending.reason == EXPIRED_CONFIRM:  # a value no authority resolved selects nothing (row 7); M2A4-D2:
+        return _reask(7, "ANSWER_UNRESOLVED")  # «continuar» is confirmed only by event
     if pending.candidate_patches:  # step 5: exactly one candidate equals P; its WHOLE patch is composed
         wanted = ops_identity(ops)
         chosen = [c for c in pending.candidate_patches if ops_identity(c.patch.ops) == wanted]
