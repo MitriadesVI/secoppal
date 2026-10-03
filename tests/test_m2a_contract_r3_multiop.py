@@ -549,6 +549,14 @@ def identity(ops) -> list[tuple]:
     return sorted((op.kind, op.slot, op.value) for op in ops)
 
 
+def adds_nothing(ops, asked) -> bool:
+    """M2A4-D20 (HERA, on ZEUS P1-1): what is left of an answer, once its identity KEEPs are gone, is a non-empty SUBSET (as a
+    multiset of identities) of the patch that asked: it repeats part of what the product itself proposed and tells no
+    candidate from another. The identical case is F24 itself, judged on the normalized answer too."""
+    left = Counter(identity(ops)) - Counter(identity(asked))
+    return bool(ops) and not left
+
+
 def selects(candidate: tuple[Op, ...], ops) -> bool:
     """§8.3 «Selección» (R3c, U26): EXACT match of the multiset of resolved operations with the candidate's patch."""
     return not open_operations(EMPTY, ops) and identity(ops) == identity(candidate)
@@ -570,6 +578,10 @@ def answer(cfg: Config, pending: Pending, ops) -> Response:
         return Response("REASK", "ANSWER_UNRESOLVED", pending=pending, clause="§8.3 7 (F24)")
     if pending.candidates:
         ops = normalized(pending.frame, ops)
+        # M2A4-D20 (narrowed by D26): where F24 protects the selection of a candidate, it is judged on the normalized answer
+        # too, and a PART of the asking patch tells no candidate from another; with no candidate the sealed codes stand
+        if adds_nothing(ops, pending.asked):
+            return Response("REASK", "ANSWER_UNRESOLVED", pending=pending, clause="§8.3 7 (F24 normalized, M2A4-D20)")
     touched_slots = covered(ops)
     if not touched_slots & pending.answer_slots:
         return Response("REASK", "PENDING_UNANSWERED", pending=pending, clause="§8.3 8")
@@ -933,7 +945,10 @@ def test_r3c_zeus_witnesses():
     both = apply(base, (Op("SET", "GEOGRAPHY/POSITIVE", "x"),))
     assert respond(cfg, change_buyer).state == apply(base, change_buyer)  # A: only by repeating its two ops (M2A-4)
     said = (Op("KEEP", "BUYER/POSITIVE"), Op("SET", "GEOGRAPHY/POSITIVE", "x"))  # «buscar con ambos», «mantén … y en …»
-    assert respond(cfg, said) == Response("EXECUTE", state=both, clause="§8.3 4")
+    # M2A4-D20 (HERA, ZEUS P1-1): with the KEEP gone the answer IS the asking patch: B is reached only by event
+    assert respond(cfg, said) == Response("REASK", "ANSWER_UNRESOLVED", pending=h6,
+                                          clause="§8.3 7 (F24 normalized, M2A4-D20)")
+    assert both == apply(base, (Op("SET", "GEOGRAPHY/POSITIVE", "x"),))  # (what choosing B by event executes)
     resent = (Op("SET", "GEOGRAPHY/POSITIVE", "x"),)  # the asking turn again: F24, the product does not choose (R3d)
     assert respond(cfg, resent) == Response("REASK", "ANSWER_UNRESOLVED", pending=h6, clause="§8.3 7 (F24)")
     assert respond(cfg, (Op("KEEP", "BUYER/POSITIVE"),)).code == "PENDING_UNANSWERED"  # empty after normalizing: row 8
