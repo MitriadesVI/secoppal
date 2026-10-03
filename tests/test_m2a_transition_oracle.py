@@ -1181,8 +1181,9 @@ REFUSAL_CODE_MUTANTS = {
     "refusal_code_outside_the_vocabulary": ("T-REFUSAL-CODE", m_code_outside_the_vocabulary),
 }
 def untouched_dimension_code(base, patch):
-    touched = {op["slot"].partition("/")[0] for op in patch["ops"]}
-    return "OP_NOT_ACCREDITED:" + next(d for d in ("STATE", "MODALITY", "ACTOR", "CONTRACT_TYPE_OR_NATURE") if d not in touched)
+    """An OP_NOT_ACCREDITED on a dimension that neither an op of the patch touches nor the base holds."""
+    taken = {op["slot"].partition("/")[0] for op in patch["ops"]} | {c["dimension"] for c in base["conditions"]}
+    return "OP_NOT_ACCREDITED:" + next(d for d in ("STATE", "MODALITY", "ACTOR", "CONTRACT_TYPE_OR_NATURE") if d not in taken)
 
 
 UNJUSTIFIED_MUTANTS = {  # a lawful patch refused for a structural cause that is not there, or blamed on an untouched dimension
@@ -1190,7 +1191,7 @@ UNJUSTIFIED_MUTANTS = {  # a lawful patch refused for a structural cause that is
     "refuse_lawful_as_keep_on_empty": ("T-REFUSAL-UNJUSTIFIED", "KEEP_ON_EMPTY_SLOT"),
     "refuse_lawful_as_cardinality_without_order": ("T-REFUSAL-UNJUSTIFIED", "DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER"),
     "refuse_lawful_as_target_not_addressable": ("T-REFUSAL-UNJUSTIFIED", "TARGET_NOT_ADDRESSABLE"),
-    "refuse_op_not_accredited_on_an_untouched_dimension": ("T-REFUSAL-UNJUSTIFIED", untouched_dimension_code),
+    "refuse_op_not_accredited_on_a_dimension_neither_touched_nor_held": ("T-REFUSAL-UNJUSTIFIED", untouched_dimension_code),
 }
 
 
@@ -1272,6 +1273,30 @@ def test_a_refusal_code_must_be_in_the_vocabulary_of_annex_a3_and_blame_a_dimens
     assert value_op and check(value_op[1], value_op[2], None, refusal="VALUE_WITHOUT_COMPARATOR") == []
     other = next(e for e in LAWFUL_POOL if not any(op["slot"].startswith("VALUE") for op in e[2]["ops"]))
     assert {v["rule"] for v in check(other[1], other[2], None, refusal="VALUE_WITHOUT_COMPARATOR")} == {"T-REFUSAL-UNJUSTIFIED"}
+
+
+ACTOR_BASE = cond("ACTOR", "is", "POSITIVE", "Constructora X S.A.S.", "c10", R, n=20)
+STATE_BASE = cond("STATE", "is", "POSITIVE", "awarded", "c11", R, n=21)
+TIME_BASE = cond("TIME", "during_year", "POSITIVE", "2025", "c12", R, n=22)
+NEW_ACTOR = cond("ACTOR", "is", "POSITIVE", "Otra S.A.S.", "p10", R, n=23)
+
+
+def test_a_policy_without_owner_may_blame_a_dimension_the_base_holds_but_no_op_touches():
+    """§6 step 3b row 4 admits «una política sin dueño (§6.6)», re-decided on the composed effective: a REPLACE_UNIVERSE with a
+    STATE or an ACTOR in the base, ACTOR x TIME (ZEUS opna_probe). The refusal names a dimension no op touches but the base
+    holds (the carried ones); a dimension neither touched nor held is still refused."""
+    _, (base, patch) = hand("pol1", [TOPIC_A, ACTOR_BASE, STATE_BASE], [redirect_op("processes", "records")])
+    assert transition.expected_refusal(base, patch) is None  # a lawful patch as far as the dicts show
+    for code in ("OP_NOT_ACCREDITED:STATE", "OP_NOT_ACCREDITED:ACTOR", "OP_NOT_ACCREDITED:UNIVERSE", "OP_NOT_ACCREDITED:TOPIC",
+                 "UNRESOLVED_VALUE:STATE", "UNRESOLVED_VALUE:ACTOR"):
+        assert check(base, patch, None, refusal=code) == [], code
+    for code in ("OP_NOT_ACCREDITED:TIME", "OP_NOT_ACCREDITED:MODALITY", "UNRESOLVED_VALUE:BUYER"):
+        assert {v["rule"] for v in check(base, patch, None, refusal=code)} == {"T-REFUSAL-UNJUSTIFIED"}, code
+    _, (base, patch) = hand("pol2", [TOPIC_A, ACTOR_BASE, TIME_BASE], [set_op(NEW_ACTOR)])  # ACTOR x TIME, the TIME carried
+    for code in ("OP_NOT_ACCREDITED:TIME", "UNRESOLVED_VALUE:TIME", "OP_NOT_ACCREDITED:ACTOR",
+                 "OP_NOT_ACCREDITED:UNIVERSE"):  # the universe is always in the base: it has its requests
+        assert check(base, patch, None, refusal=code) == [], code
+    assert {v["rule"] for v in check(base, patch, None, refusal="OP_NOT_ACCREDITED:STATE")} == {"T-REFUSAL-UNJUSTIFIED"}
 
 
 def test_the_f16_inversion_must_happen_the_positive_cannot_survive_next_to_its_negation():

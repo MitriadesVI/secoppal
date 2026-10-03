@@ -96,12 +96,20 @@ LIMITED_GUARANTEES = (
              "NO_MEDIBLE(HOST_FACT_NOT_IN_GOLD:CARRIED_BUYER_TERRITORY)",
      "closed_by": "a Gold case that executes a compatible territory over a carried buyer, with the buyer's territory typed"},
     {"id": "LG-HOST-FACTS-NOT-IN-GOLD", "kind": "SCOPE",
-     "what": "H6, H7 and H8 read a fact the Gold's IR does not carry (the carried buyer's territory, the closed list of regions, "
-             "the states of the resulting universe): section 19 says LECTURA for them, so they are not reds, but the oracle "
-             "will not type the fact by guessing. A case where the Gold expects the rule to FIRE is NO_MEDIBLE with the fact "
-             "named, and so is every case where H8 READS the literals whatever the outcome: a change of universe with a STATE "
-             "or MODALITY standing (§14). An EXECUTE control stays measurable only when no rule reads a missing fact",
+     "what": "H6, H7 and H8 decide on a fact the Gold's typed values do not carry: the carried buyer's territory (H6), whether "
+             "a region's NAME is in E-GEO's closed list (H7: the Gold types the name, so a region that executes is in the list "
+             "by construction and the region the Gold says is outside it has no typed value), the states of the resulting "
+             "universe (H8). Section 19 says LECTURA for them, so they are not reds, but the oracle will not type the fact by "
+             "guessing. A case where the Gold expects the rule to FIRE is NO_MEDIBLE with the fact named, and so is every case "
+             "where H8 READS the literals whatever the outcome: a change of universe with a STATE or MODALITY standing (§14). "
+             "An EXECUTE control stays measurable only when no rule reads a missing fact",
      "closed_by": "a Gold that carries the typed fact in its IR, or a decision to derive it from the adjudicated outcome"},
+    {"id": "LG-H8-ONLY-AFTER-A-UNIVERSE-CHANGE", "kind": "ORACLE_BLIND_SPOT",
+     "what": "H8 is measured only after a change of universe (§14). A STATE is typed WITHOUT literals, and every applicable case "
+             "that sets or carries a STATE over an UNCHANGED universe (SF009 and SF010 among them) is measured on the "
+             "assumption that the authority resolved the state against that dataset, so it exists there; a reducer that "
+             "applied H8 to an unchanged universe would fail them for lack of literals, not for a defect",
+     "closed_by": "E-STATE's typed literals per dataset in the Gold's IR (§19 DEP-STATE-LITERALS)"},
     {"id": "LG-LECTURA-WITHOUT-TYPED-VALUE", "kind": "SCOPE",
      "what": "a §19 dependency with impacto LECTURA does not block, but a case whose value the Gold does not give typed stays "
              "NO_MEDIBLE with the typing motive: a month without a year (TIME_MONTH_HINT), a SMMLV amount whose IR has no single "
@@ -110,8 +118,9 @@ LIMITED_GUARANTEES = (
      "closed_by": "E-VALUE and E-TIME typed values in the Gold's IR"},
     {"id": "LG-REGION-MEMBERS-SYNTHETIC", "kind": "ORACLE_BLIND_SPOT",
      "what": "a REGION is typed with ONE synthetic member derived from its name (the Gold carries no members; compose never "
-             "reads them, §19 DEP-REGION is LECTURA): a reducer that validates a region against E-GEO's closed list would "
-             "reject it, and H7 is measured only where the Gold executes",
+             "reads them, §19 DEP-REGION is LECTURA). H7 reads the region by its NAME, the canonical the Gold types, which is "
+             "the key of E-GEO's closed list (app/data/colombia_geography.py): only a reducer that validated the member list "
+             "instead of the name would reject the synthetic member",
      "closed_by": "E-GEO's closed list of regions and members in the Gold's IR"},
     {"id": "LG-TARGET-NOT-ADDRESSABLE", "kind": "ORACLE_BLIND_SPOT",
      "what": "TARGET_NOT_ADDRESSABLE (precedence 1) needs the shape of the IR v2 logic expression to know that an op targets an "
@@ -120,10 +129,12 @@ LIMITED_GUARANTEES = (
     {"id": "LG-AUTHORITY-REFUSALS", "kind": "ORACLE_BLIND_SPOT",
      "what": "OP_NOT_ACCREDITED of an op whose authority did not resolve cannot be written in a m2a-patch/1 (it carries only "
              "resolved conditions): check_transition finds the causes the dicts show (F16 fail-closed, P-3, incomparable "
-             "units). With ``refusal=`` it rejects a code outside annex A.3 and an OP_NOT_ACCREDITED over a dimension no op "
-             "touches; what remains is accepted unjudged: an authority refusal over a dimension an op touches, and any "
-             "A.3 code of a host rule or of the protocol (the Gold decides them by case; SF194's mark is compose's, not an "
-             "authority's)",
+             "units). With ``refusal=`` it rejects a code outside annex A.3 and an OP_NOT_ACCREDITED over a dimension that "
+             "neither an op touches nor the base holds. What remains is accepted unjudged: an authority refusal over a "
+             "dimension an op touches or the base holds (§6 step 3b row 4 also admits a policy without owner, §6.6, "
+             "re-decided on the composed effective: a REPLACE_UNIVERSE with a STATE or an ACTOR in the base, ACTOR x TIME), "
+             "and any A.3 code of a host rule or of the protocol (the Gold decides them by case; SF194's mark is compose's, "
+             "not an authority's)",
      "closed_by": "the authorities' own gates and the Gold cases"},
     {"id": "LG-F16-CONTAINED-VALUE", "kind": "ORACLE_BLIND_SPOT",
      "what": "F16's other fail-closed branch, a negated value CONTAINED in a positive (G-FU-09), needs a notion of containment "

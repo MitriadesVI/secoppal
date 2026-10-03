@@ -713,6 +713,32 @@ def test_a_fresh_acceptance_composes_nothing_so_h8_reads_nothing():
     assert {c["dimension"] for c in with_state["expected"]["effective"]["conditions"]} >= {"STATE"}
 
 
+def _states_over_an_unchanged_universe(cases):
+    """Applicable composed cases that SET or CARRY a STATE with no change of universe: measured on the assumption (declared in
+    LG-H8-ONLY-AFTER-A-UNIVERSE-CHANGE) that the authority resolved the state against that dataset."""
+    out = []
+    for case in cases:
+        if case["applicability"] != oracle.APPLICABLE or case["expected"]["effective_scope"] != "COMPOSED":
+            continue
+        base, patch = case["inputs"]["base"], case["inputs"]["patch"]
+        held = {(r["subject"], r["universe_kind"]) for r in base["requests"]}
+        moves = any((op["universe"]["subject"], op["universe"]["universe_kind"]) not in held for op in patch["ops"]
+                    if op["op"] == "REPLACE_UNIVERSE")
+        written = [op["slot"] for op in patch["ops"] if op["op"] in ("SET", "SET_ORDER", "CLEAR")]
+        standing = [c for c in base["conditions"] if not any(transition_module._covered(w, c["slot"]) for w in written)]
+        placed = [op["condition"] for op in patch["ops"] if op["condition"] is not None]
+        if not moves and any(c["dimension"] == "STATE" for c in (*standing, *placed)):
+            out.append(case["gold_id"])
+    return out
+
+
+def test_the_states_over_an_unchanged_universe_are_the_declared_h8_assumption():
+    ids = _states_over_an_unchanged_universe(CASES)
+    assert {"SF009", "SF010"} <= set(ids)  # the controls: a state set, the universe untouched
+    declared = {g["id"]: g for g in oracle.declarations()["limited_guarantees"]}["LG-H8-ONLY-AFTER-A-UNIVERSE-CHANGE"]
+    assert "UNCHANGED universe" in declared["what"] and declared["kind"] == "ORACLE_BLIND_SPOT"
+
+
 def test_h8_reads_the_literals_of_a_dual_anchor_only_when_the_universe_is_not_held():
     dual = _requests(("processes", "records"), ("contracts", "records"))
     state = [_typed("STATE/POSITIVE", "STATE")]
@@ -722,8 +748,9 @@ def test_h8_reads_the_literals_of_a_dual_anchor_only_when_the_universe_is_not_he
 
 def test_h8_decides_the_case_whatever_the_outcome_and_no_applicable_case_depends_on_a_host_fact_the_gold_does_not_type():
     """§14: «tras cambiar el universo, F27 (H8) comprueba STATE y MODALITY sobre el dataset resultante». A change of universe
-    with a STATE or MODALITY standing is NO_MEDIBLE (EXECUTE or not: SF078, REAL R0094), and the class, whole: no applicable
-    case has such a change, a H6/H7/H8 outcome, or a territory next to a carried buyer."""
+    with a STATE or MODALITY standing is NO_MEDIBLE (EXECUTE or not: SF078, REAL R0094). This test checks that no applicable
+    case (composed) has such a change, and that none expects a H6, H7 or H8 outcome. A territory next to a carried buyer is
+    ``test_h6_has_no_executed_control_in_this_gold_and_says_so``'s."""
     assert BY_ID["SF078"]["applicability"] == H8_FACT and BY_ID["SF079"]["applicability"] == H8_FACT
     hidden = []
     for case in APPLICABLE:
@@ -1456,6 +1483,7 @@ def test_the_manifest_declares_the_exclusions_the_transition_rules_and_the_limit
     assert ids >= {"LG-BASES-WITHOUT-HOST-FIELDS", "LG-CLASSIFICATION-CERTIFIED-BY-8B", "GOLD-GAP-F16-ANY-VALUE",
                    "GOLD-GAP-H6-OVERFIRE", "LG-HOST-FACTS-NOT-IN-GOLD", "LG-LECTURA-WITHOUT-TYPED-VALUE",
                    "LG-TARGET-NOT-ADDRESSABLE", "LG-AUTHORITY-REFUSALS", "LG-F16-CONTAINED-VALUE", "LG-REGION-MEMBERS-SYNTHETIC",
+                   "LG-H8-ONLY-AFTER-A-UNIVERSE-CHANGE",
                    "LG-HOST-RULES-NOT-DECIDED-HERE",
                    "GOLD-GAP-SET-CLEARS-WHOLE-DIMENSION", "GOLD-GAP-CLEAR-DIMENSION-ONLY-POSITIVE",
                    "GOLD-GAP-REPLACE-UNIVERSE-KEEPS-OLD-KIND", "LG-DATASET-VALUE", "LG-REQUEST-POLICIES", "LG-FRESH-ACCEPTANCE"}
@@ -1981,6 +2009,12 @@ def test_the_synthetic_audit_of_real_actuals_declares_what_it_did_not_cover():
     assert not partial["ok"] and partial["extra"]  # REAL ids with no REAL case loaded
     only_synthetic = oracle.audit({k: v for k, v in reference.items() if not k.startswith("R")}, cases)
     assert not only_synthetic["ok"] and only_synthetic["missing"]  # REAL cases loaded but not answered
+
+
+@needs_real
+def test_the_real_states_over_an_unchanged_universe_are_covered_by_the_declared_h8_assumption():
+    ids = _states_over_an_unchanged_universe([c for c in oracle.load_cases(REAL_DIR) if c["source"] == "REAL"])
+    assert ids and all(i.startswith("R") for i in ids)
 
 
 @needs_real

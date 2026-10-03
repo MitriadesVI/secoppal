@@ -104,10 +104,12 @@ TRANSITION_RULES = (
     {"id": "T-REFUSAL-UNJUSTIFIED", "clause": "§6 step 3b (a refusal needs a cause), §6.1",
      "demands": "a structural refusal (DELTA_SLOT_CONFLICT, KEEP_ON_EMPTY_SLOT, DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER, "
                 "TARGET_NOT_ADDRESSABLE over a base without logic) over a patch with no such cause refuses a lawful "
-                "transition; OP_NOT_ACCREDITED:<DIM> (or its A.3 publication) names a dimension some op of the patch touches",
+                "transition; OP_NOT_ACCREDITED:<DIM> (or its A.3 publication) names a dimension some op of the patch touches or "
+                "the base holds (§6 step 3b row 4 also admits a policy without owner, §6.6, which is re-decided on the "
+                "composed effective)",
      "killed_by": ["refuse_lawful_as_slot_conflict", "refuse_lawful_as_keep_on_empty",
                    "refuse_lawful_as_cardinality_without_order", "refuse_lawful_as_target_not_addressable",
-                   "refuse_op_not_accredited_on_an_untouched_dimension"]},
+                   "refuse_op_not_accredited_on_a_dimension_neither_touched_nor_held"]},
     {"id": "T-REQ-SET", "clause": "§5.2 (REPLACE_UNIVERSE), §14",
      "demands": "without REPLACE_UNIVERSE the effective has exactly the base's requests; with it, exactly one: the named "
                 "subject's (a dual anchor keeps the named one and the other disappears) or the single one",
@@ -117,10 +119,13 @@ TRANSITION_RULES = (
                 "universe_kind, universe_origin, view, dataset",
      "killed_by": ["M3_reoriginate_untouched_request", "M4_change_scope_id_untouched", "M5_change_request_id_untouched",
                    "untouched_request_dataset_changed"]},
-    {"id": "T-REQ-REDIRECT", "clause": "§5.2 (REPLACE_UNIVERSE changes subject and kind), §3.2 (request_id, scope_id and view "
-                                       "belong to the request); user decision R3 (request_id, scope_id)",
+    {"id": "T-REQ-REDIRECT", "clause": "§5.2 (REPLACE_UNIVERSE changes subject and kind; the universe becomes said, the view not "
+                                       "derived), §3.2 (view is required iff the subject is unspecified); user decision R3 "
+                                       "(request_id, scope_id)",
      "demands": "a request touched by REPLACE_UNIVERSE keeps request_id, scope_id and view: only subject, universe_kind, "
-                "universe_origin and dataset change (neither §5.2 nor §3.2 says the redirect rewrites the view)",
+                "universe_origin and dataset change. Known limit: a redirect FROM an unspecified request must drop its view "
+                "(§3.2, §5.2); this check does not demand it because the oracle's bases are specified (the Gold's requests "
+                "carry view None), so the case is latent",
      "killed_by": ["redirect_changes_request_id", "redirect_changes_scope_id", "redirect_changes_view"]},
     {"id": "T-REQ-TARGET", "clause": "§5.2",
      "demands": "the redirected request has the op's subject and universe kind",
@@ -363,14 +368,18 @@ def in_vocabulary(code: str) -> bool:
 
 def _check_refusal(base: dict, patch: dict, refusal: str, bad: Callable) -> None:
     """The reducer refused with ``refusal``: it must be a code of the vocabulary, it needs a cause, and the code must be the
-    highest-precedence one. An OP_NOT_ACCREDITED over a dimension no op of the patch touches has no op to blame."""
+    highest-precedence one. An OP_NOT_ACCREDITED must name a dimension an op of the patch touches or the base HOLDS (the carried
+    ones): row 4 of §6 step 3b also admits «una política sin dueño (§6.6)», re-decided on the composed effective (a
+    REPLACE_UNIVERSE with a STATE or an ACTOR in the base, ACTOR x TIME), which blames a dimension no op touches. A dimension
+    neither touched nor held has nothing to blame."""
     code, causes = _published(refusal), refusal_causes(base, patch)
     if not (in_vocabulary(refusal) or in_vocabulary(code)):
         bad("T-REFUSAL-CODE", f"{refusal!r} is not a code of annex A.3 or of the DeltaRefusal list")
         return
     head, _, tail = code.partition(":")
-    if head == OPNA and tail not in {_dimension(op["slot"]) for op in patch["ops"]}:
-        bad("T-REFUSAL-UNJUSTIFIED", f"{refusal} names {tail}, a dimension no op of the patch touches")
+    blameable = {_dimension(op["slot"]) for op in patch["ops"]} | {c["dimension"] for c in base["conditions"]} | {"UNIVERSE"}
+    if head == OPNA and tail not in blameable:  # the universe is always in the base: every base has its requests
+        bad("T-REFUSAL-UNJUSTIFIED", f"{refusal} names {tail}, a dimension no op of the patch touches and the base does not hold")
     if causes:
         if code != causes[0]["code"] and not (code == "TARGET_NOT_ADDRESSABLE" and base["logic"] is not None):
             bad("T-REFUSAL-CODE", f"the highest-precedence cause is {causes[0]['code']} (of {[c['code'] for c in causes]}) "
