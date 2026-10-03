@@ -11,9 +11,10 @@ The seal, the contract and the valid vocabulary are INPUTS verified at run time,
 
 So when the Gold is re-sealed (a new case, a new code) the oracle is regenerated without touching any code.
 
-User decisions about applicability live in ``APPLICABILITY_DECISIONS.json`` and are accepted only when each one cites a
-RECORD that exists, is pinned by sha256 and states the decision on one line (decision id, Gold id and owner): a decision
-that nobody recorded is refused by ``load_decisions`` (and so by ``load_cases`` and ``audit``).
+Dependencies have ONE authority (U19): contract section 19, through the sealed extraction ``CONTRACT_S19_DEPENDENCIES.json``
+(schema ``m2a-contract-s19/2``). ``s19()`` reads it only after the seal verifies and the file matches the sha256 the seal
+binds, and refuses an extraction that is missing, of another schema, with an owner or an impact outside its own closed
+lists, or inconsistent with itself. There is no local override and no recorded user decision in the oracle.
 
 Nothing here knows the reducer: the oracle is independent of M2A-3 and imports no registered M2a module.
 """
@@ -33,10 +34,10 @@ ROOT = Path(__file__).resolve().parents[3]
 GOLD_DIR = ROOT / "docs/audits/m2a_conversation/gold"
 SEAL_PATH = GOLD_DIR / "M2A_GOLD_SEAL.json"
 SCRIPTS_DIR = Path(__file__).resolve().parent
-DECISIONS_PATH = ROOT / "docs/audits/m2a_conversation/oracle/APPLICABILITY_DECISIONS.json"
-DECISIONS_SCHEMA = "m2a-oracle-applicability-decisions/2"
-DECISION_FIELDS = {"owner", "decided_by", "date", "record"}
-RECORD_FIELDS = {"doc", "decision_id", "doc_sha256"}
+S19_PATH = GOLD_DIR / "CONTRACT_S19_DEPENDENCIES.json"
+S19_KEY = str(S19_PATH.relative_to(ROOT))  # how the seal names it
+S19_SCHEMA = "m2a-contract-s19/2"
+KNOWN_IMPACTS = ("LECTURA", "COMPOSICION")  # the only two impacts the oracle knows how to treat (U19)
 
 
 class OracleError(Exception):
@@ -91,6 +92,8 @@ def verify_seal(real_dir: Path | None = None) -> None:
         sys.argv = argv
         with contextlib.redirect_stdout(out):
             code = seal_module().main()
+    except (OSError, ValueError) as error:  # a file the seal binds is missing or unreadable: the seal does not verify
+        raise OracleError(f"the Gold seal does not verify: {error}") from error
     finally:
         sys.argv = saved
     if code != 0:
@@ -102,52 +105,123 @@ def invalidate_seal_cache() -> None:
     _VERIFIED.clear()
 
 
-def check_reason(reason: str | None) -> None:
-    """A ``disposition_reason`` must be in the sealed checker's vocabulary (its codes and parameterised prefixes)."""
+def host_rules() -> dict[str, tuple[str | None, str | None]]:
+    """``{rule: (disposition, code)}`` of contract §6 step 4 (H1...H12), through the sealed checker's own contract parser."""
+    chk = checker()
+    return {rule: (disposition, code) for rule, disposition, code in chk.contract_text.host_rules(chk._CONTRACT)}
+
+
+def contract_slot_order() -> tuple[str, ...]:
+    """The slots in the order of the rows of contract §4.2 (each polarized dimension POSITIVE then NEGATIVE, VALUE lower then
+    upper): the tie-break between refusal causes of one precedence. Read through the sealed checker's contract parser."""
+    chk = checker()
+    text = chk._CONTRACT
+    rows = chk.contract_text.table(chk.contract_text.section(text, "### 4.2 Ranuras", "### 4.3 Identidad"),
+                                   "| Ranura | Contenido |")
+    names = {"TOPIC", "BUYER", "ACTOR", "GEOGRAPHY", "TIME", "STATE", "MODALITY", "CONTRACT_TYPE_OR_NATURE", "VALUE", "ORDER",
+             "CARDINALITY", "UNIVERSE"}
+    dimensions: list[str] = []
+    for row in rows:
+        for d in re.findall(r"[A-Z][A-Z_]+", row[0]):
+            if d in names and d not in dimensions:
+                dimensions.append(d)
+    if set(dimensions) != names:
+        raise OracleError(f"the slot table of §4.2 does not name the dimensions the oracle knows: {sorted(set(dimensions))}")
+    single = {"VALUE": ("VALUE/lower", "VALUE/upper"), "ORDER": ("ORDER",), "CARDINALITY": ("CARDINALITY",),
+              "UNIVERSE": ("UNIVERSE",)}
+    return tuple(s for d in dimensions for s in single.get(d, (f"{d}/POSITIVE", f"{d}/NEGATIVE")))
+
+
+def contract_comparable_units() -> tuple[frozenset[str], str]:
+    """§15.2 (A8): the units of the scale of pesos, comparable among themselves, and the one unit comparable only with itself."""
+    chk = checker()
+    body = chk.contract_text.section(chk._CONTRACT, "### 15.2 A8.1", "### 15.3")
+    found = re.search(r"unidades de escala de pesos \(([^)]*)\)", body)
+    if found is None or "`SMMLV`" not in body:
+        raise OracleError("§15.2 does not say which units are comparable in the shape the oracle reads")
+    return frozenset(re.findall(r"`([A-Z_]+)`", found.group(1))), "SMMLV"
+
+
+def contract_precedence() -> tuple[str, ...]:
+    """§6 step 3b: the closed precedence of refusal causes, highest first (the sealed checker's own reading)."""
+    return tuple(code.partition(":")[0] for code in checker().PRECEDENCE)
+
+
+def check_reason(reason: str | None, disposition: str | None = None) -> None:
+    """A ``disposition_reason`` must be in the sealed checker's vocabulary: its codes, its parameterised heads WITH a tail
+    in the domain the contract declares, and (given the disposition) the pair annex A.3 allows."""
     chk = checker()
     if reason is None:
         return
-    if reason in chk.RETIRED_REASONS or not (reason in chk.REASONS or reason.startswith(tuple(chk.REASON_PREFIXES))):
+    if reason in chk.RETIRED_REASONS:
+        raise OracleError(f"disposition_reason {reason!r} is retired")
+    if reason in chk.REASONS:
+        shape = reason
+    elif reason.startswith(tuple(chk.REASON_PREFIXES)):
+        head, _, tail = reason.partition(":")
+        if tail not in chk.REASON_TAILS.get(head + ":", set()):
+            raise OracleError(f"disposition_reason {reason!r}: the tail is outside the domain the contract declares")
+        shape = head + ":" + {"UNRESOLVED_VALUE": "<DIM>", "OPERATION_CHANGE": "<op>",
+                              "UNSUPPORTED_PROPOSAL": "<motivo>"}.get(head, "?")
+    else:
         raise OracleError(f"disposition_reason {reason!r} is not in the sealed vocabulary")
+    if disposition in ("EXECUTE", "NEW_SEARCH"):
+        raise OracleError(f"{disposition} carries no reason (got {reason!r})")
+    if disposition in chk.PAIRS and shape not in chk.PAIRS[disposition]:
+        raise OracleError(f"disposition_reason {reason!r} is not valid with {disposition} (annex A.3 pairs)")
 
 
-def _record_states(decision_id: str, gold_id: str, owner: str, text: str) -> bool:
-    """Some line of the record carries the decision id, the Gold id and the owner as whole tokens."""
-    def has(token: str, line: str) -> bool:
-        return re.search(rf"(?<![\w.-]){re.escape(token)}(?![\w.-])", line) is not None
-    return any(has(decision_id, ln) and has(gold_id, ln) and has(owner, ln) for ln in text.splitlines())
+_S19: dict[tuple, dict] = {}
 
 
-def load_decisions(known_ids: set[str] | None = None) -> dict[str, dict]:
-    """The user's decisions about applicability, each checked against a pinned record that states it."""
-    return verify_decisions(json.loads(DECISIONS_PATH.read_text(encoding="utf-8")), known_ids)
+def s19(real_dir: Path | None = None) -> dict:
+    """The sealed extraction of contract section 19, verified at run time (never a copy kept in the oracle).
 
-
-def verify_decisions(data: dict, known_ids: set[str] | None = None) -> dict[str, dict]:
-    if data.get("schema") != DECISIONS_SCHEMA or set(data) != {"schema", "decisions"}:
-        raise OracleError("APPLICABILITY_DECISIONS.json: unknown schema or keys")
-    known = known_ids if known_ids is not None else {
-        i for source in ("REAL", "SYNTHETIC") for i in seal()["slices"]["M2A_GOLD"][source]["ids"]}
-    for gid, decision in data["decisions"].items():
-        if gid not in known:
-            raise OracleError(f"decision for {gid}: not an M2A_GOLD id of the seal")
-        record = decision.get("record") if isinstance(decision, dict) else None
-        if set(decision) != DECISION_FIELDS or not isinstance(record, dict) or set(record) != RECORD_FIELDS or not all(
-                type(v) is str and v.strip() for v in (*(decision[k] for k in DECISION_FIELDS - {"record"}),
-                                                      *record.values())):
-            raise OracleError(f"decision for {gid}: needs owner, decided_by, date and a record "
-                              f"{{doc, decision_id, doc_sha256}}, all non-empty")
-        doc = (ROOT / record["doc"]).resolve()
-        if ROOT not in doc.parents or doc == DECISIONS_PATH.resolve() or not doc.is_file():
-            raise OracleError(f"decision for {gid}: record {record['doc']!r} is not an existing document of the repo "
-                              f"(the decisions file cannot be its own record)")
-        raw = doc.read_bytes()
-        if hashlib.sha256(raw).hexdigest() != record["doc_sha256"]:
-            raise OracleError(f"decision for {gid}: record {record['doc']!r} does not match its pinned sha256")
-        if not _record_states(record["decision_id"], gid, decision["owner"], raw.decode("utf-8")):
-            raise OracleError(f"decision for {gid}: record {record['doc']!r} does not state decision "
-                              f"{record['decision_id']!r} for {gid} with owner {decision['owner']!r}")
-    return data["decisions"]
+    Fails (``OracleError``) when the file is missing, does not match the sha256 the seal binds, has another schema, lists an
+    impact the oracle does not know or an owner outside its own closed list, names a case the sealed Gold does not have, or
+    contradicts itself (a case's impact or owners are not the roll-up of its dependencies)."""
+    verify_seal(real_dir)
+    if not S19_PATH.is_file():
+        raise OracleError("the section 19 extraction is missing: nothing else may decide a dependency (U19)")
+    raw, sealed = S19_PATH.read_bytes(), seal()
+    entry = sealed["public_files"].get(S19_KEY)
+    digest_now = hashlib.sha256(raw).hexdigest()
+    if entry is None or entry["sha256"] != digest_now:
+        raise OracleError("the section 19 extraction does not match the sha256 the seal binds")
+    if digest_now in _S19:
+        return _S19[digest_now]
+    data = json.loads(raw.decode("utf-8"))
+    if data.get("schema") != S19_SCHEMA:
+        raise OracleError(f"the section 19 extraction has schema {data.get('schema')!r}, not {S19_SCHEMA!r}")
+    contract = sealed["interpreting_rules"].get(data["source"]["contract"])
+    if contract is None or contract != data["source"]["contract_sha256"]:
+        raise OracleError("the section 19 extraction was made from a contract the seal does not bind")
+    if tuple(data["impacts"]) != KNOWN_IMPACTS:
+        raise OracleError(f"the section 19 extraction declares impacts {data['impacts']}: the oracle knows {KNOWN_IMPACTS}")
+    owners = set(data["owners"])
+    rows = {d["dep_id"]: d for d in data["dependencies"]}
+    gold_ids = {i for source in ("REAL", "SYNTHETIC") for i in sealed["slices"]["M2A_GOLD"][source]["ids"]}
+    for dep in data["dependencies"]:
+        if dep["impacto_m2a3"] not in KNOWN_IMPACTS:
+            raise OracleError(f"{dep['dep_id']}: unknown impact {dep['impacto_m2a3']!r}")
+        if set(dep["owners"]) - owners or not dep["owners"]:
+            raise OracleError(f"{dep['dep_id']}: owner outside the closed list of the extraction: "
+                              f"{sorted(set(dep['owners']) - owners)}")
+    if set(data["case_dependencies"]) - gold_ids:
+        raise OracleError("the section 19 extraction names cases the sealed M2A_GOLD does not have")
+    for case, deps in data["case_dependencies"].items():
+        unknown = [d for d in deps if d not in rows]
+        if unknown:
+            raise OracleError(f"{case}: dependencies {unknown} are not rows of the extraction")
+        impact = "COMPOSICION" if any(rows[d]["impacto_m2a3"] == "COMPOSICION" for d in deps) else "LECTURA"
+        if data["case_impacto_m2a3"].get(case) != impact or data["case_owners"].get(case) != sorted(
+                {o for d in deps for o in rows[d]["owners"]}):
+            raise OracleError(f"{case}: impact or owners are not the roll-up of its dependencies")
+    if set(data["case_impacto_m2a3"]) != set(data["case_dependencies"]) or set(data["case_owners"]) != set(
+            data["case_dependencies"]):
+        raise OracleError("the section 19 extraction indexes different cases per field")
+    _S19[digest_now] = data
+    return data
 
 
 def sha(text: str) -> str:

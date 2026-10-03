@@ -20,12 +20,16 @@ from __future__ import annotations
 import ast
 import copy
 import random
+import re
+import urllib.parse
 from pathlib import Path
 
 import pytest
 from hypothesis import HealthCheck, given, settings
 from hypothesis import strategies as st
 
+from scripts.audits.m2a_conversation import m2a_contract_text as contract_text
+from scripts.audits.m2a_conversation import m2a_oracle_gold as gold
 from scripts.audits.m2a_conversation import m2a_oracle_transition as transition
 from scripts.audits.m2a_conversation import m2a_oracle_typing as typing_
 from scripts.audits.m2a_conversation import m2a_reducer_oracle as oracle
@@ -130,7 +134,7 @@ def probe_apply(base: dict, patch: dict, dataset_of=typing_.dataset_of) -> dict:
             "policies": [], "base_trace_id": "b0", "root_trace_id": base["root_trace_id"]}
 
 
-def enrich(base: dict, patch: dict, seed: int) -> tuple[dict, dict]:
+def enrich(base: dict, patch: dict, seed: int, smmlv: bool = False) -> tuple[dict, dict]:
     """Fill EVERY host field with non-default content: what the Gold's bases lack (policies, receipt_rules, authority,
     provenance.{source_amount, year, year_source, buyer_scope, inherited_from}, origins, a view): the generated bases."""
     rng = random.Random(seed)
@@ -145,6 +149,8 @@ def enrich(base: dict, patch: dict, seed: int) -> tuple[dict, dict]:
                                        year_source=rng.choice(["STATED", "PREVIOUS_ACCEPTED_TIME"]),
                                        buyer_scope=rng.choice(["05001", "NATIONAL", "08"]),
                                        inherited_from=f"t-{rng.randint(0, 9)}")
+        if smmlv and condition["dimension"] == "VALUE" and rng.random() < 0.3:
+            condition["provenance"]["unit"] = "SMMLV"  # the unit class decides whether A8.1 can compare two bounds (§15.2)
     for c in base["conditions"]:
         fill(c)
         c["origin"] = {"kind": "SPAN", "trace_id": f"t{rng.randint(0, 4)}", "raw_sha256": f"{rng.getrandbits(256):064x}",
@@ -238,9 +244,9 @@ def random_transition(seed: int) -> tuple[dict, dict]:
     for n, entry in enumerate(rng.sample(VOCABULARY, rng.randint(2, 6)), 1):
         dimension, operator, polarity, level, unit, hint = entry
         t = typing_.tcond(dimension, operator, polarity, level, unit, hint)
-        if t["slot"] in taken:
+        if t["slot"] in taken and not (t["slot"] == "TOPIC/POSITIVE" and taken[t["slot"]] == 1):  # at most two TOPIC positives
             continue
-        taken[t["slot"]] = True
+        taken[t["slot"]] = taken.get(t["slot"], 0) + 1
         base_conditions.append(typing_.condition_dict(t, f"c{n}", rids, typing_.origin("t0", raw, n)))
     if rng.random() < 0.4:
         order = typing_.tcond("ORDER", "value_desc", "POSITIVE", None, None, None, ods="STATED")
@@ -299,7 +305,7 @@ def refused(base, patch) -> bool:
 @FAST
 @given(seed=st.integers(min_value=0, max_value=10**7))
 def test_the_faithful_application_is_lawful_over_generated_transitions_with_the_host_table(seed):
-    base, patch = enrich(*random_transition(seed), seed)
+    base, patch = enrich(*random_transition(seed), seed, smmlv=True)
     if refused(base, patch):
         return
     for request in base["requests"]:
@@ -311,7 +317,7 @@ def test_the_faithful_application_is_lawful_over_generated_transitions_with_the_
 
 GENERATED = []
 for _seed in range(4000):
-    _base, _patch = enrich(*random_transition(_seed), _seed)
+    _base, _patch = enrich(*random_transition(_seed), _seed, smmlv=True)
     if not refused(_base, _patch):
         GENERATED.append((f"generated-{_seed}", _base, _patch))
         if len(GENERATED) == 400:
@@ -389,14 +395,7 @@ HAND = [
     hand("f16_other_value", [TOPIC_A], [set_op(TOPIC_B_NEG)]),
     hand("f16_same_value", [TOPIC_A], [set_op(TOPIC_A_NEG)]),
     hand("two_positives_and_a_negative_set", [TOPIC_A, TOPIC_C], [set_op(TOPIC_B_NEG)]),
-    # F16 inverts the STANDING single positive only: a positive the same patch places is never "vigente" (found by
-    # Hypothesis, seed 88199: the faithful application used to displace the patch's own positive)
-    hand("one_patch_sets_both_polarities_of_one_value", [BUYER],
-         [set_op(cond("TOPIC", "contains", "POSITIVE", "aseo", "p0", R, n=1)), set_op(TOPIC_A_NEG, 1)]),
-    hand("one_patch_sets_both_polarities_over_the_standing_positive", [TOPIC_A],
-         [set_op(cond("TOPIC", "contains", "POSITIVE", "aseo", "p0", R, n=1)), set_op(TOPIC_A_NEG, 1)]),
-    hand("negative_first_then_positive_over_the_standing_positive", [TOPIC_A],
-         [set_op(TOPIC_A_NEG, 1), set_op(cond("TOPIC", "contains", "POSITIVE", "aseo", "p0", R, n=1))]),
+    # R3 (P-3): +X and -X in one patch is NOT a lawful transition any more (OP_NOT_ACCREDITED); it is a refusal case below
     hand("clear_topic_with_both_polarities", [TOPIC_A, TOPIC_NEG, BUYER], [clear_op("TOPIC")]),
     hand("a81_collision", [LOWER, BUYER], [set_op(NEW_UPPER_COLLIDING)]),
     hand("a81_no_collision", [LOWER, BUYER], [set_op(NEW_UPPER_OK)]),
@@ -424,25 +423,98 @@ def test_every_hand_built_transition_is_lawful_when_faithful_with_the_host_table
 
 
 # ====================================================================================================================
-# THE REFUSALS
+# THE REFUSALS (§6 steps 2, 3b, 5; §6.7): what the contract refuses, and for which cause first
 # ====================================================================================================================
-CONFLICT_CASES = {
-    "effective_for_slot_conflict": hand("c", [TOPIC_A], [set_op(NEW_TOPIC), set_op(cond("TOPIC", "contains", "POSITIVE", "otro", "p9", R))])[1],
+def with_unit(condition, unit):
+    return {**condition, "provenance": {**condition["provenance"], "unit": unit}}
+
+
+SMMLV_UPPER = with_unit(cond("VALUE", "less_or_equal", "POSITIVE", "400 millones", "p2", R, unit="MILLONES", n=8), "SMMLV")
+TOPIC_A_P0 = cond("TOPIC", "contains", "POSITIVE", "aseo", "p0", R, n=1)
+BUYER_A_NEG = cond("BUYER", "is", "NEGATIVE", "SENA", "p5", R, n=5)
+BUYER_A_P = cond("BUYER", "is", "POSITIVE", "SENA", "p6", R, n=6)
+TOPIC_C_NEG = cond("TOPIC", "contains", "NEGATIVE", "dotación", "p7", R, n=7)
+CARD_NEW = cond("CARDINALITY", "top_n", "POSITIVE", None, "p8", R, n_requested=20, n=11)
+TOPIC_OTHER = cond("TOPIC", "contains", "POSITIVE", "otro", "p9", R)
+
+REFUSAL_CASES = {  # name -> (base, patch): each patch has a cause the contract refuses; the faithful application is NOT lawful
+    "effective_for_two_set_one_slot": hand("c", [TOPIC_A], [set_op(NEW_TOPIC), set_op(TOPIC_OTHER)])[1],
+    "effective_for_keep_and_clear_one_slot": hand("kc", [TOPIC_A], [keep_op("TOPIC/POSITIVE"), clear_op("TOPIC", 1)])[1],
+    "effective_for_keep_and_set_same_value": hand("ks", [TOPIC_A, BUYER], [keep_op("TOPIC/POSITIVE"), set_op(TOPIC_A_P0, 1)])[1],
+    "effective_for_keep_and_set_order": hand("ko", [ORDER, CARD, BUYER], [keep_op("ORDER"), set_op(NEW_ORDER, 1)])[1],
+    "effective_for_keep_and_replace_universe": hand("ku", [TOPIC_A], [keep_op("UNIVERSE"), redirect_op("contracts", "records", 1)])[1],
+    "effective_for_two_replace_universe": hand("rr", [TOPIC_A], [redirect_op("processes", "records"), redirect_op("contracts", "records", 1)])[1],
     "effective_for_keep_on_empty_slot": hand("k", [TOPIC_A], [keep_op("BUYER/POSITIVE")])[1],
-    "effective_for_clear_on_empty_slot": hand("e", [TOPIC_A], [clear_op("MODALITY")])[1],
+    "effective_for_f16_several_positives": hand("f", [TOPIC_A, TOPIC_C, BUYER], [set_op(TOPIC_A_NEG)])[1],
+    "effective_for_f16_same_patch_positive": hand("p3", [BUYER], [set_op(TOPIC_A_P0), set_op(TOPIC_A_NEG, 1)])[1],
+    "effective_for_a81_incomparable_units": hand("a", [LOWER, BUYER], [set_op(SMMLV_UPPER)])[1],
     "effective_for_clear_order_leaving_cardinality": hand("o", [ORDER, CARD, BUYER], [clear_op("ORDER")])[1],
-    "keep_and_clear_one_slot": hand("kc", [TOPIC_A], [keep_op("TOPIC/POSITIVE"), clear_op("TOPIC", 1)])[1],
-    "two_replace_universe": hand("rr", [TOPIC_A], [redirect_op("processes", "records"), redirect_op("contracts", "records", 1)])[1],
+    "effective_for_set_cardinality_without_order": hand("sc", [TOPIC_A, BUYER], [set_op(CARD_NEW)])[1],
+    "effective_for_clear_on_empty_slot": hand("e", [TOPIC_A], [clear_op("MODALITY")])[1],
+}
+EXPECTED_REFUSAL = {
+    "effective_for_two_set_one_slot": "DELTA_SLOT_CONFLICT", "effective_for_keep_and_clear_one_slot": "DELTA_SLOT_CONFLICT",
+    "effective_for_keep_and_set_same_value": "DELTA_SLOT_CONFLICT", "effective_for_keep_and_set_order": "DELTA_SLOT_CONFLICT",
+    "effective_for_keep_and_replace_universe": "DELTA_SLOT_CONFLICT", "effective_for_two_replace_universe": "DELTA_SLOT_CONFLICT",
+    "effective_for_keep_on_empty_slot": "KEEP_ON_EMPTY_SLOT", "effective_for_f16_several_positives": "OP_NOT_ACCREDITED:TOPIC",
+    "effective_for_f16_same_patch_positive": "OP_NOT_ACCREDITED:TOPIC",
+    "effective_for_a81_incomparable_units": "OP_NOT_ACCREDITED:VALUE",
+    "effective_for_clear_order_leaving_cardinality": "DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER",
+    "effective_for_set_cardinality_without_order": "DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER",
+    "effective_for_clear_on_empty_slot": "CLEAR_ON_EMPTY_SLOT",
 }
 
 
-@pytest.mark.parametrize("name", sorted(CONFLICT_CASES))
+@pytest.mark.parametrize("name", sorted(REFUSAL_CASES))
 def test_a_patch_the_contract_refuses_must_not_produce_an_effective(name):
-    base, patch = CONFLICT_CASES[name]
-    base, patch = enrich(base, patch, 3)
+    base, patch = enrich(*REFUSAL_CASES[name], 3)
     assert check(base, patch, None) == []
     violations = check(base, patch, probe_apply(base, patch))
     assert [v["rule"] for v in violations] == ["T-REFUSAL"]
+    assert transition.expected_refusal(base, patch) == EXPECTED_REFUSAL[name]
+    assert check(base, patch, None, refusal=EXPECTED_REFUSAL[name]) == []  # and refusing with its code is lawful
+
+
+@pytest.mark.parametrize("a3,deltarefusal", [("UNRESOLVED_VALUE:TOPIC", "OP_NOT_ACCREDITED:TOPIC"),
+                                               ("UNRESOLVED_VALUE:VALUE", "OP_NOT_ACCREDITED:VALUE"),
+                                               ("VALUE_WITHOUT_COMPARATOR", "OP_NOT_ACCREDITED:VALUE")])
+def test_the_a3_code_published_for_op_not_accredited_is_the_same_refusal(a3, deltarefusal):
+    assert transition._published(a3) == deltarefusal
+    for name in ("effective_for_f16_several_positives", "effective_for_a81_incomparable_units"):
+        base, patch = enrich(*REFUSAL_CASES[name], 3)
+        top = transition.expected_refusal(base, patch)
+        assert (check(base, patch, None, refusal=a3) == []) == (top == deltarefusal)
+
+
+def test_the_contract_does_not_refuse_what_it_does_not_name():
+    """KEEP of a slot the patch does not write; F16 over the single carried positive (a declared substitution); a negation of
+    ANOTHER value next to several positives (F17); a bound against a comparable carried one; CLEAR(ORDER)+CLEAR(CARDINALITY);
+    CLEAR(ORDER)+SET_ORDER (F10); an ANSWER-free delta over a base with logic that no op addresses."""
+    lawful = {
+        "keep_other_slot": hand("a", [TOPIC_A, BUYER], [set_op(NEW_TOPIC), keep_op("BUYER/POSITIVE", 1)])[1],
+        "f16_single_carried": hand("b", [TOPIC_A, BUYER], [set_op(TOPIC_A_NEG)])[1],
+        "negate_another_value_next_to_several": hand("c", [TOPIC_A, TOPIC_C, BUYER], [set_op(TOPIC_B_NEG)])[1],
+        "comparable_bound": hand("d", [LOWER, BUYER], [set_op(NEW_UPPER_OK)])[1],
+        "clear_order_and_cardinality": hand("e", [ORDER, CARD, BUYER], [clear_op("ORDER"), clear_op("CARDINALITY", 1)])[1],
+        "clear_order_and_set_order": hand("f", [ORDER, CARD, BUYER], [clear_op("ORDER"), set_op(NEW_ORDER, 1)])[1],
+        "negative_next_to_a_different_positive": hand("g", [BUYER], [set_op(TOPIC_A_P0), set_op(TOPIC_B_NEG, 1)])[1],
+        "keep_the_universe": hand("h", [TOPIC_A], [keep_op("UNIVERSE"), set_op(NEW_TOPIC, 1)])[1],
+        "clear_of_an_empty_slot_is_h12_only_when_it_is_the_only_op": hand("i", [TOPIC_A, BUYER],
+                                                                          [clear_op("MODALITY"), set_op(NEW_TOPIC, 1)])[1],
+    }
+    for name, (base, patch) in lawful.items():
+        base, patch = enrich(base, patch, 5)
+        assert transition.refusal_causes(base, patch) == [] and transition.expected_refusal(base, patch) is None, name
+        assert check(base, patch, probe_apply(base, patch)) == [], name
+
+
+def test_a_cause_in_a_slot_the_patch_replaces_is_not_carried_so_it_is_not_a_cause():
+    """F16 fail-closed needs the carried positives: a SET of the positive slot in the same patch replaces them first."""
+    base, patch = hand("r", [TOPIC_A, TOPIC_C, BUYER], [set_op(TOPIC_OTHER), set_op(TOPIC_A_NEG, 1)])[1]
+    base, patch = enrich(base, patch, 5)
+    assert transition.refusal_causes(base, patch) == []
+    carried_positive_cleared = hand("s", [TOPIC_A, TOPIC_C, BUYER], [clear_op("TOPIC/POSITIVE"), set_op(TOPIC_A_NEG, 1)])[1]
+    assert transition.refusal_causes(*enrich(*carried_positive_cleared, 5)) == []
 
 
 # ====================================================================================================================
@@ -919,10 +991,11 @@ def test_the_rule_table_names_exactly_the_mutants_of_the_tests():
     by_rule: dict[str, set[str]] = {}
     for name, (rule, _fn) in MUTANTS.items():
         by_rule.setdefault(rule, set()).add(name)
-    refusal = {n for n in CONFLICT_CASES if n.startswith("effective_for")}
+    for name, (rule, _fn) in {**REFUSAL_CODE_MUTANTS, **UNJUSTIFIED_MUTANTS}.items():
+        by_rule.setdefault(rule, set()).add(name)
+    by_rule.setdefault("T-REFUSAL", set()).update(REFUSAL_CASES)
     for rule, names in rules.items():
-        expected = by_rule.get(rule, set()) | (refusal if rule == "T-REFUSAL" else set())
-        assert names == expected, rule
+        assert names == by_rule.get(rule, set()), rule
     assert set(by_rule) <= set(rules)
 
 
@@ -959,9 +1032,343 @@ def test_each_mutant_manifests_somewhere_and_is_killed_by_its_rule_everywhere(na
         assert rule in rules, (name, label, sorted(rules))
 
 
-@pytest.mark.parametrize("name", sorted(CONFLICT_CASES))
+# ---- the code of a refusal: closed precedence (§6 step 3b) and the slot order of §4.2 ----------------------------------------
+def random_messy(seed: int) -> tuple[dict, dict]:
+    """A generated transition with 1-3 troublemaker ops added: a second SET of a slot, a KEEP next to a SET, a KEEP of an
+    absent slot, +X and -X in one patch (P-3), a negation of a carried positive, an incomparable bound, a CLEAR of ORDER.
+    Some of them are refused (possibly for several causes), some are not."""
+    base, patch = random_transition(seed)
+    rng = random.Random(seed ^ 0x5EED)
+    raw = f"{seed:064x}"
+    ops = patch["ops"]
+    rids = [r["request_id"] for r in base["requests"]]
+    present = {c["slot"] for c in base["conditions"]}
+    for k in range(rng.randint(1, 3)):
+        trouble = rng.choice(["twice", "keep_and_set", "keep_absent", "p3", "negate_carried", "incomparable", "clear_order"])
+        origin = typing_.origin("t2", raw, 50 + k)
+        sets = [o for o in ops if o["op"] == "SET"]
+        if trouble == "twice" and sets:
+            dup = copy.deepcopy(rng.choice(sets))
+            dup["condition"]["condition_id"] = f"dup{k}"
+            ops.append(dup)
+        elif trouble == "keep_and_set" and sets:
+            ops.append({"op": "KEEP", "slot": rng.choice(sets)["slot"], "condition": None, "universe": None, "origin": origin})
+        elif trouble == "keep_absent":
+            absent = [s for s in ("MODALITY/POSITIVE", "STATE/POSITIVE", "ACTOR/NEGATIVE", "UNIVERSE") if s not in present]
+            ops.append({"op": "KEEP", "slot": rng.choice(absent), "condition": None, "universe": None, "origin": origin})
+        elif trouble == "p3":
+            hint = rng.choice(["aseo", "obras"])
+            for polarity in ("POSITIVE", "NEGATIVE"):
+                tc = typing_.tcond("TOPIC", "contains", polarity, None, None, hint)
+                ops.append({"op": "SET", "slot": tc["slot"], "universe": None, "origin": origin,
+                            "condition": typing_.condition_dict(tc, f"p3{polarity[0]}{k}", rids, origin)})
+        elif trouble == "negate_carried":
+            positives = [c for c in base["conditions"] if c["slot"] == "TOPIC/POSITIVE"]
+            if positives:
+                hint = urllib.parse.unquote(positives[0]["value"][1].partition("=")[2])
+                tc = typing_.tcond("TOPIC", "contains", "NEGATIVE", None, None, hint)
+                ops.append({"op": "SET", "slot": tc["slot"], "universe": None, "origin": origin,
+                            "condition": typing_.condition_dict(tc, f"nc{k}", rids, origin)})
+        elif trouble == "incomparable":
+            tc = typing_.tcond("VALUE", rng.choice(["greater_or_equal", "less_or_equal"]), "POSITIVE", None, "MILLONES",
+                               "100 millones")
+            condition = with_unit(typing_.condition_dict(tc, f"ic{k}", rids, origin), "SMMLV")
+            ops.append({"op": "SET", "slot": tc["slot"], "condition": condition, "universe": None, "origin": origin})
+        elif trouble == "clear_order":
+            ops.append({"op": "CLEAR", "slot": "ORDER", "condition": None, "universe": None, "origin": origin})
+    return base, {**patch, "ops": ops}
+
+
+MULTI_CAUSE = {  # patches with SEVERAL causes, to pin the closed precedence and the slot order
+    "conflict_and_keep_on_empty": hand("m1", [TOPIC_A, BUYER], [set_op(NEW_TOPIC), set_op(TOPIC_OTHER), keep_op("MODALITY/POSITIVE", 1)])[1],
+    "keep_on_empty_and_opna": hand("m2", [BUYER], [keep_op("TIME/POSITIVE"), set_op(TOPIC_A_P0, 1), set_op(TOPIC_A_NEG, 2)])[1],
+    "opna_and_cardinality": hand("m3", [ORDER, CARD, TOPIC_A], [clear_op("ORDER"), set_op(NEW_TOPIC, 1),
+                                                                set_op(cond("TOPIC", "contains", "NEGATIVE", "vigilancia", "p3", R, n=3), 2)])[1],
+    "conflict_and_cardinality": hand("m4", [ORDER, CARD, TOPIC_A], [clear_op("ORDER"), set_op(NEW_TOPIC, 1), set_op(TOPIC_OTHER, 2)])[1],
+    "keep_on_empty_and_cardinality": hand("m5", [ORDER, CARD, TOPIC_A], [clear_op("ORDER"), keep_op("BUYER/POSITIVE", 1)])[1],
+    "two_opna_in_two_dimensions": hand("m6", [LOWER], [set_op(BUYER_A_P), set_op(BUYER_A_NEG, 1), set_op(TOPIC_A_P0, 2), set_op(TOPIC_A_NEG, 3)])[1],
+    "every_cause_at_once": hand("m7", [ORDER, CARD, TOPIC_A, LOWER], [clear_op("ORDER"), set_op(NEW_TOPIC, 1), set_op(TOPIC_OTHER, 2),
+                                                                      keep_op("MODALITY/POSITIVE", 3), set_op(SMMLV_UPPER, 4)])[1],
+    "opna_value_and_opna_topic": hand("m8", [LOWER, TOPIC_A, TOPIC_C], [set_op(SMMLV_UPPER), set_op(TOPIC_A_NEG, 1)])[1],
+}
+EXPECTED_TOP = {"conflict_and_keep_on_empty": "DELTA_SLOT_CONFLICT", "keep_on_empty_and_opna": "KEEP_ON_EMPTY_SLOT",
+                "opna_and_cardinality": "OP_NOT_ACCREDITED:TOPIC", "conflict_and_cardinality": "DELTA_SLOT_CONFLICT",
+                "keep_on_empty_and_cardinality": "KEEP_ON_EMPTY_SLOT", "two_opna_in_two_dimensions": "OP_NOT_ACCREDITED:TOPIC",
+                "every_cause_at_once": "DELTA_SLOT_CONFLICT", "opna_value_and_opna_topic": "OP_NOT_ACCREDITED:TOPIC"}
+
+REFUSED_POOL = [*((f"case:{n}", *enrich(*REFUSAL_CASES[n], 5)) for n in sorted(REFUSAL_CASES)),
+                *((f"multi:{n}", *enrich(*MULTI_CAUSE[n], 5)) for n in sorted(MULTI_CAUSE))]
+LAWFUL_POOL = [entry for entry in POOL if transition.expected_refusal(entry[1], entry[2]) is None]
+MESSY = []
+for _seed in range(6000):
+    _base, _patch = enrich(*random_messy(_seed), _seed, smmlv=True)
+    MESSY.append((f"messy-{_seed}", _base, _patch))
+REFUSED_POOL += [m for m in MESSY if transition.expected_refusal(m[1], m[2]) is not None][:600]
+LAWFUL_MESSY = [m for m in MESSY if transition.expected_refusal(m[1], m[2]) is None][:200]
+
+
+def _codes(causes):
+    return [c["code"] for c in causes]
+
+
+def m_conflict_as_keep_on_empty(base, patch, causes):
+    codes = _codes(causes)
+    return "KEEP_ON_EMPTY_SLOT" if codes and codes[0] == "DELTA_SLOT_CONFLICT" and "KEEP_ON_EMPTY_SLOT" in codes else None
+
+
+def m_keep_on_empty_as_opna(base, patch, causes):
+    codes = _codes(causes)
+    lower = [c for c in codes if c.startswith("OP_NOT_ACCREDITED")]
+    return lower[0] if codes and codes[0] == "KEEP_ON_EMPTY_SLOT" and lower else None
+
+
+def m_opna_as_cardinality(base, patch, causes):
+    codes = _codes(causes)
+    return "DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER" if (codes and codes[0].startswith("OP_NOT_ACCREDITED")
+                                                        and "DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER" in codes) else None
+
+
+def m_conflict_as_cardinality(base, patch, causes):
+    codes = _codes(causes)
+    return "DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER" if (codes and codes[0] == "DELTA_SLOT_CONFLICT"
+                                                        and "DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER" in codes) else None
+
+
+def m_precedence_reversed(base, patch, causes):
+    return causes[-1]["code"] if len({c["refusal"] for c in causes}) >= 2 else None  # the LOWEST precedence first
+
+
+def m_slot_order_ignored(base, patch, causes):
+    same = [c for c in causes if c["refusal"] == causes[0]["refusal"]] if causes else []
+    return same[-1]["code"] if len({c["code"] for c in same}) >= 2 else None  # the LAST slot of the same precedence
+
+
+def m_wrong_dimension(base, patch, causes):
+    if not causes or not causes[0]["code"].startswith("OP_NOT_ACCREDITED:"):
+        return None
+    return "OP_NOT_ACCREDITED:" + ("GEOGRAPHY" if causes[0]["code"].endswith(":TOPIC") else "TOPIC")
+
+
+def m_replaced_by_a_host_rule(base, patch, causes):
+    return "CONTEXT_EXPIRED_CONFIRM" if causes else None  # H1 would fire AFTER the causes (§6 step 3b precedes step 4)
+
+
+REFUSAL_CODE_MUTANTS = {
+    "refusal_conflict_reported_as_keep_on_empty": ("T-REFUSAL-CODE", m_conflict_as_keep_on_empty),
+    "refusal_keep_on_empty_reported_as_opna": ("T-REFUSAL-CODE", m_keep_on_empty_as_opna),
+    "refusal_opna_reported_as_cardinality": ("T-REFUSAL-CODE", m_opna_as_cardinality),
+    "refusal_conflict_reported_as_cardinality": ("T-REFUSAL-CODE", m_conflict_as_cardinality),
+    "refusal_precedence_reversed": ("T-REFUSAL-CODE", m_precedence_reversed),
+    "refusal_slot_order_ignored": ("T-REFUSAL-CODE", m_slot_order_ignored),
+    "refusal_wrong_dimension": ("T-REFUSAL-CODE", m_wrong_dimension),
+    "refusal_replaced_by_a_host_rule": ("T-REFUSAL-CODE", m_replaced_by_a_host_rule),
+}
+UNJUSTIFIED_MUTANTS = {  # a lawful patch refused for a structural cause that is not there
+    "refuse_lawful_as_slot_conflict": ("T-REFUSAL-UNJUSTIFIED", "DELTA_SLOT_CONFLICT"),
+    "refuse_lawful_as_keep_on_empty": ("T-REFUSAL-UNJUSTIFIED", "KEEP_ON_EMPTY_SLOT"),
+    "refuse_lawful_as_cardinality_without_order": ("T-REFUSAL-UNJUSTIFIED", "DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER"),
+    "refuse_lawful_as_target_not_addressable": ("T-REFUSAL-UNJUSTIFIED", "TARGET_NOT_ADDRESSABLE"),
+}
+
+
+@pytest.mark.parametrize("name", sorted(MULTI_CAUSE))
+def test_the_precedence_of_several_causes_is_the_contracts_and_the_correct_code_is_lawful(name):
+    base, patch = enrich(*MULTI_CAUSE[name], 5)
+    causes = transition.refusal_causes(base, patch)
+    assert len(causes) >= 2 and causes[0]["code"] == EXPECTED_TOP[name] == transition.expected_refusal(base, patch)
+    assert [PRECEDENCE_INDEX[c["refusal"]] for c in causes] == sorted(PRECEDENCE_INDEX[c["refusal"]] for c in causes)
+    assert check(base, patch, None, refusal=EXPECTED_TOP[name]) == []
+    assert [v["rule"] for v in check(base, patch, probe_apply(base, patch))] == ["T-REFUSAL"]  # an effective is unlawful
+
+
+PRECEDENCE_INDEX = {code: n for n, code in enumerate(transition.PRECEDENCE)}
+
+
+def test_every_refusal_of_the_pool_is_lawful_with_its_own_code_and_unlawful_with_any_other_cause_first():
+    for label, base, patch in REFUSED_POOL:
+        causes = transition.refusal_causes(base, patch)
+        top = transition.expected_refusal(base, patch)
+        assert check(base, patch, None, refusal=top) == [], label
+        for cause in causes[1:]:
+            if cause["code"] != top:
+                assert {v["rule"] for v in check(base, patch, None, refusal=cause["code"])} == {"T-REFUSAL-CODE"}, label
+
+
+@pytest.mark.parametrize("name", sorted(REFUSAL_CODE_MUTANTS))
+def test_each_refusal_code_mutant_manifests_and_dies_on_its_rule(name):
+    rule, mutate = REFUSAL_CODE_MUTANTS[name]
+    hits = 0
+    for label, base, patch in REFUSED_POOL:
+        wrong = mutate(base, patch, transition.refusal_causes(base, patch))
+        if wrong is None or wrong == transition.expected_refusal(base, patch):
+            continue
+        hits += 1
+        assert rule in {v["rule"] for v in check(base, patch, None, refusal=wrong)}, (name, label, wrong)
+    assert hits >= 3, f"{name} manifests {hits} times"
+
+
+@pytest.mark.parametrize("name", sorted(UNJUSTIFIED_MUTANTS))
+def test_each_unjustified_refusal_mutant_dies_on_every_lawful_transition(name):
+    rule, code = UNJUSTIFIED_MUTANTS[name]
+    assert len(LAWFUL_POOL) > 100 and len(LAWFUL_MESSY) > 20
+    for label, base, patch in [*LAWFUL_POOL, *LAWFUL_MESSY]:
+        assert base["logic"] is None
+        assert rule in {v["rule"] for v in check(base, patch, None, refusal=code)}, (name, label)
+
+
+def test_what_the_dicts_cannot_show_is_not_judged_and_says_so():
+    """An authority refusal (OP_NOT_ACCREDITED over an op the authority did not resolve) and TARGET_NOT_ADDRESSABLE over a base
+    with a logic expression cannot be decided from the dicts: they are accepted; the Gold oracle decides them by case."""
+    for label, base, patch in LAWFUL_POOL[:50]:
+        assert check(base, patch, None, refusal="OP_NOT_ACCREDITED:TOPIC") == [], label
+        assert check(base, patch, None, refusal="UNRESOLVED_VALUE:VALUE") == [], label
+        assert check(base, patch, None, refusal="CONTEXT_EXPIRED_CONFIRM") == [], label  # a host rule: the Gold's to decide
+    label, base, patch = LAWFUL_POOL[0]
+    with_logic = {**copy.deepcopy(base), "logic": {"operator": "OR", "condition_id": None, "children": []}}
+    assert check(with_logic, patch, None, refusal="TARGET_NOT_ADDRESSABLE") == []
+    assert check(base, patch, None, refusal="TARGET_NOT_ADDRESSABLE") != []
+
+
+def test_an_effective_and_a_refusal_together_are_a_misuse():
+    label, base, patch = LAWFUL_POOL[0]
+    with pytest.raises(ValueError, match="not both"):
+        check(base, patch, probe_apply(base, patch), refusal="DELTA_SLOT_CONFLICT")
+
+
+@FAST
+@given(seed=st.integers(min_value=0, max_value=10**6), shuffle=st.integers(min_value=0, max_value=10**6))
+def test_the_outcome_does_not_depend_on_the_order_of_the_ops_of_a_patch(seed, shuffle):
+    """§6 step 2: «el desenlace no depende del orden de las operaciones dentro del parche»."""
+    base, patch = enrich(*random_messy(seed), seed, smmlv=True)
+    ops = list(patch["ops"])
+    random.Random(shuffle).shuffle(ops)
+    shuffled = {**patch, "ops": ops}
+    assert transition.refusal_causes(base, patch) == transition.refusal_causes(base, shuffled)
+    assert transition.expected_refusal(base, patch) == transition.expected_refusal(base, shuffled)
+    if transition.expected_refusal(base, patch) is None:
+        effective = probe_apply(base, patch)
+        assert check(base, patch, effective) == check(base, shuffled, effective)
+
+
+@FAST
+@given(seed=st.integers(min_value=0, max_value=10**7))
+def test_a_refusal_with_the_expected_code_is_lawful_and_an_effective_for_it_is_not_over_generated_messy_patches(seed):
+    base, patch = enrich(*random_messy(seed), seed, smmlv=True)
+    expected = transition.expected_refusal(base, patch)
+    if expected is None:
+        assert check(base, patch, probe_apply(base, patch, dataset_of=host_dataset)) is not None
+        return
+    assert check(base, patch, None, refusal=expected) == []
+    assert [v["rule"] for v in check(base, patch, probe_apply(base, patch))] == ["T-REFUSAL"]
+
+
+# ---- the oracle against the Gold and the contract ----------------------------------------------------------------------------
+def gold_refusal_of(case):
+    expected = case["expected"]
+    code = expected["code"]
+    if expected["disposition"] in ("CLARIFY", "INFORM") and code:
+        if code in ("DELTA_SLOT_CONFLICT", "KEEP_ON_EMPTY_SLOT", "DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER", "CLEAR_ON_EMPTY_SLOT"):
+            return code
+        if code.startswith("UNRESOLVED_VALUE:") or code == "VALUE_WITHOUT_COMPARATOR":
+            return transition._published(code)
+    return None
+
+
+def test_the_contract_oracle_and_the_gold_agree_on_every_refusal_of_every_applicable_case():
+    """Two independent derivations (the contract's mechanics; the adjudicated Gold) say the same for each case: a refusal
+    cause the contract finds is exactly what the Gold expects, and where the Gold executes there is none."""
+    refused_by_the_gold = 0
+    for case in APPLICABLE:
+        base, patch = case["inputs"]["base"], case["inputs"]["patch"]
+        assert transition.expected_refusal(base, patch) == gold_refusal_of(case), case["gold_id"]
+        refused_by_the_gold += gold_refusal_of(case) is not None
+    assert refused_by_the_gold >= 6  # SF113 (H12), SF193/SF198/SF196 (KEEP), SF194 (F16), SF197 (conflict)
+
+
+def test_the_gold_refusals_are_lawful_with_the_gold_code_and_the_new_cases_exercise_the_new_rules():
+    by_id = {c["gold_id"]: c for c in APPLICABLE}
+    for gid, want in {"SF193": "KEEP_ON_EMPTY_SLOT", "SF194": "OP_NOT_ACCREDITED:TOPIC", "SF196": "KEEP_ON_EMPTY_SLOT",
+                      "SF197": "DELTA_SLOT_CONFLICT", "SF198": "KEEP_ON_EMPTY_SLOT", "SF113": "CLEAR_ON_EMPTY_SLOT"}.items():
+        base, patch = by_id[gid]["inputs"]["base"], by_id[gid]["inputs"]["patch"]
+        assert transition.expected_refusal(base, patch) == want, gid
+        assert check(base, patch, None, refusal=by_id[gid]["expected"]["code"]) == [], gid
+    sf196 = by_id["SF196"]["inputs"]
+    assert _codes(transition.refusal_causes(sf196["base"], sf196["patch"])) == ["KEEP_ON_EMPTY_SLOT",
+                                                                                "DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER"]
+
+
+def test_the_harness_judges_the_refusals_of_the_gold_with_the_code_the_reducer_reports():
+    report = oracle.audit_transitions(REFERENCE, CASES)
+    assert report["ok"] and report["refusals_checked"] >= 6
+    wrong = copy.deepcopy(REFERENCE)
+    wrong["SF196"]["code"] = "DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER"  # the lower precedence first
+    report = oracle.audit_transitions(wrong, CASES)
+    assert not report["ok"] and {v["gold_id"] for v in report["violations"]} == {"SF196"}
+    assert {v["rule"] for v in report["violations"]} == {"T-REFUSAL-CODE"}
+    invented = copy.deepcopy(REFERENCE)
+    victim = next(c["gold_id"] for c in APPLICABLE if c["expected"]["disposition"] == "EXECUTE")
+    invented[victim].update(disposition="CLARIFY", code="DELTA_SLOT_CONFLICT", effective=None)
+    report = oracle.audit_transitions(invented, CASES)
+    assert {v["rule"] for v in report["violations"]} == {"T-REFUSAL-UNJUSTIFIED"} and report["violations"][0]["gold_id"] == victim
+
+
+def test_the_constants_of_the_transition_oracle_are_the_sealed_contracts():
+    text = contract_text.read()
+    assert list(transition.PRECEDENCE) == [c.partition(":")[0] for c in contract_text.refusal_precedence(text)]
+    assert transition.H12 == gold.host_rules()["H12"][1]
+    assert set(transition.PRECEDENCE) <= {c.partition(":")[0] for c in contract_text.refusal_codes(text)}
+    published = contract_text.refusal_table(text)["OP_NOT_ACCREDITED:<DIM>"]
+    assert set(published) == {"UNRESOLVED_VALUE:<DIM>", "VALUE_WITHOUT_COMPARATOR"}
+    rows = contract_text.table(contract_text.section(text, "### 4.2 Ranuras", "### 4.3 Identidad"), "| Ranura | Contenido |")
+    names = {"TOPIC", "BUYER", "ACTOR", "GEOGRAPHY", "TIME", "STATE", "MODALITY", "CONTRACT_TYPE_OR_NATURE", "VALUE", "ORDER",
+             "CARDINALITY", "UNIVERSE"}
+    dims = []
+    for row in rows:
+        for d in re.findall(r"[A-Z][A-Z_]+", row[0]):
+            if d in names and d not in dims:
+                dims.append(d)
+    expected = []
+    for d in dims:
+        expected += {"VALUE": ["VALUE/lower", "VALUE/upper"], "ORDER": ["ORDER"], "CARDINALITY": ["CARDINALITY"],
+                     "UNIVERSE": ["UNIVERSE"]}.get(d, [f"{d}/POSITIVE", f"{d}/NEGATIVE"])
+    assert list(transition.SLOT_ORDER) == expected
+
+
+def test_the_polarized_dimensions_and_the_comparable_units_are_the_contracts():
+    polarized = {s.partition("/")[0] for s in transition.SLOT_ORDER if s.endswith("/POSITIVE")}
+    assert set(transition.POLARIZED) == polarized == set(typing_.POLARIZED)
+    scale, single = gold.contract_comparable_units()
+    assert set(transition.PESOS_SCALE) == scale == set(typing_.UNIT_SCALE) and single == "SMMLV"
+    assert scale == {"PESOS", "MILES", "MILLONES", "MIL_MILLONES", "BILLONES"}
+
+
+def test_a_polarized_dimension_or_a_unit_that_no_longer_matches_the_contract_fails_the_build(monkeypatch):
+    monkeypatch.setattr(transition, "POLARIZED", frozenset(transition.POLARIZED - {"STATE"}))
+    with pytest.raises(oracle.OracleError, match="polarized dimensions"):
+        oracle.load_cases()
+    monkeypatch.undo()
+    monkeypatch.setattr(transition, "PESOS_SCALE", frozenset(transition.PESOS_SCALE | {"SMMLV"}))
+    with pytest.raises(oracle.OracleError, match="comparable units"):
+        oracle.load_cases()
+
+
+def test_a_constant_that_no_longer_matches_the_contract_fails_the_build(monkeypatch):
+    monkeypatch.setattr(transition, "PRECEDENCE", tuple(reversed(transition.PRECEDENCE)))
+    with pytest.raises(oracle.OracleError, match="precedence"):
+        oracle.load_cases()
+    monkeypatch.undo()
+    monkeypatch.setattr(transition, "SLOT_ORDER", tuple(reversed(transition.SLOT_ORDER)))
+    with pytest.raises(oracle.OracleError, match="slot order"):
+        oracle.load_cases()
+    monkeypatch.undo()
+    monkeypatch.setattr(transition, "H12", "ANOTHER_CODE")
+    with pytest.raises(oracle.OracleError, match="H12"):
+        oracle.load_cases()
+
+
+@pytest.mark.parametrize("name", sorted(REFUSAL_CASES))
 def test_each_refusal_mutant_is_an_effective_for_a_refused_patch(name):
-    base, patch = enrich(*CONFLICT_CASES[name], 5)
+    base, patch = enrich(*REFUSAL_CASES[name], 5)
     assert {v["rule"] for v in check(base, patch, probe_apply(base, patch))} == {"T-REFUSAL"}
 
 
@@ -1115,7 +1522,9 @@ def test_what_the_gold_oracle_cannot_see_the_transition_oracle_catches_and_the_o
 def test_the_harness_runs_the_contract_oracle_over_every_composed_case_of_the_gold():
     report = oracle.audit_transitions(REFERENCE, CASES)
     assert report["ok"] and report["checked"] == len(COMPOSED) and report["violations"] == []
-    assert set(report["not_checked"]) == {c["gold_id"] for c in APPLICABLE} - {c["gold_id"] for c in COMPOSED}
+    refused = {g for g, a in REFERENCE.items() if a["disposition"] in ("CLARIFY", "INFORM", "REASK")}
+    assert report["refusals_checked"] == len(refused)
+    assert set(report["not_checked"]) == {c["gold_id"] for c in APPLICABLE} - {c["gold_id"] for c in COMPOSED} - refused
     broken = copy.deepcopy(REFERENCE)
     victim = next(c["gold_id"] for c in COMPOSED if len(broken[c["gold_id"]]["effective"]["conditions"]) > 1)
     broken[victim]["effective"]["conditions"][0]["authority"] = "tampered@9"

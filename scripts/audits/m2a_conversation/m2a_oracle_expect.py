@@ -1,7 +1,7 @@
 """M2A-8a0 oracle, part 4: the expectation of every case, derived from the sealed Gold.
 
-``load_cases`` verifies the seal (``m2a_gold_seal verify``), the user's recorded decisions and the effects vocabulary,
-then builds one case per ``M2A_GOLD`` record: its applicability, its typed inputs (``base``, ``patch``, ``p_facts``,
+``load_cases`` verifies the seal (``m2a_gold_seal verify``), reads the sealed section 19 extraction (the one authority of
+dependencies, U19) and checks the effects vocabulary, then builds one case per ``M2A_GOLD`` record: its applicability, its typed inputs (``base``, ``patch``, ``p_facts``,
 ``context``: the SAME shape for every case, so the shape never says what §7.2 concludes) and its expectation
 (``disposition``, ``code``, ``scope``, the effective as a semantic projection, the reducer-scope effects and the
 classification). ``inputs`` and ``expected`` exist only for ``APLICABLE_M2A3``; a red case is declared with its owner,
@@ -25,7 +25,9 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from scripts.audits.m2a_conversation import m2a_oracle_gold as gold  # noqa: E402
-from scripts.audits.m2a_conversation.m2a_oracle_applicability import dependencies, surface_form_problem  # noqa: E402
+from scripts.audits.m2a_conversation.m2a_oracle_applicability import blocking  # noqa: E402
+from scripts.audits.m2a_conversation import m2a_oracle_transition as transition  # noqa: E402
+from scripts.audits.m2a_conversation import m2a_oracle_typing as typing_module  # noqa: E402
 from scripts.audits.m2a_conversation.m2a_oracle_gold import OracleError, canon  # noqa: E402
 from scripts.audits.m2a_conversation.m2a_oracle_typing import (  # noqa: E402
     POLARIZED, Untypeable, accepted_dict, fresh_ops, ir_conditions, money_amount, patch_dict, requests_of, sem_key,
@@ -45,6 +47,17 @@ ECHO_EFFECTS = frozenset({"UNIVERSE_CHANGED", "TOPN_CARRIED", "TOPN_CAPPED", "OR
 CLASSIFICATION_EFFECTS = frozenset({"CONTEXT_RESET", "PENDING_CANCELLED", "VIEW_REDERIVED"})
 
 
+# A host rule whose PRECONDITION reads a fact the Gold's IR does not carry. The oracle never types a fact by guessing: the
+# case that the Gold expects the rule to FIRE on is NO_MEDIBLE (an EXECUTE control stays measurable: nothing needs the fact).
+# This is a typing limit, not a dependency: section 19 still says what each lane owes. The codes are the contract's (§6 step
+# 4, read through the sealed parser); only the fact each rule reads is declared here, with its clause.
+HOST_RULE_FACTS = {
+    "H6": ("CARRIED_BUYER_TERRITORY", "§6.4 H6, §3.2 Provenance.buyer_scope: the carried buyer's territory"),
+    "H7": ("REGION_CLOSED_LIST", "§6.4 H7: the closed list of regions"),
+    "H8": ("STATE_LITERALS_OF_THE_UNIVERSE", "§6.4 H8, §3.2 StateValue.literals: the states of the resulting universe"),
+}
+
+
 class NoProducer(Exception):
     """The case needs structural evidence of the producer that the Gold does not carry."""
 
@@ -61,6 +74,34 @@ def check_effects_vocabulary() -> None:
         raise OracleError(f"the effects of the sealed vocabulary and the oracle's scope differ: new {sorted(unknown)}, "
                           f"gone {sorted(gone)}: decide whether each is the reducer's or the echo's (REDUCER_EFFECTS / "
                           f"ECHO_EFFECTS) and give it a derivation")
+
+
+def typing_polarized() -> tuple[str, ...]:
+    return typing_module.POLARIZED
+
+
+def unit_scale() -> dict:
+    return typing_module.UNIT_SCALE
+
+
+def check_transition_vocabulary() -> None:
+    """The constants of ``check_transition`` (a pure stdlib function: it cannot read the contract) are the SEALED contract's:
+    the closed precedence of refusal causes (§6 step 3b), the §4.2 slot order and polarized dimensions, the code of H12 and
+    the comparable units of §15.2. A re-seal that changes one stops the build until the oracle is changed on purpose."""
+    if tuple(transition.PRECEDENCE) != gold.contract_precedence():
+        raise OracleError(f"the precedence of refusal causes of the transition oracle {transition.PRECEDENCE} is not the "
+                          f"contract's (§6 step 3b) {gold.contract_precedence()}")
+    if tuple(transition.SLOT_ORDER) != gold.contract_slot_order():
+        raise OracleError("the slot order of the transition oracle is not the contract's (§4.2): "
+                          f"{transition.SLOT_ORDER} != {gold.contract_slot_order()}")
+    if transition.H12 != gold.host_rules()["H12"][1]:
+        raise OracleError("the code of H12 in the transition oracle is not the contract's")
+    polarized = {s.partition("/")[0] for s in gold.contract_slot_order() if s.endswith("/POSITIVE")}
+    if set(transition.POLARIZED) != polarized or set(typing_polarized()) != polarized:
+        raise OracleError(f"the polarized dimensions of the oracle are not the contract's slots (§4.2): {sorted(polarized)}")
+    scale, single = gold.contract_comparable_units()
+    if set(transition.PESOS_SCALE) != scale or set(unit_scale()) != scale or single != "SMMLV":
+        raise OracleError(f"the comparable units of the oracle are not the contract's (§15.2): {sorted(scale)} and {single}")
 
 
 # ---- what the patch writes, carries and loses ---------------------------------------------------------------------------
@@ -252,6 +293,20 @@ def _same_conditions(a: list[dict], b: list[dict]) -> bool:
     return sorted(map(sem_key, a)) == sorted(map(sem_key, b))
 
 
+def surface_form_problem(rec: dict, surface_form_gaps) -> bool:
+    """The surface forms of VALUE (§19 DEP-VALUE-FORMS, a LECTURA row: the AUTHORITY reads the text, compose receives the
+    operators typed) are measurable only when both labels agree on the typed operation (operator, polarity and side); the
+    amount agreement is the typing's (both labels' ops and results must type equal). This is an A/B check, not a
+    dependency."""
+    A, B = rec["label_A"], rec["label_B"]
+    if not (set(A.get("gap_codes") or []) | set(B.get("gap_codes") or [])) & set(surface_form_gaps):
+        return False
+
+    def signature(label):
+        return sorted((o["op"], o["slot"], o["operator"], o["polarity"]) for o in label["ops"])
+    return signature(A) != signature(B)
+
+
 def _agree(A: dict, B: dict, *paths: tuple[str, ...], motive: str) -> None:
     for path in paths:
         x, y = A, B
@@ -271,6 +326,9 @@ def _expectation(rec: dict) -> tuple[dict, dict]:
             B["expected_disposition"] != disposition):
         raise Untypeable("LABEL_DISPOSITION_DISAGREES_WITH_RECORD")
     _agree(A["prior"], B["prior"], ("gap_seconds",), ("state",), ("owner",), motive="PRIOR_AB_DISAGREE")
+    for rule, (fact, _clause) in HOST_RULE_FACTS.items():
+        if disposition in ("CLARIFY", "INFORM") and A["disposition_reason"] == gold.host_rules()[rule][1]:
+            raise Untypeable(f"HOST_FACT_NOT_IN_GOLD:{fact}")
     if surface_form_problem(rec, gold.checker().SURFACE_FORM_GAPS):
         raise Untypeable("SURFACE_FORM_AB_DISAGREE")
     priors = [ir_conditions(L["prior"]["ir"]) for L in (A, B)]
@@ -340,12 +398,15 @@ def flags(rec: dict) -> list[str]:
     return out
 
 
-def build_case(source: str, rec: dict, partition: str, decisions: dict[str, dict] | None = None) -> dict:
-    gold.check_reason(rec["label_A"]["disposition_reason"])
+def build_case(source: str, rec: dict, partition: str, s19: dict | None = None) -> dict:
+    s19 = gold.s19() if s19 is None else s19
+    for name in ("label_A", "label_B"):
+        gold.check_reason(rec[name]["disposition_reason"], rec[name]["expected_disposition"])
     case = {"gold_id": rec["gold_id"], "source": source, "partition": partition,
             "disposition": rec["expected_disposition"], "reason": rec["label_A"]["disposition_reason"],
             "m2a_scope": rec["m2a_scope"], "flags": flags(rec)}
-    rules, owners = dependencies(rec, decisions)
+    rules, owners, facts = blocking(rec, s19)
+    case["s19"] = facts  # what §19 says of the case, whether it blocks (COMPOSICION) or is only read (LECTURA)
     if owners:
         case.update(applicability=f"DEPENDIENTE({owners[0]})", owners=owners, rules=rules, inputs=None, expected=None)
         return case
@@ -363,14 +424,15 @@ def build_case(source: str, rec: dict, partition: str, decisions: dict[str, dict
 
 
 def load_cases(real_dir: Path | None = None) -> list[dict]:
-    """One case per ``M2A_GOLD`` record, in seal order, after the seal verifies (``m2a_gold_seal verify``) and the
-    user's decisions are checked against their records. The REAL slice needs the private ``real_dir`` (never in git).
-    Nothing about the Gold is fixed in the oracle: the ids, the partition, the vocabulary and the rules that read it come
-    from the verified seal and the sealed checker."""
+    """One case per ``M2A_GOLD`` record, in seal order, after the seal verifies (``m2a_gold_seal verify``) and the section
+    19 extraction it binds is read. The REAL slice needs the private ``real_dir`` (never in git). Nothing about the Gold is
+    fixed in the oracle: the ids, the partition, the vocabulary, the dependencies and the rules that read them come from
+    the verified seal, the sealed checker and the sealed extraction."""
     gold.verify_seal(real_dir)
     check_effects_vocabulary()
-    partition, decisions = gold.partition_of(gold.seal()), gold.load_decisions()
-    return [build_case(source, rec, partition[rec["gold_id"]], decisions) for source, rec in gold.gold_records(real_dir)]
+    check_transition_vocabulary()
+    partition, s19 = gold.partition_of(gold.seal()), gold.s19(real_dir)
+    return [build_case(source, rec, partition[rec["gold_id"]], s19) for source, rec in gold.gold_records(real_dir)]
 
 
 def select_partition(cases: list[dict], partition: str) -> list[dict]:

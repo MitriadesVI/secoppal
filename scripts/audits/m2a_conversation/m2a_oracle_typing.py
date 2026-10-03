@@ -3,8 +3,8 @@
 A hint becomes the closed ``ExecutableValue`` of its dimension, deterministically and without guessing:
 
 * opaque dimensions (TOPIC, BUYER, ACTOR, GEOGRAPHY, MODALITY, CONTRACT_TYPE_OR_NATURE) carry the hint as their
-  identity (ACTOR: a synthetic document hashed from it), so the same hint gives the same value and distinct hints give
-  distinct values;
+  identity (ACTOR: a synthetic document hashed from it; a REGION: one synthetic member hashed from it), so the same hint
+  gives the same value and distinct hints give distinct values;
 * quantified dimensions are normalised to their canonical content: VALUE to ``amount_cop`` and comparator (the unit goes
   to ``Provenance.unit``), TIME to its half-open interval, ORDER and CARDINALITY to their enumerations. Two hints that
   denote the same canonical content give the same value: that is what a canonical value is;
@@ -169,10 +169,14 @@ def type_value(dimension: str, operator: str, polarity: str, level: str | None, 
         name = nfc(hint)
         return ActorValue("H" + _opaque(name)[:15].upper(), "ORACLE", name, excluded).encode()
     if dimension == "GEOGRAPHY":
-        if level not in ("DEPARTMENT", "MUNICIPALITY"):
-            raise Untypeable(f"GEO_LEVEL:{level}")  # REGION is E-GEO's (members): it never reaches here for APLICABLE
+        if level not in ("DEPARTMENT", "MUNICIPALITY", "REGION"):
+            raise Untypeable(f"GEO_LEVEL:{level}")
         department = "oracle-department" if level == "MUNICIPALITY" else None
-        return GeoValue(GeoLevel(level), nfc(hint), department, None, (), excluded).encode()
+        # A REGION needs its members (E-GEO's closed list, §19 DEP-REGION: LECTURA). The Gold carries none and compose never
+        # reads them, so the typed value has ONE synthetic member derived from the hint, as an ACTOR has a synthetic
+        # document (``LG-REGION-MEMBERS-SYNTHETIC``): the same hint gives the same value, distinct hints distinct values.
+        members = (f"oracle-member-{_opaque(nfc(hint))[:12]}",) if level == "REGION" else ()
+        return GeoValue(GeoLevel(level), nfc(hint), department, None, members, excluded).encode()
     if dimension == "TIME":
         return _time_value(operator, hint, excluded)
     if dimension == "VALUE":
@@ -227,7 +231,8 @@ def slot_key(dimension: str, value: tuple[str, ...]) -> str:
 
 
 # ---- typed conditions and the accepted / patch dicts ------------------------------------------------------------------
-def tcond(dimension, operator, polarity, level, unit, hint, *, ods=None, unit_source=None, n_requested=None) -> dict:
+def tcond(dimension, operator, polarity, level, unit, hint, *, ods=None, unit_source=None, n_requested=None,
+          year_source=None) -> dict:
     """A typed condition (a plain dict): the identity every comparison of the oracle is made on."""
     if dimension == "ORDER":
         value = _order_value(operator)
@@ -240,7 +245,8 @@ def tcond(dimension, operator, polarity, level, unit, hint, *, ods=None, unit_so
             "polarity": "NEGATIVE" if slot.endswith("/NEGATIVE") else "POSITIVE",
             "level": level if dimension == "GEOGRAPHY" else None, "value": list(value),
             "unit": unit if dimension == "VALUE" else None, "ods": ods if dimension == "ORDER" else None,
-            "unit_source": (unit_source or "STATED") if dimension == "VALUE" else None}
+            "unit_source": (unit_source or "STATED") if dimension == "VALUE" else None,
+            "year_source": year_source if dimension == "TIME" else None}
 
 
 def sem_key(c: dict) -> tuple:
@@ -290,7 +296,7 @@ def condition_dict(t: dict, cid: str, request_ids: list[str], org: dict) -> dict
             "operator": t["operator"], "polarity": t["polarity"], "level": t["level"], "value": list(t["value"]),
             "authority": AUTHORITY, "receipt_rules": [], "policies": [], "origin": org,
             "provenance": {"unit": t["unit"], "source_amount": None, "unit_source": t["unit_source"], "year": None,
-                           "year_source": None, "buyer_scope": None, "order_direction_source": t["ods"],
+                           "year_source": t.get("year_source"), "buyer_scope": None, "order_direction_source": t["ods"],
                            "inherited_from": None}}
 
 
@@ -350,14 +356,17 @@ def typed_ops(label: dict) -> list[dict]:
         if kind in ("CLEAR", "KEEP"):
             entry["slot"] = _slot_of_directive(op)
         elif kind == "SET_UNIVERSE":
-            pair = requests_of(res) if res else []
             hint = fold(str(op["value_hint"] or ""))
             named = hint.split()[:1]
-            if len(pair) != 1 or not named or not named[0].startswith(pair[0][0][:4]):
+            subject = next((s for s in ("contracts", "processes") if named and named[0].startswith(s[:4])), None)
+            kind_named = "opportunities" if re.search(r"oportunidad|opportunit", hint) else "records"
+            if subject is None:
                 raise Untypeable("UNIVERSE_TARGET")
-            if (re.search(r"oportunidad|opportunit", hint) is not None) != (pair[0][1] == "opportunities"):
-                raise Untypeable("UNIVERSE_TARGET_KIND")  # the hint and the typed result must name the same kind
-            entry.update(slot="UNIVERSE", universe=list(pair[0]))
+            if res:  # an executed turn: the typed result must name the same universe the hint names
+                pair = requests_of(res)
+                if pair != [(subject, kind_named)]:
+                    raise Untypeable("UNIVERSE_TARGET_KIND" if pair and pair[0][0] == subject else "UNIVERSE_TARGET")
+            entry.update(slot="UNIVERSE", universe=[subject, kind_named])
         elif kind in ("SET", "SET_ORDER"):
             entry["cond"] = _typed_set_op(op, res, res_conds)
             entry["slot"] = entry["cond"]["slot"]
@@ -377,7 +386,7 @@ def _typed_set_op(op: dict, res: dict | None, res_conds: list[dict]) -> dict:
         if len(on_side) != 1:  # the op carries no unit: the typed result must hold exactly one bound on that side
             raise Untypeable("VALUE_UNIT_FROM_RESULT")
         t = tcond("VALUE", op["operator"], op["polarity"], None, on_side[0]["unit"], op["value_hint"],
-                  unit_source=op["inherited"].get("unit_source"))
+                  unit_source=(op["inherited"] or {}).get("unit_source"))
     elif dim == "ORDER":
         ods = res["order"].get("direction_source") if res and res.get("order") else None
         t = tcond("ORDER", op["operator"], "POSITIVE", None, None, None, ods=ods)
@@ -386,7 +395,8 @@ def _typed_set_op(op: dict, res: dict | None, res_conds: list[dict]) -> dict:
     else:
         if dim == "GEOGRAPHY" and op.get("level") is None:
             raise Untypeable("GEO_LEVEL_MISSING")
-        t = tcond(dim, op["operator"], op["polarity"], op.get("level"), None, op["value_hint"])
+        t = tcond(dim, op["operator"], op["polarity"], op.get("level"), None, op["value_hint"],
+                  year_source=(op["inherited"] or {}).get("year_source"))
     if res is not None and not any(sem_key(t) == sem_key(c) for c in res_conds if c["slot"] == t["slot"]):
         raise Untypeable("OP_DISAGREES_WITH_RESULT")
     return t

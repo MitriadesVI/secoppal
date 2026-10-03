@@ -10,14 +10,15 @@ verifies both with two independent pure functions over dicts. Neither imports th
   the reducer arrive without falsifying identity or provenance? Its rules come from the contract
   (``TRANSITION_RULES``); M2A-3 also calls it over GENERATED bases.
 
-Parts: ``m2a_oracle_gold`` (reading the sealed Gold, verifying the seal and the recorded decisions),
-``m2a_oracle_typing`` (``value_hint`` -> closed values, the dicts), ``m2a_oracle_applicability`` (dependency rules, each with
-its clause), ``m2a_oracle_expect`` (the cases), ``m2a_oracle_audit`` (the Gold audit) and ``m2a_oracle_transition`` (the
+Parts: ``m2a_oracle_gold`` (reading the sealed Gold, verifying the seal and the sealed §19 extraction),
+``m2a_oracle_typing`` (``value_hint`` -> closed values, the dicts), ``m2a_oracle_applicability`` (the blocking
+dependencies: §19 rows with impacto COMPOSICION plus two structural rules, each with its clause), ``m2a_oracle_expect`` (the cases), ``m2a_oracle_audit`` (the Gold audit) and ``m2a_oracle_transition`` (the
 contract's invariants). This module is the facade, the artifact, the manifest and the CLI.
 
 Applicability: ``APLICABLE_M2A3`` (typed input and a Gold-determined expectation: M2A-3 must reach 100 %),
-``DEPENDIENTE(<owner>)`` (needs a rule or authority that does not exist yet: red declared), ``NO_MEDIBLE_SIN_PRODUCTOR``
-and ``NO_MEDIBLE(<motive>)`` (the Gold does not allow typing or determining something without guessing).
+``DEPENDIENTE(<owner>)`` (contract §19 says compose needs an input another lane produces, ``impacto_m2a3 = COMPOSICION``,
+or a structural rule says so: red declared), ``NO_MEDIBLE_SIN_PRODUCTOR`` and ``NO_MEDIBLE(<motive>)`` (the Gold does not
+allow typing or determining something without guessing). A §19 dependency with ``impacto_m2a3 = LECTURA`` does not block.
 
 Use (M2A-3 iterates on DEV and measures TEST once, to freeze)::
 
@@ -25,7 +26,11 @@ Use (M2A-3 iterates on DEV and measures TEST once, to freeze)::
     inputs = {c["gold_id"]: c["inputs"] for c in cases if c["applicability"] == "APLICABLE_M2A3"}
     actuals = {gid: run(inputs[gid]) for gid in inputs}        # {disposition, code, effective, effects}
     audit(actuals, cases)["ok"] and audit_transitions(actuals, cases)["ok"]
-    check_transition(generated_base, generated_patch, run_effective)   # in the Hypothesis properties, rich bases
+    # in the Hypothesis properties, over GENERATED bases with every host field filled (never only the Gold's):
+    check_transition(base, patch, effective)                  # the reducer executed: identity, provenance, what is refused
+    check_transition(base, patch, None, refusal=code)         # the reducer refused: a cause must exist, with the top code
+    expected_refusal(base, patch)                             # what the contract demands: the code, or None (an effective)
+    refusal_causes(base, patch)                               # every cause in the closed precedence of §6 step 3b
 
 CLI: ``build`` / ``check`` / ``report`` [--real-dir D]; the REAL section of the manifest is ids, counts and digests.
 """
@@ -54,12 +59,14 @@ from scripts.audits.m2a_conversation.m2a_oracle_expect import (  # noqa: E402,F4
     select_partition,
 )
 from scripts.audits.m2a_conversation.m2a_oracle_gold import OracleError, digest  # noqa: E402,F401
-from scripts.audits.m2a_conversation.m2a_oracle_transition import TRANSITION_RULES, check_transition  # noqa: E402,F401
+from scripts.audits.m2a_conversation.m2a_oracle_transition import (  # noqa: E402,F401
+    TRANSITION_RULES, check_transition, expected_refusal, refusal_causes,
+)
 
 ORACLE_DIR = "docs/audits/m2a_conversation/oracle"
 ARTIFACT = f"{ORACLE_DIR}/M2A_REDUCER_ORACLE_synthetic.jsonl"
 MANIFEST = f"{ORACLE_DIR}/M2A_REDUCER_ORACLE_MANIFEST.json"
-SCHEMA = "m2a-reducer-oracle/2"
+SCHEMA = "m2a-reducer-oracle/3"
 
 
 # ---- artifact, manifest, CLI -----------------------------------------------------------------------------------------------
@@ -92,10 +99,20 @@ def declarations() -> dict:
     for entry in PROJECTION_EXCLUSIONS:
         rules = sorted({rid for rid in killers if rid in entry["to"]}, key=entry["to"].index)
         delegated.append({**entry, "rules": rules, "killed_by": sorted({m for rid in rules for m in killers[rid]})})
-    return {"applicability_rules": rule_table(), "transition_rules": list(TRANSITION_RULES),
+    return {"applicability_rules": rule_table(gold.s19()), "transition_rules": list(TRANSITION_RULES),
             "gold_projection_delegates_to_transition": delegated,
             "limited_guarantees": list(LIMITED_GUARANTEES),
             "effects_scope": {"reducer": sorted(REDUCER_EFFECTS), "echo": sorted(ECHO_EFFECTS)}}
+
+
+def s19_section() -> dict:
+    """The one authority of dependencies, as the manifest binds it (the seal binds the same file and the contract)."""
+    s19 = gold.s19()
+    return {"path": str(gold.S19_PATH.relative_to(gold.ROOT)), "sha256": hashlib.sha256(gold.S19_PATH.read_bytes()).hexdigest(),
+            "schema": s19["schema"], "contract_sha256": s19["source"]["contract_sha256"], "impacts": s19["impacts"],
+            "owners": s19["owners"],
+            "dependencies": {d["dep_id"]: {"impacto_m2a3": d["impacto_m2a3"], "owners": d["owners"],
+                                           "cases": d["cases_count"]} for d in s19["dependencies"]}}
 
 
 def build_artifacts(real_dir: Path | None, previous: dict | None) -> tuple[str, dict]:
@@ -107,12 +124,8 @@ def build_artifacts(real_dir: Path | None, previous: dict | None) -> tuple[str, 
         real = previous["real"]
     else:
         raise SystemExit("build needs --real-dir the first time (the REAL section is private)")
-    decisions = gold.load_decisions()
     manifest = {"schema": SCHEMA, "gold_seal_sha256": gold.seal()["seal_sha256"], "seal_verified": True,
-                "applicability_decisions": {
-                    "path": f"{ORACLE_DIR}/APPLICABILITY_DECISIONS.json",
-                    "sha256": hashlib.sha256(gold.DECISIONS_PATH.read_bytes()).hexdigest(),
-                    "records": {gid: d["record"] for gid, d in sorted(decisions.items())}},
+                "dependencies_authority": s19_section(),
                 "artifact": {"path": ARTIFACT, "sha256": hashlib.sha256(text.encode("utf-8")).hexdigest(),
                              "records": len(synthetic)},
                 "declarations": declarations(), "synthetic": _summary(synthetic), "real": real,

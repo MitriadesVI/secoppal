@@ -1,118 +1,227 @@
 {
- "applicability_decisions": {
-  "path": "docs/audits/m2a_conversation/oracle/APPLICABILITY_DECISIONS.json",
-  "records": {
-   "SF075": {
-    "decision_id": "UD-2026-10-02-SF075",
-    "doc": "docs/audits/m2a_conversation/oracle/USER_DECISIONS.jsonl",
-    "doc_sha256": "292f90463e764823d2cb3509596f9f0224d354fa5e9551c9cb4a8bb39587256b"
-   }
-  },
-  "sha256": "c97f867df485c1d879591f8025354e1c670249b46954a670922d5ef659633959"
- },
  "artifact": {
   "path": "docs/audits/m2a_conversation/oracle/M2A_REDUCER_ORACLE_synthetic.jsonl",
-  "records": 150,
-  "sha256": "e51de0a0e2ec86e9b015f805fd36a24188d59ee91e9355439a43bf43120e576b"
+  "records": 160,
+  "sha256": "ae53a7ab10ebccbb459ce2a1302a4f34d4c833d22db44451c01d2da989f6daec"
  },
  "declarations": {
   "applicability_rules": [
    {
-    "basis": "PLAN",
+    "basis": "STRUCTURAL",
     "clause": "§8.3; plan M2A-4",
     "id": "PENDING_PRIOR",
     "owners": [
      "M2A-4"
     ],
-    "why": "a pending prior, an ANSWER or CANCEL_PENDING op: the response protocol is M2A-4's"
+    "why": "a pending prior, an ANSWER or CANCEL_PENDING op: the response protocol is M2A-4's, and §19 does not cover it"
    },
    {
-    "basis": "PLAN",
+    "basis": "STRUCTURAL",
     "clause": "§7.1 #3, §9; plan M2A-6",
     "id": "EVENT_OR_PROTOCOL",
     "owners": [
      "M2A-6"
     ],
-    "why": "events and pagination are the runtime protocol of M2A-6"
+    "why": "events and pagination are the runtime protocol of M2A-6, and §19 does not cover them"
    },
    {
     "basis": "§19",
-    "clause": "§19 row «vista derivada»; §14",
-    "id": "DERIVED_VIEW",
+    "blocks": false,
+    "cases": 3,
+    "clause": "§19 DEP-TIME-RELATIVE: A5: relativo al referente temporal único (§16.3)",
+    "id": "DEP-TIME-RELATIVE",
+    "impacto_m2a3": "LECTURA",
+    "needs": "entrada separada de TIME con `time.relative_to_previous`",
     "owners": [
-     "F"
-    ],
-    "why": "HostViewDecision does not exist yet: a request with a derived view is not representable"
-   },
-   {
-    "basis": "§19",
-    "clause": "§19 row 4 (SMMLV en follow-ups); §15.5",
-    "id": "SMMLV",
-    "owners": [
-     "E-VALUE"
-    ],
-    "why": "the conversion by vigencia (D10) is E-VALUE's: the typed value does not exist without it"
-   },
-   {
-    "basis": "§19",
-    "clause": "§19 row «herencia de unidad/año»; §15.4",
-    "id": "UNIT_INHERITED",
-    "owners": [
-     "E-VALUE"
-    ],
-    "why": "unit.inherited comes from the separate input of the host (3b)"
-   },
-   {
-    "basis": "§19",
-    "clause": "§19 rows 3 (A5) and «herencia de unidad/año»; §16.1, §16.3",
-    "id": "YEAR_INHERITED_OR_INFERRED",
-    "owners": [
+     "D-TIME",
      "E-TIME"
-    ],
-    "why": "year.inherited / year.inferred / time.relative_to_previous come from the separate input of the host (3b)"
+    ]
    },
    {
     "basis": "§19",
-    "clause": "§19 G-FU-07; §6.4 H7",
-    "id": "REGION",
+    "blocks": false,
+    "cases": 16,
+    "clause": "§19 DEP-INHERITANCE: herencia de unidad o año y mes sin año (F5–F7, §15.4, §16.1)",
+    "id": "DEP-INHERITANCE",
+    "impacto_m2a3": "LECTURA",
+    "needs": "`unit.inherited`, `year.inherited`, `year.inferred` por la entrada separada; lectura del mes",
     "owners": [
-     "E-GEO"
-    ],
-    "why": "the members of a region and the closed list are E-GEO's: a GeoValue REGION cannot be typed without them"
+     "D-MONEY",
+     "D-TIME"
+    ]
    },
    {
     "basis": "§19",
-    "clause": "§19 row F30; §6.4 H6",
-    "id": "NEW_TERRITORY_NEXT_TO_CARRIED_BUYER",
+    "blocks": false,
+    "cases": 3,
+    "clause": "§19 DEP-SMMLV-READ: SMMLV en follow-ups: leer o tipar una cota SMMLV (§15.5)",
+    "id": "DEP-SMMLV-READ",
+    "impacto_m2a3": "LECTURA",
+    "needs": "conversión por vigencia de D10 dentro del catálogo 2024–2026",
+    "owners": [
+     "D-MONEY",
+     "E-VALUE"
+    ]
+   },
+   {
+    "basis": "§19",
+    "blocks": true,
+    "cases": 1,
+    "clause": "§19 DEP-SMMLV-RECALC: SMMLV arrastrado cuando cambia el año (§15.5)",
+    "id": "DEP-SMMLV-RECALC",
+    "impacto_m2a3": "COMPOSICION",
+    "needs": "recálculo de la cota arrastrada a partir de `source_amount` sobre la nueva vigencia",
+    "owners": [
+     "D-MONEY",
+     "E-VALUE"
+    ]
+   },
+   {
+    "basis": "§19",
+    "blocks": false,
+    "cases": 8,
+    "clause": "§19 DEP-VALUE-FORMS: formas «entre X y Y», «mayores de», «pasen de»",
+    "id": "DEP-VALUE-FORMS",
+    "impacto_m2a3": "LECTURA",
+    "needs": "lectura de la autoridad VALUE del primer turno",
+    "owners": [
+     "D-MONEY",
+     "E-VALUE"
+    ]
+   },
+   {
+    "basis": "§19",
+    "blocks": false,
+    "cases": 0,
+    "clause": "§19 DEP-VALUE-EQUALITY: igualdad «exactamente X» (§15.2)",
+    "id": "DEP-VALUE-EQUALITY",
+    "impacto_m2a3": "LECTURA",
+    "needs": "lectura como par `>=`/`<=` del mismo turno",
+    "owners": [
+     "D-MONEY",
+     "E-VALUE"
+    ]
+   },
+   {
+    "basis": "§19",
+    "blocks": false,
+    "cases": 2,
+    "clause": "§19 DEP-BUYER-TERRITORY: F30: territorio nuevo con comprador arrastrado (H6)",
+    "id": "DEP-BUYER-TERRITORY",
+    "impacto_m2a3": "LECTURA",
+    "needs": "`buyer.territory.<código>` / `buyer.national`",
     "owners": [
      "D-BUYER"
-    ],
-    "why": "H6 needs the carried buyer's buyer.territory provenance"
+    ]
    },
    {
-    "basis": "STRUCTURAL",
-    "clause": "§6.4 H8; §14",
-    "id": "STATE_IN_UNIVERSE",
+    "basis": "§19",
+    "blocks": true,
+    "cases": 10,
+    "clause": "§19 DEP-DERIVED-VIEW: vista derivada (§14)",
+    "id": "DEP-DERIVED-VIEW",
+    "impacto_m2a3": "COMPOSICION",
+    "needs": "`HostViewDecision`, `decide_view`",
+    "owners": [
+     "F"
+    ]
+   },
+   {
+    "basis": "§19",
+    "blocks": false,
+    "cases": 8,
+    "clause": "§19 DEP-REGION: región (`GeoValue` REGION; H7)",
+    "id": "DEP-REGION",
+    "impacto_m2a3": "LECTURA",
+    "needs": "miembros y lista cerrada de regiones",
+    "owners": [
+     "E-GEO"
+    ]
+   },
+   {
+    "basis": "§19",
+    "blocks": false,
+    "cases": 6,
+    "clause": "§19 DEP-STATE-LITERALS: estado sobre el universo de la petición (H8)",
+    "id": "DEP-STATE-LITERALS",
+    "impacto_m2a3": "LECTURA",
+    "needs": "`state@1.literals` por dataset",
     "owners": [
      "E-STATE"
-    ],
-    "why": "StateValue without literals per dataset cannot say whether the state exists in the resulting universe (a reducer that fails closed would turn a Gold EXECUTE into a CLARIFY)"
+    ]
    },
    {
-    "basis": "STRUCTURAL",
-    "clause": "§6.4 H8; §14",
-    "id": "MODALITY_IN_UNIVERSE",
+    "basis": "§19",
+    "blocks": true,
+    "cases": 5,
+    "clause": "§19 DEP-MODALITY-UNIVERSE: modalidad sobre el universo resultante (H8)",
+    "id": "DEP-MODALITY-UNIVERSE",
+    "impacto_m2a3": "COMPOSICION",
+    "needs": "catálogo de modalidad por dataset (`modality@1` no lleva el dataset)",
     "owners": [
      "E-MODALITY"
-    ],
-    "why": "ModalityValue: same as STATE_IN_UNIVERSE"
+    ]
    },
    {
-    "basis": "STRUCTURAL",
-    "clause": "§6.1",
-    "id": "UNRESOLVED_AUTHORITY_VALUE",
-    "owners": "E-<DIMENSION OF THE UNRESOLVED OP>",
-    "why": "a value the authority of its dimension left unresolved is refused with that authority's code: the patch never carries a typed condition for it"
+    "basis": "§19",
+    "blocks": true,
+    "cases": 1,
+    "clause": "§19 DEP-O1B-OPPORTUNITIES: SF075: `REPLACE_UNIVERSE` a oportunidades con TIME arrastrado (R3-3)",
+    "id": "DEP-O1B-OPPORTUNITIES",
+    "impacto_m2a3": "COMPOSICION",
+    "needs": "re-decidir O1B / `opportunity-explicit-state` sobre la efectiva (su representación es de M2A-1b) y TIME explícito sobre oportunidades (`foundation_projection.py:235-237`). Mientras falte, `compose` rechaza con `OP_NOT_ACCREDITED:UNIVERSE` ⇒ `CLARIFY UNRESOLVED_VALUE:UNIVERSE` y el caso es rojo declarado (§20.2)",
+    "owners": [
+     "FOUNDATION_O1B_EXPLICIT_TIME_PARITY",
+     "M2A-1b"
+    ]
+   },
+   {
+    "basis": "§19",
+    "blocks": false,
+    "cases": 25,
+    "clause": "§19 DEP-E-ORDER: follow-ups con ORDER/CARDINALITY: leer el criterio o la cifra (R3, D-5)",
+    "id": "DEP-E-ORDER",
+    "impacto_m2a3": "LECTURA",
+    "needs": "autoridad ORDER/CARDINALITY (`order@1`, `cardinality@2`, `order.direction_defaulted`, `topn.capped`); `main` aún no las admite en el primer turno (`UNRESOLVED_HOST_DIMENSION:ORDER`). Mientras falte, la pendiente de §6.7 (R3-1) es provisional fail-closed: **sólo C1** «quitar orden y límite» y la cancelación, sin candidatos `SET_ORDER`",
+    "owners": [
+     "E-ORDER"
+    ]
+   },
+   {
+    "basis": "§19",
+    "blocks": true,
+    "cases": 4,
+    "clause": "§19 DEP-E-ORDER-CANDIDATES: candidatos `SET_ORDER` de la pendiente de R3-1 (§6.7)",
+    "id": "DEP-E-ORDER-CANDIDATES",
+    "impacto_m2a3": "COMPOSICION",
+    "needs": "enumerar al preguntar los criterios de orden alternativos del dataset; SF199–SF201 traen esa opción `SET_ORDER` en su pendiente previa (R3c). Las alternativas selladas de SF192 son **PARCIALES** (sólo C1) y el registro lo declara (`partial_alternatives`); los `SET_ORDER` no se sellan",
+    "owners": [
+     "E-ORDER"
+    ]
+   },
+   {
+    "basis": "§19",
+    "blocks": false,
+    "cases": 1,
+    "clause": "§19 DEP-M2A5-WIRE-CARDINALITY: «dame 20» con la pendiente de R3-1: IR v2 rechaza un `FOLLOWUP_DELTA` que sólo trae CARDINALITY (`interpretation_contract.py:438-439`), §7.1 fila 4b `INVALID_PROPOSAL` (§6.7; R3c)",
+    "id": "DEP-M2A5-WIRE-CARDINALITY",
+    "impacto_m2a3": "LECTURA",
+    "needs": "que el wire admita una CARDINALITY sola en un `FOLLOWUP_DELTA`; mientras no lo haga, la etiqueta sellada es la fila 4b",
+    "owners": [
+     "M2A-5"
+    ]
+   },
+   {
+    "basis": "§19",
+    "blocks": true,
+    "cases": 0,
+    "clause": "§19 DEP-M1-PENDING-FRAME: primer turno sin ancla cuya pendiente de M1 no tiene `frame` construible (§8.4)",
+    "id": "DEP-M1-PENDING-FRAME",
+    "impacto_m2a3": "COMPOSICION",
+    "needs": "representar la pendiente de M1 en `from_acceptance`",
+    "owners": [
+     "M2A-1b"
+    ]
    }
   ],
   "effects_scope": {
@@ -341,10 +450,52 @@
     "what": "a reducer whose CLEAR of a dimension leaves its negative conditions is not discriminated by the Gold: no applicable case clears a dimension that holds a negative condition"
    },
    {
-    "closed_by": "D-BUYER (buyer.territory) and a Gold case that executes a compatible territory over a carried buyer",
+    "closed_by": "a Gold case that executes a compatible territory over a carried buyer, with the buyer's territory typed",
     "id": "GOLD-GAP-H6-OVERFIRE",
     "kind": "GOLD_GAP",
-    "what": "a reducer that over-fires H6 (a clarification for any new territory next to a buyer) is not discriminated: no applicable EXECUTE case has a territory next to a carried buyer (the H6 cases, SF123 and SF155, are the D-BUYER and E-GEO lanes')"
+    "what": "a reducer that over-fires H6 (a clarification for any new territory next to a buyer) is not discriminated: no applicable EXECUTE case has a territory next to a carried buyer, and the two cases where H6 fires are NO_MEDIBLE(HOST_FACT_NOT_IN_GOLD:CARRIED_BUYER_TERRITORY)"
+   },
+   {
+    "closed_by": "a Gold that carries the typed fact in its IR, or a decision to derive it from the adjudicated outcome",
+    "id": "LG-HOST-FACTS-NOT-IN-GOLD",
+    "kind": "SCOPE",
+    "what": "H6, H7 and H8 read a fact the Gold's IR does not carry (the carried buyer's territory, the closed list of regions, the states of the resulting universe): section 19 says LECTURA for them, so they are not reds, but the oracle will not type the fact by guessing: the case where the Gold expects the rule to FIRE is NO_MEDIBLE with the fact named, and the EXECUTE controls stay measurable"
+   },
+   {
+    "closed_by": "E-VALUE and E-TIME typed values in the Gold's IR",
+    "id": "LG-LECTURA-WITHOUT-TYPED-VALUE",
+    "kind": "SCOPE",
+    "what": "a §19 dependency with impacto LECTURA does not block, but a case whose value the Gold does not give typed stays NO_MEDIBLE with the typing motive: a SMMLV amount (the conversion by vigencia and its provenance, read by compose in H3, are E-VALUE's: VALUE_UNIT_NOT_PESO_SCALE), a month without a year (TIME_MONTH_HINT), a window relative to the clock (TIME_OPERATOR:relative_period: the Gold's labels disagree on its end)"
+   },
+   {
+    "closed_by": "E-GEO's closed list of regions and members in the Gold's IR",
+    "id": "LG-REGION-MEMBERS-SYNTHETIC",
+    "kind": "ORACLE_BLIND_SPOT",
+    "what": "a REGION is typed with ONE synthetic member derived from its name (the Gold carries no members; compose never reads them, §19 DEP-REGION is LECTURA): a reducer that validates a region against E-GEO's closed list would reject it, and H7 is measured only where the Gold executes"
+   },
+   {
+    "closed_by": "M2A-3 properties over bases with a logic expression, using the IR v2 shape",
+    "id": "LG-TARGET-NOT-ADDRESSABLE",
+    "kind": "ORACLE_BLIND_SPOT",
+    "what": "TARGET_NOT_ADDRESSABLE (precedence 1) needs the shape of the IR v2 logic expression to know that an op targets an atom inside an OR/NOT group: check_transition never finds it, and accepts it unjudged over a base with a logic"
+   },
+   {
+    "closed_by": "the authorities' own gates and the Gold cases",
+    "id": "LG-AUTHORITY-REFUSALS",
+    "kind": "ORACLE_BLIND_SPOT",
+    "what": "OP_NOT_ACCREDITED of an op whose authority did not resolve cannot be written in a m2a-patch/1 (it carries only resolved conditions): check_transition finds the causes the dicts show (F16 fail-closed, P-3, incomparable units) and accepts an authority refusal unjudged; the Gold decides it by case (SF194's mark is compose's, not an authority's)"
+   },
+   {
+    "closed_by": "M2b (G-FU-09)",
+    "id": "LG-F16-CONTAINED-VALUE",
+    "kind": "ORACLE_BLIND_SPOT",
+    "what": "F16's other fail-closed branch, a negated value CONTAINED in a positive (G-FU-09), needs a notion of containment no typed value gives: check_transition decides the several-positives and same-patch branches only"
+   },
+   {
+    "closed_by": "the Gold cases and M2A-4",
+    "id": "LG-HOST-RULES-NOT-DECIDED-HERE",
+    "kind": "SCOPE",
+    "what": "the host rules H1-H11 need the conversational context (expiry, pending, authority readings): the transition oracle only checks that a host-rule code never replaces a refusal cause; the Gold decides them by case"
    },
    {
     "closed_by": "check_transition T-REQ-TARGET (killed by redirect_keeps_old_kind)",
@@ -372,14 +523,49 @@
     ]
    },
    {
-    "clause": "§6.1, §6.2, §6.4 H12, §6.7 (amendment R3)",
-    "demands": "a patch the contract refuses produces NO effective: two SET on one slot, KEEP and CLEAR of one slot, two REPLACE_UNIVERSE, KEEP of an empty slot, a lone CLEAR of an empty slot, and (amendment R3) a CLEAR of ORDER that leaves a CARDINALITY standing",
+    "clause": "§6 steps 2, 3b and 5 (F16, P-3, A8.1), §6.7 (R3-1), §6.4 H12",
+    "demands": "a patch with a refusal cause produces NO effective: two SET (or two SET_ORDER, or two REPLACE_UNIVERSE) on one slot; KEEP with CLEAR, or KEEP with SET/SET_ORDER/REPLACE_UNIVERSE, of one slot EVEN WHEN THE VALUES COINCIDE (R3b, U22); KEEP of an empty slot; a negative SET of a value that is one of several carried positives, or whose positive the same patch creates (F16 fail-closed, R3-4, P-3); a VALUE bound against a carried opposite bound of incomparable units (§15.2); a composed state that leaves a CARDINALITY standing without ORDER (R3-1, decided on the STATE, not on the op); and a lone CLEAR of an empty slot (H12)",
     "id": "T-REFUSAL",
     "killed_by": [
-     "effective_for_slot_conflict",
+     "effective_for_two_set_one_slot",
+     "effective_for_keep_and_clear_one_slot",
+     "effective_for_keep_and_set_same_value",
+     "effective_for_keep_and_set_order",
+     "effective_for_keep_and_replace_universe",
+     "effective_for_two_replace_universe",
      "effective_for_keep_on_empty_slot",
-     "effective_for_clear_on_empty_slot",
-     "effective_for_clear_order_leaving_cardinality"
+     "effective_for_f16_several_positives",
+     "effective_for_f16_same_patch_positive",
+     "effective_for_a81_incomparable_units",
+     "effective_for_clear_order_leaving_cardinality",
+     "effective_for_set_cardinality_without_order",
+     "effective_for_clear_on_empty_slot"
+    ]
+   },
+   {
+    "clause": "§6 step 3b (closed precedence of causes), §6 table (A.3 code per DeltaRefusal)",
+    "demands": "a refused patch is refused with the code of the HIGHEST-precedence cause (TARGET_NOT_ADDRESSABLE > DELTA_SLOT_CONFLICT > KEEP_ON_EMPTY_SLOT > OP_NOT_ACCREDITED:<DIM> > DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER), with ties decided by the §4.2 slot order and the dimension of the slot named in OP_NOT_ACCREDITED; a host-rule code never replaces a cause (causes precede §6 step 4)",
+    "id": "T-REFUSAL-CODE",
+    "killed_by": [
+     "refusal_conflict_reported_as_keep_on_empty",
+     "refusal_keep_on_empty_reported_as_opna",
+     "refusal_opna_reported_as_cardinality",
+     "refusal_conflict_reported_as_cardinality",
+     "refusal_precedence_reversed",
+     "refusal_slot_order_ignored",
+     "refusal_wrong_dimension",
+     "refusal_replaced_by_a_host_rule"
+    ]
+   },
+   {
+    "clause": "§6 step 3b (a refusal needs a cause), §6.1",
+    "demands": "a structural refusal (DELTA_SLOT_CONFLICT, KEEP_ON_EMPTY_SLOT, DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER, TARGET_NOT_ADDRESSABLE over a base without logic) over a patch with no such cause refuses a lawful transition",
+    "id": "T-REFUSAL-UNJUSTIFIED",
+    "killed_by": [
+     "refuse_lawful_as_slot_conflict",
+     "refuse_lawful_as_keep_on_empty",
+     "refuse_lawful_as_cardinality_without_order",
+     "refuse_lawful_as_target_not_addressable"
     ]
    },
    {
@@ -531,59 +717,211 @@
    }
   ]
  },
- "gold_seal_sha256": "bb2e981229ec8263a961994388ee4bae5b84a15ac523d0f0435de7a328cd2216",
+ "dependencies_authority": {
+  "contract_sha256": "182a2e10d8821d2c4abe8e212c90bf1eaa0f48e42c0ceb16f3d2ec926edeca2c",
+  "dependencies": {
+   "DEP-BUYER-TERRITORY": {
+    "cases": 2,
+    "impacto_m2a3": "LECTURA",
+    "owners": [
+     "D-BUYER"
+    ]
+   },
+   "DEP-DERIVED-VIEW": {
+    "cases": 10,
+    "impacto_m2a3": "COMPOSICION",
+    "owners": [
+     "F"
+    ]
+   },
+   "DEP-E-ORDER": {
+    "cases": 25,
+    "impacto_m2a3": "LECTURA",
+    "owners": [
+     "E-ORDER"
+    ]
+   },
+   "DEP-E-ORDER-CANDIDATES": {
+    "cases": 4,
+    "impacto_m2a3": "COMPOSICION",
+    "owners": [
+     "E-ORDER"
+    ]
+   },
+   "DEP-INHERITANCE": {
+    "cases": 16,
+    "impacto_m2a3": "LECTURA",
+    "owners": [
+     "D-MONEY",
+     "D-TIME"
+    ]
+   },
+   "DEP-M1-PENDING-FRAME": {
+    "cases": 0,
+    "impacto_m2a3": "COMPOSICION",
+    "owners": [
+     "M2A-1b"
+    ]
+   },
+   "DEP-M2A5-WIRE-CARDINALITY": {
+    "cases": 1,
+    "impacto_m2a3": "LECTURA",
+    "owners": [
+     "M2A-5"
+    ]
+   },
+   "DEP-MODALITY-UNIVERSE": {
+    "cases": 5,
+    "impacto_m2a3": "COMPOSICION",
+    "owners": [
+     "E-MODALITY"
+    ]
+   },
+   "DEP-O1B-OPPORTUNITIES": {
+    "cases": 1,
+    "impacto_m2a3": "COMPOSICION",
+    "owners": [
+     "FOUNDATION_O1B_EXPLICIT_TIME_PARITY",
+     "M2A-1b"
+    ]
+   },
+   "DEP-REGION": {
+    "cases": 8,
+    "impacto_m2a3": "LECTURA",
+    "owners": [
+     "E-GEO"
+    ]
+   },
+   "DEP-SMMLV-READ": {
+    "cases": 3,
+    "impacto_m2a3": "LECTURA",
+    "owners": [
+     "D-MONEY",
+     "E-VALUE"
+    ]
+   },
+   "DEP-SMMLV-RECALC": {
+    "cases": 1,
+    "impacto_m2a3": "COMPOSICION",
+    "owners": [
+     "D-MONEY",
+     "E-VALUE"
+    ]
+   },
+   "DEP-STATE-LITERALS": {
+    "cases": 6,
+    "impacto_m2a3": "LECTURA",
+    "owners": [
+     "E-STATE"
+    ]
+   },
+   "DEP-TIME-RELATIVE": {
+    "cases": 3,
+    "impacto_m2a3": "LECTURA",
+    "owners": [
+     "D-TIME",
+     "E-TIME"
+    ]
+   },
+   "DEP-VALUE-EQUALITY": {
+    "cases": 0,
+    "impacto_m2a3": "LECTURA",
+    "owners": [
+     "D-MONEY",
+     "E-VALUE"
+    ]
+   },
+   "DEP-VALUE-FORMS": {
+    "cases": 8,
+    "impacto_m2a3": "LECTURA",
+    "owners": [
+     "D-MONEY",
+     "E-VALUE"
+    ]
+   }
+  },
+  "impacts": [
+   "LECTURA",
+   "COMPOSICION"
+  ],
+  "owners": [
+   "CONTRATO_M1",
+   "D-BUYER",
+   "D-MONEY",
+   "D-TIME",
+   "E-BUYER",
+   "E-GEO",
+   "E-MODALITY",
+   "E-ORDER",
+   "E-STATE",
+   "E-TIME",
+   "E-VALUE",
+   "F",
+   "FOUNDATION_O1B_EXPLICIT_TIME_PARITY",
+   "M2A-1b",
+   "M2A-5",
+   "M2A-6",
+   "M2b",
+   "M3",
+   "PROTOCOLO_M2A"
+  ],
+  "path": "docs/audits/m2a_conversation/gold/CONTRACT_S19_DEPENDENCIES.json",
+  "schema": "m2a-contract-s19/2",
+  "sha256": "4f6c3bf29f8bd8f735d211e08b620aaa4ff69a71b280ccc2dc7ff50409ae704e"
+ },
+ "gold_seal_sha256": "7dd39b4b322990925c5138b6492df909803da3fdc98f7a771e07bc17bd2a03b3",
  "policy": "texto REAL fuera de git; aquí sólo ids, conteos y digests",
  "real": {
   "case_sha256": {
-   "R0075": "39d172722eeb25d438ea8177b12fa45a4c9ba2809165bd073342ad80e7ded118",
-   "R0079": "637d8782a7c7c0f1255a7ac38f9bc3a818c5a88106cdee8e93d746c63cc131be",
-   "R0083": "9af5cd29cd02d311bc50c74f97a4c511045dc72a1380beef93d28bf73aafde4e",
-   "R0087": "e862cf7c152728b019821a50e07ab3e3ee0de52292bfa910081927ac1a9a61dd",
-   "R0089": "4fd1ab5e3d05c4456967eeb555b41cc98706e1d82d854cf1af2dd8b6377a974b",
-   "R0092": "6e9ea95d6b8a10cc9e7d342269f8ebb0ac080c24294037b89e2f9dc3568cb997",
-   "R0093": "1ed132549cd9b7883919f9aa57b93946917f2ec51702246e505300fc1ab4030a",
-   "R0094": "534b64b29404a5b31272622ec0bb788ed5dc6925c7788d0ab6581f6f1cfdf4ec",
-   "R0099": "2a1af07441ea0608aa394a1f38db1c5900606035b9087ea58ae7c55bd066c95b",
-   "R0106": "f8a10c67fed6f5620a62fdafcae219bdbf5326851a06138363240611f677387a",
-   "R0107": "5a9d9a173cd983abdb00275efa103a0b8eea10d5fcb32edb4a4754a6bdc17fd1",
-   "R0180": "9fb902c1f99fcfb5832b9ee4e9115b0462c81fad8464e8fce4f6d32a2b2ce3d7",
-   "R0197": "def2b533ca7cb0338121435ecb1e2e94e9d55975e45932e9d6d7ce04309bdea1",
-   "R0201": "acb339b0b72822f34c433e89508b9111bbc99144ffdbb4434ed0ee0b8f681559",
-   "R0202": "8171cc5b25231b7d307293514481a751d53a0cfcb2e528d1bb9104544fc1de69",
-   "R0205": "55c82dac1f38d0117666c66f15f9108b1d42420710dfd09f876aed27fc390e5f",
-   "R0223": "e42f1322c17f62efccaca87263d4724a2bd6c36e8a1cfe35d88e9008eb21bc61",
-   "R0233": "7a74f6c591bd6dd328e7beed9640993b8e832e284a3991ff8c70beefa9ca67ec",
-   "R0274": "6b6ff5ba06f194337f73398f9dc2018f9b2f9c27417e0d66f316bebcebfb9b1b",
-   "R0281": "36ad9ae8168e0b7684f0c4c9f9d85987ead57c1d7b0af19185d28b7ee77cbc26",
-   "R0282": "93eb25d01a2ee763fc15a784c3a30404e42b92092cf0df18162bcf99fad3f3da",
-   "R0286": "c3ca11f8a7d40656132ca4ce1bc527ef8aaa03b3d2e5271e73311fe2eb0975e0",
-   "R0295": "c382810c9d0ff854b192fed05fac485e1d64ef0226168153f961adc62d9da1ff",
-   "R0301": "f0c07f98752937ebc70d5cd742c9f82c77d02b74928b3ad8e78ae93e10986054",
-   "R0303": "5bf79469cc7a20872af2df519cb69f20999cfd5e6e8c01a6e3cfe858e7aeb41f",
-   "R0304": "1a3900875319945a42f3efd71609a61e6eed77cca795ce5a7c830a34f5cc65d1",
-   "R0308": "4bd202cbfbc8ba917d67d4f2b81fe7ad4a826a5a2cc345886fd10047164fa37f",
-   "R0309": "d1f7f79633fcd61b28d7a46aa5fc0c228407c53cd9b3de786eae526088c2e075",
-   "R0310": "f51588f72dcd790c2f0ea8adc78ea5f46c6452ca1977d52a834a0abc3812977f",
-   "R0311": "4f26fac64992566919f11947a6a7c736777898951c129f8d02a60189aeff1f47",
-   "R0312": "4baad28e9bc9ee1c9a26ed989d01b68d107c11090e531b4856351015e19157ce",
-   "R0313": "27770cc5070541ae23bee7695f0e72f382f397a1d3de2041847ab3a3bda4b885",
-   "R0314": "c7d78b5b00eb92ee97f058ec4635c89d77f0dae0a7919cf2131577fea3539ee8",
-   "R0336": "3a7154ae6e3cf3653900e4688c30407458bab198f0417a0477d4a4778806eec0",
-   "R0409": "f6c54ef22ce583ba42f201d3a97a783447219da982e8c8a8478ebe7c3ddcb74c",
-   "R0431": "56dae35c2cb21dd502d0f43128fe0e71d6715aac1ce8458743d50f6f3e238f44",
-   "R0432": "4388b09403057059cbf8d472431d5c48b3533debb083d4510cec0920c67e9507",
-   "R0450": "79a681d802f6ba43575d6d5da9a97c7f0db3289aa947f7f95dda5d0ef14b4675",
-   "R0459": "a69d591acd3bc95eaae230de8de00690729c3bbe71a9cc22f1bfad7a4b4f3721",
-   "R0464": "71d514d5a130f7e521ce74f9b11b0aa157462a7a8ef70d6b09d5e1d6d4987e43",
-   "R0484": "2127c39b15f0965a95abadf32a799f8d5ee281803a6a88c3c74ef5214d51b7d9",
-   "R0496": "17d019ba18fd57479d2a5d3509ff61b5edf09b0e94e5063b867a815e254755b8",
-   "R0497": "ad7bb603da7443160251bf9cefa3ec89060900bc1456798e7af536cae8390f77",
-   "R0498": "d64f317599f6639390818d719457924466afcc8188527fccd75e286ea682af96",
-   "R0515": "5de0395672a8af0c5d13605b955b1f0e1f71aebecf56a40b40f4ade294f79ea9",
-   "R0529": "a0f9a147d42a54315f1512637f987973556e2f951cbf5f0749ba6dc74d9c2313",
-   "R0531": "6571cd95345e0e68ad44d43ec0005b84d2ef1dd68acd4696ac78e2ee63be7549",
-   "R0532": "3fe9d764f3533ecca18260b7ca603552b5b5b6f20da239198387ffe4d7938ea9",
-   "R0556": "16681aaa38775f072353895397c7384a47d76ed47485855339c76cf7866a492d"
+   "R0075": "300bebfae35fd524edffdd603cbef64c01df07977f9e6db18d018c1f66100015",
+   "R0079": "fa2854db8fd16962d8f0f2c286b1d4974c7accd87684aaba54ec56b9cde00443",
+   "R0083": "4f93edf0b8f3000869c9548261fdb0e8a8649bf3f8a79e86c9c926cee95cef17",
+   "R0087": "e5f9a35c2978f6fd165304631d47a7a095145f9081aaecb05c423def4ce5dd9a",
+   "R0089": "299509c751a0d017b78b8727c3e9a5db9fd7cc352db52a2128eac3e34ace1f4b",
+   "R0092": "30c941a0cd940e4c571ab9981ea0eb5822318c0f1990bd2992f3a45fc9daaa3f",
+   "R0093": "19dc40432874caffe2b482af83698a3f4472a6247e7ff99277f692555222357f",
+   "R0094": "6b38244c57d4ef7bc36b66eefa67fe68a6343ec40f82e3389002995ca462d157",
+   "R0099": "bb54531db586a17b6d096baa25f4a5baf1a6a8def0b01d73310426c87881dad3",
+   "R0106": "3979e43960c5fe1326229efd60bbe49681653072fbfe2d094e6b5e52a8ed4b1c",
+   "R0107": "07fd93c4201a2444f057c54177a2dd1058fa8ee919cdbd68e882a95b754bdbf2",
+   "R0180": "53ed5f41902be6b41c92dad947117168acb6e3f3ca406ed4d2d8e22afe426c78",
+   "R0197": "1948e832b3fbe65ce2efc59413e946a59f1efb764ff0da9939eff35a2be47bf5",
+   "R0201": "40cc4f33b3b5c4bcaa79c00dad6141fe43c793fed9ea277fd8913fb626f0e0dc",
+   "R0202": "fe4da3d0a5daf9303b66a3946455d1e2b790af855fdf3d3612fc999f2cf4daf9",
+   "R0205": "e4f402e7c549d2a1aab2a550ada5d0d99c15256ddcb700c7443f0fda9b393b55",
+   "R0223": "8f204149db276d53ac8c49b38bd9bd2010da6101f189b6408528effdc2e53619",
+   "R0233": "9cc73b68be8b266e7b31784db7973dfb7ad27e96fcfc2c2a0614eae671dcb0a1",
+   "R0274": "e1dd1d26d43c0ea1d2f9e427207f299930a5eab0f657b82f07d9ffca5798ffba",
+   "R0281": "ad5eafb8833dd6afe4d9c810427a60abc4e8697929c0c25af3ac0fe27d82c254",
+   "R0282": "4175856120a6f546bdab1fbdbc6a4cc71c27e0e22017abde3316205f188103e5",
+   "R0286": "32afae77a1f51bc38b5f552df1920acfc57e32d1efc1e6fca4499fcb630a847d",
+   "R0295": "a2b99b8f74057eef49c2a0873631e0661e277b5bb7bdf1bcfd2fe31dc66f054d",
+   "R0301": "cb0109be24bc4930476638970cb7759c3abef356f08326d2b9c0b1667bf28605",
+   "R0303": "632e24385ace83d19d72fd1dbd3739e41c52c751930d377d8939b270540764a5",
+   "R0304": "1c91589bb0fcc7f98efbd5087cddb78c11d23ca8899b3ee11e214150697da52c",
+   "R0308": "c5969a0de846e5344abb9bbd0e663fe9826b1bba1aef7da5c06f329a3d305f60",
+   "R0309": "c2350f707f85042377286f34f8b00f2b14007c1de4d9be61655d1de3388506f2",
+   "R0310": "20126c06c5d3d3d06c08c3fc3d5bab0b3d151032c68b85513abfcb19634edf03",
+   "R0311": "eece89e8a5228c1cf54ba82cd99859f515186b028b72384d650874a0de5e2692",
+   "R0312": "0e52701cc111ea437716f20cb8c227aab22ed0cbda60c86124f176d437ad0558",
+   "R0313": "3b1ab5647158c55e207a8e4c6196fbe50b8020fb9c25de1f62fce298e5fbf64e",
+   "R0314": "fb89e068adbc7e97445d8ac1e9a03fc9e53bd91e4b90ca8878f4c7239922e1fd",
+   "R0336": "7cf410f183d1db470a9b4201c34ae67f91c35037b987e190f45d300ad0b4ef27",
+   "R0409": "5684abcca8f895700111c4d336ad50a33cb1c51dc4fc3335b5ab687c32ddbae1",
+   "R0431": "03f9e739b20fae05253754a4bef26d31dd7eeff5e6b16b21b331cb7c7b1d7be7",
+   "R0432": "ad4525c3c1eb1120894559189342d2c43359074deb0eca1f5bff0c5272cf5cee",
+   "R0450": "82d53a1491b9a72ca383fec670011e79fff7cb8063886b2b91311825937b74f1",
+   "R0459": "58fd60466fd62140c7febdce12b7e46079494f78ca670d7418a0eca108413174",
+   "R0464": "f235b8879cbfd651e9772f394829ac23edce0792845ec964338166654aa5fedf",
+   "R0484": "7fea4a22f58437802ef9e0b0f9fca77e2f5e3c8474b847ad6c56522c4da1fedf",
+   "R0496": "6f37d6a7bb0e723dbe419eeed82cd0e8f2d4b542ef884cadfbd0830e5d4b8919",
+   "R0497": "447c28ffe651d61707c2f8e4868a17ef3fdb64c22f8924b3162df3cc7ea3d541",
+   "R0498": "932b3d3eb4d56f75b037f8786c1bbdeb81f99381f36b46c939fa264fc2085f32",
+   "R0515": "e8830712ea011bb9d5adb5d8695539cad3ba8bdf77f56f97133460a70d1c58b3",
+   "R0529": "d7cf513bcefdcf5a6c03e716871a34528eb65f26ed0bcd3726b804bb47ebd6f9",
+   "R0531": "2db146fb45d22e6e21d9d7d873c7f579ac423f83bad860c58e8ccd7fa1aef611",
+   "R0532": "4edabb11c4b9dc17346a977ea42e9ddd360ee35afad1295a1441dd4b970166fb",
+   "R0556": "c97816b9c03b26cf51f320379127b790cc001eeb7bebbf4df026a20055ca9eb3"
   },
   "ids_by_applicability": {
    "APLICABLE_M2A3": [
@@ -593,6 +931,7 @@
     "R0089",
     "R0092",
     "R0093",
+    "R0094",
     "R0099",
     "R0180",
     "R0197",
@@ -616,29 +955,17 @@
     "R0450",
     "R0464",
     "R0484",
+    "R0496",
+    "R0497",
+    "R0498",
     "R0515",
     "R0556"
    ],
-   "DEPENDIENTE(E-GEO)": [
-    "R0274",
-    "R0281",
-    "R0282"
+   "DEPENDIENTE(D-MONEY)": [
+    "R0304"
    ],
    "DEPENDIENTE(E-MODALITY)": [
     "R0459"
-   ],
-   "DEPENDIENTE(E-STATE)": [
-    "R0094"
-   ],
-   "DEPENDIENTE(E-TIME)": [
-    "R0496",
-    "R0497",
-    "R0498"
-   ],
-   "DEPENDIENTE(E-VALUE)": [
-    "R0301",
-    "R0303",
-    "R0304"
    ],
    "DEPENDIENTE(F)": [
     "R0106",
@@ -647,9 +974,18 @@
     "R0531",
     "R0532"
    ],
+   "NO_MEDIBLE(OPS_AB_DISAGREE)": [
+    "R0274",
+    "R0281"
+   ],
    "NO_MEDIBLE(PRIOR_AB_DISAGREE)": [
     "R0075",
+    "R0282",
     "R0336"
+   ],
+   "NO_MEDIBLE(VALUE_UNIT_NOT_PESO_SCALE)": [
+    "R0301",
+    "R0303"
    ]
   },
   "summary": {
@@ -659,81 +995,75 @@
    },
    "applicable_by_disposition": {
     "CLARIFY": 2,
-    "EXECUTE": 29
+    "EXECUTE": 33
    },
    "applicable_by_partition": {
-    "DEV": 17,
-    "TEST": 14
+    "DEV": 18,
+    "TEST": 17
    },
    "by_applicability": {
-    "APLICABLE_M2A3": 31,
-    "DEPENDIENTE(E-GEO)": 3,
+    "APLICABLE_M2A3": 35,
+    "DEPENDIENTE(D-MONEY)": 1,
     "DEPENDIENTE(E-MODALITY)": 1,
-    "DEPENDIENTE(E-STATE)": 1,
-    "DEPENDIENTE(E-TIME)": 3,
-    "DEPENDIENTE(E-VALUE)": 3,
     "DEPENDIENTE(F)": 5,
-    "NO_MEDIBLE(PRIOR_AB_DISAGREE)": 2
+    "NO_MEDIBLE(OPS_AB_DISAGREE)": 2,
+    "NO_MEDIBLE(PRIOR_AB_DISAGREE)": 3,
+    "NO_MEDIBLE(VALUE_UNIT_NOT_PESO_SCALE)": 2
    },
    "cases": 49,
-   "classification_measurable": 29,
+   "classification_measurable": 33,
    "dependent_by_any_owner": {
-    "E-GEO": 3,
+    "D-MONEY": 1,
     "E-MODALITY": 1,
-    "E-STATE": 1,
-    "E-TIME": 4,
-    "E-VALUE": 5,
+    "E-VALUE": 1,
     "F": 5
    },
    "effects_not_measurable": 0
   }
  },
- "schema": "m2a-reducer-oracle/2",
+ "schema": "m2a-reducer-oracle/3",
  "seal_verified": true,
  "synthetic": {
   "all_by_partition": {
-   "DEV": 74,
-   "TEST": 76
+   "DEV": 77,
+   "TEST": 83
   },
   "applicable_by_disposition": {
-   "CLARIFY": 2,
-   "EXECUTE": 72,
-   "INFORM": 1,
-   "NEW_SEARCH": 4
+   "CLARIFY": 5,
+   "EXECUTE": 89,
+   "INFORM": 3,
+   "NEW_SEARCH": 5
   },
   "applicable_by_partition": {
-   "DEV": 38,
-   "TEST": 41
+   "DEV": 52,
+   "TEST": 50
   },
   "by_applicability": {
-   "APLICABLE_M2A3": 79,
-   "DEPENDIENTE(D-BUYER)": 2,
-   "DEPENDIENTE(E-BUYER)": 1,
-   "DEPENDIENTE(E-GEO)": 4,
+   "APLICABLE_M2A3": 102,
    "DEPENDIENTE(E-MODALITY)": 4,
-   "DEPENDIENTE(E-STATE)": 4,
-   "DEPENDIENTE(E-TIME)": 8,
-   "DEPENDIENTE(E-VALUE)": 10,
+   "DEPENDIENTE(E-ORDER)": 1,
    "DEPENDIENTE(F)": 4,
    "DEPENDIENTE(FOUNDATION_O1B_EXPLICIT_TIME_PARITY)": 1,
-   "DEPENDIENTE(M2A-4)": 19,
+   "DEPENDIENTE(M2A-4)": 22,
    "DEPENDIENTE(M2A-6)": 6,
-   "NO_MEDIBLE(TIME_OPERATOR:relative_period)": 8
+   "NO_MEDIBLE(HOST_FACT_NOT_IN_GOLD:CARRIED_BUYER_TERRITORY)": 2,
+   "NO_MEDIBLE(HOST_FACT_NOT_IN_GOLD:REGION_CLOSED_LIST)": 1,
+   "NO_MEDIBLE(HOST_FACT_NOT_IN_GOLD:STATE_LITERALS_OF_THE_UNIVERSE)": 1,
+   "NO_MEDIBLE(OPS_AB_DISAGREE)": 1,
+   "NO_MEDIBLE(TIME_MONTH_HINT)": 1,
+   "NO_MEDIBLE(TIME_OPERATOR:relative_period)": 9,
+   "NO_MEDIBLE(VALUE_UNIT_FROM_RESULT)": 1,
+   "NO_MEDIBLE(VALUE_UNIT_NOT_PESO_SCALE)": 4
   },
-  "cases": 150,
-  "classification_measurable": 76,
+  "cases": 160,
+  "classification_measurable": 98,
   "dependent_by_any_owner": {
-   "D-BUYER": 2,
-   "E-BUYER": 4,
-   "E-CONTRACT_TYPE": 1,
-   "E-GEO": 7,
    "E-MODALITY": 4,
-   "E-STATE": 5,
-   "E-TIME": 9,
-   "E-VALUE": 11,
+   "E-ORDER": 4,
    "F": 5,
    "FOUNDATION_O1B_EXPLICIT_TIME_PARITY": 1,
-   "M2A-4": 19,
+   "M2A-1b": 1,
+   "M2A-4": 22,
    "M2A-6": 9
   },
   "effects_not_measurable": 0

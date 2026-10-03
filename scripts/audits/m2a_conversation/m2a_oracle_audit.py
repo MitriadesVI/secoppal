@@ -92,9 +92,44 @@ LIMITED_GUARANTEES = (
      "closed_by": "check_transition T-COND-WRITTEN-SLOT (killed by clear_dimension_only_positive)"},
     {"id": "GOLD-GAP-H6-OVERFIRE", "kind": "GOLD_GAP",
      "what": "a reducer that over-fires H6 (a clarification for any new territory next to a buyer) is not discriminated: no "
-             "applicable EXECUTE case has a territory next to a carried buyer (the H6 cases, SF123 and SF155, are the "
-             "D-BUYER and E-GEO lanes')",
-     "closed_by": "D-BUYER (buyer.territory) and a Gold case that executes a compatible territory over a carried buyer"},
+             "applicable EXECUTE case has a territory next to a carried buyer, and the two cases where H6 fires are "
+             "NO_MEDIBLE(HOST_FACT_NOT_IN_GOLD:CARRIED_BUYER_TERRITORY)",
+     "closed_by": "a Gold case that executes a compatible territory over a carried buyer, with the buyer's territory typed"},
+    {"id": "LG-HOST-FACTS-NOT-IN-GOLD", "kind": "SCOPE",
+     "what": "H6, H7 and H8 read a fact the Gold's IR does not carry (the carried buyer's territory, the closed list of regions, "
+             "the states of the resulting universe): section 19 says LECTURA for them, so they are not reds, but the oracle "
+             "will not type the fact by guessing: the case where the Gold expects the rule to FIRE is NO_MEDIBLE with the fact "
+             "named, and the EXECUTE controls stay measurable",
+     "closed_by": "a Gold that carries the typed fact in its IR, or a decision to derive it from the adjudicated outcome"},
+    {"id": "LG-LECTURA-WITHOUT-TYPED-VALUE", "kind": "SCOPE",
+     "what": "a §19 dependency with impacto LECTURA does not block, but a case whose value the Gold does not give typed stays "
+             "NO_MEDIBLE with the typing motive: a SMMLV amount (the conversion by vigencia and its provenance, read by compose in "
+             "H3, are E-VALUE's: VALUE_UNIT_NOT_PESO_SCALE), a month without a year (TIME_MONTH_HINT), a window relative to "
+             "the clock (TIME_OPERATOR:relative_period: the Gold's labels disagree on its end)",
+     "closed_by": "E-VALUE and E-TIME typed values in the Gold's IR"},
+    {"id": "LG-REGION-MEMBERS-SYNTHETIC", "kind": "ORACLE_BLIND_SPOT",
+     "what": "a REGION is typed with ONE synthetic member derived from its name (the Gold carries no members; compose never "
+             "reads them, §19 DEP-REGION is LECTURA): a reducer that validates a region against E-GEO's closed list would "
+             "reject it, and H7 is measured only where the Gold executes",
+     "closed_by": "E-GEO's closed list of regions and members in the Gold's IR"},
+    {"id": "LG-TARGET-NOT-ADDRESSABLE", "kind": "ORACLE_BLIND_SPOT",
+     "what": "TARGET_NOT_ADDRESSABLE (precedence 1) needs the shape of the IR v2 logic expression to know that an op targets an "
+             "atom inside an OR/NOT group: check_transition never finds it, and accepts it unjudged over a base with a logic",
+     "closed_by": "M2A-3 properties over bases with a logic expression, using the IR v2 shape"},
+    {"id": "LG-AUTHORITY-REFUSALS", "kind": "ORACLE_BLIND_SPOT",
+     "what": "OP_NOT_ACCREDITED of an op whose authority did not resolve cannot be written in a m2a-patch/1 (it carries only "
+             "resolved conditions): check_transition finds the causes the dicts show (F16 fail-closed, P-3, incomparable "
+             "units) and accepts an authority refusal unjudged; the Gold decides it by case (SF194's mark is compose's, not "
+             "an authority's)",
+     "closed_by": "the authorities' own gates and the Gold cases"},
+    {"id": "LG-F16-CONTAINED-VALUE", "kind": "ORACLE_BLIND_SPOT",
+     "what": "F16's other fail-closed branch, a negated value CONTAINED in a positive (G-FU-09), needs a notion of containment "
+             "no typed value gives: check_transition decides the several-positives and same-patch branches only",
+     "closed_by": "M2b (G-FU-09)"},
+    {"id": "LG-HOST-RULES-NOT-DECIDED-HERE", "kind": "SCOPE",
+     "what": "the host rules H1-H11 need the conversational context (expiry, pending, authority readings): the transition "
+             "oracle only checks that a host-rule code never replaces a refusal cause; the Gold decides them by case",
+     "closed_by": "the Gold cases and M2A-4"},
     {"id": "GOLD-GAP-REPLACE-UNIVERSE-KEEPS-OLD-KIND", "kind": "GOLD_GAP",
      "what": "a reducer that keeps the old universe kind after REPLACE_UNIVERSE is not discriminated by the Gold: no "
              "applicable case changes the kind (SF075, records to opportunities, is declared dependent downstream)",
@@ -135,29 +170,33 @@ def _mismatch(out: list, gid: str, field: str, expected, actual, source: str) ->
     out.append(item)
 
 
-def _decision_problems(cases: list[dict], decisions: dict[str, dict]) -> list[str]:
-    """The cases must be the ones the verified decisions produce (no stale cases, no case hidden by an unrecorded one)."""
+def _s19_problems(cases: list[dict]) -> list[str]:
+    """The cases must be the ones the verified §19 extraction produces (no stale case, no case hidden by an override)."""
+    s19 = gold.s19()
+    rows = {d["dep_id"]: d for d in s19["dependencies"]}
     out = []
     for c in cases:
-        decided = "USER_DECISION" in c["rules"]
-        if decided != (c["gold_id"] in decisions):
-            out.append(f"{c['gold_id']}: the case and the verified decisions disagree")
-        elif decided and decisions[c["gold_id"]]["owner"] not in c["owners"]:
-            out.append(f"{c['gold_id']}: the decided owner is not the case's")
+        deps = s19["case_dependencies"].get(c["gold_id"], [])
+        if ((c.get("s19") or {}).get("dependencies") or []) != deps:
+            out.append(f"{c['gold_id']}: the case and the verified §19 extraction disagree")
+            continue
+        blocking_deps = sorted(d for d in deps if rows[d]["impacto_m2a3"] == "COMPOSICION")
+        if sorted(r for r in c["rules"] if r in rows) != blocking_deps or (
+                blocking_deps and not c["applicability"].startswith("DEPENDIENTE(")):
+            out.append(f"{c['gold_id']}: the blocking dependencies of the case are not the extraction's COMPOSICION rows")
     return out
 
 
 def audit(actuals: dict, cases: list[dict] | None = None, *, require_sources=("SYNTHETIC",),
           require_fresh: bool = False) -> dict:
     """The GOLD oracle: completeness (exactly the ``APLICABLE_M2A3`` ids), then per-case exact comparison of disposition,
-    code, effective (semantic projection) and reducer-scope effects. Pure but for verifying the user's decisions against
-    their records. The report declares its COVERAGE: ``ok`` is «no error in what was audited»; ``complete`` is «and that
+    code, effective (semantic projection) and reducer-scope effects. Pure but for verifying the cases against the sealed §19
+    extraction. The report declares its COVERAGE: ``ok`` is «no error in what was audited»; ``complete`` is «and that
     was every case the seal holds, with nothing left unverified». ``require_sources`` names the sources that must have
     cases loaded (asking for REAL with no REAL case fails); ``require_fresh`` turns an absent effective of a fresh
     acceptance into a mismatch instead of an ``unverified`` entry."""
     cases = load_cases() if cases is None else cases
-    decisions = gold.load_decisions()
-    decision_problems = _decision_problems(cases, decisions)
+    s19_problems = _s19_problems(cases)
     sealed = gold.seal()["slices"]["M2A_GOLD"]
     loaded = collections.Counter(c["source"] for c in cases)
     by_id = {c["gold_id"]: c for c in cases}
@@ -203,11 +242,11 @@ def audit(actuals: dict, cases: list[dict] | None = None, *, require_sources=("S
         "partitions": dict(sorted(collections.Counter(c["partition"] for c in cases).items())),
         "full_sources": sorted(s for s, v in sealed.items() if loaded.get(s) == len(v["ids"])),
         "required_sources": list(require_sources)}
-    ok = not (missing or extra or mismatches or decision_problems or source_problems)
+    ok = not (missing or extra or mismatches or s19_problems or source_problems)
     return {"ok": ok, "complete": ok and not unverified and coverage["full_sources"] == sorted(sealed),
             "coverage": coverage, "expected": len(expected_ids), "actual": len(actuals), "missing": missing,
             "extra": extra, "mismatches": mismatches, "unverified": unverified, "source_problems": source_problems,
-            "decision_problems": decision_problems,
+            "s19_problems": s19_problems,
             "declared_red": [{"gold_id": g, "owner": c["owners"][0], "owners": c["owners"]}
                              for g, c in by_id.items() if c["applicability"].startswith("DEPENDIENTE(")],
             "no_medible": [{"gold_id": g, "motive": c["applicability"] if c["applicability"] == NO_PRODUCER
@@ -216,24 +255,35 @@ def audit(actuals: dict, cases: list[dict] | None = None, *, require_sources=("S
 
 
 def audit_transitions(actuals: dict, cases: list[dict] | None = None, *, dataset_of_fn=None) -> dict:
-    """The CONTRACT oracle over the cases of the Gold: ``check_transition(base, patch, effective)`` for every applicable
-    case whose effective was composed (a fresh acceptance has no transition) and which the reducer executed. ``ok`` is no
-    violation; the violations name their rule (``TRANSITION_RULES``). The Gold's bases carry no host fields (see
-    ``LG-BASES-WITHOUT-HOST-FIELDS``): M2A-3 also calls ``check_transition`` over generated bases."""
+    """The CONTRACT oracle over the cases of the Gold: ``check_transition`` for every applicable case. A turn the reducer
+    EXECUTED with a composed effective is checked with that effective; a turn it did NOT execute (CLARIFY, INFORM, REASK) is
+    checked with the code it reported, which must be the highest-precedence cause when the contract finds one and must not be
+    a structural refusal when it finds none (``T-REFUSAL-CODE``, ``T-REFUSAL-UNJUSTIFIED``). A fresh acceptance has no
+    transition. ``ok`` is no violation; the violations name their rule (``TRANSITION_RULES``). The Gold's bases carry no host
+    fields (see ``LG-BASES-WITHOUT-HOST-FIELDS``): M2A-3 also calls ``check_transition`` over generated bases."""
     cases = load_cases() if cases is None else cases
-    violations, checked, skipped = [], 0, []
+    violations, checked, refusals, skipped = [], 0, 0, []
     for c in cases:
         if c["applicability"] != APPLICABLE or c["gold_id"] not in actuals:
             continue
         actual = actuals[c["gold_id"]]
-        effective = actual.get("effective") if isinstance(actual, dict) else None
+        if not isinstance(actual, dict):
+            skipped.append(c["gold_id"])
+            continue
+        base, patch = c["inputs"]["base"], c["inputs"]["patch"]
+        effective = actual.get("effective")
+        if actual.get("disposition") in ("CLARIFY", "INFORM", "REASK") and isinstance(actual.get("code"), str):
+            refusals += 1
+            violations += [{"gold_id": c["gold_id"], **v} for v in check_transition(
+                base, patch, None, dataset_of=dataset_of_fn, refusal=actual["code"])]
+            continue
         if c["expected"]["effective_scope"] != "COMPOSED" or effective is None:
             skipped.append(c["gold_id"])
             continue
         checked += 1
-        violations += [{"gold_id": c["gold_id"], **v} for v in check_transition(
-            c["inputs"]["base"], c["inputs"]["patch"], effective, dataset_of=dataset_of_fn)]
-    return {"ok": not violations, "checked": checked, "violations": violations, "not_checked": sorted(skipped)}
+        violations += [{"gold_id": c["gold_id"], **v} for v in check_transition(base, patch, effective, dataset_of=dataset_of_fn)]
+    return {"ok": not violations, "checked": checked, "refusals_checked": refusals, "violations": violations,
+            "not_checked": sorted(skipped)}
 
 
 def audit_classification(scopes: dict, cases: list[dict] | None = None) -> dict:

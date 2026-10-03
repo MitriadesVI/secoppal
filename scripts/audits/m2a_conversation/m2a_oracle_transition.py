@@ -5,11 +5,14 @@ Two oracles answer two different questions, and neither imports the other nor an
 * the GOLD oracle (``m2a_oracle_audit.audit``): is the adjudicated MEANING right (disposition, code, semantic effective,
   effects)? The Gold decides meaning;
 * this one, ``check_transition(base, patch, effective)``: did the reducer get there WITHOUT FALSIFYING IDENTITY OR
-  PROVENANCE? The contract decides the mechanical invariants (what is carried, what is placed, what is refused, how a
-  redirected universe is rebuilt); the human labelers never adjudicate mechanics.
+  PROVENANCE, and did it refuse what the contract refuses, for the contract's reason? The contract decides the
+  mechanical invariants (what is carried, what is placed, what is refused and with which cause first, how a redirected
+  universe is rebuilt); the human labelers never adjudicate mechanics.
 
-``check_transition`` is a pure function of three dicts (``m2a-accepted/1`` base, ``m2a-patch/1`` patch, the effective
-the reducer returned) and the standard library; it returns the list of violations (empty = the transition is lawful).
+``check_transition`` is a pure function of the dicts (``m2a-accepted/1`` base, ``m2a-patch/1`` patch, and either the
+effective the reducer returned or the code it refused with) and the standard library; it returns the list of violations
+(empty = the transition is lawful). ``refusal_causes(base, patch)`` and ``expected_refusal(base, patch)`` expose what the
+contract demands of a refusal (§6 step 3b: the causes, with their closed precedence), also as pure functions.
 
 Interface for M2A-3 (its Hypothesis properties call it; the oracle never calls the reducer): feed it GENERATED bases and
 patches, not only the Gold's. The Gold's bases carry empty ``policies``, ``receipt_rules`` and
@@ -17,7 +20,15 @@ patches, not only the Gold's. The Gold's bases carry empty ``policies``, ``recei
 condition with those defaults is invisible on them; on a base whose conditions carry non-default values for every field
 (and a dual anchor, and a ``view``), rebuilding, re-originating or re-resolving shows up as a violation. Pass the host's
 own subject-to-dataset table as ``dataset_of`` to make the dataset check exact; without it the check is relational (the
-base's dataset for the same subject, else one that is none of the base's other datasets).
+base's dataset for the same subject, else one that is none of the base's other datasets). When the reducer REFUSED, pass
+``effective=None`` and ``refusal=<the code it refused with>`` (a ``DeltaRefusal`` code, or the A.3 code published for it:
+``UNRESOLVED_VALUE:<DIM>``, ``VALUE_WITHOUT_COMPARATOR``); with both ``None`` there is nothing to judge.
+
+What this function cannot decide from the dicts, declared (see ``LIMITED_GUARANTEES``): ``TARGET_NOT_ADDRESSABLE`` (it needs
+the shape of the IR v2 ``logic`` expression: with a ``logic`` in the base that refusal is accepted unjudged), the refusals
+that come from an AUTHORITY (``OP_NOT_ACCREDITED`` of an op whose authority did not resolve: a ``m2a-patch/1`` carries only
+resolved conditions), a value CONTAINED in a positive (G-FU-09), and the host rules H1-H11, which need the conversational
+context and are the Gold's to decide.
 
 ``TRANSITION_RULES`` lists every rule with its contract clause, what it demands and the mutants of the tests that must
 die (the manifest declares the table).
@@ -35,6 +46,18 @@ CONDITION_KEYS = frozenset({"condition_id", "request_ids", "slot", "dimension", 
                             "authority", "receipt_rules", "policies", "origin", "provenance"})
 POLICY_KEYS = frozenset({"policy_id", "version", "condition_ids", "effect"})
 SINGLE_SLOTS = ("VALUE/lower", "VALUE/upper", "ORDER", "CARDINALITY")
+# §4.2 slot order (the rows of the slot table: each polarized dimension POSITIVE then NEGATIVE; VALUE lower then upper):
+# the tie-break between causes of the same precedence (§6 step 3b). The test suite pins it against the contract's table.
+SLOT_ORDER = tuple(f"{d}/{p}" for d in ("TOPIC", "BUYER", "ACTOR", "GEOGRAPHY", "TIME", "STATE", "MODALITY",
+                                        "CONTRACT_TYPE_OR_NATURE") for p in ("POSITIVE", "NEGATIVE")) + (
+    "VALUE/lower", "VALUE/upper", "ORDER", "CARDINALITY", "UNIVERSE")
+# §6 step 3b: the closed precedence of refusal causes, highest first (pinned against the contract's table by the tests).
+PRECEDENCE = ("TARGET_NOT_ADDRESSABLE", "DELTA_SLOT_CONFLICT", "KEEP_ON_EMPTY_SLOT", "OP_NOT_ACCREDITED",
+              "DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER")
+OPNA = "OP_NOT_ACCREDITED"
+H12 = "CLEAR_ON_EMPTY_SLOT"  # §6.4 H12: INFORM, no effective, the anchor intact (not a DeltaRefusal: it follows the causes)
+WRITERS = ("SET", "SET_ORDER", "REPLACE_UNIVERSE")
+PESOS_SCALE = frozenset({"PESOS", "MILES", "MILLONES", "MIL_MILLONES", "BILLONES"})  # §15.2: comparable among themselves
 
 TRANSITION_RULES = (
     {"id": "T-STRUCT", "clause": "§3.2; M2A-1 types",
@@ -44,12 +67,35 @@ TRANSITION_RULES = (
      "killed_by": ["effective_extra_key", "duplicate_request_id", "duplicate_condition_id", "condition_unknown_request",
                    "dual_scope_differs", "dangling_policy", "malformed_policy", "two_bounds_same_side",
                    "cardinality_without_order", "request_ids_not_rewritten_after_reduction"]},
-    {"id": "T-REFUSAL", "clause": "§6.1, §6.2, §6.4 H12, §6.7 (amendment R3)",
-     "demands": "a patch the contract refuses produces NO effective: two SET on one slot, KEEP and CLEAR of one slot, two "
-                "REPLACE_UNIVERSE, KEEP of an empty slot, a lone CLEAR of an empty slot, and (amendment R3) a CLEAR of "
-                "ORDER that leaves a CARDINALITY standing",
-     "killed_by": ["effective_for_slot_conflict", "effective_for_keep_on_empty_slot", "effective_for_clear_on_empty_slot",
-                   "effective_for_clear_order_leaving_cardinality"]},
+    {"id": "T-REFUSAL", "clause": "§6 steps 2, 3b and 5 (F16, P-3, A8.1), §6.7 (R3-1), §6.4 H12",
+     "demands": "a patch with a refusal cause produces NO effective: two SET (or two SET_ORDER, or two REPLACE_UNIVERSE) on "
+                "one slot; KEEP with CLEAR, or KEEP with SET/SET_ORDER/REPLACE_UNIVERSE, of one slot EVEN WHEN THE VALUES "
+                "COINCIDE (R3b, U22); KEEP of an empty slot; a negative SET of a value that is one of several carried "
+                "positives, or whose positive the same patch creates (F16 fail-closed, R3-4, P-3); a VALUE bound against a "
+                "carried opposite bound of incomparable units (§15.2); a composed state that leaves a CARDINALITY standing "
+                "without ORDER (R3-1, decided on the STATE, not on the op); and a lone CLEAR of an empty slot (H12)",
+     "killed_by": ["effective_for_two_set_one_slot", "effective_for_keep_and_clear_one_slot",
+                   "effective_for_keep_and_set_same_value", "effective_for_keep_and_set_order",
+                   "effective_for_keep_and_replace_universe", "effective_for_two_replace_universe",
+                   "effective_for_keep_on_empty_slot", "effective_for_f16_several_positives",
+                   "effective_for_f16_same_patch_positive", "effective_for_a81_incomparable_units",
+                   "effective_for_clear_order_leaving_cardinality", "effective_for_set_cardinality_without_order",
+                   "effective_for_clear_on_empty_slot"]},
+    {"id": "T-REFUSAL-CODE", "clause": "§6 step 3b (closed precedence of causes), §6 table (A.3 code per DeltaRefusal)",
+     "demands": "a refused patch is refused with the code of the HIGHEST-precedence cause (TARGET_NOT_ADDRESSABLE > "
+                "DELTA_SLOT_CONFLICT > KEEP_ON_EMPTY_SLOT > OP_NOT_ACCREDITED:<DIM> > "
+                "DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER), with ties decided by the §4.2 slot order and the dimension of "
+                "the slot named in OP_NOT_ACCREDITED; a host-rule code never replaces a cause (causes precede §6 step 4)",
+     "killed_by": ["refusal_conflict_reported_as_keep_on_empty", "refusal_keep_on_empty_reported_as_opna",
+                   "refusal_opna_reported_as_cardinality", "refusal_conflict_reported_as_cardinality",
+                   "refusal_precedence_reversed", "refusal_slot_order_ignored", "refusal_wrong_dimension",
+                   "refusal_replaced_by_a_host_rule"]},
+    {"id": "T-REFUSAL-UNJUSTIFIED", "clause": "§6 step 3b (a refusal needs a cause), §6.1",
+     "demands": "a structural refusal (DELTA_SLOT_CONFLICT, KEEP_ON_EMPTY_SLOT, DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER, "
+                "TARGET_NOT_ADDRESSABLE over a base without logic) over a patch with no such cause refuses a lawful "
+                "transition",
+     "killed_by": ["refuse_lawful_as_slot_conflict", "refuse_lawful_as_keep_on_empty",
+                   "refuse_lawful_as_cardinality_without_order", "refuse_lawful_as_target_not_addressable"]},
     {"id": "T-REQ-SET", "clause": "§5.2 (REPLACE_UNIVERSE), §14",
      "demands": "without REPLACE_UNIVERSE the effective has exactly the base's requests; with it, exactly one: the named "
                 "subject's (a dual anchor keeps the named one and the other disappears) or the single one",
@@ -175,27 +221,129 @@ def _structure(effective) -> tuple[list[str], list[str]]:
     return out, soft
 
 
-def _refusal(base: dict, ops: list[dict]) -> str | None:
-    """Why the contract refuses this patch (so that no effective may exist), or None."""
-    sets = collections.Counter(op["slot"] for op in ops if op["op"] in ("SET", "SET_ORDER"))
-    if any(n > 1 for n in sets.values()):
-        return "DELTA_SLOT_CONFLICT: two SET on one slot"
-    keeps = [op["slot"] for op in ops if op["op"] == "KEEP"]
-    clears = [op["slot"] for op in ops if op["op"] == "CLEAR"]
-    if any(_covered(c, k) or _covered(k, c) for c in clears for k in keeps):
-        return "DELTA_SLOT_CONFLICT: KEEP and CLEAR of one slot"
-    if sum(1 for op in ops if op["op"] == "REPLACE_UNIVERSE") > 1:
-        return "DELTA_SLOT_CONFLICT: two REPLACE_UNIVERSE"
+def _cover(slot: str) -> tuple[str, ...]:
+    """The slots an op's slot addresses: a dimension-wide slot (CLEAR(TOPIC), CLEAR(VALUE)) covers each of its slots."""
+    return tuple(k for k in SLOT_ORDER if _covered(slot, k)) or (slot,)
+
+
+def _rank(slot: str) -> int:
+    return SLOT_ORDER.index(slot) if slot in SLOT_ORDER else len(SLOT_ORDER)
+
+
+def _unit_class(condition: dict) -> str | None:
+    unit = (condition.get("provenance") or {}).get("unit")
+    return "SMMLV" if unit == "SMMLV" else ("PESOS" if unit in PESOS_SCALE else None)
+
+
+def _dimension(slot: str) -> str:
+    return slot.partition("/")[0]
+
+
+def refusal_causes(base: dict, patch: dict) -> list[dict]:
+    """The refusal causes the contract finds in ``patch`` over ``base`` (§6 step 3b), highest precedence first and, within
+    one precedence, in §4.2 slot order. Each is ``{"code", "refusal", "slot"}``; ``code`` is the ``DeltaRefusal`` code
+    (``OP_NOT_ACCREDITED:<DIM>`` with the dimension of the slot). The result does not depend on the order of the ops
+    (§6 step 2). Only what the dicts show is decided (see the module docstring): ``TARGET_NOT_ADDRESSABLE`` is never found
+    here, and an op whose authority did not resolve cannot be written in a ``m2a-patch/1``."""
+    ops = patch["ops"]
+    present = {c["slot"] for c in base["conditions"]} | {"UNIVERSE"}
+    writers: dict[str, list] = {}
+    keeps: dict[str, list] = {}
+    clears: dict[str, list] = {}
+    for op in ops:
+        if op["op"] in WRITERS:
+            writers.setdefault(op["slot"], []).append(op)
+        elif op["op"] in ("KEEP", "CLEAR"):
+            for key in _cover(op["slot"]):
+                (keeps if op["op"] == "KEEP" else clears).setdefault(key, []).append(op)
+    found: list[tuple[str, str]] = []  # (refusal, slot)
+    for key in sorted(set(writers) | set(keeps), key=_rank):
+        if len(writers.get(key, ())) >= 2 or (key in keeps and (key in writers or key in clears)):
+            found.append(("DELTA_SLOT_CONFLICT", key))
+    for op in ops:
+        if op["op"] == "KEEP" and not any(k in present for k in _cover(op["slot"])):
+            found.append(("KEEP_ON_EMPTY_SLOT", op["slot"]))
+
+    def carried(key: str) -> bool:  # §6 step 3: standing in the base and touched by no op (KEEP touches nothing)
+        return key in present and key not in writers and key not in clears
+
+    for op in ops:
+        if op["op"] != "SET" or op["condition"] is None:
+            continue
+        slot, condition = op["slot"], op["condition"]
+        if slot.endswith("/NEGATIVE") and _dimension(slot) in POLARIZED:
+            positive = slot.replace("/NEGATIVE", "/POSITIVE")
+            same_patch = any(o["op"] == "SET" and o["slot"] == positive and o["condition"] is not None
+                             and _canonical(o["condition"]) == _canonical(condition) for o in ops)
+            standing = [c for c in base["conditions"] if c["slot"] == positive]
+            several = (carried(positive) and len(standing) > 1
+                       and any(_canonical(c) == _canonical(condition) for c in standing))
+            if same_patch or several:  # F16 fail-closed (R3-4) and P-3: never inverted, never accepted
+                found.append((OPNA, slot))
+        elif slot in ("VALUE/lower", "VALUE/upper"):
+            opposite = "VALUE/upper" if slot == "VALUE/lower" else "VALUE/lower"
+            kept = [c for c in base["conditions"] if c["slot"] == opposite]
+            if carried(opposite) and kept and None not in (_unit_class(condition), _unit_class(kept[0])) and (
+                    _unit_class(condition) != _unit_class(kept[0])):  # §15.2: incomparable units are never compared
+                found.append((OPNA, slot))
+    after: dict[str, set] = {r["request_id"]: set() for r in base["requests"]}  # per request: slots left standing (R3-1)
+    for c in base["conditions"]:
+        if c["slot"] not in writers and c["slot"] not in clears:
+            for rid in c["request_ids"]:
+                after.setdefault(rid, set()).add(c["slot"])
+    placed = {op["slot"] for op in ops if op["op"] in ("SET", "SET_ORDER")}
+    for slots in after.values():
+        slots |= placed
+    if any("CARDINALITY" in slots and "ORDER" not in slots for slots in after.values()):
+        found.append(("DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER", "ORDER"))
+    found.sort(key=lambda f: (PRECEDENCE.index(f[0].partition(":")[0]), _rank(f[1])))
+    return [{"code": f"{OPNA}:{_dimension(slot)}" if refusal == OPNA else refusal, "refusal": refusal, "slot": slot}
+            for refusal, slot in found]
+
+
+def _h12(base: dict, ops: list[dict]) -> bool:
+    """§6.4 H12: a CLEAR of an empty slot as the only operation (INFORM, no effective, the anchor intact)."""
     slots = [c["slot"] for c in base["conditions"]]
-    if any(k not in slots for k in keeps):
-        return "KEEP_ON_EMPTY_SLOT"
-    if len(ops) == 1 and clears and not any(_covered(clears[0], s) for s in slots):
-        return "CLEAR_ON_EMPTY_SLOT (H12: INFORM, the anchor is intact)"
-    written = [op["slot"] for op in ops if op["op"] in ("SET", "SET_ORDER", "CLEAR")]
-    after = {s for s in slots if not any(_covered(w, s) for w in written)} | set(sets)
-    if "CARDINALITY" in after and "ORDER" not in after:
-        return "DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER (§6.7; amendment R3): CLEAR(ORDER) with a CARDINALITY not withdrawn"
-    return None
+    clears = [op["slot"] for op in ops if op["op"] == "CLEAR"]
+    return len(ops) == 1 and bool(clears) and not any(_covered(clears[0], s) for s in slots)
+
+
+def expected_refusal(base: dict, patch: dict) -> str | None:
+    """The code the contract demands when it refuses ``patch`` over ``base``: the code of the highest-precedence cause
+    (``OP_NOT_ACCREDITED:<DIM>``, ``DELTA_SLOT_CONFLICT``...), ``CLEAR_ON_EMPTY_SLOT`` for H12 once no cause exists, or
+    ``None`` when the contract refuses nothing the dicts show (the reducer must produce an effective)."""
+    causes = refusal_causes(base, patch)
+    if causes:
+        return causes[0]["code"]
+    return H12 if _h12(base, patch["ops"]) else None
+
+
+def _refusal(base: dict, ops: list[dict]) -> str | None:
+    """Why the contract refuses this patch (so that no effective may exist), or None: the code, for messages."""
+    return expected_refusal(base, {"ops": ops})
+
+
+def _published(code: str) -> str:
+    """The ``DeltaRefusal`` a code stands for: the A.3 codes of OP_NOT_ACCREDITED (§6 table) are mapped back to it."""
+    head, _, tail = code.partition(":")
+    if head == "UNRESOLVED_VALUE" and tail:
+        return f"{OPNA}:{tail}"
+    return f"{OPNA}:VALUE" if code == "VALUE_WITHOUT_COMPARATOR" else code
+
+
+def _check_refusal(base: dict, patch: dict, refusal: str, bad: Callable) -> None:
+    """The reducer refused with ``refusal``: it needs a cause, and the code must be the highest-precedence one."""
+    code, causes = _published(refusal), refusal_causes(base, patch)
+    if causes:
+        if code != causes[0]["code"] and not (code == "TARGET_NOT_ADDRESSABLE" and base["logic"] is not None):
+            bad("T-REFUSAL-CODE", f"the highest-precedence cause is {causes[0]['code']} (of {[c['code'] for c in causes]}) "
+                                  f"and the reducer refused with {refusal}")
+        return
+    if code == H12 and _h12(base, patch["ops"]):
+        return
+    structural = {"DELTA_SLOT_CONFLICT", "KEEP_ON_EMPTY_SLOT", "DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER", H12}
+    if code in structural or (code == "TARGET_NOT_ADDRESSABLE" and base["logic"] is None):
+        bad("T-REFUSAL-UNJUSTIFIED", f"the reducer refused with {refusal} and the contract finds no such cause in the patch")
 
 
 def _check_requests(base: dict, ops: list[dict], effective: dict, dataset_of, bad: Callable) -> None:
@@ -256,8 +404,9 @@ def _declared_substitution(b: dict, base: dict, patch_conds: list[dict], effecti
     if b["dimension"] in POLARIZED and b["polarity"] == "POSITIVE":
         negative = b["slot"].replace("/POSITIVE", "/NEGATIVE")
         same = [p for p in patch_conds if p["slot"] == negative and _canonical(p) == _canonical(b)]
-        single = sum(1 for x in base["conditions"] if x["slot"] == b["slot"]) == 1
-        return "F16" if same and single else None
+        # a patch whose negative SET matches one of SEVERAL carried positives (F16's fail-closed branch) never gets here: it is
+        # refused first (``refusal_causes``), so what vanishes here is the single carried positive the declaration covers
+        return "F16" if same else None
     return None
 
 
@@ -325,22 +474,29 @@ def _check_conditions(base: dict, ops: list[dict], effective: dict, bad: Callabl
             bad("T-COND-INTERVAL", "an empty or degenerate VALUE interval left by a carried opposite bound")
 
 
-def check_transition(base: dict, patch: dict, effective: dict | None, *, dataset_of: Callable[[str], str] | None = None
-                     ) -> list[dict]:
+def check_transition(base: dict, patch: dict, effective: dict | None = None, *,
+                     dataset_of: Callable[[str], str] | None = None, refusal: str | None = None) -> list[dict]:
     """The violations of the contract's mechanical invariants by the transition ``base --patch--> effective`` (empty =
-    lawful). ``effective`` is what the reducer returned for an EXECUTED delta; for a refused patch pass ``None``: a
-    refused patch with an effective is a violation. ``dataset_of``: the host's subject-to-dataset table (exact check)."""
+    lawful). Pass the ``effective`` the reducer returned, or, when it REFUSED, ``refusal=<its code>`` (and no effective):
+    the refusal needs a cause, and must carry the code of the highest-precedence one. An effective for a patch the contract
+    refuses is a violation. With neither there is nothing to judge: whether something had to be produced is the Gold
+    oracle's (disposition and code). ``dataset_of``: the host's subject-to-dataset table (exact check)."""
+    if effective is not None and refusal is not None:
+        raise ValueError("pass the effective the reducer returned or the code it refused with, not both")
     out: list[dict] = []
 
     def bad(rule: str, detail: str) -> None:
         out.append({"rule": rule, "detail": detail})
 
     ops = patch["ops"]
-    refusal = _refusal(base, ops)
+    if refusal is not None:
+        _check_refusal(base, patch, refusal, bad)
+        return out
     if effective is None:
         return out  # nothing was produced: whether it had to be is the Gold oracle's (disposition and code)
-    if refusal is not None:
-        bad("T-REFUSAL", f"the contract refuses this patch ({refusal}) and the reducer produced an effective")
+    expected = expected_refusal(base, patch)
+    if expected is not None:
+        bad("T-REFUSAL", f"the contract refuses this patch ({expected}) and the reducer produced an effective")
         return out
     fatal, soft = _structure(effective)
     if fatal:
