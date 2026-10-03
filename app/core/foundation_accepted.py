@@ -34,8 +34,8 @@ from __future__ import annotations
 
 import hashlib
 import json
-from dataclasses import dataclass
-from datetime import datetime, timezone
+from dataclasses import dataclass, replace
+from datetime import datetime, timedelta, timezone
 from enum import Enum
 
 from app.core.foundation_authority_values import (
@@ -509,6 +509,73 @@ def slot_of(dimension: SemanticDimension, value: tuple[str, ...]) -> Slot:
     return Slot(dimension)
 
 
+# ---- decoded facts of an accredited value: the one decoding surface of the M2a reducer (M2A-3; R1) ----------------
+# The reducer never imports the closed value types (C1.x pin): it reads these plain facts, decoded here.
+def canonical_value(condition) -> tuple[str, ...]:
+    """The encoded value without its polarity: the canonical identity F16, F3/F22 and Nuevo(P, A) compare."""
+    decoded = decode_value(condition.value)
+    if getattr(decoded, "excluded", False):
+        decoded = replace(decoded, excluded=False)
+    return decoded.encode()
+
+
+def money_bound(condition) -> tuple[int, bool, bool]:
+    """``(amount_cop, is_lower, is_inclusive)`` of a VALUE condition (contract §15.2)."""
+    decoded = decode_value(condition.value)
+    if type(decoded) is not MoneyValue:
+        _fail("NOT_A_MONEY_VALUE")
+    return (decoded.amount_cop, decoded.comparator in _LOWER,
+            decoded.comparator in (_Comparator.GTE, _Comparator.LTE))
+
+
+def unit_class(condition) -> str | None:
+    """The comparability class of a VALUE bound (§15.2): ``SMMLV``, ``PESOS`` (any peso scale) or None (unknown)."""
+    unit = condition.provenance.unit
+    return None if unit is None else ("SMMLV" if unit is Unit.SMMLV else "PESOS")
+
+
+def time_years(condition) -> tuple[int, int] | None:
+    """``(first, last)`` civil year a TIME interval covers; None for an open bound."""
+    decoded = decode_value(condition.value)
+    if type(decoded) is not TimeValue:
+        _fail("NOT_A_TIME_VALUE")
+    if decoded.start is None or decoded.end_exclusive is None:
+        return None
+    return decoded.start.year, (decoded.end_exclusive - timedelta(days=1)).year
+
+
+def geo_divipola(condition) -> str | None:
+    """The DIVIPOLA code of a GEOGRAPHY value (None for a region or an uncoded place)."""
+    decoded = decode_value(condition.value)
+    if type(decoded) is not GeoValue:
+        _fail("NOT_A_GEO_VALUE")
+    return decoded.divipola
+
+
+def state_datasets(condition) -> frozenset[str]:
+    """The datasets a STATE value carries literals for (H8, §14): the state exists in those."""
+    decoded = decode_value(condition.value)
+    if type(decoded) is not StateValue:
+        _fail("NOT_A_STATE_VALUE")
+    return frozenset(entry[0] for entry in decoded.literals)
+
+
+def state_class(condition) -> str:
+    """The closed class of a STATE value (``state@1.canonical_class``)."""
+    decoded = decode_value(condition.value)
+    if type(decoded) is not StateValue:
+        _fail("NOT_A_STATE_VALUE")
+    return decoded.canonical_class
+
+
+def modality_family_policy(condition) -> str | None:
+    """The family policy a MODALITY value names (``modality@1.family_policy``); None for literal procedure ids."""
+    decoded = decode_value(condition.value)
+    if type(decoded) is not ModalityValue:
+        _fail("NOT_A_MODALITY_VALUE")
+    return decoded.family_policy
+
+
 # ---- ConditionOrigin / Provenance (contract §3.2) -----------------------------------------------------------------
 @dataclass(frozen=True, slots=True)
 class ConditionOrigin:
@@ -575,10 +642,13 @@ class Provenance:
                 _instance(value, kind, f"PROVENANCE_{name.upper()}")
         if (self.unit is None) != (self.unit_source is None):
             _fail("UNIT_WITHOUT_SOURCE")
-        if (self.year is None) != (self.year_source is None):
-            _fail("YEAR_WITHOUT_SOURCE")
+        # ``year`` is the vigencia of a SMMLV conversion and travels with its source (§15.5, §11); ``year_source`` alone
+        # is the provenance of a TIME's year (§11 YEAR_INHERITED / YEAR_CLOCK_INFERRED, §16.1). Only that half of the
+        # M2A-1a coupling had no clause (M2A-3 phase 2; ZEUS P2-5 keeps nothing wider).
         if self.year is not None:
             _int(self.year, "PROVENANCE_YEAR", 1)
+            if self.year_source is None:
+                _fail("YEAR_WITHOUT_SOURCE")
         if self.source_amount is not None and not _canonical_decimal(self.source_amount):
             _fail("INVALID_PROVENANCE_SOURCE_AMOUNT")
         if self.source_amount is not None and self.unit is None:
@@ -590,9 +660,13 @@ class Provenance:
                 and len(self.buyer_scope) in (2, 5)):
             _fail("INVALID_PROVENANCE_BUYER_SCOPE")
         _opt_text(self.inherited_from, "PROVENANCE_INHERITED_FROM")
-        inherited = (self.unit_source is UnitSource.PREVIOUS_ACCEPTED_VALUE
-                     or self.year_source is YearSource.PREVIOUS_ACCEPTED_TIME)
-        if inherited != (self.inherited_from is not None):
+        # An inherited UNIT names where it comes from (contract §15.4: ``unit.inherited``, ``PREVIOUS_ACCEPTED_VALUE``,
+        # ``inherited_from``; §11 UNIT_INHERITED «de dónde sale»). An inherited YEAR is ``year_source =
+        # PREVIOUS_ACCEPTED_TIME`` (§11 YEAR_INHERITED, §16) and may carry it; an origin needs an inheritance.
+        if self.unit_source is UnitSource.PREVIOUS_ACCEPTED_VALUE and self.inherited_from is None:
+            _fail("INHERITANCE_WITHOUT_ORIGIN")
+        if self.inherited_from is not None and not (self.unit_source is UnitSource.PREVIOUS_ACCEPTED_VALUE
+                                                    or self.year_source is YearSource.PREVIOUS_ACCEPTED_TIME):
             _fail("INHERITANCE_WITHOUT_ORIGIN")
 
     def check_dimension(self, dimension: SemanticDimension) -> None:
@@ -600,6 +674,12 @@ class Provenance:
             _fail("UNIT_OUTSIDE_VALUE")
         if self.year is not None and dimension not in (SemanticDimension.VALUE, SemanticDimension.TIME):
             _fail("YEAR_OUTSIDE_VALUE_OR_TIME")
+        if self.inherited_from is not None and dimension not in (SemanticDimension.VALUE, SemanticDimension.TIME):
+            _fail("INHERITANCE_OUTSIDE_VALUE_OR_TIME")  # §15.4 a unit, §11/§16 a year: VALUE and TIME only
+        if self.year_source is not None and dimension not in (SemanticDimension.VALUE, SemanticDimension.TIME):
+            _fail("YEAR_SOURCE_OUTSIDE_VALUE_OR_TIME")
+        if self.year_source is not None and self.year is None and dimension is SemanticDimension.VALUE:
+            _fail("YEAR_SOURCE_WITHOUT_YEAR")  # a year source without a year is a TIME's only (§11, §16.1)
         if self.buyer_scope is not None and dimension is not SemanticDimension.BUYER:
             _fail("BUYER_SCOPE_OUTSIDE_BUYER")
         if self.order_direction_source is not None and dimension is not SemanticDimension.ORDER:

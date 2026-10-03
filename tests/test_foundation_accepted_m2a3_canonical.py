@@ -427,6 +427,81 @@ def test_the_a1_a3_closed_lists_never_widen():
     assert annex_failures(fa) == []
 
 
+# ---- 7. Provenance as the contract writes it (phase 2, narrowed by ZEUS P2-5) -----------------------------------
+def _on(m, dimension: D, **fields):
+    """A Provenance checked against the dimension of its condition (``check_dimension``)."""
+    def build():
+        m.Provenance(**fields).check_dimension(dimension)
+    return build
+
+
+def provenance_failures(m) -> list[str]:
+    """§3.2, §11, §15.4–§15.5, §16.1. Relaxed in phase 2, and ONLY this: a TIME carries a ``year_source`` without a SMMLV
+    ``year``, and an inherited year needs no origin. Kept: a SMMLV vigencia (``year``) travels with its source;
+    ``year_source`` and ``inherited_from`` live on VALUE/TIME only; an inherited UNIT names its origin; an origin needs
+    an inheritance."""
+    out = []
+    stated = m.YearSource.STATED
+    accepted = {
+        "TIME year source without a SMMLV year": _on(m, D.TIME, year_source=stated),
+        "TIME year inferred by the clock": _on(m, D.TIME, year_source=m.YearSource.CLOCK_INFERRED),
+        "SMMLV year with its source": _on(m, D.VALUE, unit=m.Unit.SMMLV, source_amount="500",
+                                          unit_source=m.UnitSource.STATED, year=2025, year_source=stated),
+        "inherited year without origin": _on(m, D.TIME, year_source=m.YearSource.PREVIOUS_ACCEPTED_TIME),
+        "inherited year with origin": _on(m, D.TIME, year_source=m.YearSource.PREVIOUS_ACCEPTED_TIME,
+                                          inherited_from="t0"),
+        "inherited unit with origin": _on(m, D.VALUE, unit=m.Unit.MILLONES, source_amount="5",
+                                          unit_source=m.UnitSource.PREVIOUS_ACCEPTED_VALUE, inherited_from="t0"),
+        "SMMLV year inherited from the TIME": _on(m, D.VALUE, unit=m.Unit.SMMLV, source_amount="500",
+                                                  unit_source=m.UnitSource.STATED, year=2025,
+                                                  year_source=m.YearSource.PREVIOUS_ACCEPTED_TIME),
+    }
+    for label, build in accepted.items():
+        if (code := _code(build)) is not None:
+            out.append(f"refused {label}: {code}")
+    refused = {
+        "inherited unit without origin": _on(m, D.VALUE, unit=m.Unit.MILLONES, source_amount="5",
+                                             unit_source=m.UnitSource.PREVIOUS_ACCEPTED_VALUE),
+        "an origin without an inheritance": _on(m, D.TIME, year_source=stated, inherited_from="t0"),
+        "SMMLV without its year": _on(m, D.VALUE, unit=m.Unit.SMMLV, source_amount="500",
+                                      unit_source=m.UnitSource.STATED),
+        "SMMLV year without a year source": _on(m, D.VALUE, unit=m.Unit.SMMLV, source_amount="500",
+                                                unit_source=m.UnitSource.STATED, year=2025),
+        "a pesos bound with a year and no source": _on(m, D.VALUE, unit=m.Unit.PESOS,
+                                                       unit_source=m.UnitSource.STATED, year=2031),
+        "a VALUE year source without a year": _on(m, D.VALUE, unit=m.Unit.PESOS, unit_source=m.UnitSource.STATED,
+                                                  year_source=stated),
+        **{f"a year source on {d.value}": _on(m, d, year_source=source)
+           for d in (D.TOPIC, D.BUYER, D.ORDER) for source in (m.YearSource.CLOCK_INFERRED, stated)},
+    }
+    for label, build in refused.items():
+        if _code(build) is None:
+            out.append(f"accepted {label}")
+    for d in (D.TOPIC, D.BUYER, D.ORDER):  # the origin itself is confined, not only through its year source
+        code = _code(_on(m, d, year_source=m.YearSource.PREVIOUS_ACCEPTED_TIME, inherited_from="t-other"))
+        if code != "INHERITANCE_OUTSIDE_VALUE_OR_TIME":
+            out.append(f"an inherited year on {d.value}: {code}")
+    return out
+
+
+def test_provenance_follows_the_contract():
+    assert provenance_failures(fa) == []
+
+
+def test_the_decoding_surface_reads_the_accredited_value():
+    negative = condition(fa, D.TOPIC, 1, "c1")  # vias, token mode, excluded
+    positive = condition(fa, D.TOPIC, 0, "c2")  # obras: another value
+    assert fa.canonical_value(negative) != negative.value  # the polarity is gone from the identity
+    assert fa.canonical_value(negative) != fa.canonical_value(positive)
+    lower = condition(fa, D.VALUE, 0, "v")  # >= 500_000_000, MILLONES
+    assert fa.money_bound(lower) == (500_000_000, True, True) and fa.unit_class(lower) == "PESOS"
+    assert fa.time_years(condition(fa, D.TIME, 0, "t")) == (2025, 2025)
+    assert fa.geo_divipola(condition(fa, D.GEOGRAPHY, 1, "g")) == "76001"
+    assert fa.state_datasets(condition(fa, D.STATE, 0, "s")) == frozenset()
+    with pytest.raises(ContractError, match="NOT_A_MONEY_VALUE"):
+        fa.money_bound(negative)
+
+
 # ---- mutants ---------------------------------------------------------------------------------------------------------
 def _mutant(*replacements: tuple[str, str]) -> types.ModuleType:
     source = SOURCE
@@ -496,6 +571,35 @@ MUTANTS = {
         LOGIC, "    return None if _conjunction_only(logic) else ConditionExpression(logic.operator, None, tuple(\n"
                "        g for c in logic.children for g in (c.children if c.operator is LogicOperator.AND "
                "and logic.operator is LogicOperator.AND else (c,))))"),),
+    # Provenance (phase 2, narrowed by ZEUS P2-5)
+    "year_coupled_to_its_source_again": (provenance_failures, (
+        "            if self.year_source is None:\n                _fail(\"YEAR_WITHOUT_SOURCE\")",
+        "            if self.year_source is None:\n                _fail(\"YEAR_WITHOUT_SOURCE\")\n"
+        "        if self.year_source is not None and self.year is None:\n            _fail(\"YEAR_WITHOUT_SOURCE\")"),),
+    "smmlv_year_without_source_accepted": (provenance_failures, (
+        "            if self.year_source is None:\n                _fail(\"YEAR_WITHOUT_SOURCE\")",
+        "            pass"),),
+    "year_source_on_any_dimension": (provenance_failures, (
+        "        if self.year_source is not None and dimension not in (SemanticDimension.VALUE, "
+        "SemanticDimension.TIME):",
+        "        if False:"),),
+    "value_year_source_without_year": (provenance_failures, (
+        "        if self.year_source is not None and self.year is None and dimension is SemanticDimension.VALUE:",
+        "        if False:"),),
+    "inheritance_on_any_dimension": (provenance_failures, (
+        "        if self.inherited_from is not None and dimension not in (SemanticDimension.VALUE, "
+        "SemanticDimension.TIME):",
+        "        if False:"),),
+    "inherited_unit_without_origin_accepted": (provenance_failures, (
+        "        if self.unit_source is UnitSource.PREVIOUS_ACCEPTED_VALUE and self.inherited_from is None:",
+        "        if False:"),),
+    "inherited_year_requires_origin_again": (provenance_failures, (
+        "        if self.unit_source is UnitSource.PREVIOUS_ACCEPTED_VALUE and self.inherited_from is None:",
+        "        if (self.unit_source is UnitSource.PREVIOUS_ACCEPTED_VALUE\n"
+        "                or self.year_source is YearSource.PREVIOUS_ACCEPTED_TIME) and self.inherited_from is None:"),),
+    "origin_without_inheritance_accepted": (provenance_failures, (
+        "        if self.inherited_from is not None and not (self.unit_source is UnitSource.PREVIOUS_ACCEPTED_VALUE",
+        "        if False and not (self.unit_source is UnitSource.PREVIOUS_ACCEPTED_VALUE"),),
     # A.1 / A.3 (phase 1c)
     "inform_accepts_every_clarify_code": (annex_failures, (
         "        return (code in INFORM_CODES or code in INFORM_CAPABLE_CLARIFY_CODES or unresolved",
