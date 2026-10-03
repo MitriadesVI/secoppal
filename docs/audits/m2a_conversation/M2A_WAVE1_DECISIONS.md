@@ -399,10 +399,28 @@ Los marcados «a completar» los completa el orquestador al integrar.
   - La sección R3d de `gold/ADJUDICATION_R3.md`; el sello.
 - **Si cambia, tocar.** Lo mismo, y re-sellar con motivo.
 
+### U28. Alcance del congelado de M2A-3 (2026-10-02)
+- **Decisión.**
+  - «M2A-3 LANGUAGE R3 = FROZEN» cubre la superficie de M2A-3:
+    - §4–§7 y §15–§16;
+    - los códigos de A.1 y A.3 que emiten `compose` y `classify`;
+    - §19.
+  - §8.3, §10 y §17 (protocolo de pendientes, vigencia y cancelación) quedan sellados tal como están, pero son de
+    M2A-4 (pendientes) y de M2A-6 (vigencia y runtime). Cada paso los cierra con su propio gate antes de implementarse,
+    con la regla de congelación de §20.4: sólo por inconsistencia propia o por versionado.
+  - Las deudas de entrada que esos gates deben cerrar están en `M2A4_M2A6_ENTRY_DEBTS.md`.
+- **Lección.** R3b, R3c y R3d arrastraron protocolo que no era de M2A-3. El alcance del congelado debió acotarse desde
+  el principio.
+- **Quién.** Usuario.
+- **Motivo.** GO de ZEUS sobre `57530a07`, con hallazgos de protocolo fuera de M2A-3.
+- **Dónde.** Este registro y `docs/audits/m2a_conversation/M2A4_M2A6_ENTRY_DEBTS.md`. El contrato y el sello no cambian
+  (sello `7dd39b4b…`).
+- **Si cambia, tocar.** Este registro; el documento de deudas; el plan (filas M2A-4 y M2A-6) al integrar.
+
 ## Estado
 
-- **M2A-3 LANGUAGE R3 = FROZEN.** Se activa con el GO de ZEUS sobre el re-sellado de R3b-2 (contrato §20.4). Hasta
-  entonces, R3 sigue abierto sólo para R3b.
+- **M2A-3 LANGUAGE R3 = FROZEN.** Activo desde el GO de ZEUS sobre `57530a07` (sello `7dd39b4b…`, contrato §20.4).
+  Su alcance es el de U28. §8.3, §10 y §17 los cierran los gates de M2A-4 y M2A-6.
 
 ## Decisiones del orquestador (no-producto)
 
@@ -459,4 +477,5 @@ Los marcados «a completar» los completa el orquestador al integrar.
 | `7b30b221` | R3b-2: cierre y re-sellado único (U25), sello `3693d19f…` |
 | `55571ec5` | R3c: último arreglo (U26) y re-sellado |
 | `109095fe` | remate de forma de R3c (barandilla): pins de F16, P-3, A8.1 no comparable y dos causas no acreditadas; «componer sobre `frame`» declarado gate de M2A-4; §6.7: C1 lo emite el productor; re-sellado |
-| commit siguiente a `109095fe` | R3d: arreglos acotados (U27) y re-sellado |
+| `57530a07` | R3d: arreglos acotados (U27) y re-sellado |
+| commit siguiente a `57530a07` | sólo documentación: U28 y deudas de entrada de M2A-4/M2A-6 (sello sin cambios) |
