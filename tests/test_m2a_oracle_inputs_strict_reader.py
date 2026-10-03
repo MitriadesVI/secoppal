@@ -21,11 +21,39 @@ from pathlib import Path
 import pytest
 
 from app.core.foundation_accepted import AcceptedInterpretation, SemanticPatch
+from app.core.interpretation_contract import ContractError
 from scripts.audits.m2a_conversation import m2a_reducer_oracle as oracle
 from scripts.audits.m2a_conversation import m2a_oracle_typing as typing_
 
 REAL_DIR = Path(os.environ["M2A_GOLD_REAL_DIR"]) if os.environ.get("M2A_GOLD_REAL_DIR") else None
 needs_real = pytest.mark.skipif(REAL_DIR is None, reason="M2A_GOLD_REAL_DIR (private GOLD_CANDIDATE) not set")
+
+
+# The closed table of slots of §4.2, in its order: each polarized dimension positive then negative, then the single slots.
+SLOT_TABLE = tuple(f"{d}/{p}" for d in ("TOPIC", "BUYER", "ACTOR", "GEOGRAPHY", "TIME", "STATE", "MODALITY",
+                                         "CONTRACT_TYPE_OR_NATURE") for p in ("POSITIVE", "NEGATIVE")) + (
+    "VALUE/lower", "VALUE/upper", "ORDER", "CARDINALITY")
+
+
+def by_slot(accepted: dict | None) -> dict | None:
+    """The accepted dict with its conditions grouped by the slot table of §4.2. The order WITHIN a slot is untouched: a stable
+    sort on the slot's place in the table and nothing else."""
+    if accepted is None:
+        return None
+    rank = {slot: n for n, slot in enumerate(SLOT_TABLE)}
+    return {**accepted, "conditions": sorted(accepted["conditions"], key=lambda c: rank[c["slot"]])}
+
+
+def test_the_slot_table_is_the_one_of_the_contract_and_the_regrouping_is_stable_within_a_slot():
+    from scripts.audits.m2a_conversation import m2a_contract_text as contract_text
+    text = contract_text.read()
+    rows = contract_text.table(contract_text.section(text, "### 4.2 Ranuras", "### 4.3 Identidad"), "| Ranura | Contenido |")
+    assert [r[0] for r in rows][1:3] == ["`VALUE.lower`", "`VALUE.upper`"] and rows[0][0].startswith("`(TOPIC, POSITIVE)`")
+    assert SLOT_TABLE[0] == "TOPIC/POSITIVE" and SLOT_TABLE[-1] == "CARDINALITY" and len(set(SLOT_TABLE)) == len(SLOT_TABLE)
+    two = {"conditions": [{"slot": "ORDER", "n": 1}, {"slot": "TOPIC/POSITIVE", "n": 2}, {"slot": "BUYER/POSITIVE", "n": 3},
+                          {"slot": "TOPIC/POSITIVE", "n": 4}, {"slot": "VALUE/upper", "n": 5}, {"slot": "VALUE/lower", "n": 6}]}
+    assert [c["n"] for c in by_slot(two)["conditions"]] == [2, 4, 3, 6, 5, 1]  # the two TOPIC positives keep their order
+    assert by_slot(None) is None
 
 
 def invalid_inputs(cases: list[dict]) -> list[tuple[str, str]]:
@@ -36,8 +64,8 @@ def invalid_inputs(cases: list[dict]) -> list[tuple[str, str]]:
         if case["applicability"] != oracle.APPLICABLE:
             continue
         gid, inputs = case["gold_id"], case["inputs"]
-        for name, reader, data in (("base", AcceptedInterpretation, inputs["base"]), ("patch", SemanticPatch, inputs["patch"]),
-                                   ("effective", AcceptedInterpretation, oracle.realize_effective(case))):
+        for name, reader, data in (("base", AcceptedInterpretation, by_slot(inputs["base"])), ("patch", SemanticPatch, inputs["patch"]),
+                                   ("effective", AcceptedInterpretation, by_slot(oracle.realize_effective(case)))):
             if data is None:
                 continue
             try:
@@ -109,16 +137,20 @@ def test_a_year_and_its_source_travel_together_in_every_typed_provenance():
 
 
 def test_the_strict_reader_would_have_refused_the_old_inputs():
-    """The test is not vacuous: an inherited unit without its origin, and a year without its source, are refused."""
+    """The test is not vacuous. An inherited unit without its origin is refused with the code every version of the type shares
+    (``INHERITANCE_WITHOUT_ORIGIN``); an input that carries a year with no source is refused, whatever the code the version
+    gives (the coupling between a year and its source is the type's, and may move between versions)."""
     case = next(c for c in CASES if c["gold_id"] == "SF103")
     broken = {**case["inputs"]["patch"], "ops": [dict(op) for op in case["inputs"]["patch"]["ops"]]}
     for op in broken["ops"]:
         if op["condition"] is not None and op["condition"]["dimension"] == "VALUE":
             op["condition"] = {**op["condition"], "provenance": {**op["condition"]["provenance"], "inherited_from": None}}
-    with pytest.raises(Exception, match="INHERITANCE_WITHOUT_ORIGIN"):
+    SemanticPatch.from_dict(case["inputs"]["patch"])  # the repaired input is read
+    with pytest.raises(ContractError, match="INHERITANCE_WITHOUT_ORIGIN"):
         SemanticPatch.from_dict(broken)
-    year_without_source = dict(case["inputs"]["base"]["conditions"][0])
-    year_without_source["provenance"] = {**year_without_source["provenance"], "year": 2025}
-    with pytest.raises(Exception, match="YEAR_WITHOUT_SOURCE"):
-        AcceptedInterpretation.from_dict({**case["inputs"]["base"],
-                                          "conditions": [year_without_source, *case["inputs"]["base"]["conditions"][1:]]})
+    base = by_slot(case["inputs"]["base"])
+    AcceptedInterpretation.from_dict(base)
+    year_without_source = dict(base["conditions"][0])
+    year_without_source["provenance"] = {**year_without_source["provenance"], "year": 2025}  # a year, no year_source
+    with pytest.raises(ContractError):
+        AcceptedInterpretation.from_dict({**base, "conditions": [year_without_source, *base["conditions"][1:]]})
