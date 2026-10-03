@@ -430,6 +430,8 @@ def with_unit(condition, unit):
 
 
 SMMLV_UPPER = with_unit(cond("VALUE", "less_or_equal", "POSITIVE", "400 millones", "p2", R, unit="MILLONES", n=8), "SMMLV")
+UNKNOWN_UPPER = with_unit(cond("VALUE", "less_or_equal", "POSITIVE", "400 millones", "p2", R, unit="MILLONES", n=8), None)
+LOWER_UNKNOWN = with_unit(LOWER, None)
 TOPIC_A_P0 = cond("TOPIC", "contains", "POSITIVE", "aseo", "p0", R, n=1)
 BUYER_A_NEG = cond("BUYER", "is", "NEGATIVE", "SENA", "p5", R, n=5)
 BUYER_A_P = cond("BUYER", "is", "POSITIVE", "SENA", "p6", R, n=6)
@@ -448,6 +450,8 @@ REFUSAL_CASES = {  # name -> (base, patch): each patch has a cause the contract 
     "effective_for_f16_several_positives": hand("f", [TOPIC_A, TOPIC_C, BUYER], [set_op(TOPIC_A_NEG)])[1],
     "effective_for_f16_same_patch_positive": hand("p3", [BUYER], [set_op(TOPIC_A_P0), set_op(TOPIC_A_NEG, 1)])[1],
     "effective_for_a81_incomparable_units": hand("a", [LOWER, BUYER], [set_op(SMMLV_UPPER)])[1],
+    "effective_for_a81_unknown_unit_carried": hand("au", [LOWER_UNKNOWN, BUYER], [set_op(NEW_UPPER_OK)])[1],
+    "effective_for_a81_unknown_unit_placed": hand("ap", [LOWER, BUYER], [set_op(UNKNOWN_UPPER)])[1],
     "effective_for_clear_order_leaving_cardinality": hand("o", [ORDER, CARD, BUYER], [clear_op("ORDER")])[1],
     "effective_for_set_cardinality_without_order": hand("sc", [TOPIC_A, BUYER], [set_op(CARD_NEW)])[1],
     "effective_for_clear_on_empty_slot": hand("e", [TOPIC_A], [clear_op("MODALITY")])[1],
@@ -459,6 +463,8 @@ EXPECTED_REFUSAL = {
     "effective_for_keep_on_empty_slot": "KEEP_ON_EMPTY_SLOT", "effective_for_f16_several_positives": "OP_NOT_ACCREDITED:TOPIC",
     "effective_for_f16_same_patch_positive": "OP_NOT_ACCREDITED:TOPIC",
     "effective_for_a81_incomparable_units": "OP_NOT_ACCREDITED:VALUE",
+    "effective_for_a81_unknown_unit_carried": "OP_NOT_ACCREDITED:VALUE",
+    "effective_for_a81_unknown_unit_placed": "OP_NOT_ACCREDITED:VALUE",
     "effective_for_clear_order_leaving_cardinality": "DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER",
     "effective_for_set_cardinality_without_order": "DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER",
     "effective_for_clear_on_empty_slot": "CLEAR_ON_EMPTY_SLOT",
@@ -484,6 +490,35 @@ def test_the_a3_code_published_for_op_not_accredited_is_the_same_refusal(a3, del
         base, patch = enrich(*REFUSAL_CASES[name], 3)
         top = transition.expected_refusal(base, patch)
         assert (check(base, patch, None, refusal=a3) == []) == (top == deltarefusal)
+
+
+@pytest.mark.parametrize("new,kept,comparable", [
+    ("MILLONES", "PESOS", True), ("MILES", "BILLONES", True), ("MIL_MILLONES", "MIL_MILLONES", True), ("SMMLV", "SMMLV", True),
+    ("SMMLV", "MILLONES", False), ("MILLONES", "SMMLV", False),
+    (None, "MILLONES", False), ("MILLONES", None, False), (None, None, False), (None, "SMMLV", False), ("SMMLV", None, False),
+    ("FURLONG", "MILLONES", False), ("MILLONES", "FURLONG", False),
+])
+def test_a81_applies_only_to_comparable_units_and_an_unknown_unit_is_not_comparable(new, kept, comparable):
+    """§15.2 (A8): both bounds in the scale of pesos, or both SMMLV. A unit that is neither, or None, is NOT comparable: the
+    new bound against a carried opposite bound of such a unit is the fail-closed refusal (OP_NOT_ACCREDITED:VALUE, the same as
+    SMMLV against pesos), never a comparison."""
+    base, patch = enrich(*hand("u", [with_unit(LOWER, kept), BUYER], [set_op(with_unit(NEW_UPPER_OK, new))])[1], 5)
+    causes = [c["code"] for c in transition.refusal_causes(base, patch)]
+    assert causes == ([] if comparable else ["OP_NOT_ACCREDITED:VALUE"]), (new, kept)
+    assert (transition.expected_refusal(base, patch) is None) == comparable
+    effective = probe_apply(base, patch)
+    assert ([v["rule"] for v in check(base, patch, effective)] == []) == comparable  # an effective only for comparable units
+    if not comparable:
+        assert [v["rule"] for v in check(base, patch, effective)] == ["T-REFUSAL"]
+        assert check(base, patch, None, refusal="UNRESOLVED_VALUE:VALUE") == []  # the A.3 code the contract publishes for it
+
+
+def test_an_opposite_bound_the_patch_replaces_or_clears_is_not_compared_so_its_unit_does_not_matter():
+    for ops in ([set_op(with_unit(NEW_UPPER_OK, None)), set_op(cond("VALUE", "greater_or_equal", "POSITIVE", "50 millones", "p3", R,
+                                                                     unit="MILLONES", n=9), 1)],
+                [clear_op("VALUE"), set_op(with_unit(NEW_UPPER_OK, None), 1)]):
+        base, patch = enrich(*hand("w", [LOWER_UNKNOWN, BUYER], ops)[1], 5)
+        assert transition.refusal_causes(base, patch) == []  # no carried opposite bound: nothing is compared
 
 
 def test_the_contract_does_not_refuse_what_it_does_not_name():

@@ -530,7 +530,7 @@
    },
    {
     "clause": "§6 steps 2, 3b and 5 (F16, P-3, A8.1), §6.7 (R3-1), §6.4 H12",
-    "demands": "a patch with a refusal cause produces NO effective: two SET (or two SET_ORDER, or two REPLACE_UNIVERSE) on one slot; KEEP with CLEAR, or KEEP with SET/SET_ORDER/REPLACE_UNIVERSE, of one slot EVEN WHEN THE VALUES COINCIDE (R3b, U22); KEEP of an empty slot; a negative SET of a value that is one of several carried positives, or whose positive the same patch creates (F16 fail-closed, R3-4, P-3); a VALUE bound against a carried opposite bound of incomparable units (§15.2); a composed state that leaves a CARDINALITY standing without ORDER (R3-1, decided on the STATE, not on the op); and a lone CLEAR of an empty slot (H12)",
+    "demands": "a patch with a refusal cause produces NO effective: two SET (or two SET_ORDER, or two REPLACE_UNIVERSE) on one slot; KEEP with CLEAR, or KEEP with SET/SET_ORDER/REPLACE_UNIVERSE, of one slot EVEN WHEN THE VALUES COINCIDE (R3b, U22); KEEP of an empty slot; a negative SET of a value that is one of several carried positives, or whose positive the same patch creates (F16 fail-closed, R3-4, P-3); a VALUE bound against a carried opposite bound of incomparable units, an unknown unit (None) included (§15.2); a composed state that leaves a CARDINALITY standing without ORDER (R3-1, decided on the STATE, not on the op); and a lone CLEAR of an empty slot (H12)",
     "id": "T-REFUSAL",
     "killed_by": [
      "effective_for_two_set_one_slot",
@@ -543,6 +543,8 @@
      "effective_for_f16_several_positives",
      "effective_for_f16_same_patch_positive",
      "effective_for_a81_incomparable_units",
+     "effective_for_a81_unknown_unit_carried",
+     "effective_for_a81_unknown_unit_placed",
      "effective_for_clear_order_leaving_cardinality",
      "effective_for_set_cardinality_without_order",
      "effective_for_clear_on_empty_slot"

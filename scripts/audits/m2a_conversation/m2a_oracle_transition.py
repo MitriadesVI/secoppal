@@ -82,13 +82,14 @@ TRANSITION_RULES = (
                 "one slot; KEEP with CLEAR, or KEEP with SET/SET_ORDER/REPLACE_UNIVERSE, of one slot EVEN WHEN THE VALUES "
                 "COINCIDE (R3b, U22); KEEP of an empty slot; a negative SET of a value that is one of several carried "
                 "positives, or whose positive the same patch creates (F16 fail-closed, R3-4, P-3); a VALUE bound against a "
-                "carried opposite bound of incomparable units (§15.2); a composed state that leaves a CARDINALITY standing "
+                "carried opposite bound of incomparable units, an unknown unit (None) included (§15.2); a composed state that leaves a CARDINALITY standing "
                 "without ORDER (R3-1, decided on the STATE, not on the op); and a lone CLEAR of an empty slot (H12)",
      "killed_by": ["effective_for_two_set_one_slot", "effective_for_keep_and_clear_one_slot",
                    "effective_for_keep_and_set_same_value", "effective_for_keep_and_set_order",
                    "effective_for_keep_and_replace_universe", "effective_for_two_replace_universe",
                    "effective_for_keep_on_empty_slot", "effective_for_f16_several_positives",
-                   "effective_for_f16_same_patch_positive", "effective_for_a81_incomparable_units",
+                   "effective_for_f16_same_patch_positive", "effective_for_a81_incomparable_units", "effective_for_a81_unknown_unit_carried",
+                   "effective_for_a81_unknown_unit_placed",
                    "effective_for_clear_order_leaving_cardinality", "effective_for_set_cardinality_without_order",
                    "effective_for_clear_on_empty_slot"]},
     {"id": "T-REFUSAL-CODE", "clause": "§6 step 3b (closed precedence of causes), §6 table (A.3 code per DeltaRefusal)",
@@ -305,8 +306,10 @@ def refusal_causes(base: dict, patch: dict) -> list[dict]:
         elif slot in ("VALUE/lower", "VALUE/upper"):
             opposite = "VALUE/upper" if slot == "VALUE/lower" else "VALUE/lower"
             kept = [c for c in base["conditions"] if c["slot"] == opposite]
-            if carried(opposite) and kept and None not in (_unit_class(condition), _unit_class(kept[0])) and (
-                    _unit_class(condition) != _unit_class(kept[0])):  # §15.2: incomparable units are never compared
+            # §15.2: A8.1 applies only when both bounds are in COMPARABLE units (both in the scale of pesos, or both SMMLV). A
+            # unit that is none of them, or unknown (None), is not comparable either: nothing is compared, substituted or kept
+            # in silence, and the refusal is the same as for SMMLV against pesos
+            if carried(opposite) and kept and (_unit_class(condition) is None or _unit_class(condition) != _unit_class(kept[0])):
                 found.append((OPNA, slot))
     after: dict[str, set] = {r["request_id"]: set() for r in base["requests"]}  # per request: slots left standing (R3-1)
     for c in base["conditions"]:
