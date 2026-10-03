@@ -281,7 +281,11 @@ class ConversationStore:
         envelope_path = self._envelope_path_for(chat_id)
         with conversation_lock(envelope_path):
             advance_epoch(envelope_path)
-            for path in (envelope_path,
+            # M2A-2 (declared legacy divergence, pinned by AST): the accepted-record store dies with the history,
+            # under this same lock. By LITERAL on purpose: the legacy closure must never import M2a. It goes FIRST so
+            # a failure mid-reset never leaves M2a personal data without the history that justifies it.
+            for path in (self.base_path / f"{_sanitize_chat_id(chat_id)}.accepted.jsonl",
+                         envelope_path,
                          self.base_path / f"{_sanitize_chat_id(chat_id)}.jsonl",
                          self.base_path / f"{_sanitize_chat_id(chat_id)}.pagination.json"):
                 path.unlink(missing_ok=True)
