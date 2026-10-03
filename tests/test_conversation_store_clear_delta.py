@@ -32,6 +32,7 @@ from pathlib import Path
 import pytest
 
 from tests import test_m1_wave1_parity_pins as parity
+from tests import test_c1_wave3_prep_boundary as c1_boundary
 from tests.test_m1_wave1_parity_pins import ALLOWED_DIVERGENCE, frozen_module_problems, legacy_manifest
 from tests.test_m1_wave1_parity_pins import _sha_bytes
 from tests.test_m2a_boundaries import legacy_reach_problems
@@ -299,7 +300,25 @@ def _leaf_narrowing() -> list[str]:
     return [line for line in frozen_module_problems({name: source}) if line.startswith(f"{name}:")]
 
 
+# The two new exemptions have real source enforcement, not only a metadata entry.
+C1_NARROWING_ENFORCEMENT = {
+    "app.core.orchestrator": c1_boundary.boundary_errors,
+    "app.core.turn_ledger": c1_boundary.ledger_boundary_errors,
+}
+
+
+def c1_narrowed_legacy_problems(overrides: dict[str, bytes] | None = None) -> list[str]:
+    # The canonical legacy gate itself invokes both narrow checks; not only this meta-test.
+    return frozen_module_problems({name: data.decode("utf-8") for name, data in (overrides or {}).items()})
+
+
+
 NARROWING_PINS = {
+    "app.core.orchestrator": lambda: c1_boundary.boundary_errors(c1_boundary.replace(
+        (ROOT / "app/core/orchestrator.py").read_bytes(),
+        "binding = capability_for(observation, deps.settings)", "binding = None")),
+    "app.core.turn_ledger": lambda: c1_boundary.ledger_boundary_errors(c1_boundary.replace(
+        (ROOT / "app/core/turn_ledger.py").read_bytes(), "LEDGER_VERSION = 1", "LEDGER_VERSION = 2")),
     # each entry: a function that applies the divergence's own narrowing pin to an UNDECLARED change and returns what
     # it reports (empty would mean the divergence is open: any change to the module would be accepted)
     MODULE: lambda: candidate_problems(current_bytes() + b"# an undeclared change\n"),
@@ -323,8 +342,8 @@ def test_every_allowed_divergence_has_a_narrowing_pin_that_catches_an_undeclared
 
 
 def test_mutant_a_divergence_declared_without_its_pin_is_a_gap():
-    found = narrowing_gaps({**ALLOWED_DIVERGENCE, "app.core.orchestrator": "a new divergence"}, NARROWING_PINS)
-    assert found == ["app.core.orchestrator: declared in ALLOWED_DIVERGENCE with no narrowing pin (add it to NARROWING_PINS)"]
+    found = narrowing_gaps({**ALLOWED_DIVERGENCE, "app.core.unapproved_divergence": "a new divergence"}, NARROWING_PINS)
+    assert found == ["app.core.unapproved_divergence: declared in ALLOWED_DIVERGENCE with no narrowing pin (add it to NARROWING_PINS)"]
 
 
 def test_mutant_a_pin_that_accepts_everything_is_a_gap():
@@ -335,3 +354,56 @@ def test_mutant_a_pin_that_accepts_everything_is_a_gap():
 def test_mutant_a_stale_pin_is_a_gap():
     found = narrowing_gaps({k: v for k, v in ALLOWED_DIVERGENCE.items() if k != MODULE}, NARROWING_PINS)
     assert found == [f"{MODULE}: a narrowing pin for a divergence that is no longer declared"]
+
+
+def test_c1_divergences_are_really_enforced_and_both_postimages_pass():
+    assert set(C1_NARROWING_ENFORCEMENT) <= set(ALLOWED_DIVERGENCE)
+    assert c1_narrowed_legacy_problems() == []
+    assert c1_narrowed_legacy_problems({
+        "app.core.orchestrator": c1_boundary.approved_hook_source(),
+        "app.core.turn_ledger": c1_boundary.approved_ledger_source(),
+    }) == []
+
+
+@pytest.mark.parametrize("name,old,new", [
+    ("app.core.orchestrator", "binding = capability_for(observation, deps.settings)", "binding = None"),
+    ("app.core.turn_ledger", "LEDGER_VERSION = 1", "LEDGER_VERSION = 2"),
+])
+def test_new_whitelist_entries_do_not_exempt_their_whole_modules(name, old, new):
+    source = (ROOT / (name.replace(".", "/") + ".py")).read_bytes()
+    assert c1_narrowed_legacy_problems({name: c1_boundary.replace(source, old, new)})
+
+
+@pytest.mark.parametrize("name", tuple(C1_NARROWING_ENFORCEMENT))
+def test_removing_either_new_narrow_pin_or_making_it_always_green_is_a_gap(name):
+    found = narrowing_gaps(ALLOWED_DIVERGENCE, {k: v for k, v in NARROWING_PINS.items() if k != name})
+    assert any(line.startswith(f"{name}: declared") for line in found)
+    found = narrowing_gaps(ALLOWED_DIVERGENCE, {**NARROWING_PINS, name: lambda: []})
+    assert any(line.startswith(f"{name}: its narrowing pin accepts") for line in found)
+
+
+
+@pytest.mark.parametrize("name,source", [
+    ("app.core.orchestrator", c1_boundary.approved_hook_source),
+    ("app.core.turn_ledger", c1_boundary.approved_ledger_source),
+])
+def test_canonical_legacy_gate_accepts_each_exact_postimage(name, source):
+    assert frozen_module_problems({name: source().decode("utf-8")}) == []
+
+
+def test_canonical_legacy_gate_rejects_inner_hook_and_ledger_adversaries():
+    hook = c1_boundary.replace(c1_boundary.approved_hook_source(),
+                               "record_operation_handoff(foundation)", "pass")
+    ledger = c1_boundary.replace(c1_boundary.approved_ledger_source(),
+                                 "type(self.authority) is str", "isinstance(self.authority, str)")
+    assert any("UNAPPROVED_HOOK_POSTIMAGE" in line for line in frozen_module_problems({
+        "app.core.orchestrator": hook.decode("utf-8")}))
+    assert any("UNAPPROVED_LEDGER_POSTIMAGE" in line for line in frozen_module_problems({
+        "app.core.turn_ledger": ledger.decode("utf-8")}))
+
+
+def test_canonical_legacy_gate_respects_the_encoding_cookie_of_real_bytes():
+    source = (ROOT / "app/core/orchestrator.py").read_bytes()
+    changed = b"# coding: latin-1\n" + source
+    assert any("OUTSIDE_HOOK_CHANGED" in line for line in frozen_module_problems({
+        "app.core.orchestrator": changed.decode("utf-8")}))

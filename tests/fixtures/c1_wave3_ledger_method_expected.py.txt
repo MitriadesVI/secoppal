@@ -1,0 +1,19 @@
+def to_dict(self) -> dict:
+    result = {
+        "name": StageName(self.name).value,
+        "authority": _token(self.authority),
+        "decision": _token(self.decision),
+        "reason_code": _token(self.reason_code),
+        "input_digest": _token(self.input_digest),
+        "output_digest": _token(self.output_digest),
+        "detail": {str(_token(key)): _clean(item) for key, item in dict(self.detail or {}).items()},
+    }
+    if (StageName(self.name) is StageName.CAPABILITY
+            and type(self.authority) is str
+            and self.authority == "operation-owners@1"):
+        result["authority"] = "operation-owners@1"
+        for key, item in dict(self.detail or {}).items():
+            if (type(key) is str and key == "table_version"
+                    and type(item) is str and item == "operation-owners@1"):
+                result["detail"]["table_version"] = "operation-owners@1"
+    return result

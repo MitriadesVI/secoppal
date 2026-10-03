@@ -1,0 +1,18 @@
+from app.core.foundation_runtime import (
+    OperationHandoff, record_operation_handoff, record_operation_handoff_result,
+    run_foundation_search,
+)
+
+foundation = run_foundation_search(self, ctx, seed_resolved_params,
+                                   observation=observation, binding=binding)
+if isinstance(foundation, OperationHandoff):
+    record_operation_handoff(foundation)
+    with legacy_budget(observation is not None):
+        result = handle_normal_flow(observed_deps(deps, observation, binding), ctx)
+    record_operation_handoff_result(foundation, result)
+    params = result.get("resolved_params") or {}
+    result["_continuation_owner"] = "ACTOR" if params.get("actor_scope") or params.get("actor_pending") else "TABULAR"
+    return result
+if foundation is not None:
+    foundation["_continuation_owner"] = "NONE"
+    return foundation

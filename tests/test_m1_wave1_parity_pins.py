@@ -547,6 +547,10 @@ MANIFEST_PATH = ROOT / "tests" / "fixtures" / "legacy_closure_manifest_88653752.
 DATA_ROOT = "app/data"
 # Explicit and minimal. Widening it is an ADR decision (and, in E-0, the ``AccreditedSpan`` re-export of D3).
 ALLOWED_DIVERGENCE = {
+    # C1-WAVE3-PREP: exact METIS GO_SPEC postimages, enforced by the dedicated AST pins
+    # and the whitelist/narrowing correspondence gate. Never regenerate the legacy manifest.
+    "app.core.orchestrator": "C1.4: exact approved Foundation hook AST only",
+    "app.core.turn_ledger": "C1.4: exact Stage.to_dict public CAPABILITY literal postimage only",
     "app.core.semantic_dimensions": "additive, whitelist (pins 4 and 5)",
     "app.core.foundation_guard": "source-boundary leaf D13 (pin 6)",
     # M2A-2 (user decision 2026-10-02, M2A_WAVE1_PREP §7): the manifest is NOT regenerated. The ONLY delta is one
@@ -638,6 +642,13 @@ def frozen_module_problems(overrides: dict[str, str] | None = None) -> list[str]
         if name in LEAF_SHA256:
             if sha != LEAF_SHA256[name]:
                 out.append(f"{name}: differs from its pinned source-boundary leaf")
+        elif name in {"app.core.orchestrator", "app.core.turn_ledger"} and name in ALLOWED_DIVERGENCE:
+            # Staged C1.4 permission is NEVER a whole-module waiver, including overrides.
+            from tests.test_c1_wave3_prep_boundary import boundary_errors, ledger_boundary_errors
+
+            check = {"app.core.orchestrator": boundary_errors,
+                     "app.core.turn_ledger": ledger_boundary_errors}[name]
+            out.extend(f"{name}: {error}" for error in sorted(check(_module_bytes(name, index, overrides))))
         elif name not in ALLOWED_DIVERGENCE and sha != manifest[relative]:
             out.append(f"{name}: differs from main 88653752")
     return out
@@ -959,12 +970,19 @@ def test_every_legacy_closure_module_matches_main():
 
 
 def test_the_allowed_divergences_are_real_and_inside_the_closure():
-    """Minimal, not a stale allowance: each one is in the closure and really differs from main."""
+    """Closure is mandatory; staged C1.4 allows only exact base/postimage, others must differ."""
     index, graph, _ = build_graph()
     parent, manifest = closure(graph), legacy_manifest()
     for name in ALLOWED_DIVERGENCE:
         assert name in parent, name
-        assert _sha_bytes(index[name].read_bytes()) != manifest[_relative(index[name])], name
+        if name in {"app.core.orchestrator", "app.core.turn_ledger"}:
+            from tests.test_c1_wave3_prep_boundary import boundary_errors, ledger_boundary_errors
+
+            check = {"app.core.orchestrator": boundary_errors,
+                     "app.core.turn_ledger": ledger_boundary_errors}[name]
+            assert not check(index[name].read_bytes()), name
+        else:
+            assert _sha_bytes(index[name].read_bytes()) != manifest[_relative(index[name])], name
     assert set(LEAF_SHA256) <= set(ALLOWED_DIVERGENCE)
 
 
