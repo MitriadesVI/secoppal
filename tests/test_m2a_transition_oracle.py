@@ -652,6 +652,17 @@ def m_f16_any_value(base, patch, effective):
     return None
 
 
+def m_f16_positive_kept(base, patch, effective):
+    """The reducer that never inverts: the single carried +X stays next to the -X it places (ZEUS tx1)."""
+    for op in patch["ops"]:
+        if op["op"] == "SET" and op["slot"].endswith("/NEGATIVE") and op["slot"].split("/")[0] in typing_.POLARIZED:
+            standing = [c for c in base["conditions"] if c["slot"] == op["slot"].replace("/NEGATIVE", "/POSITIVE")]
+            canonical = [i for i in op["condition"]["value"] if not i.startswith("excluded=")]
+            if len(standing) == 1 and [i for i in standing[0]["value"] if not i.startswith("excluded=")] == canonical:
+                return readd(base, patch, effective, lambda c: c["condition_id"] == standing[0]["condition_id"])
+    return None
+
+
 def m_set_clears_whole_dimension(base, patch, effective):
     for op in patch["ops"]:
         if op["op"] == "SET" and op["slot"].split("/")[0] in typing_.POLARIZED:
@@ -970,6 +981,7 @@ MUTANTS = {
     "clear_dimension_only_positive": ("T-COND-WRITTEN-SLOT", m_clear_only_positive),
     "removal_without_op": ("T-COND-REMOVAL", m_removal_without_op),
     "f16_any_value": ("T-COND-REMOVAL", m_f16_any_value),
+    "f16_positive_kept_next_to_its_negation": ("T-COND-F16", m_f16_positive_kept),
     "set_order_drops_cardinality": ("T-COND-REMOVAL", m_set_order_drops_cardinality),
     "set_clears_whole_dimension": ("T-COND-REMOVAL", m_set_clears_whole_dimension),
     "a81_without_collision": ("T-COND-REMOVAL", m_a81_without_collision),
@@ -1153,6 +1165,10 @@ def m_replaced_by_a_host_rule(base, patch, causes):
     return "CONTEXT_EXPIRED_CONFIRM" if causes else None  # H1 would fire AFTER the causes (§6 step 3b precedes step 4)
 
 
+def m_code_outside_the_vocabulary(base, patch, causes):
+    return "NOT_A_CODE_OF_ANNEX_A3" if causes else None
+
+
 REFUSAL_CODE_MUTANTS = {
     "refusal_conflict_reported_as_keep_on_empty": ("T-REFUSAL-CODE", m_conflict_as_keep_on_empty),
     "refusal_keep_on_empty_reported_as_opna": ("T-REFUSAL-CODE", m_keep_on_empty_as_opna),
@@ -1162,12 +1178,19 @@ REFUSAL_CODE_MUTANTS = {
     "refusal_slot_order_ignored": ("T-REFUSAL-CODE", m_slot_order_ignored),
     "refusal_wrong_dimension": ("T-REFUSAL-CODE", m_wrong_dimension),
     "refusal_replaced_by_a_host_rule": ("T-REFUSAL-CODE", m_replaced_by_a_host_rule),
+    "refusal_code_outside_the_vocabulary": ("T-REFUSAL-CODE", m_code_outside_the_vocabulary),
 }
-UNJUSTIFIED_MUTANTS = {  # a lawful patch refused for a structural cause that is not there
+def untouched_dimension_code(base, patch):
+    touched = {op["slot"].partition("/")[0] for op in patch["ops"]}
+    return "OP_NOT_ACCREDITED:" + next(d for d in ("STATE", "MODALITY", "ACTOR", "CONTRACT_TYPE_OR_NATURE") if d not in touched)
+
+
+UNJUSTIFIED_MUTANTS = {  # a lawful patch refused for a structural cause that is not there, or blamed on an untouched dimension
     "refuse_lawful_as_slot_conflict": ("T-REFUSAL-UNJUSTIFIED", "DELTA_SLOT_CONFLICT"),
     "refuse_lawful_as_keep_on_empty": ("T-REFUSAL-UNJUSTIFIED", "KEEP_ON_EMPTY_SLOT"),
     "refuse_lawful_as_cardinality_without_order": ("T-REFUSAL-UNJUSTIFIED", "DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER"),
     "refuse_lawful_as_target_not_addressable": ("T-REFUSAL-UNJUSTIFIED", "TARGET_NOT_ADDRESSABLE"),
+    "refuse_op_not_accredited_on_an_untouched_dimension": ("T-REFUSAL-UNJUSTIFIED", untouched_dimension_code),
 }
 
 
@@ -1213,20 +1236,57 @@ def test_each_unjustified_refusal_mutant_dies_on_every_lawful_transition(name):
     assert len(LAWFUL_POOL) > 100 and len(LAWFUL_MESSY) > 20
     for label, base, patch in [*LAWFUL_POOL, *LAWFUL_MESSY]:
         assert base["logic"] is None
-        assert rule in {v["rule"] for v in check(base, patch, None, refusal=code)}, (name, label)
+        refusal = code(base, patch) if callable(code) else code
+        assert rule in {v["rule"] for v in check(base, patch, None, refusal=refusal)}, (name, label)
 
 
 def test_what_the_dicts_cannot_show_is_not_judged_and_says_so():
     """An authority refusal (OP_NOT_ACCREDITED over an op the authority did not resolve) and TARGET_NOT_ADDRESSABLE over a base
-    with a logic expression cannot be decided from the dicts: they are accepted; the Gold oracle decides them by case."""
+    with a logic expression cannot be decided from the dicts: they are accepted when an op touches the dimension named; the Gold
+    oracle decides them by case (LG-AUTHORITY-REFUSALS)."""
     for label, base, patch in LAWFUL_POOL[:50]:
-        assert check(base, patch, None, refusal="OP_NOT_ACCREDITED:TOPIC") == [], label
-        assert check(base, patch, None, refusal="UNRESOLVED_VALUE:VALUE") == [], label
+        dimension = patch["ops"][0]["slot"].partition("/")[0]
+        assert check(base, patch, None, refusal=f"OP_NOT_ACCREDITED:{dimension}") == [], label
+        assert check(base, patch, None, refusal=f"UNRESOLVED_VALUE:{dimension}") == [], label
         assert check(base, patch, None, refusal="CONTEXT_EXPIRED_CONFIRM") == [], label  # a host rule: the Gold's to decide
     label, base, patch = LAWFUL_POOL[0]
     with_logic = {**copy.deepcopy(base), "logic": {"operator": "OR", "condition_id": None, "children": []}}
     assert check(with_logic, patch, None, refusal="TARGET_NOT_ADDRESSABLE") == []
     assert check(base, patch, None, refusal="TARGET_NOT_ADDRESSABLE") != []
+
+
+def test_a_refusal_code_must_be_in_the_vocabulary_of_annex_a3_and_blame_a_dimension_an_op_touches():
+    label, base, patch = LAWFUL_POOL[0]
+    touched = patch["ops"][0]["slot"].partition("/")[0]
+    for garbage in ("NOT_A_CODE", "", "delta_slot_conflict", "UNRESOLVED_VALUE:", "OP_NOT_ACCREDITED:NO_SUCH_DIM",
+                    "UNRESOLVED_VALUE:topic", "BASE_INVALID:X", "SMMLV_UNSUPPORTED", "OPERATION_CHANGE:",
+                    "UNSUPPORTED_PROPOSAL:", ":TOPIC"):
+        assert {v["rule"] for v in check(base, patch, None, refusal=garbage)} == {"T-REFUSAL-CODE"}, garbage
+    untouched = untouched_dimension_code(base, patch)
+    for code in (untouched, untouched.replace("OP_NOT_ACCREDITED", "UNRESOLVED_VALUE")):
+        assert {v["rule"] for v in check(base, patch, None, refusal=code)} == {"T-REFUSAL-UNJUSTIFIED"}, code
+    assert check(base, patch, None, refusal=f"OP_NOT_ACCREDITED:{touched}") == []
+    for code in ("OPERATION_CHANGE:COUNT", "UNSUPPORTED_PROPOSAL:INVALID_PROPOSAL", "STALE_OPTION", "BASE_INVALID"):
+        assert check(base, patch, None, refusal=code) == [], code  # in the vocabulary: a host or protocol outcome, not judged
+    value_op = next((e for e in LAWFUL_POOL if any(op["slot"].startswith("VALUE") for op in e[2]["ops"])), None)
+    assert value_op and check(value_op[1], value_op[2], None, refusal="VALUE_WITHOUT_COMPARATOR") == []
+    other = next(e for e in LAWFUL_POOL if not any(op["slot"].startswith("VALUE") for op in e[2]["ops"]))
+    assert {v["rule"] for v in check(other[1], other[2], None, refusal="VALUE_WITHOUT_COMPARATOR")} == {"T-REFUSAL-UNJUSTIFIED"}
+
+
+def test_the_f16_inversion_must_happen_the_positive_cannot_survive_next_to_its_negation():
+    """ZEUS tx1: the single carried +X kept next to the placed -X is a violation of T-COND-F16; the faithful inversion is not."""
+    for name, (base, patch) in (("f16_same_value", HAND_BY_NAME["f16_same_value"]),):
+        effective = probe_apply(base, patch, dataset_of=host_dataset)
+        assert check(base, patch, effective, dataset_of=host_dataset) == []
+        kept = m_f16_positive_kept(base, patch, effective)
+        assert kept is not None and {v["rule"] for v in check(base, patch, kept, dataset_of=host_dataset)} == {"T-COND-F16"}
+    base, patch = enrich(*hand("b", [BUYER], [set_op(BUYER_A_NEG)])[1], 5)  # the same for another polarized dimension
+    effective = probe_apply(base, patch)
+    assert check(base, patch, effective) == []
+    assert {v["rule"] for v in check(base, patch, m_f16_positive_kept(base, patch, effective))} == {"T-COND-F16"}
+    base, patch = enrich(*hand("c", [TOPIC_A, TOPIC_C], [set_op(TOPIC_B_NEG)])[1], 5)  # another value: nothing to invert
+    assert m_f16_positive_kept(base, patch, probe_apply(base, patch)) is None
 
 
 def test_an_effective_and_a_refusal_together_are_a_misuse():

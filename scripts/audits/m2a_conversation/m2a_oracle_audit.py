@@ -98,14 +98,15 @@ LIMITED_GUARANTEES = (
     {"id": "LG-HOST-FACTS-NOT-IN-GOLD", "kind": "SCOPE",
      "what": "H6, H7 and H8 read a fact the Gold's IR does not carry (the carried buyer's territory, the closed list of regions, "
              "the states of the resulting universe): section 19 says LECTURA for them, so they are not reds, but the oracle "
-             "will not type the fact by guessing: the case where the Gold expects the rule to FIRE is NO_MEDIBLE with the fact "
-             "named, and the EXECUTE controls stay measurable",
+             "will not type the fact by guessing. A case where the Gold expects the rule to FIRE is NO_MEDIBLE with the fact "
+             "named, and so is every case where H8 READS the literals whatever the outcome: a change of universe with a STATE "
+             "or MODALITY standing (§14). An EXECUTE control stays measurable only when no rule reads a missing fact",
      "closed_by": "a Gold that carries the typed fact in its IR, or a decision to derive it from the adjudicated outcome"},
     {"id": "LG-LECTURA-WITHOUT-TYPED-VALUE", "kind": "SCOPE",
      "what": "a §19 dependency with impacto LECTURA does not block, but a case whose value the Gold does not give typed stays "
-             "NO_MEDIBLE with the typing motive: a SMMLV amount (the conversion by vigencia and its provenance, read by compose in "
-             "H3, are E-VALUE's: VALUE_UNIT_NOT_PESO_SCALE), a month without a year (TIME_MONTH_HINT), a window relative to "
-             "the clock (TIME_OPERATOR:relative_period: the Gold's labels disagree on its end)",
+             "NO_MEDIBLE with the typing motive: a month without a year (TIME_MONTH_HINT), a SMMLV amount whose IR has no single "
+             "catalogued year (SMMLV_YEAR_NOT_SINGLE, SMMLV_YEAR_NOT_CATALOGUED: the clock is not in the Gold, the catalogue is "
+             "closed), a relative window the hint does not state (TIME_RELATIVE_WINDOW_NOT_EXPLICIT)",
      "closed_by": "E-VALUE and E-TIME typed values in the Gold's IR"},
     {"id": "LG-REGION-MEMBERS-SYNTHETIC", "kind": "ORACLE_BLIND_SPOT",
      "what": "a REGION is typed with ONE synthetic member derived from its name (the Gold carries no members; compose never "
@@ -119,8 +120,10 @@ LIMITED_GUARANTEES = (
     {"id": "LG-AUTHORITY-REFUSALS", "kind": "ORACLE_BLIND_SPOT",
      "what": "OP_NOT_ACCREDITED of an op whose authority did not resolve cannot be written in a m2a-patch/1 (it carries only "
              "resolved conditions): check_transition finds the causes the dicts show (F16 fail-closed, P-3, incomparable "
-             "units) and accepts an authority refusal unjudged; the Gold decides it by case (SF194's mark is compose's, not "
-             "an authority's)",
+             "units). With ``refusal=`` it rejects a code outside annex A.3 and an OP_NOT_ACCREDITED over a dimension no op "
+             "touches; what remains is accepted unjudged: an authority refusal over a dimension an op touches, and any "
+             "A.3 code of a host rule or of the protocol (the Gold decides them by case; SF194's mark is compose's, not an "
+             "authority's)",
      "closed_by": "the authorities' own gates and the Gold cases"},
     {"id": "LG-F16-CONTAINED-VALUE", "kind": "ORACLE_BLIND_SPOT",
      "what": "F16's other fail-closed branch, a negated value CONTAINED in a positive (G-FU-09), needs a notion of containment "

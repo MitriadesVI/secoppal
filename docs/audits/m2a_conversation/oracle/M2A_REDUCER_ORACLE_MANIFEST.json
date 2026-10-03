@@ -2,7 +2,7 @@
  "artifact": {
   "path": "docs/audits/m2a_conversation/oracle/M2A_REDUCER_ORACLE_synthetic.jsonl",
   "records": 160,
-  "sha256": "ae53a7ab10ebccbb459ce2a1302a4f34d4c833d22db44451c01d2da989f6daec"
+  "sha256": "4aa343c7488ecff31c96e1f56d2e82559aa7deeff6fc441497a97171a28c699b"
  },
  "declarations": {
   "applicability_rules": [
@@ -459,13 +459,13 @@
     "closed_by": "a Gold that carries the typed fact in its IR, or a decision to derive it from the adjudicated outcome",
     "id": "LG-HOST-FACTS-NOT-IN-GOLD",
     "kind": "SCOPE",
-    "what": "H6, H7 and H8 read a fact the Gold's IR does not carry (the carried buyer's territory, the closed list of regions, the states of the resulting universe): section 19 says LECTURA for them, so they are not reds, but the oracle will not type the fact by guessing: the case where the Gold expects the rule to FIRE is NO_MEDIBLE with the fact named, and the EXECUTE controls stay measurable"
+    "what": "H6, H7 and H8 read a fact the Gold's IR does not carry (the carried buyer's territory, the closed list of regions, the states of the resulting universe): section 19 says LECTURA for them, so they are not reds, but the oracle will not type the fact by guessing. A case where the Gold expects the rule to FIRE is NO_MEDIBLE with the fact named, and so is every case where H8 READS the literals whatever the outcome: a change of universe with a STATE or MODALITY standing (§14). An EXECUTE control stays measurable only when no rule reads a missing fact"
    },
    {
     "closed_by": "E-VALUE and E-TIME typed values in the Gold's IR",
     "id": "LG-LECTURA-WITHOUT-TYPED-VALUE",
     "kind": "SCOPE",
-    "what": "a §19 dependency with impacto LECTURA does not block, but a case whose value the Gold does not give typed stays NO_MEDIBLE with the typing motive: a SMMLV amount (the conversion by vigencia and its provenance, read by compose in H3, are E-VALUE's: VALUE_UNIT_NOT_PESO_SCALE), a month without a year (TIME_MONTH_HINT), a window relative to the clock (TIME_OPERATOR:relative_period: the Gold's labels disagree on its end)"
+    "what": "a §19 dependency with impacto LECTURA does not block, but a case whose value the Gold does not give typed stays NO_MEDIBLE with the typing motive: a month without a year (TIME_MONTH_HINT), a SMMLV amount whose IR has no single catalogued year (SMMLV_YEAR_NOT_SINGLE, SMMLV_YEAR_NOT_CATALOGUED: the clock is not in the Gold, the catalogue is closed), a relative window the hint does not state (TIME_RELATIVE_WINDOW_NOT_EXPLICIT)"
    },
    {
     "closed_by": "E-GEO's closed list of regions and members in the Gold's IR",
@@ -483,7 +483,7 @@
     "closed_by": "the authorities' own gates and the Gold cases",
     "id": "LG-AUTHORITY-REFUSALS",
     "kind": "ORACLE_BLIND_SPOT",
-    "what": "OP_NOT_ACCREDITED of an op whose authority did not resolve cannot be written in a m2a-patch/1 (it carries only resolved conditions): check_transition finds the causes the dicts show (F16 fail-closed, P-3, incomparable units) and accepts an authority refusal unjudged; the Gold decides it by case (SF194's mark is compose's, not an authority's)"
+    "what": "OP_NOT_ACCREDITED of an op whose authority did not resolve cannot be written in a m2a-patch/1 (it carries only resolved conditions): check_transition finds the causes the dicts show (F16 fail-closed, P-3, incomparable units). With ``refusal=`` it rejects a code outside annex A.3 and an OP_NOT_ACCREDITED over a dimension no op touches; what remains is accepted unjudged: an authority refusal over a dimension an op touches, and any A.3 code of a host rule or of the protocol (the Gold decides them by case; SF194's mark is compose's, not an authority's)"
    },
    {
     "closed_by": "M2b (G-FU-09)",
@@ -544,7 +544,7 @@
    },
    {
     "clause": "§6 step 3b (closed precedence of causes), §6 table (A.3 code per DeltaRefusal)",
-    "demands": "a refused patch is refused with the code of the HIGHEST-precedence cause (TARGET_NOT_ADDRESSABLE > DELTA_SLOT_CONFLICT > KEEP_ON_EMPTY_SLOT > OP_NOT_ACCREDITED:<DIM> > DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER), with ties decided by the §4.2 slot order and the dimension of the slot named in OP_NOT_ACCREDITED; a host-rule code never replaces a cause (causes precede §6 step 4)",
+    "demands": "a refused patch is refused with the code of the HIGHEST-precedence cause (TARGET_NOT_ADDRESSABLE > DELTA_SLOT_CONFLICT > KEEP_ON_EMPTY_SLOT > OP_NOT_ACCREDITED:<DIM> > DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER), with ties decided by the §4.2 slot order and the dimension of the slot named in OP_NOT_ACCREDITED; a host-rule code never replaces a cause (causes precede §6 step 4); a code outside the vocabulary of annex A.3 and the DeltaRefusal list is no refusal at all",
     "id": "T-REFUSAL-CODE",
     "killed_by": [
      "refusal_conflict_reported_as_keep_on_empty",
@@ -554,18 +554,20 @@
      "refusal_precedence_reversed",
      "refusal_slot_order_ignored",
      "refusal_wrong_dimension",
-     "refusal_replaced_by_a_host_rule"
+     "refusal_replaced_by_a_host_rule",
+     "refusal_code_outside_the_vocabulary"
     ]
    },
    {
     "clause": "§6 step 3b (a refusal needs a cause), §6.1",
-    "demands": "a structural refusal (DELTA_SLOT_CONFLICT, KEEP_ON_EMPTY_SLOT, DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER, TARGET_NOT_ADDRESSABLE over a base without logic) over a patch with no such cause refuses a lawful transition",
+    "demands": "a structural refusal (DELTA_SLOT_CONFLICT, KEEP_ON_EMPTY_SLOT, DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER, TARGET_NOT_ADDRESSABLE over a base without logic) over a patch with no such cause refuses a lawful transition; OP_NOT_ACCREDITED:<DIM> (or its A.3 publication) names a dimension some op of the patch touches",
     "id": "T-REFUSAL-UNJUSTIFIED",
     "killed_by": [
      "refuse_lawful_as_slot_conflict",
      "refuse_lawful_as_keep_on_empty",
      "refuse_lawful_as_cardinality_without_order",
-     "refuse_lawful_as_target_not_addressable"
+     "refuse_lawful_as_target_not_addressable",
+     "refuse_op_not_accredited_on_an_untouched_dimension"
     ]
    },
    {
@@ -590,8 +592,8 @@
     ]
    },
    {
-    "clause": "§5.2; user decision R3",
-    "demands": "a request touched by REPLACE_UNIVERSE keeps request_id, scope_id and view: only subject, universe_kind, universe_origin and dataset change",
+    "clause": "§5.2 (REPLACE_UNIVERSE changes subject and kind), §3.2 (request_id, scope_id and view belong to the request); user decision R3 (request_id, scope_id)",
+    "demands": "a request touched by REPLACE_UNIVERSE keeps request_id, scope_id and view: only subject, universe_kind, universe_origin and dataset change (neither §5.2 nor §3.2 says the redirect rewrites the view)",
     "id": "T-REQ-REDIRECT",
     "killed_by": [
      "redirect_changes_request_id",
@@ -679,6 +681,14 @@
      "set_order_drops_cardinality",
      "set_clears_whole_dimension",
      "a81_without_collision"
+    ]
+   },
+   {
+    "clause": "§6.5 (F16), INV-M2A-19",
+    "demands": "a negative SET whose canonical value is the single carried positive of its slot INVERTS it: the positive does not survive next to its own negation (an effective with +X and -X of one canonical value)",
+    "id": "T-COND-F16",
+    "killed_by": [
+     "f16_positive_kept_next_to_its_negation"
     ]
    },
    {
@@ -880,7 +890,7 @@
    "R0089": "299509c751a0d017b78b8727c3e9a5db9fd7cc352db52a2128eac3e34ace1f4b",
    "R0092": "30c941a0cd940e4c571ab9981ea0eb5822318c0f1990bd2992f3a45fc9daaa3f",
    "R0093": "19dc40432874caffe2b482af83698a3f4472a6247e7ff99277f692555222357f",
-   "R0094": "6b38244c57d4ef7bc36b66eefa67fe68a6343ec40f82e3389002995ca462d157",
+   "R0094": "28689c9d9cf9b8c06589e06fa8ae0df94af27d51b6139fe8f09b8b5095c030c4",
    "R0099": "bb54531db586a17b6d096baa25f4a5baf1a6a8def0b01d73310426c87881dad3",
    "R0106": "3979e43960c5fe1326229efd60bbe49681653072fbfe2d094e6b5e52a8ed4b1c",
    "R0107": "07fd93c4201a2444f057c54177a2dd1058fa8ee919cdbd68e882a95b754bdbf2",
@@ -896,8 +906,8 @@
    "R0282": "4175856120a6f546bdab1fbdbc6a4cc71c27e0e22017abde3316205f188103e5",
    "R0286": "32afae77a1f51bc38b5f552df1920acfc57e32d1efc1e6fca4499fcb630a847d",
    "R0295": "a2b99b8f74057eef49c2a0873631e0661e277b5bb7bdf1bcfd2fe31dc66f054d",
-   "R0301": "cb0109be24bc4930476638970cb7759c3abef356f08326d2b9c0b1667bf28605",
-   "R0303": "632e24385ace83d19d72fd1dbd3739e41c52c751930d377d8939b270540764a5",
+   "R0301": "a0f90eb6cbb9e7223867b8989771466706fb745ba9975d95662412ba430b2682",
+   "R0303": "0cc6764e1f64ac9b1254aa177092a08a202e44d323936c1f43a8f5fd05f667ab",
    "R0304": "1c91589bb0fcc7f98efbd5087cddb78c11d23ca8899b3ee11e214150697da52c",
    "R0308": "c5969a0de846e5344abb9bbd0e663fe9826b1bba1aef7da5c06f329a3d305f60",
    "R0309": "c2350f707f85042377286f34f8b00f2b14007c1de4d9be61655d1de3388506f2",
@@ -931,7 +941,6 @@
     "R0089",
     "R0092",
     "R0093",
-    "R0094",
     "R0099",
     "R0180",
     "R0197",
@@ -942,6 +951,8 @@
     "R0233",
     "R0286",
     "R0295",
+    "R0301",
+    "R0303",
     "R0308",
     "R0309",
     "R0310",
@@ -974,6 +985,9 @@
     "R0531",
     "R0532"
    ],
+   "NO_MEDIBLE(HOST_FACT_NOT_IN_GOLD:STATE_LITERALS_OF_THE_UNIVERSE)": [
+    "R0094"
+   ],
    "NO_MEDIBLE(OPS_AB_DISAGREE)": [
     "R0274",
     "R0281"
@@ -982,10 +996,6 @@
     "R0075",
     "R0282",
     "R0336"
-   ],
-   "NO_MEDIBLE(VALUE_UNIT_NOT_PESO_SCALE)": [
-    "R0301",
-    "R0303"
    ]
   },
   "summary": {
@@ -994,24 +1004,24 @@
     "TEST": 25
    },
    "applicable_by_disposition": {
-    "CLARIFY": 2,
+    "CLARIFY": 3,
     "EXECUTE": 33
    },
    "applicable_by_partition": {
     "DEV": 18,
-    "TEST": 17
+    "TEST": 18
    },
    "by_applicability": {
-    "APLICABLE_M2A3": 35,
+    "APLICABLE_M2A3": 36,
     "DEPENDIENTE(D-MONEY)": 1,
     "DEPENDIENTE(E-MODALITY)": 1,
     "DEPENDIENTE(F)": 5,
+    "NO_MEDIBLE(HOST_FACT_NOT_IN_GOLD:STATE_LITERALS_OF_THE_UNIVERSE)": 1,
     "NO_MEDIBLE(OPS_AB_DISAGREE)": 2,
-    "NO_MEDIBLE(PRIOR_AB_DISAGREE)": 3,
-    "NO_MEDIBLE(VALUE_UNIT_NOT_PESO_SCALE)": 2
+    "NO_MEDIBLE(PRIOR_AB_DISAGREE)": 3
    },
    "cases": 49,
-   "classification_measurable": 33,
+   "classification_measurable": 34,
    "dependent_by_any_owner": {
     "D-MONEY": 1,
     "E-MODALITY": 1,
@@ -1029,17 +1039,17 @@
    "TEST": 83
   },
   "applicable_by_disposition": {
-   "CLARIFY": 5,
-   "EXECUTE": 89,
+   "CLARIFY": 6,
+   "EXECUTE": 93,
    "INFORM": 3,
    "NEW_SEARCH": 5
   },
   "applicable_by_partition": {
-   "DEV": 52,
-   "TEST": 50
+   "DEV": 54,
+   "TEST": 53
   },
   "by_applicability": {
-   "APLICABLE_M2A3": 102,
+   "APLICABLE_M2A3": 107,
    "DEPENDIENTE(E-MODALITY)": 4,
    "DEPENDIENTE(E-ORDER)": 1,
    "DEPENDIENTE(F)": 4,
@@ -1048,15 +1058,14 @@
    "DEPENDIENTE(M2A-6)": 6,
    "NO_MEDIBLE(HOST_FACT_NOT_IN_GOLD:CARRIED_BUYER_TERRITORY)": 2,
    "NO_MEDIBLE(HOST_FACT_NOT_IN_GOLD:REGION_CLOSED_LIST)": 1,
-   "NO_MEDIBLE(HOST_FACT_NOT_IN_GOLD:STATE_LITERALS_OF_THE_UNIVERSE)": 1,
-   "NO_MEDIBLE(OPS_AB_DISAGREE)": 1,
-   "NO_MEDIBLE(TIME_MONTH_HINT)": 1,
-   "NO_MEDIBLE(TIME_OPERATOR:relative_period)": 9,
-   "NO_MEDIBLE(VALUE_UNIT_FROM_RESULT)": 1,
-   "NO_MEDIBLE(VALUE_UNIT_NOT_PESO_SCALE)": 4
+   "NO_MEDIBLE(HOST_FACT_NOT_IN_GOLD:STATE_LITERALS_OF_THE_UNIVERSE)": 2,
+   "NO_MEDIBLE(OPS_AB_DISAGREE)": 6,
+   "NO_MEDIBLE(SMMLV_YEAR_NOT_SINGLE)": 1,
+   "NO_MEDIBLE(TIME_MONTH_HINT)": 2,
+   "NO_MEDIBLE(VALUE_UNIT_FROM_RESULT)": 1
   },
   "cases": 160,
-  "classification_measurable": 98,
+  "classification_measurable": 103,
   "dependent_by_any_owner": {
    "E-MODALITY": 4,
    "E-ORDER": 4,

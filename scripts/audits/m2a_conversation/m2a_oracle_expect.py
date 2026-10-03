@@ -47,15 +47,23 @@ ECHO_EFFECTS = frozenset({"UNIVERSE_CHANGED", "TOPN_CARRIED", "TOPN_CAPPED", "OR
 CLASSIFICATION_EFFECTS = frozenset({"CONTEXT_RESET", "PENDING_CANCELLED", "VIEW_REDERIVED"})
 
 
-# A host rule whose PRECONDITION reads a fact the Gold's IR does not carry. The oracle never types a fact by guessing: the
-# case that the Gold expects the rule to FIRE on is NO_MEDIBLE (an EXECUTE control stays measurable: nothing needs the fact).
-# This is a typing limit, not a dependency: section 19 still says what each lane owes. The codes are the contract's (§6 step
-# 4, read through the sealed parser); only the fact each rule reads is declared here, with its clause.
+# A host rule whose DECISION reads a fact the Gold's IR does not carry. The oracle never types a fact by guessing, and a case
+# whose outcome depends on such a rule is NO_MEDIBLE: a reducer faithful to the contract decides the rule on the fact, the Gold
+# gives it no fact to decide on, so no expectation would be a measurement. Two triggers, each a property of the Gold and the
+# typed ops (never a list of ids):
+#   * the Gold EXPECTS the rule to fire (its code is the outcome): H6, H7, H8;
+#   * the typed ops make the rule READ the fact whatever the outcome: H8 after a universe change (§14: «tras cambiar el
+#     universo, F27 (H8) comprueba STATE y MODALITY sobre el dataset resultante»), with a STATE or MODALITY carried or set.
+# An EXECUTE control stays measurable only when no rule's decision reads a missing fact (a SET of a state over an unchanged
+# universe, where the authority resolved it against that dataset). This is a typing limit, not a dependency: §19 still says
+# what each lane owes. The codes are the contract's (§6 step 4, read through the sealed parser); only the fact each rule reads
+# is declared here, with its clause.
 HOST_RULE_FACTS = {
     "H6": ("CARRIED_BUYER_TERRITORY", "§6.4 H6, §3.2 Provenance.buyer_scope: the carried buyer's territory"),
     "H7": ("REGION_CLOSED_LIST", "§6.4 H7: the closed list of regions"),
-    "H8": ("STATE_LITERALS_OF_THE_UNIVERSE", "§6.4 H8, §3.2 StateValue.literals: the states of the resulting universe"),
+    "H8": ("STATE_LITERALS_OF_THE_UNIVERSE", "§6.4 H8, §14, §3.2 StateValue.literals: the states of the resulting universe"),
 }
+H8_DIMENSIONS = ("STATE", "MODALITY")  # §6.4 H8: «estado o modalidad inexistente en el universo resultante» (§14)
 
 
 class NoProducer(Exception):
@@ -99,6 +107,16 @@ def check_transition_vocabulary() -> None:
     polarized = {s.partition("/")[0] for s in gold.contract_slot_order() if s.endswith("/POSITIVE")}
     if set(transition.POLARIZED) != polarized or set(typing_polarized()) != polarized:
         raise OracleError(f"the polarized dimensions of the oracle are not the contract's slots (§4.2): {sorted(polarized)}")
+    chk = gold.checker()
+    refusal_codes = chk.contract_text.refusal_codes(chk._CONTRACT)  # §6: the closed DeltaRefusal list
+    plain = set(chk.REASONS) | {c for c in refusal_codes if ":" not in c}
+    heads = {p.rstrip(":") for p in chk.REASON_PREFIXES} | {c.partition(":")[0] for c in refusal_codes if ":" in c}
+    dimensions = {s.partition("/")[0] for s in transition.SLOT_ORDER}
+    if (set(transition.A3_PLAIN_CODES) != plain or set(transition.A3_DIM_HEADS) | set(transition.A3_FREE_HEADS) != heads
+            or dimensions != set(chk.REASON_TAILS["UNRESOLVED_VALUE:"])):
+        raise OracleError("the vocabulary of refusal codes of the transition oracle is not the contract's (annex A.3 and the "
+                          f"DeltaRefusal list): plain {sorted(plain ^ set(transition.A3_PLAIN_CODES))}, heads "
+                          f"{sorted(heads ^ (set(transition.A3_DIM_HEADS) | set(transition.A3_FREE_HEADS)))}")
     scale, single = gold.contract_comparable_units()
     if set(transition.PESOS_SCALE) != scale or set(unit_scale()) != scale or single != "SMMLV":
         raise OracleError(f"the comparable units of the oracle are not the contract's (§15.2): {sorted(scale)} and {single}")
@@ -307,6 +325,18 @@ def surface_form_problem(rec: dict, surface_form_gaps) -> bool:
     return signature(A) != signature(B)
 
 
+def h8_reads_the_literals(base_dict: dict, base: list[dict], ops: list[dict]) -> bool:
+    """§14 and §6.4 H8: a REPLACE_UNIVERSE to a universe the base does not hold, with a STATE or MODALITY that stands in the
+    effective (carried by the base and not written by an op, or placed by the patch). Then H8 decides on the literals of the
+    resulting dataset, which the Gold's typed values do not carry."""
+    held = {(r["subject"], r["universe_kind"]) for r in base_dict["requests"]}
+    if not any(tuple(e["universe"]) not in held for e in ops if e["op"] == "REPLACE_UNIVERSE"):
+        return False
+    written = [e["slot"] for e in ops if e["op"] in ("SET", "SET_ORDER", "CLEAR")]
+    standing = [b for b in base if not any(_covered(w, b["slot"]) for w in written)]
+    return any(c["dimension"] in H8_DIMENSIONS for c in (*standing, *(e["cond"] for e in ops if e["cond"] is not None)))
+
+
 def _agree(A: dict, B: dict, *paths: tuple[str, ...], motive: str) -> None:
     for path in paths:
         x, y = A, B
@@ -341,6 +371,8 @@ def _expectation(rec: dict) -> tuple[dict, dict]:
     both_ops = [typed_ops(L) for L in (A, B)]
     if both_ops[0] != both_ops[1]:
         raise Untypeable("OPS_AB_DISAGREE")
+    if h8_reads_the_literals(base_dict, base_typed, both_ops[0]):  # a fresh acceptance has no ops: nothing is composed
+        raise Untypeable(f"HOST_FACT_NOT_IN_GOLD:{HOST_RULE_FACTS['H8'][0]}")
     results: dict[str, list[dict] | None] = {"label_A": None, "label_B": None}
     if executed:
         results = {n: ir_conditions(rec[n]["resulting_ir"]) for n in ("label_A", "label_B")}

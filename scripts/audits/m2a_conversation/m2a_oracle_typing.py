@@ -7,10 +7,13 @@ A hint becomes the closed ``ExecutableValue`` of its dimension, deterministicall
   gives the same value and distinct hints give distinct values;
 * quantified dimensions are normalised to their canonical content: VALUE to ``amount_cop`` and comparator (the unit goes
   to ``Provenance.unit``), TIME to its half-open interval, ORDER and CARDINALITY to their enumerations. Two hints that
-  denote the same canonical content give the same value: that is what a canonical value is;
+  denote the same canonical content give the same value: that is what a canonical value is. A SMMLV amount is converted
+  with the SEALED catalogue of D10 (``SMMLV_COP_BY_YEAR``, read through the sealed checker) and the single civil year of the
+  IR it belongs to (§15.5); the conversion is the contract's own rule, and ``Provenance`` keeps the unit, the amount said
+  and the year used. A relative window is typed only when its hint states the window explicitly;
 * a hint that cannot be typed without guessing raises ``Untypeable`` and the case becomes ``NO_MEDIBLE(<motive>)``: a
-  VALUE hint must hold exactly one number and any unit word in it must agree with the unit the Gold gives; a relative
-  window (``relative_period``) is not an interval the Gold fixes (its labels disagree on the end of the window);
+  VALUE hint must hold exactly one number and any unit word in it must agree with the unit the Gold gives; a SMMLV amount
+  needs a single catalogued year; a relative window without an explicit ``(start..end)`` is not an interval;
 * a CLEAR names the whole dimension unless the Gold gives it a polarity, and then only that polarity's slot.
 
 Where a datum is typed twice (an op and the resulting IR) both typings must coincide. Only the closed value types are
@@ -30,7 +33,7 @@ ROOT = Path(__file__).resolve().parents[3]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from scripts.audits.m2a_conversation.m2a_oracle_gold import sha  # noqa: E402
+from scripts.audits.m2a_conversation.m2a_oracle_gold import checker, sha  # noqa: E402
 
 from app.core.foundation_authority_values import (  # noqa: E402 (closed types: not M2a)
     MAX_TOP_N, STATE_CLASSES, ActorValue, BuyerKind, BuyerValue, CardinalityBasis, CardinalityValue, Comparator,
@@ -110,6 +113,12 @@ def _time_value(operator: str, hint, excluded: bool) -> tuple[str, ...]:
                 raise Untypeable("TIME_RANGE_HINT")
             start = date.fromisoformat(m.group(1)) if m.group(1) else None
             end = date.fromisoformat(m.group(2)) + timedelta(days=1) if m.group(2) else None  # the end day is inclusive
+        elif operator == "relative_period":  # a window the hint states: «últimos 3 meses (2026-07-01..2026-10-01)»
+            m = re.search(r"\((\d{4}-\d{2}-\d{2})\.\.(\d{4}-\d{2}-\d{2})\)\s*$", text)
+            if not m:
+                raise Untypeable("TIME_RELATIVE_WINDOW_NOT_EXPLICIT")
+            start = date.fromisoformat(m.group(1))
+            end = date.fromisoformat(m.group(2)) + timedelta(days=1)  # the notation of between_dates: the end day is inclusive
         else:
             raise Untypeable(f"TIME_OPERATOR:{operator}")
         return TimeValue(start, end, _time_label(start, end), excluded).encode()
@@ -125,10 +134,8 @@ def _unit_word(folded: str) -> str | None:
     return None
 
 
-def _amount(hint, unit: str) -> int:
-    scale = UNIT_SCALE.get(unit or "")
-    if scale is None:
-        raise Untypeable("VALUE_UNIT_NOT_PESO_SCALE")
+def _number(hint, unit: str) -> Decimal:
+    """The single number of a VALUE hint, in the unit said (never a guess among several, never an ambiguous ``2.5``)."""
     text = nfc(hint)
     numbers = re.findall(r"\d[\d.]*(?:,\d+)?", text)
     if len(numbers) != 1:  # the first number of «de 50 a 100 millones» would be a guess
@@ -140,12 +147,45 @@ def _amount(hint, unit: str) -> int:
     if "." in whole and not re.fullmatch(r"\d{1,3}(?:\.\d{3})+", whole):
         raise Untypeable("VALUE_NUMBER_AMBIGUOUS")  # «2.5» could be 2,5 or 2500: not guessed
     try:
-        amount = Decimal(whole.replace(".", "") + ("." + frac if comma else "")) * scale
+        return Decimal(whole.replace(".", "") + ("." + frac if comma else ""))
     except InvalidOperation as error:
         raise Untypeable("VALUE_NO_NUMBER") from error
+
+
+def _amount(hint, unit: str, year: int | None = None) -> int:
+    """``amount_cop`` of a VALUE hint: the scale of its unit; for SMMLV (§15.5) the sealed catalogue of D10 at ``year``."""
+    if unit == "SMMLV":
+        if year is None:
+            raise Untypeable("SMMLV_YEAR_NOT_SINGLE")  # no single civil year in the IR: the clock is not in the Gold
+        scale = checker().SMMLV_COP_BY_YEAR.get(year)
+        if scale is None:
+            raise Untypeable("SMMLV_YEAR_NOT_CATALOGUED")  # the catalogue is closed: nothing is extrapolated
+    else:
+        scale = UNIT_SCALE.get(unit or "")
+        if scale is None:
+            raise Untypeable("VALUE_UNIT_NOT_PESO_SCALE")
+    amount = _number(hint, unit) * scale
     if amount != amount.to_integral_value():
         raise Untypeable("VALUE_NOT_WHOLE_PESOS")
     return int(amount)
+
+
+def _civil_year(value) -> int | None:
+    """The single civil year a typed ``time@1`` interval lies in, or None (several years, or an open bound)."""
+    try:
+        start = date.fromisoformat(next(i for i in value if i.startswith("start=")).partition("=")[2])
+        end = date.fromisoformat(next(i for i in value if i.startswith("end_exclusive=")).partition("=")[2])
+    except (StopIteration, ValueError):
+        return None
+    return start.year if (end - timedelta(days=1)).year == start.year else None
+
+
+def ir_year(ir: dict | None) -> int | None:
+    """The single year of an IR for a SMMLV conversion (§15.5): its ONE positive TIME condition, when it lies in one civil
+    year. No TIME, several TIME conditions or several years give None (the clock is not in the Gold)."""
+    times = [tcond("TIME", c["operator"], c["polarity"], c["level"], c["unit"], c["value_hint"])
+             for c in (ir or {"conditions": []})["conditions"] if c["dimension"] == "TIME" and c["polarity"] == "POSITIVE"]
+    return _civil_year(times[0]["value"]) if len(times) == 1 else None
 
 
 def money_amount(value) -> int:
@@ -157,8 +197,10 @@ def _opaque(text: str) -> str:
     return sha(unicodedata.normalize("NFC", text))
 
 
-def type_value(dimension: str, operator: str, polarity: str, level: str | None, unit: str | None, hint) -> tuple[str, ...]:
-    """The ``ExecutableValue.encode()`` of a Gold condition or op (contract §2, §3.2)."""
+def type_value(dimension: str, operator: str, polarity: str, level: str | None, unit: str | None, hint,
+               year: int | None = None) -> tuple[str, ...]:
+    """The ``ExecutableValue.encode()`` of a Gold condition or op (contract §2, §3.2). ``year``: the single civil year of the
+    IR the condition belongs to, only for the conversion of a SMMLV amount (§15.5)."""
     excluded = polarity == "NEGATIVE"
     if dimension == "TOPIC":
         return TopicValue(nfc(hint), operator == "whole_token_folded", excluded).encode()
@@ -185,7 +227,7 @@ def type_value(dimension: str, operator: str, polarity: str, level: str | None, 
             raise Untypeable(f"VALUE_OPERATOR:{operator}")
         if polarity == "NEGATIVE":  # the comparator absorbs the negation (contract §2): «no más de X» is <= X
             comparator = OPPOSITE[comparator]
-        return MoneyValue(_amount(hint, unit or ""), comparator).encode()
+        return MoneyValue(_amount(hint, unit or "", year), comparator).encode()
     if dimension == "STATE":
         name = nfc(hint)
         if name not in STATE_CLASSES:
@@ -232,21 +274,24 @@ def slot_key(dimension: str, value: tuple[str, ...]) -> str:
 
 # ---- typed conditions and the accepted / patch dicts ------------------------------------------------------------------
 def tcond(dimension, operator, polarity, level, unit, hint, *, ods=None, unit_source=None, n_requested=None,
-          year_source=None) -> dict:
+          year_source=None, year=None) -> dict:
     """A typed condition (a plain dict): the identity every comparison of the oracle is made on."""
     if dimension == "ORDER":
         value = _order_value(operator)
     elif dimension == "CARDINALITY":
         value = _cardinality_value(n_requested)
     else:
-        value = type_value(dimension, operator, polarity, level, unit, hint)
+        value = type_value(dimension, operator, polarity, level, unit, hint, year)
     slot = slot_key(dimension, value)
+    smmlv = dimension == "VALUE" and unit == "SMMLV"  # §3.2 Provenance: the amount said and the year the conversion used
     return {"dimension": dimension, "operator": operator, "slot": slot,
             "polarity": "NEGATIVE" if slot.endswith("/NEGATIVE") else "POSITIVE",
             "level": level if dimension == "GEOGRAPHY" else None, "value": list(value),
             "unit": unit if dimension == "VALUE" else None, "ods": ods if dimension == "ORDER" else None,
             "unit_source": (unit_source or "STATED") if dimension == "VALUE" else None,
-            "year_source": year_source if dimension == "TIME" else None}
+            "year_source": year_source if dimension == "TIME" else None,
+            "source_amount": format(_number(hint, unit).normalize(), "f") if smmlv else None,
+            "year": year if smmlv else None}
 
 
 def sem_key(c: dict) -> tuple:
@@ -259,10 +304,11 @@ def ir_conditions(ir: dict) -> list[dict]:
     if ir.get("logic") is not None:
         raise Untypeable("IR_LOGIC")
     out = []
+    year = ir_year(ir) if any(c["dimension"] == "VALUE" and c["unit"] == "SMMLV" for c in ir["conditions"]) else None
     for c in ir["conditions"]:
         if c["dimension"] == "SOURCE":
             raise Untypeable("IR_SOURCE_CONDITION")  # IR v2 keeps it in source_evidence, it is not a slot
-        out.append({**tcond(c["dimension"], c["operator"], c["polarity"], c["level"], c["unit"], c["value_hint"]),
+        out.append({**tcond(c["dimension"], c["operator"], c["polarity"], c["level"], c["unit"], c["value_hint"], year=year),
                     "id": c["id"]})
     if ir.get("order"):
         out.append({**tcond("ORDER", ir["order"]["operator"], "POSITIVE", None, None, None,
@@ -295,7 +341,8 @@ def condition_dict(t: dict, cid: str, request_ids: list[str], org: dict) -> dict
     return {"condition_id": cid, "request_ids": sorted(request_ids), "slot": t["slot"], "dimension": t["dimension"],
             "operator": t["operator"], "polarity": t["polarity"], "level": t["level"], "value": list(t["value"]),
             "authority": AUTHORITY, "receipt_rules": [], "policies": [], "origin": org,
-            "provenance": {"unit": t["unit"], "source_amount": None, "unit_source": t["unit_source"], "year": None,
+            "provenance": {"unit": t["unit"], "source_amount": t.get("source_amount"), "unit_source": t["unit_source"],
+                           "year": t.get("year"),
                            "year_source": t.get("year_source"), "buyer_scope": None, "order_direction_source": t["ods"],
                            "inherited_from": None}}
 
@@ -386,7 +433,7 @@ def _typed_set_op(op: dict, res: dict | None, res_conds: list[dict]) -> dict:
         if len(on_side) != 1:  # the op carries no unit: the typed result must hold exactly one bound on that side
             raise Untypeable("VALUE_UNIT_FROM_RESULT")
         t = tcond("VALUE", op["operator"], op["polarity"], None, on_side[0]["unit"], op["value_hint"],
-                  unit_source=(op["inherited"] or {}).get("unit_source"))
+                  unit_source=(op["inherited"] or {}).get("unit_source"), year=ir_year(res))
     elif dim == "ORDER":
         ods = res["order"].get("direction_source") if res and res.get("order") else None
         t = tcond("ORDER", op["operator"], "POSITIVE", None, None, None, ods=ods)

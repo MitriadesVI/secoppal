@@ -31,6 +31,7 @@ import json
 import os
 import re
 import shutil
+import subprocess
 import sys
 import tempfile
 from datetime import date, timedelta
@@ -45,6 +46,7 @@ from scripts.audits.m2a_conversation import m2a_oracle_applicability as applicab
 from scripts.audits.m2a_conversation import m2a_oracle_audit as audit_mod
 from scripts.audits.m2a_conversation import m2a_oracle_expect as expect_mod
 from scripts.audits.m2a_conversation import m2a_oracle_gold as gold
+from scripts.audits.m2a_conversation import m2a_oracle_transition as transition_module
 from scripts.audits.m2a_conversation import m2a_oracle_typing as typing_
 from scripts.audits.m2a_conversation import m2a_reducer_oracle as oracle
 from tests.m2a_steps import registered_modules
@@ -161,6 +163,45 @@ def test_the_independence_pin_does_not_flag_what_the_oracle_may_use():
           "from app.core import foundation_geo_level\nimport importlib.util\n"
           "spec = importlib.util.spec_from_file_location('x', 'y')\n")
     assert import_offenders(ok, _registered()) == []
+
+
+LOADED_APP_SCRIPT = """
+import json, sys
+sys.path.insert(0, {root!r})
+{extra}
+from scripts.audits.m2a_conversation import m2a_reducer_oracle as o
+cases = o.load_cases(); reference = o.reference_actuals(cases)
+o.audit(reference, cases); o.audit_transitions(reference, cases); o.check_transition(
+    cases[0]["inputs"]["base"], cases[0]["inputs"]["patch"], None) if cases[0]["inputs"] else None
+print(json.dumps(sorted(m for m in sys.modules if m == "app" or m.startswith("app."))))
+"""
+
+
+def loaded_app_modules(extra: str = "") -> set[str]:
+    """The ``app`` modules a FRESH interpreter holds after the whole oracle ran (load, audit, transitions): the transitive truth
+    the AST pin cannot see."""
+    result = subprocess.run([sys.executable, "-c", LOADED_APP_SCRIPT.format(root=str(ROOT), extra=extra)], capture_output=True,
+                            text=True, cwd=ROOT, timeout=300)
+    assert result.returncode == 0, result.stderr[-500:]
+    return set(json.loads(result.stdout.strip().splitlines()[-1]))
+
+
+def m2a_modules_among(loaded: set[str]) -> list[str]:
+    return sorted(m for m in loaded if m in _registered() or any(part in FORBIDDEN_MODULE_NAMES for part in m.split(".")))
+
+
+def test_no_module_of_the_oracle_loads_m2a_not_even_transitively():
+    """The independence is of the CODE of the oracle (scripts/): a test may load M2a only to generate domain, never for an
+    expectation. After a full run in a fresh interpreter no registered M2a module (nor foundation_accepted, the reducer's
+    modules...) is in ``sys.modules``: what is loaded is the closed value types and what the sealed checker reads."""
+    loaded = loaded_app_modules()
+    assert {"app.core.foundation_authority_values", "app.core.foundation_geo_level"} <= loaded
+    assert m2a_modules_among(loaded) == []
+
+
+def test_the_transitive_pin_sees_a_load_it_would_have_to_refuse():
+    loaded = loaded_app_modules("import app.core.foundation_accepted")
+    assert "app.core.foundation_accepted" in m2a_modules_among(loaded)
 
 
 def test_the_oracle_only_reads_app_through_the_two_closed_value_modules():
@@ -341,6 +382,10 @@ def test_a_re_seal_with_a_new_case_and_a_new_code_is_regenerated_without_touchin
     monkeypatch.setattr(gold.checker(), "REASONS", set(gold.checker().REASONS) | {"A_FAIL_CLOSED_CODE_OF_THE_NEXT_SEAL"})
     monkeypatch.setattr(gold.checker(), "PAIRS", {**gold.checker().PAIRS, "CLARIFY": gold.checker().PAIRS["CLARIFY"] | {
         "A_FAIL_CLOSED_CODE_OF_THE_NEXT_SEAL"}})  # annex A.3 of the next seal pairs it with CLARIFY
+    with pytest.raises(gold.OracleError, match="vocabulary of refusal codes"):
+        oracle.load_cases()  # a new A.3 code is a contract amendment: the transition oracle's vocabulary stops the build...
+    monkeypatch.setattr(transition_module, "A3_PLAIN_CODES",
+                        transition_module.A3_PLAIN_CODES | {"A_FAIL_CLOSED_CODE_OF_THE_NEXT_SEAL"})  # ...until it is extended
     cases = {c["gold_id"]: c for c in oracle.load_cases()}
     case = cases["SF900"]
     assert case["applicability"] == oracle.APPLICABLE and case["partition"] == "DEV"
@@ -573,7 +618,8 @@ def test_the_retired_dependency_rules_are_gone_and_what_they_held_back_is_decide
     assert not hasattr(applicability, "OWNER_ORDER") and not hasattr(applicability, "USER_DECISION")
     inherited = [g for g, c in BY_ID.items() if c["s19"] and "DEP-INHERITANCE" in c["s19"]["dependencies"]]
     assert inherited and all(BY_ID[g]["applicability"] != "DEPENDIENTE(E-TIME)" for g in inherited)  # LECTURA: read, not red
-    assert BY_ID["SF009"]["applicability"] == oracle.APPLICABLE and BY_ID["SF078"]["applicability"] == oracle.APPLICABLE
+    assert BY_ID["SF009"]["applicability"] == oracle.APPLICABLE  # a state SET over an unchanged universe reads no literals
+    assert BY_ID["SF078"]["applicability"] == "NO_MEDIBLE(HOST_FACT_NOT_IN_GOLD:STATE_LITERALS_OF_THE_UNIVERSE)"  # H8 after a change
     assert BY_ID["SF075"]["applicability"] == "DEPENDIENTE(FOUNDATION_O1B_EXPLICIT_TIME_PARITY)"  # now §19's, not a user note
 
 
@@ -601,7 +647,7 @@ def test_a_host_rule_that_reads_a_fact_the_gold_does_not_carry_is_no_medible_nev
     """H6/H7/H8 over a CLARIFY need a fact (the carried buyer's territory, the closed list of regions, the states of the
     universe) the Gold's IR does not carry. §19 says LECTURA, so they are not reds; the oracle cannot type the fact without
     guessing, so a case where the Gold expects the rule to FIRE is NO_MEDIBLE with the fact named. A control that executes
-    needs no fact and stays measurable."""
+    stays measurable only when no rule's decision reads the missing fact (see ``test_h8_...``)."""
     host = gold.host_rules()
     assert set(expect_mod.HOST_RULE_FACTS) <= set(host)
     for rule, (fact, clause) in expect_mod.HOST_RULE_FACTS.items():
@@ -609,11 +655,96 @@ def test_a_host_rule_that_reads_a_fact_the_gold_does_not_carry_is_no_medible_nev
         fired = [c for c in CASES if c["reason"] == host[rule][1] and c["disposition"] in ("CLARIFY", "INFORM")]
         assert fired, rule
         assert all(c["applicability"] == f"NO_MEDIBLE(HOST_FACT_NOT_IN_GOLD:{fact})" and c["owners"] == [] for c in fired)
-    controls = [c for c in APPLICABLE if c["gold_id"] in ("SF009", "SF010", "SF078")]
-    assert len(controls) == 3 and all(c["expected"]["disposition"] == "EXECUTE" for c in controls)
+    controls = [c for c in APPLICABLE if c["gold_id"] in ("SF009", "SF010")]
+    assert len(controls) == 2 and all(c["expected"]["disposition"] == "EXECUTE" for c in controls)
     moved = rebuilt("SF009", lambda rec: (rec.update(expected_disposition="CLARIFY"), both(lambda L: L.update(
         expected_disposition="CLARIFY", disposition_reason=host["H8"][1], resulting_ir=None))(rec)))
     assert moved["applicability"] == "NO_MEDIBLE(HOST_FACT_NOT_IN_GOLD:STATE_LITERALS_OF_THE_UNIVERSE)"
+
+
+H8_FACT = "NO_MEDIBLE(HOST_FACT_NOT_IN_GOLD:STATE_LITERALS_OF_THE_UNIVERSE)"
+
+
+def _requests(*pairs):
+    return {"requests": [{"subject": s, "universe_kind": k} for s, k in pairs]}
+
+
+def _typed(slot, dimension):
+    return {"slot": slot, "dimension": dimension}
+
+
+def _op(kind, slot, cond_dimension=None, universe=None):
+    return {"op": kind, "slot": slot, "cond": None if cond_dimension is None else {"dimension": cond_dimension}, "universe": universe}
+
+
+@pytest.mark.parametrize("name,base,ops,reads", [
+    ("state set after a change", [], [_op("REPLACE_UNIVERSE", "UNIVERSE", universe=["processes", "records"]),
+                                      _op("SET", "STATE/POSITIVE", "STATE")], True),
+    ("state carried after a change", [_typed("STATE/POSITIVE", "STATE")],
+     [_op("REPLACE_UNIVERSE", "UNIVERSE", universe=["processes", "records"])], True),
+    ("modality carried after a change", [_typed("MODALITY/POSITIVE", "MODALITY")],
+     [_op("REPLACE_UNIVERSE", "UNIVERSE", universe=["processes", "records"])], True),
+    ("modality set after a kind change", [], [_op("REPLACE_UNIVERSE", "UNIVERSE", universe=["contracts", "opportunities"]),
+                                              _op("SET", "MODALITY/POSITIVE", "MODALITY")], True),
+    ("negative state carried after a change", [_typed("STATE/NEGATIVE", "STATE")],
+     [_op("REPLACE_UNIVERSE", "UNIVERSE", universe=["processes", "records"])], True),
+    ("the state is cleared by the same patch", [_typed("STATE/POSITIVE", "STATE")],
+     [_op("REPLACE_UNIVERSE", "UNIVERSE", universe=["processes", "records"]), _op("CLEAR", "STATE")], False),
+    ("the state slot is replaced by a topic only", [_typed("STATE/POSITIVE", "STATE")],
+     [_op("REPLACE_UNIVERSE", "UNIVERSE", universe=["processes", "records"]), _op("CLEAR", "STATE/POSITIVE")], False),
+    ("a change with no state or modality", [_typed("TOPIC/POSITIVE", "TOPIC")],
+     [_op("REPLACE_UNIVERSE", "UNIVERSE", universe=["processes", "records"])], False),
+    ("a state next to an unchanged universe", [_typed("STATE/POSITIVE", "STATE")],
+     [_op("REPLACE_UNIVERSE", "UNIVERSE", universe=["contracts", "records"])], False),
+    ("a state set with no redirect", [], [_op("SET", "STATE/POSITIVE", "STATE")], False),
+])
+def test_h8_reads_the_literals_after_a_universe_change_with_a_state_or_a_modality_standing(name, base, ops, reads):
+    assert expect_mod.h8_reads_the_literals(_requests(("contracts", "records")), base, ops) is reads, name
+
+
+def test_a_fresh_acceptance_composes_nothing_so_h8_reads_nothing():
+    """A NEW_SEARCH is built by from_acceptance (M2A-1b), not by compose: its STATE next to another universe is the
+    authority's, and the case stays measurable."""
+    assert BY_ID["SF124"]["applicability"] == oracle.APPLICABLE and BY_ID["SF124"]["expected"]["effective_scope"] == "FRESH_ACCEPTANCE"
+    state = {"id": "c9", "dimension": "STATE", "operator": "is", "polarity": "POSITIVE", "level": None, "unit": None,
+             "value_hint": "awarded"}
+    with_state = rebuilt("SF124", both(lambda L: L["resulting_ir"]["conditions"].append(dict(state))))
+    assert with_state["applicability"] == oracle.APPLICABLE
+    assert {c["dimension"] for c in with_state["expected"]["effective"]["conditions"]} >= {"STATE"}
+
+
+def test_h8_reads_the_literals_of_a_dual_anchor_only_when_the_universe_is_not_held():
+    dual = _requests(("processes", "records"), ("contracts", "records"))
+    state = [_typed("STATE/POSITIVE", "STATE")]
+    assert not expect_mod.h8_reads_the_literals(dual, state, [_op("REPLACE_UNIVERSE", "UNIVERSE", universe=["contracts", "records"])])
+    assert expect_mod.h8_reads_the_literals(dual, state, [_op("REPLACE_UNIVERSE", "UNIVERSE", universe=["contracts", "opportunities"])])
+
+
+def test_h8_decides_the_case_whatever_the_outcome_and_no_applicable_case_depends_on_a_host_fact_the_gold_does_not_type():
+    """§14: «tras cambiar el universo, F27 (H8) comprueba STATE y MODALITY sobre el dataset resultante». A change of universe
+    with a STATE or MODALITY standing is NO_MEDIBLE (EXECUTE or not: SF078, REAL R0094), and the class, whole: no applicable
+    case has such a change, a H6/H7/H8 outcome, or a territory next to a carried buyer."""
+    assert BY_ID["SF078"]["applicability"] == H8_FACT and BY_ID["SF079"]["applicability"] == H8_FACT
+    hidden = []
+    for case in APPLICABLE:
+        base, patch = case["inputs"]["base"], case["inputs"]["patch"]
+        if case["expected"]["effective_scope"] == "FRESH_ACCEPTANCE":
+            continue
+        held = {(r["subject"], r["universe_kind"]) for r in base["requests"]}
+        moves = any((op["universe"]["subject"], op["universe"]["universe_kind"]) not in held for op in patch["ops"]
+                    if op["op"] == "REPLACE_UNIVERSE")
+        written = [op["slot"] for op in patch["ops"] if op["op"] in ("SET", "SET_ORDER", "CLEAR")]
+        standing = [c for c in base["conditions"] if not any(transition_module._covered(w, c["slot"]) for w in written)]
+        placed = [op["condition"] for op in patch["ops"] if op["condition"] is not None]
+        if moves and any(c["dimension"] in ("STATE", "MODALITY") for c in (*standing, *placed)):
+            hidden.append(case["gold_id"])
+    assert hidden == []
+    host = gold.host_rules()
+    assert not [c["gold_id"] for c in APPLICABLE if c["expected"]["code"] in {host[r][1] for r in expect_mod.HOST_RULE_FACTS}]
+    carried = rebuilt("SF073", both(lambda L: L["prior"]["ir"]["conditions"].append(
+        {"id": "c9", "dimension": "STATE", "operator": "is", "polarity": "POSITIVE", "level": None, "unit": None,
+         "value_hint": "awarded"})))
+    assert BY_ID["SF073"]["applicability"] == oracle.APPLICABLE and carried["applicability"] == H8_FACT  # the change carries it
 
 
 def test_a_lectura_dependency_that_the_gold_types_is_measurable_regions_included():
@@ -630,11 +761,28 @@ def test_a_lectura_dependency_that_the_gold_types_is_measurable_regions_included
         assert decode_value(tuple(op["condition"]["value"])).level.value == "REGION"
 
 
-def test_a_relative_window_is_no_medible_and_the_labels_disagree_on_its_end():
-    windows = [g for g, c in BY_ID.items() if c["applicability"] == "NO_MEDIBLE(TIME_OPERATOR:relative_period)"]
-    assert windows and all("relative_period" in json.dumps(SYN[g]["label_A"]) for g in windows)
-    assert [g for g in windows if "RESULT_IR_AB_DISAGREE" in BY_ID[g]["flags"]]  # the labels disagree on the window's end
-    assert all(BY_ID[g]["inputs"] is None and BY_ID[g]["owners"] == [] for g in windows)
+def test_an_explicit_relative_window_on_which_both_labels_agree_is_measurable_and_only_a_disagreement_excludes_it():
+    """The labels of SF027, SF028 and SF029 agree byte for byte on a window the hint states («últimos 3 meses
+    (2026-07-01..2026-10-01)»): the case is measured, with the typed interval. Where the labels give different ends (SF025,
+    SF026, SF030, SF036, SF161) the case is NO_MEDIBLE with the true motive: they disagree on the ops."""
+    agree = ("SF027", "SF028", "SF029")
+    for gid in agree:
+        assert json.dumps(SYN[gid]["label_A"]["ops"], sort_keys=True) == json.dumps(SYN[gid]["label_B"]["ops"], sort_keys=True)
+        assert BY_ID[gid]["applicability"] == oracle.APPLICABLE and BY_ID[gid]["owners"] == []
+        time = next(c for c in BY_ID[gid]["expected"]["effective"]["conditions"] if c["dimension"] == "TIME")
+        assert time["operator"] == "relative_period" and time["value"][0] == "time@1"
+    window = next(o["condition"]["value"] for o in BY_ID["SF028"]["inputs"]["patch"]["ops"] if o["condition"])
+    assert window[1:3] == ["start=2026-07-01", "end_exclusive=2026-10-02"]  # the end day is inclusive, as in between_dates
+    disagree = [g for g in ("SF025", "SF026", "SF030", "SF036", "SF161")]
+    for gid in disagree:
+        ends = {re.search(r"\.\.(\d{4}-\d{2}-\d{2})", o["value_hint"]).group(1) for n in ("label_A", "label_B")
+                for o in SYN[gid][n]["ops"] if o["operator"] == "relative_period"}
+        assert len(ends) == 2, gid  # the windows really end on different days
+        assert BY_ID[gid]["applicability"] == "NO_MEDIBLE(OPS_AB_DISAGREE)" and BY_ID[gid]["inputs"] is None, gid
+    not_explicit = rebuilt("SF028", both(lambda L: [o.update(value_hint="últimos 3 meses") for o in L["ops"]]
+                                         + [c.update(value_hint="últimos 3 meses") for c in L["resulting_ir"]["conditions"]
+                                            if c["dimension"] == "TIME"]))
+    assert not_explicit["applicability"] == "NO_MEDIBLE(TIME_RELATIVE_WINDOW_NOT_EXPLICIT)"
 
 
 def test_surface_forms_of_value_are_measurable_only_when_both_labels_agree_on_the_operation():
@@ -913,6 +1061,91 @@ def test_geography_distinguishes_hints_and_levels(a, b):
         typing_.type_value("GEOGRAPHY", "is", "POSITIVE", "UNKNOWN", None, a)  # a level nobody resolved is not guessed
 
 
+def test_a_smmlv_amount_is_converted_with_the_sealed_catalogue_at_the_single_year_of_its_ir():
+    catalogue = gold.checker().SMMLV_COP_BY_YEAR  # the catalogue of D10 the sealed checker uses: never copied here
+    assert catalogue and 2023 not in catalogue
+    for year, salary in catalogue.items():
+        value = typing_.type_value("VALUE", "greater_or_equal", "POSITIVE", None, "SMMLV", "500 SMMLV", year)
+        assert value == ("money@1", f"amount_cop={500 * salary}", "comparator=>=")
+    even = next(y for y, s in catalogue.items() if s % 2 == 0)
+    assert typing_.type_value("VALUE", "less_than", "POSITIVE", None, "SMMLV", "2,5 SMMLV", even)[1] == (
+        f"amount_cop={catalogue[even] * 5 // 2}")
+    odd = [y for y, s in catalogue.items() if s % 2]
+    if odd:  # half a peso is never rounded
+        with pytest.raises(typing_.Untypeable, match="VALUE_NOT_WHOLE_PESOS"):
+            typing_.type_value("VALUE", "less_than", "POSITIVE", None, "SMMLV", "2,5 SMMLV", odd[0])
+    for year, motive in ((None, "SMMLV_YEAR_NOT_SINGLE"), (2023, "SMMLV_YEAR_NOT_CATALOGUED"), (2099, "SMMLV_YEAR_NOT_CATALOGUED")):
+        with pytest.raises(typing_.Untypeable) as error:
+            typing_.type_value("VALUE", "greater_or_equal", "POSITIVE", None, "SMMLV", "500 SMMLV", year)
+        assert error.value.motive == motive  # nothing is extrapolated, no clock is read
+    with pytest.raises(typing_.Untypeable) as error:
+        typing_.type_value("VALUE", "greater_or_equal", "POSITIVE", None, "SMMLV", "500 millones", max(catalogue))
+    assert error.value.motive == "VALUE_UNIT_WORD_DISAGREES"
+
+
+def test_the_smmlv_catalogue_is_read_from_the_sealed_checker_not_kept_in_the_oracle(monkeypatch):
+    year = max(gold.checker().SMMLV_COP_BY_YEAR)
+    monkeypatch.setattr(gold.checker(), "SMMLV_COP_BY_YEAR", {year: 1_000_000, 2023: 1_160_000})
+    assert typing_.type_value("VALUE", "greater_or_equal", "POSITIVE", None, "SMMLV", "7 SMMLV", year)[1] == "amount_cop=7000000"
+    assert typing_.type_value("VALUE", "greater_or_equal", "POSITIVE", None, "SMMLV", "7 SMMLV", 2023)[1] == "amount_cop=8120000"
+
+
+def test_the_year_of_an_ir_is_its_one_positive_time_in_one_civil_year():
+    def ir(*times):
+        return {"conditions": [{"dimension": "TIME", "operator": op, "polarity": pol, "level": None, "unit": None,
+                                "value_hint": hint, "id": f"t{n}"} for n, (op, pol, hint) in enumerate(times)]}
+    assert typing_.ir_year(ir(("during_year", "POSITIVE", "2025"))) == 2025
+    assert typing_.ir_year(ir(("during_month", "POSITIVE", "2024-03"))) == 2024
+    assert typing_.ir_year(ir(("between_dates", "POSITIVE", "2025-02-01..2025-06-30"))) == 2025
+    assert typing_.ir_year(ir(("during_year", "POSITIVE", "2025"), ("during_year", "NEGATIVE", "2024"))) == 2025
+    for none in (ir(), ir(("between_dates", "POSITIVE", "2023-01-01..2025-12-31")), ir(("between_dates", "POSITIVE", "2025-01-01..")),
+                 ir(("during_year", "POSITIVE", "2024"), ("during_year", "POSITIVE", "2025")), ir(("during_year", "NEGATIVE", "2025"))):
+        assert typing_.ir_year(none) is None
+    assert typing_.ir_year(None) is None
+
+
+def test_the_smmlv_cases_are_h3s_over_the_closed_catalogue_and_not_a_dependency():
+    """§19 (U23): SF166, SF168 and R0303 carry SMMLV and are NOT a dependency (H3 decides them over the catalogue 2024-2026);
+    SF165, SF167 and R0301 are LECTURA, so they are measured. SF168 is a declared invalid persisted state (D1)."""
+    for gid in ("SF166", "SF168"):
+        assert BY_ID[gid]["s19"] is None and BY_ID[gid]["owners"] == []
+    for gid in ("SF165", "SF167"):
+        assert BY_ID[gid]["s19"]["impacto_m2a3"] == "LECTURA" and "DEP-SMMLV-READ" in BY_ID[gid]["s19"]["dependencies"]
+    for gid, disposition in (("SF165", "EXECUTE"), ("SF166", "CLARIFY"), ("SF167", "EXECUTE")):
+        assert BY_ID[gid]["applicability"] == oracle.APPLICABLE and BY_ID[gid]["expected"]["disposition"] == disposition, gid
+    assert BY_ID["SF166"]["expected"]["code"] == "SMMLV_YEAR_AMBIGUOUS"  # U1: 2023 is outside the catalogue (the control)
+    assert BY_ID["SF168"]["applicability"] == "NO_MEDIBLE(SMMLV_YEAR_NOT_SINGLE)" and SYN["SF168"].get("invalid_persisted_state")
+    salary = gold.checker().SMMLV_COP_BY_YEAR[2025]
+    base = BY_ID["SF165"]["inputs"]["base"]["conditions"]
+    bound = next(c for c in base if c["dimension"] == "VALUE")
+    assert bound["value"][1] == f"amount_cop={500 * salary}"
+    assert bound["provenance"]["unit"] == "SMMLV" and bound["provenance"]["source_amount"] == "500" and bound["provenance"]["year"] == 2025
+    placed = next(o["condition"] for o in BY_ID["SF167"]["inputs"]["patch"]["ops"] if o["condition"])
+    assert placed["value"][1] == f"amount_cop={800 * salary}" and placed["provenance"]["unit_source"] == "PREVIOUS_ACCEPTED_VALUE"
+    assert (placed["provenance"]["unit"], placed["provenance"]["source_amount"], placed["provenance"]["year"]) == ("SMMLV", "800", 2025)
+    assert all(c["provenance"]["source_amount"] is None and c["provenance"]["year"] is None
+               for c in BY_ID["SF091"]["inputs"]["base"]["conditions"])  # only a SMMLV amount carries them
+
+
+def test_a_smmlv_case_whose_year_is_not_one_catalogued_year_is_not_measured():
+    def two_years(label):
+        label["prior"]["ir"]["conditions"] = [c for c in label["prior"]["ir"]["conditions"] if c["dimension"] != "TIME"]
+        label["prior"]["ir"]["conditions"].append({"id": "t9", "dimension": "TIME", "operator": "between_dates",
+                                                   "polarity": "POSITIVE", "level": None, "unit": None,
+                                                   "value_hint": "2024-01-01..2025-12-31"})
+        if label["resulting_ir"]:
+            label["resulting_ir"]["conditions"] = [c for c in label["resulting_ir"]["conditions"] if c["dimension"] != "TIME"]
+            label["resulting_ir"]["conditions"].append(dict(label["prior"]["ir"]["conditions"][-1]))
+    assert rebuilt("SF165", both(two_years))["applicability"] == "NO_MEDIBLE(SMMLV_YEAR_NOT_SINGLE)"
+
+    def out_of_catalogue(label):
+        for ir in (label["prior"]["ir"], label["resulting_ir"]):
+            for c in ir["conditions"]:
+                if c["dimension"] == "TIME":
+                    c["value_hint"] = "2023"
+    assert rebuilt("SF165", both(out_of_catalogue))["applicability"] == "NO_MEDIBLE(SMMLV_YEAR_NOT_CATALOGUED)"
+
+
 @FAST
 @given(n=st.integers(min_value=1, max_value=999_999))
 def test_value_amounts_are_canonical_across_units_and_spellings(n):
@@ -935,7 +1168,7 @@ def test_value_comparator_side_and_negation_follow_the_typed_comparator():
 
 
 @pytest.mark.parametrize("unit,hint,motive", [
-    ("SMMLV", "500 SMMLV", "VALUE_UNIT_NOT_PESO_SCALE"), (None, "400", "VALUE_UNIT_NOT_PESO_SCALE"),
+    ("SMMLV", "500 SMMLV", "SMMLV_YEAR_NOT_SINGLE"), (None, "400", "VALUE_UNIT_NOT_PESO_SCALE"),
     ("MILLONES", "2.5 millones", "VALUE_NUMBER_AMBIGUOUS"), ("MILLONES", "muchos millones", "VALUE_NUMBER_COUNT"),
     ("MILLONES", "de 50 a 100 millones", "VALUE_NUMBER_COUNT"), ("MILLONES", "50 mil millones", "VALUE_UNIT_WORD_DISAGREES"),
     ("MILLONES", "50 billones", "VALUE_UNIT_WORD_DISAGREES"), ("PESOS", "0,5 pesos", "VALUE_NOT_WHOLE_PESOS"),
@@ -964,7 +1197,7 @@ def test_time_spellings_of_the_same_interval_give_the_same_value(year, month):
 
 
 @pytest.mark.parametrize("operator,hint", [
-    ("relative_period", "este año (2026-01-01..2026-10-01)"), ("during_year", "20x5"), ("during_month", "marzo"),
+    ("relative_period", "este año"), ("relative_period", "este año (2026-01-01..)"), ("during_year", "20x5"), ("during_month", "marzo"),
     ("during_month", "2025-13"), ("between_dates", "2025-02-30..2025-03-01"), ("between_dates", ".."),
     ("between_dates", "2025-05-01..2025-04-01"), ("before", "2025"),
 ])
@@ -1014,9 +1247,9 @@ def test_a_universe_op_of_a_turn_that_does_not_execute_is_typed_from_its_hint_an
     def with_hint(hint):
         def change(label):
             label.update(disposition_reason="UNIT_AMBIGUOUS")  # a host-rule code that needs no fact the Gold lacks
+            label["ops"] = [op for op in label["ops"] if op["op"] == "SET_UNIVERSE"]  # no STATE: H8 reads nothing here
             for op in label["ops"]:
-                if op["op"] == "SET_UNIVERSE":
-                    op["value_hint"] = hint
+                op["value_hint"] = hint
         return both(change)
     typed = rebuilt("SF079", with_hint("CONTRACTS"))
     redirect = next(o for o in typed["inputs"]["patch"]["ops"] if o["op"] == "REPLACE_UNIVERSE")
@@ -1026,11 +1259,15 @@ def test_a_universe_op_of_a_turn_that_does_not_execute_is_typed_from_its_hint_an
         "subject": "processes", "universe_kind": "opportunities"}
     assert rebuilt("SF079", with_hint("cualquier cosa"))["applicability"] == "NO_MEDIBLE(UNIVERSE_TARGET)"
     # an executed turn: the typed result must name the same universe the hint names
-    assert BY_ID["SF078"]["applicability"] == oracle.APPLICABLE
-    wrong = rebuilt("SF078", both(lambda L: [o.update(value_hint="CONTRACTS") for o in L["ops"] if o["op"] == "SET_UNIVERSE"]))
+    drop_state = lambda L: L.update(ops=[o for o in L["ops"] if o["op"] == "SET_UNIVERSE"])  # noqa: E731
+    assert BY_ID["SF078"]["applicability"].startswith("NO_MEDIBLE(HOST_FACT")  # SF078 changes the universe with a state
+    only_universe = rebuilt("SF078", both(lambda L: (drop_state(L), L["resulting_ir"]["conditions"].pop())))
+    assert only_universe["applicability"] == oracle.APPLICABLE
+    wrong = rebuilt("SF078", both(lambda L: (drop_state(L), L["resulting_ir"]["conditions"].pop(),
+                                             [o.update(value_hint="CONTRACTS") for o in L["ops"]])))
     assert wrong["applicability"] == "NO_MEDIBLE(UNIVERSE_TARGET)"
-    kind = rebuilt("SF078", both(lambda L: [o.update(value_hint="PROCESSES (oportunidades)") for o in L["ops"]
-                                            if o["op"] == "SET_UNIVERSE"]))
+    kind = rebuilt("SF078", both(lambda L: (drop_state(L), L["resulting_ir"]["conditions"].pop(),
+                                            [o.update(value_hint="PROCESSES (oportunidades)") for o in L["ops"]])))
     assert kind["applicability"] == "NO_MEDIBLE(UNIVERSE_TARGET_KIND)"
 
 
@@ -1744,6 +1981,15 @@ def test_the_synthetic_audit_of_real_actuals_declares_what_it_did_not_cover():
     assert not partial["ok"] and partial["extra"]  # REAL ids with no REAL case loaded
     only_synthetic = oracle.audit({k: v for k, v in reference.items() if not k.startswith("R")}, cases)
     assert not only_synthetic["ok"] and only_synthetic["missing"]  # REAL cases loaded but not answered
+
+
+@needs_real
+def test_the_real_smmlv_cases_follow_section_19_too():
+    cases = {c["gold_id"]: c for c in oracle.load_cases(REAL_DIR)}
+    assert cases["R0301"]["applicability"] == oracle.APPLICABLE and cases["R0301"]["expected"]["disposition"] == "EXECUTE"
+    assert cases["R0303"]["applicability"] == oracle.APPLICABLE and cases["R0303"]["expected"]["code"] == "SMMLV_YEAR_AMBIGUOUS"
+    assert cases["R0303"]["s19"] is None and "DEP-SMMLV-READ" in cases["R0301"]["s19"]["dependencies"]
+    assert cases["R0094"]["applicability"] == H8_FACT  # a change of universe with a state
 
 
 @needs_real

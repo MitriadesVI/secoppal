@@ -54,6 +54,16 @@ SLOT_ORDER = tuple(f"{d}/{p}" for d in ("TOPIC", "BUYER", "ACTOR", "GEOGRAPHY", 
 # §6 step 3b: the closed precedence of refusal causes, highest first (pinned against the contract's table by the tests).
 PRECEDENCE = ("TARGET_NOT_ADDRESSABLE", "DELTA_SLOT_CONFLICT", "KEEP_ON_EMPTY_SLOT", "OP_NOT_ACCREDITED",
               "DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER")
+# Annex A.3 and the DeltaRefusal list (§6): the codes a refusal may carry (pinned against the sealed contract by the build).
+A3_PLAIN_CODES = frozenset({
+    "ANCHOR_UNREADABLE", "ANSWER_EDITS_OTHER_SLOT", "ANSWER_UNRESOLVED", "BASE_INVALID", "BUYER_OR_PLACE_AFTER_ACTOR",
+    "CLEAR_ON_EMPTY_SLOT", "CONTEXT_EXPIRED_CONFIRM", "DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER", "DELTA_SLOT_CONFLICT",
+    "EMPTY_SEARCH_AFTER_DELTA", "KEEP_ON_EMPTY_SLOT", "MONTH_YEAR_AMBIGUOUS", "NO_ANCHOR", "OPTION_NOT_CHOSEN",
+    "PENDING_UNANSWERED", "REFERENT_EXTENSIONAL", "REGION_NOT_IN_LIST", "RELATIVE_TO_PREVIOUS_VALUE", "SMMLV_YEAR_AMBIGUOUS",
+    "STALE_OPTION", "STATE_NOT_IN_UNIVERSE", "TARGET_NOT_ADDRESSABLE", "TERRITORY_VS_CARRIED_BUYER", "UNIT_AMBIGUOUS",
+    "VALUE_WITHOUT_COMPARATOR"})
+A3_DIM_HEADS = frozenset({"OP_NOT_ACCREDITED", "UNRESOLVED_VALUE"})  # the tail is a dimension of a slot (or UNIVERSE)
+A3_FREE_HEADS = frozenset({"OPERATION_CHANGE", "UNSUPPORTED_PROPOSAL"})  # the tail is a non-empty operation or motive
 OPNA = "OP_NOT_ACCREDITED"
 H12 = "CLEAR_ON_EMPTY_SLOT"  # §6.4 H12: INFORM, no effective, the anchor intact (not a DeltaRefusal: it follows the causes)
 WRITERS = ("SET", "SET_ORDER", "REPLACE_UNIVERSE")
@@ -85,17 +95,19 @@ TRANSITION_RULES = (
      "demands": "a refused patch is refused with the code of the HIGHEST-precedence cause (TARGET_NOT_ADDRESSABLE > "
                 "DELTA_SLOT_CONFLICT > KEEP_ON_EMPTY_SLOT > OP_NOT_ACCREDITED:<DIM> > "
                 "DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER), with ties decided by the §4.2 slot order and the dimension of "
-                "the slot named in OP_NOT_ACCREDITED; a host-rule code never replaces a cause (causes precede §6 step 4)",
+                "the slot named in OP_NOT_ACCREDITED; a host-rule code never replaces a cause (causes precede §6 step 4); a code "
+                "outside the vocabulary of annex A.3 and the DeltaRefusal list is no refusal at all",
      "killed_by": ["refusal_conflict_reported_as_keep_on_empty", "refusal_keep_on_empty_reported_as_opna",
                    "refusal_opna_reported_as_cardinality", "refusal_conflict_reported_as_cardinality",
                    "refusal_precedence_reversed", "refusal_slot_order_ignored", "refusal_wrong_dimension",
-                   "refusal_replaced_by_a_host_rule"]},
+                   "refusal_replaced_by_a_host_rule", "refusal_code_outside_the_vocabulary"]},
     {"id": "T-REFUSAL-UNJUSTIFIED", "clause": "§6 step 3b (a refusal needs a cause), §6.1",
      "demands": "a structural refusal (DELTA_SLOT_CONFLICT, KEEP_ON_EMPTY_SLOT, DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER, "
                 "TARGET_NOT_ADDRESSABLE over a base without logic) over a patch with no such cause refuses a lawful "
-                "transition",
+                "transition; OP_NOT_ACCREDITED:<DIM> (or its A.3 publication) names a dimension some op of the patch touches",
      "killed_by": ["refuse_lawful_as_slot_conflict", "refuse_lawful_as_keep_on_empty",
-                   "refuse_lawful_as_cardinality_without_order", "refuse_lawful_as_target_not_addressable"]},
+                   "refuse_lawful_as_cardinality_without_order", "refuse_lawful_as_target_not_addressable",
+                   "refuse_op_not_accredited_on_an_untouched_dimension"]},
     {"id": "T-REQ-SET", "clause": "§5.2 (REPLACE_UNIVERSE), §14",
      "demands": "without REPLACE_UNIVERSE the effective has exactly the base's requests; with it, exactly one: the named "
                 "subject's (a dual anchor keeps the named one and the other disappears) or the single one",
@@ -105,9 +117,10 @@ TRANSITION_RULES = (
                 "universe_kind, universe_origin, view, dataset",
      "killed_by": ["M3_reoriginate_untouched_request", "M4_change_scope_id_untouched", "M5_change_request_id_untouched",
                    "untouched_request_dataset_changed"]},
-    {"id": "T-REQ-REDIRECT", "clause": "§5.2; user decision R3",
+    {"id": "T-REQ-REDIRECT", "clause": "§5.2 (REPLACE_UNIVERSE changes subject and kind), §3.2 (request_id, scope_id and view "
+                                       "belong to the request); user decision R3 (request_id, scope_id)",
      "demands": "a request touched by REPLACE_UNIVERSE keeps request_id, scope_id and view: only subject, universe_kind, "
-                "universe_origin and dataset change",
+                "universe_origin and dataset change (neither §5.2 nor §3.2 says the redirect rewrites the view)",
      "killed_by": ["redirect_changes_request_id", "redirect_changes_scope_id", "redirect_changes_view"]},
     {"id": "T-REQ-TARGET", "clause": "§5.2",
      "demands": "the redirected request has the op's subject and universe kind",
@@ -141,6 +154,10 @@ TRANSITION_RULES = (
                 "empty or degenerate) or F16 (the single positive of a slot against a negative SET of the same value)",
      "killed_by": ["removal_without_op", "f16_any_value", "set_order_drops_cardinality", "set_clears_whole_dimension",
                    "a81_without_collision"]},
+    {"id": "T-COND-F16", "clause": "§6.5 (F16), INV-M2A-19",
+     "demands": "a negative SET whose canonical value is the single carried positive of its slot INVERTS it: the positive does "
+                "not survive next to its own negation (an effective with +X and -X of one canonical value)",
+     "killed_by": ["f16_positive_kept_next_to_its_negation"]},
     {"id": "T-COND-ATOMIC", "clause": "§6.1, INV-M2A-01",
      "demands": "every SET / SET_ORDER of the patch is placed exactly once: no op is applied partially or twice",
      "killed_by": ["op_not_applied", "op_applied_twice"]},
@@ -331,9 +348,29 @@ def _published(code: str) -> str:
     return f"{OPNA}:VALUE" if code == "VALUE_WITHOUT_COMPARATOR" else code
 
 
+def in_vocabulary(code: str) -> bool:
+    """Whether ``code`` is a code of annex A.3 or the DeltaRefusal list (§6): a plain code, or a parameterised head with a tail
+    (a dimension of a slot for ``OP_NOT_ACCREDITED`` and ``UNRESOLVED_VALUE``; any non-empty tail for the other two)."""
+    if code in A3_PLAIN_CODES:
+        return True
+    head, separator, tail = code.partition(":")
+    if not separator or not tail:
+        return False
+    if head in A3_DIM_HEADS:
+        return tail in {_dimension(s) for s in SLOT_ORDER}
+    return head in A3_FREE_HEADS
+
+
 def _check_refusal(base: dict, patch: dict, refusal: str, bad: Callable) -> None:
-    """The reducer refused with ``refusal``: it needs a cause, and the code must be the highest-precedence one."""
+    """The reducer refused with ``refusal``: it must be a code of the vocabulary, it needs a cause, and the code must be the
+    highest-precedence one. An OP_NOT_ACCREDITED over a dimension no op of the patch touches has no op to blame."""
     code, causes = _published(refusal), refusal_causes(base, patch)
+    if not (in_vocabulary(refusal) or in_vocabulary(code)):
+        bad("T-REFUSAL-CODE", f"{refusal!r} is not a code of annex A.3 or of the DeltaRefusal list")
+        return
+    head, _, tail = code.partition(":")
+    if head == OPNA and tail not in {_dimension(op["slot"]) for op in patch["ops"]}:
+        bad("T-REFUSAL-UNJUSTIFIED", f"{refusal} names {tail}, a dimension no op of the patch touches")
     if causes:
         if code != causes[0]["code"] and not (code == "TARGET_NOT_ADDRESSABLE" and base["logic"] is not None):
             bad("T-REFUSAL-CODE", f"the highest-precedence cause is {causes[0]['code']} (of {[c['code'] for c in causes]}) "
@@ -459,6 +496,11 @@ def _check_conditions(base: dict, ops: list[dict], effective: dict, bad: Callabl
             bad("T-COND-FABRICATED", f"condition {c['condition_id']} is neither carried from the base nor placed from the patch")
     for p in unused:
         bad("T-COND-ATOMIC", f"the patch's condition in {p['slot']} was not placed")
+    for p in patch_conds:  # F16 (§6.5): the single carried positive of the negated value is INVERTED, it does not survive
+        if p["slot"].endswith("/NEGATIVE") and _dimension(p["slot"]) in POLARIZED:
+            standing = [b for b in base["conditions"] if b["slot"] == p["slot"].replace("/NEGATIVE", "/POSITIVE")]
+            if len(standing) == 1 and _canonical(standing[0]) == _canonical(p) and standing[0]["condition_id"] in carried_ids:
+                bad("T-COND-F16", "F16 not applied: the single carried positive survives next to its negation")
     for b in base["conditions"]:
         if b["condition_id"] in carried_ids or any(_covered(w, b["slot"]) for w in written):
             continue

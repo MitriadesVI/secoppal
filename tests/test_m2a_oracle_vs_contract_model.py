@@ -1,4 +1,4 @@
-"""M2A-8a0: the transition oracle against the contract lane's own executable model (a differential, not a dependency).
+"""M2A-8a0: the transition oracle against the contract lane's executable model (a differential, not a dependency).
 
 The sealed contract ships a SYMBOLIC model of §6 (``tests/test_m2a_contract_r3_multiop.py``: ``causes`` for the refusal causes of
 step 3b with their closed precedence and §4.2 slot order, ``apply`` for the composition of a patch without causes, with the
@@ -9,14 +9,21 @@ dicts. Here both are fed the same generated (base, patch) and must agree on:
 * the refusal causes, in order (so the closed precedence, the slot order, F16's «several positives», P-3, §15.2's
   incomparable units, KEEP with SET/CLEAR of one slot, and the CARDINALITY-without-ORDER state rule agree);
 * the composed slot contents when there is no cause (so what the oracle accepts as a faithful effective is what the model
-  composes).
+  composes);
+* the verdict of ``check_transition`` over the effectives the MODEL composes (not the oracle's own application) and over the
+  codes the model demands for the refusals: no false red (a lawful transition judged unlawful) over 40 000 generated ones.
+
+What is independent here, and what is not. The independence of the oracle is that of its CODE (``scripts/``): no module of the
+oracle loads M2a, not even transitively (a pin in ``test_m2a_reducer_oracle.py`` runs it in a fresh interpreter). A TEST may
+load M2a to generate DOMAIN, never for an expectation. This file imports the model, whose expectations (``causes``, ``apply``)
+are symbolic code that calls no M2a function, but whose domain generation (``all_slots``, ``op_slot_matrix``, ``proposal``)
+builds IR v2 and M2a objects, so importing it loads ``app.core.foundation_accepted`` transitively. That is a property of this
+test file, not of the oracle.
 
 The model's own abstractions are respected: ops flagged ``unresolved`` (an AUTHORITY's refusal: not writable in a
 ``m2a-patch/1``), the host questions, the reserved labels and a universe of ``opportunities`` (a §19 COMPOSICION row) are
 outside the dict-level oracle and are not generated; ``TARGET_NOT_ADDRESSABLE`` needs a base with a ``logic`` expression and
 is not generated either (declared in the oracle's docstring and its limited guarantees).
-
-This file imports the model as a module of the repo; it imports no M2a module and not the reducer.
 """
 
 from __future__ import annotations
@@ -206,3 +213,60 @@ def test_the_faithful_application_composes_the_same_slots_as_the_model_when_ther
         assert mine == theirs, (seed, ops, mine, theirs)
         compared += 1
     assert compared > 300
+
+
+DS = lambda subject: "d." + subject  # noqa: E731  (the host's own subject-to-dataset table, as the oracle's tests pass it)
+
+
+def effective_from_model(state, ops, base: dict, patch: dict) -> dict:
+    """The effective the MODEL composes, as an ``m2a-accepted/1`` dict: the base's conditions it keeps byte-identical, the patch's
+    it places (ids of the reducer's own), the request rebuilt when the universe changes. Not the oracle's own application."""
+    import collections
+    import copy
+    composed = model.apply(state, ops)
+    by_slot: dict[str, list[dict]] = collections.defaultdict(list)
+    for c in base["conditions"]:
+        by_slot[c["slot"]].append(c)
+    placed: dict[str, list[dict]] = collections.defaultdict(list)
+    for op in patch["ops"]:
+        if op["condition"] is not None:
+            placed[op["slot"]].append(op["condition"])
+    written = {op["slot"] for op in patch["ops"] if op["op"] in ("SET", "SET_ORDER")}
+    conditions = []
+    for key in model.CONDITION_SLOTS:
+        for token in composed.slots[model.IDX[key]]:
+            if key in written:
+                condition = copy.deepcopy(next(c for c in placed[key] if f"token={token}" in c["value"]))
+                condition.update(condition_id=f"new-{key}-{token}", request_ids=["r1"])
+            else:
+                condition = copy.deepcopy(next(c for c in by_slot[key] if f"token={token}" in c["value"]))
+            conditions.append(condition)
+    effective = {"schema": "m2a-accepted/1", "requests": copy.deepcopy(base["requests"]), "conditions": conditions,
+                 "logic": None, "policies": [], "base_trace_id": "t0", "root_trace_id": "t0"}
+    redirect = next((o for o in patch["ops"] if o["op"] == "REPLACE_UNIVERSE"), None)
+    if redirect is not None:
+        request = effective["requests"][0]
+        request["universe_origin"] = copy.deepcopy(redirect["origin"])
+        if composed.universe != state.universe:
+            request.update(subject=composed.universe[0], universe_kind="records", dataset=DS(composed.universe[0]))
+    return effective
+
+
+@pytest.mark.parametrize("block", range(8))
+def test_check_transition_has_no_false_red_over_the_effectives_the_model_composes_and_the_refusals_it_demands(block):
+    lawful = refused = 0
+    for seed in range(block * 5000, (block + 1) * 5000):
+        state, ops = random_case(seed)
+        base, patch = dicts_of(state, ops)
+        causes = model_codes(state, ops)
+        if causes:
+            refused += 1
+            violations = transition.check_transition(base, patch, None, refusal=causes[0])
+        elif len(ops) == 1 and ops[0].kind == "CLEAR" and not any(model.occupied(state, k) for k in model.COVER[ops[0].slot]):
+            refused += 1  # H12: the model keeps it as a host finding, the oracle as the code that follows the causes
+            violations = transition.check_transition(base, patch, None, refusal=transition.H12)
+        else:
+            lawful += 1
+            violations = transition.check_transition(base, patch, effective_from_model(state, ops, base, patch), dataset_of=DS)
+        assert violations == [], (seed, ops, violations)
+    assert lawful > 2000 and refused > 1500, (lawful, refused)
