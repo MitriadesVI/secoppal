@@ -164,7 +164,7 @@ def run_case(gid: str, which: str = "label_A") -> tuple[bool, str]:
     label = GOLD[gid][which]
     pending, options = typed_pending(gid, label)
     turn, event = typed_turn(gid, label, pending, options)
-    d = T.P.respond(pending, event or turn, trace_id="t2", now=T.T0 + T.MINUTE)
+    d = T.P.respond(pending, event or turn, trace_id="t2", now=T.T0 + T.MINUTE, asked_ops=())
     want, reason = label["expected_disposition"], label["disposition_reason"]
     got = {"PENDING_ANSWER": "EXECUTE", "DELTA": "EXECUTE"}.get(d.kind.value, d.kind.value)
     seen = f"{got} {d.code}"
@@ -256,9 +256,40 @@ def test_dev_every_applicable_clarify_of_the_gold_becomes_a_possible_pending(gid
     assert creation_problems(gid) == []
 
 
+def h5_problems(gid: str) -> list[str]:
+    """P09 on the Gold's F12 case (SF163, «con Soacha» after an ACTOR): the question has the Gold's two alternatives as
+    candidates, resolved at ask time, and each of them, chosen by event, composes to the Gold's alternative IR."""
+    label = GOLD[gid]["label_A"]
+    base = LINK.base_of(TY.accepted_dict(gid, label["prior"]["ir"]))
+    held = {(c["dimension"], c["value_hint"]) for c in label["prior"]["ir"]["conditions"]}
+    org = _org(TRACE_ASKED, label["ops"][0]["quote"])
+    options = []
+    for i, alternative in enumerate(label["alternatives"], 1):
+        (extra,) = [c for c in alternative["conditions"] if (c["dimension"], c["value_hint"]) not in held]
+        options.append((_set({"slot": extra["dimension"], "operator": extra["operator"], "polarity": extra["polarity"],
+                              "value_hint": extra["value_hint"]}, org, f"o{i}"),))
+    question = T.P.AuthorityQuestion("BUYER_OR_PLACE_AFTER_ACTOR", org, frozenset({T.BUYER_POS, T.GEO_POS}), tuple(options))
+    made = T.P.ask_authority(question, base=base, base_trace_id="t0", asked_trace_id=TRACE_ASKED, now=T.T0)
+    if made.disposition.value != "CLARIFY" or len(made.pending.candidate_patches) != len(label["alternatives"]):
+        return [f"the creation says {made.disposition.value}"]
+    out = []
+    for candidate, alternative in zip(made.pending.candidate_patches, label["alternatives"]):
+        d = T.P.respond(made.pending, T.P.OptionEvent(made.pending.pending_id, candidate.candidate_id), trace_id="t2",
+                        now=T.T0 + T.MINUTE, asked_ops=())
+        if d.kind.value != "PENDING_ANSWER" or effective_values(d.answer.composed.effective) != expected_values(alternative):
+            out.append(f"{candidate.candidate_id} does not compose to the Gold's alternative")
+    return out
+
+
+def test_dev_p09_the_f12_case_of_the_gold_is_a_pending_with_its_two_alternatives():
+    assert h5_problems("SF163") == []
+
+
 def main(partition: str) -> int:
     rows = measure(partition)
     creations = {gid: creation_problems(gid) for gid in applicable_clarify(partition)}
+    if partition == partition_of("SF163"):
+        creations["SF163"] = h5_problems("SF163")
     for gid, (ok, seen) in sorted(rows.items()):
         print(f"{gid} {'OK ' if ok else 'RED'} {seen}" + (f"   [declared red: {RED_DECLARED[gid]}]" if gid in RED_DECLARED else ""))
     for gid, problems in sorted(creations.items()):

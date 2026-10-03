@@ -622,6 +622,10 @@ def test_the_answer_composes_through_a_seam_that_takes_the_frame_and_nothing_els
     for name in ("answer_in_language", "answer_by_event", "compose_answer", "respond"):
         parameters = set(inspect.signature(getattr(P, name)).parameters)
         assert not parameters & {"base", "anchor", "base_effective"}, (name, parameters)
+    # F24 compares with the asking patch: ``respond`` has no default for it (silently off = the product chooses for the user)
+    assert inspect.signature(P.respond).parameters["asked_ops"].default is inspect.Parameter.empty
+    with pytest.raises(TypeError):
+        P.respond(r31()[1].pending, turn(), trace_id="t2", now=T0)
 
 
 @direct
@@ -1151,7 +1155,7 @@ def test_a_turn_with_no_pending_is_not_this_modules_and_events_are_validated():
     with pytest.raises(ContractError):
         respond(r31()[1].pending, P.OptionEvent(" ", "c1"))
     with pytest.raises(ContractError):
-        P.respond(r31()[1].pending, turn(), trace_id=" ", now=T0)
+        P.respond(r31()[1].pending, turn(), trace_id=" ", now=T0, asked_ops=())
     with pytest.raises(ContractError):
         P.respond(r31()[1].pending, turn(), trace_id="t2", now=T0, asked_ops=("op",))
     with pytest.raises(ContractError):

@@ -291,10 +291,12 @@ def _text(pending: PendingClarification, turn: PendingTurn, trace_id: str, now: 
 
 
 def respond(pending: PendingClarification | None, turn: OptionEvent | ResetEvent | PendingTurn, *, trace_id: str,
-            now: datetime, asked_ops: tuple[PatchOp, ...] = ()) -> PendingDecision:
+            now: datetime, asked_ops: tuple[PatchOp, ...]) -> PendingDecision:
     """The decision of a turn that meets ``pending`` (the one the store holds, or ``None`` if none): see the module. ``now``
     is the injected instant, ``trace_id`` the turn's own trace (the id of the pending it may create), ``asked_ops`` the
-    operations of the turn that asked (F24; ``Creation.asked_ops`` gives them when the pending is created)."""
+    operations of the turn that asked (F24; ``Creation.asked_ops`` gives them when the pending is created). It has NO
+    default: without them F24 is silently off and the product would choose for the user (M2A4-D13); pass ``()`` only to say
+    there were none (an event turn needs none)."""
     if type(trace_id) is not str or not trace_id.strip():
         raise ContractError("INVALID_TRACE_ID")
     asked_ops = tuple(asked_ops)
