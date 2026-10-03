@@ -151,7 +151,7 @@ class DeltaRefusal:
 @dataclass(frozen=True, slots=True)
 class Composed:
     """A lawful composition: the effective, its §6.5 effects, which conditions the patch placed (the rest is carried)
-    and whether the universe changed (§14: what H8 reads)."""
+    and whether the universe changed (§14: what H8 reads; a dual anchor reduced to one request counts)."""
 
     effective: AcceptedInterpretation
     effects: frozenset[DeltaEffect]
@@ -429,7 +429,10 @@ def _requests(base: AcceptedInterpretation, ops) -> tuple[tuple, bool]:
     dataset = touched.dataset if touched.subject is target.subject else SUBJECT_DATASET[target.subject]
     request = replace(touched, subject=target.subject, universe_kind=target.universe_kind,
                       universe_origin=redirect.origin, dataset=dataset)
-    return (request,), (touched.subject, touched.universe_kind) != (target.subject, target.universe_kind)
+    # §14: reducing a dual anchor is a change of universe too (the effective's universe was both; UNIVERSE_CHANGED), so
+    # F27 (H8) checks STATE and MODALITY over the resulting dataset, as the contract's model does (ZEUS F4)
+    changed = len(base.requests) > 1 or (touched.subject, touched.universe_kind) != (target.subject, target.universe_kind)
+    return (request,), changed
 
 
 def _logic(logic: ConditionExpression | None, gone: set[str], added: list[str]) -> ConditionExpression | None:

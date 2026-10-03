@@ -23,7 +23,8 @@ by one in ``test_foundation_delta_rules`` (ZEUS NO_GO on 15e72829, P2-7).
 
 Beyond the oracle (ZEUS repair): §8.1/§8.4 the candidates each pending source carries (H1 «continuar», H6's two, R3-1's
 C1) and the A.3 dimension of an UNRESOLVED_VALUE held by its ``answer_slots``; §6.6 nothing that needs a host policy
-without owner executes; §6 step 3b one cause per operation.
+without owner executes; §6 step 3b one cause per operation. ZEUS on the integration 8066e03d: the frame of a CLARIFY,
+read from the base, raises no §19 COMPOSICION dependency, and no candidate launders one (``laundering_problems``).
 """
 from __future__ import annotations
 
@@ -410,8 +411,9 @@ def spec_problems(delta, base, patch, expired, outcome) -> list[str]:
             out.append("H3 a SMMLV bound executed without a single catalogued year")
         if not effective.conditions:
             out.append("H11 an empty search executed")
-        changed = any(op.op is fa.PatchOpKind.REPLACE_UNIVERSE and (op.universe.subject, op.universe.universe_kind)
-                      not in {(r.subject, r.universe_kind) for r in base.requests} for op in ops)
+        changed = any(op.op is fa.PatchOpKind.REPLACE_UNIVERSE and (len(base.requests) > 1 or (  # §14: dual reduced too
+            op.universe.subject, op.universe.universe_kind) not in {(r.subject, r.universe_kind) for r in base.requests})
+            for op in ops)
         dataset = effective.requests[0].dataset
         if changed and any(c.dimension is D.MODALITY or (c.dimension is D.STATE and dataset not in {
                 entry[0] for entry in decode_value(c.value).literals}) for c in effective.conditions):
@@ -421,6 +423,7 @@ def spec_problems(delta, base, patch, expired, outcome) -> list[str]:
         if frame:
             out.append(frame)
     out += pending_shape_problems(delta, base, patch, outcome, conflict)
+    out += laundering_problems(base, outcome)
     out += policy_owner_problems(base, patch, outcome)
     out += cause_count_problems(causes)
     return out
@@ -495,18 +498,44 @@ def cause_count_problems(causes) -> list[str]:
     return []
 
 
+def _from_base(base, ops):
+    if not ops:
+        return fd.Composed(base, frozenset(), frozenset(), False)
+    return fd.compose(base, fa.SemanticPatch(tuple(ops), fa.PatchOriginKind.TEXT), base_trace_id="t0")
+
+
 def outcome_frame_problem(base, outcome) -> str | None:
-    """§8.4 condition 1: the frame of a CLARIFY composes with no cause and holds no open question."""
+    """§8.4 condition 1, read FROM THE BASE: the frame of a CLARIFY composes with no cause, holds no open question and
+    raises no §19 COMPOSICION dependency (that dependency decides the turn: §19, H1)."""
     frame_ops = outcome.pending.frame_ops
-    if frame_ops:
-        composed = fd.compose(base, fa.SemanticPatch(frame_ops, fa.PatchOriginKind.TEXT), base_trace_id="t0")
-        if not isinstance(composed, fd.Composed):
-            return "8.4 the frame of a CLARIFY has a refusal cause"
-    else:
-        composed = fd.Composed(base, frozenset(), frozenset(), False)
-    questions = [f for f in fo.host_findings(base, frame_ops, composed)
-                 if f.kind is fo.FindingKind.QUESTION and f.rule != "H11"]
-    return "8.4 the frame of a CLARIFY holds an open question" if questions else None
+    composed = _from_base(base, frame_ops)
+    if not isinstance(composed, fd.Composed):
+        return "8.4 the frame of a CLARIFY has a refusal cause"
+    findings = fo.host_findings(base, frame_ops, composed)
+    if any(f.kind is fo.FindingKind.DEPENDENCY for f in findings):
+        return "8.4 the frame of a CLARIFY raises a §19 dependency"
+    if any(f.kind is fo.FindingKind.QUESTION and f.rule != "H11" for f in findings):
+        return "8.4 the frame of a CLARIFY holds an open question"
+    return None
+
+
+def laundering_problems(base, outcome) -> list[str]:
+    """§19 COMPOSICION is fail-closed: a candidate judged on the frame must see every dependency the same answer raises
+    when the frame and the candidate are composed from the base (when that joint patch composes)."""
+    if outcome.disposition.value != "CLARIFY":
+        return []
+    p, out = outcome.pending, []
+    for candidate in p.candidates:
+        joint = _from_base(base, (*p.frame_ops, *candidate))
+        made = fd.compose_ops(p.frame, candidate, base_trace_id="t0")
+        if not isinstance(joint, fd.Composed) or not isinstance(made, fd.Composed):
+            continue
+        seen = {f.dependency for f in fo.host_findings(p.frame, candidate, made) if f.dependency is not None}
+        whole = {f.dependency for f in fo.host_findings(base, (*p.frame_ops, *candidate), joint)
+                 if f.dependency is not None}
+        if whole - seen:
+            out.append(f"§19 a candidate launders {sorted(d.dep_id for d in whole - seen)} through the frame")
+    return out
 
 
 def violations(delta, outcome_module, case) -> list[str]:
@@ -689,6 +718,10 @@ REDUCER_MUTANTS = {
     "one_op_several_target_causes": ([(
         "        if hits:\n            slot, clause = min(hits, key=lambda hit: SLOT_RANK[hit[0].key])\n            found.append(",
         "        for slot, clause in hits:\n            found.append(")], []),
+    "frame_dependency_laundered": ([], [(  # ZEUS on the integration 8066e03d, F1
+        "                 if f.kind is FindingKind.DEPENDENCY or (f.kind is FindingKind.QUESTION and f.rule != \"H11\")), "
+        "None)",
+        "                 if (f.kind is FindingKind.QUESTION and f.rule != \"H11\")), None)")]),
     "h1_without_continuar": ([], [(
         "HOST_CODES[\"H1\"], base, (), tuple(ops), (tuple(ops),), _slots(ops)))",
         "HOST_CODES[\"H1\"], base, (), tuple(ops), (), _slots(ops)))")]),

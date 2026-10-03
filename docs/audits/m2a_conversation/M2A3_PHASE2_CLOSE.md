@@ -4,7 +4,8 @@
 fusionado en `10c0c576`). **Oráculo:** M2A-8a0 congelado, primero `f7d1b8b8` (artefacto `4aa343c7…`, fusionado en
 `b2ad0a62`) y después `f95275b4` (artefacto `a753efad…`, fusionado en `434ab1bd`), más el arreglo de su test de lector
 estricto `9535b41f` (fusionado en `0ef76f97`) y el de A8.1 con unidad desconocida `9e54d2f5` (mismo artefacto,
-fusionado en `013e4429`). Todo de sólo lectura aquí. **La reparación del NO_GO de ZEUS sobre `15e72829` está en §6.**
+fusionado en `013e4429`). Todo de sólo lectura aquí. **La reparación del NO_GO de ZEUS sobre `15e72829` está en §6;
+la del NO_GO del ZEUS conjunto sobre la integración `8066e03d`, en §8.**
 
 **Estado: DEV y TEST al 100 % de los APLICABLES, sintético y REAL (§3).** TEST se midió una sola vez.
 
@@ -57,11 +58,12 @@ este tipo. **Estrechado por ZEUS (P2-5, §6):** de la relajación sólo quedan e
     - H1: el vencimiento es un hecho inyectado; §10 es de M2A-6.
     - H3: catálogo SMMLV 2024–2026, fijado contra `app/data/smmlv.py`.
     - H6: `buyer_scope` arrastrado frente a la DIVIPOLA nueva.
-    - H8: literales de STATE del dataset resultante.
+    - H8: literales de STATE del dataset resultante; reducir un ancla dual también cambia el universo (§14, §8).
     - H11 y H12.
   - **Dependencias declaradas de §19:** DEP-SMMLV-RECALC y DEP-MODALITY-UNIVERSE.
   - **Ley §8.4:**
-    - el marco es válido y no tiene preguntas abiertas;
+    - el marco, leído DESDE LA BASE, es válido, no tiene preguntas abiertas y no levanta ninguna dependencia
+      `COMPOSICION` de §19; si la levanta, el turno es esa `DEPENDENCY` (§8);
     - los candidatos componen sin causas del paso 3b (§8.4.2; nunca se los juzga por las preguntas del host);
     - hay al menos una respuesta que ejecuta, buscada con testigos abstractos de una operación, como en el modelo del
       contrato; un candidato ejecuta con la regla a la que responde exenta (`executes(..., answered=...)`).
@@ -191,8 +193,8 @@ Lecturas que esta reparación fija y conviene que ZEUS mire:
 - **Unidad desconocida ARRASTRADA ⇒ `INFORM UNRESOLVED_VALUE:VALUE`**, no `CLARIFY`: §8.4 (3) no encuentra respuesta sobre
   `answer_slots = {la cota nueva}` que componga, porque ninguna unidad elegida se compara con una desconocida. Con la
   unidad desconocida en la cota NUEVA y la arrastrada conocida, sí: `CLARIFY`.
-- **Ancla dual reducida** a una de sus peticiones: el universo de la petición que queda no cambia, así que sus
-  políticas se arrastran (P-1) y no hay causa §6.6.
+- **Ancla dual reducida** a una de sus peticiones: sus políticas se arrastran (P-1: «nada más cambia») y no hay causa
+  §6.6. Para H8, en cambio, sí es un cambio de universo: §8 (F4) corrige la lectura de esta sección.
 - **Mutante equivalente declarado:** quitar `answered` de la llamada de H6 a la ley no cambia ningún desenlace, porque
   «cambiar de comprador» ejecuta siempre que compone. El parámetro se mantiene porque es la semántica del contrato y la
   que usará M2A-4.
@@ -209,4 +211,31 @@ Lecturas que esta reparación fija y conviene que ZEUS mire:
 - **Composición de la opción elegida:** al aplicar un candidato (§8.3 filas 1 y 4), M2A-4 compone con la regla que la
   pendiente responde exenta (`executes(..., answered=...)`); re-juzgar «buscar con ambos» como un turno nuevo volvería a
   disparar H6.
+
+## 8. Reparación del NO_GO del ZEUS conjunto sobre la integración `8066e03d` (contiene `e96ca3c5`)
+
+Sondas de ZEUS: `scratchpad/zeus_int/probes/` (`p1_h6_dep.py`, `p2_dep_launder.py`, `p4_sweep.py`, `p6_misc.py`,
+`p9_more.py`), corridas con `PYTHONPATH` en este worktree.
+
+| Hallazgo | Reparación | Tests directos (`tests/test_foundation_delta_rules.py`) |
+|---|---|---|
+| **F1 (fondo)** una dependencia §19 `COMPOSICION` se perdía al pasar por el `frame` de una pendiente: el `frame` sólo se juzgaba por preguntas y, una vez compuesto, ya no veía el cambio de universo (H8) ni el TIME que quitó (DEP-SMMLV-RECALC) | `frame_obstacle` lee el `frame` compuesto DESDE LA BASE, en el orden del paso 4: una pregunta (salvo H11) o una dependencia de §19. La ley lo nombra («frame raises a §19 dependency») y `_ask` responde esa `DEPENDENCY` antes de preguntar, como H1 («decide esa dependencia»). Cubre toda pendiente que construyo: una causa del paso 3b (incluida R3-1), H3–H11 (H6) y H4 (`relative_outcome`). H1 ya lo hacía (su `frame` es la base). Los candidatos de H6, C1 y «continuar» no cambian el universo ni tocan TIME/VALUE, así que no pueden blanquear una dependencia sobre un `frame` lícito; la propiedad nueva `laundering_problems` lo comprueba (candidato sobre el `frame` frente a `frame` + candidato desde la base) | `test_h6_with_a_change_of_universe_that_carries_a_modality_is_its_dependency` (p1), `test_r3_1_with_a_dependency_in_its_frame_is_that_dependency` (p2 A, B, B2), `test_one_cause_whose_frame_drops_the_time_of_a_smmlv_bound_is_the_recalc` (p9), `test_h6_with_a_dependency_first_is_that_dependency` (p2 C), `test_a_relative_turn_whose_rest_raises_a_dependency_is_that_dependency` (p9, H4), `test_the_law_names_a_frame_that_raises_a_dependency` |
+| **F3 (A)** mutante vivo `subjects_after = {r.subject for r in base.requests}` | test directo con la redirección en el mismo parche, y su contraste (salir de contratos) | `test_the_policy_a_placed_condition_needs_is_judged_on_the_universe_the_patch_leaves` (p6) |
+| **F4 (P3)** ancla dual reducida con modalidad arrastrada: `EXECUTE` aquí, `DEPENDENCY` en el modelo congelado | **No sostengo la lectura «la petición que queda ya ejecutó su modalidad»:** §14 pone la reducción del ancla dual entre los cambios de universo (anuncia `UNIVERSE_CHANGED`) y dice «tras cambiar el universo, F27 (H8) comprueba STATE y MODALITY sobre el dataset resultante»; P-1 («nada más cambia») habla de los bytes de lo arrastrado, no de H8. **Me alineo al modelo:** `Composed.universe_changed` es verdadero también al reducir un ancla dual. Efecto: MODALITY arrastrada ⇒ `DEPENDENCY DEP-MODALITY-UNIVERSE`; un STATE sin literales en el dataset que queda (+Terminado al quedarse con procesos) ⇒ `CLARIFY STATE_NOT_IN_UNIVERSE` en vez de ejecutarse. Las políticas siguen arrastrándose (P-1) | `test_a_dual_anchor_reduced_is_a_change_of_universe_for_h8` (p6, p8) |
+| **F7 (P3)** | **Q-R8-3 queda CERRADA**: «Nuevo ≠ ∅ ∧ Marco ∧ ¬Admisible sola» no tiene fila en §7.2, así que §7.2 no dice búsqueda nueva y la fila 8 de §7.1 («lo demás: delta o respuesta») da `IN` / `DELTA` (INV-M2A-20: un `TurnScope` por turno). Ya no es pregunta abierta de la ola F | `test_a_new_framed_but_not_admissible_turn_is_a_delta`; tabla de §7.2 con 0 rechazos |
+
+Además (sólo tests): el mutante de ZEUS «la lente O1B cuenta un `CLEAR` de nada» sobrevivía; ahora lo mata un caso en
+`test_the_o1b_lens_counts_only_a_change_of_the_state`.
+
+**Divergencia con el modelo congelado (para HERA; no se toca, es del carril del contrato):** en
+`tests/test_m2a_contract_r3_multiop.py`, `law_violations` sólo mira `open_operations` del `frame`, no sus dependencias.
+Para `CLEAR(ORDER)` + `REPLACE_UNIVERSE` con la modalidad arrastrada (sonda `p3_model.py`) el modelo da `CLARIFY` R3-1
+y C1 `EXECUTE`; el reducer da ahora `DEPENDENCY DEP-MODALITY-UNIVERSE`, como pide F1. El oráculo no juzga
+`DEPENDENCY` y el Gold no cambia (DEV/TEST iguales).
+
+**Fuera, por orden del coordinador:** F2 (H6 con `buyer_scope` `None`) queda como gate de activación de M2A-6/D-BUYER.
+
+Gates: se corren sobre el SHA congelado tras este registro (focales y propiedades con `--hypothesis-seed=0` con y sin
+REAL, Gold-oracle DEV/TEST, mutantes, ruff, semgrep delta `--base fa0b6de8`) y se reportan en la entrega; este
+documento no se toca después del freeze para no invalidarlo.
 

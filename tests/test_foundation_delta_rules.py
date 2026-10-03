@@ -10,6 +10,9 @@ generator happens to reach it. Every refusal or effective is also judged by the 
 * §6 step 3b: one cause per OPERATION; §6.6 policies without owner (placed, carried across a change of universe, the
   O1B lens), §19 DEP-O1B; §15.2 an unknown unit is comparable with nothing.
 * §7.1–§7.2: rows and the facts the table cannot reach on its own; ``search_effects``.
+* ZEUS NO_GO on the integration 8066e03d: F1, a §19 COMPOSICION dependency never passes through the frame of a pending
+  (it decides the turn, read from the base); F3, the policy a placed condition needs is judged on the universe the
+  same patch leaves; F4, a dual anchor reduced is a change of universe for H8 (§14, the contract's model).
 """
 from __future__ import annotations
 
@@ -328,6 +331,8 @@ def test_the_o1b_lens_counts_only_a_change_of_the_state():
     wide = answer(lens, clear(STATE))  # one operation, one cause, even if it covers two slots
     assert [c.code for c in wide.causes] == ["OP_NOT_ACCREDITED:STATE"]
     assert said(answer(lens, op(fa.PatchOpKind.KEEP, STATE_POS), set_op(D.TOPIC, VIAS, 1))) == ("EXECUTE", None)
+    stateless = base((D.TOPIC, ASEO), kind=OPPORTUNITIES)  # a CLEAR of a STATE the anchor lacks changes nothing
+    assert said(answer(stateless, clear(STATE), set_op(D.TOPIC, VIAS, 1))) == ("EXECUTE", None)
     assert said(answer(lens, set_op(D.TOPIC, VIAS))) == ("EXECUTE", None)
 
 
@@ -368,6 +373,84 @@ def test_h8_a_state_or_a_modality_over_a_changed_universe():
 def test_h11_and_h12():
     assert said(answer(base((D.TOPIC, ASEO)), clear(TOPIC_POS))) == ("CLARIFY", "EMPTY_SEARCH_AFTER_DELTA")
     assert said(answer(base((D.TOPIC, ASEO)), clear(TIME_POS))) == ("INFORM", "CLEAR_ON_EMPTY_SLOT")
+
+
+# ---- F1: a §19 COMPOSICION dependency is never laundered through the frame of a pending --------------------------
+LITERAL = ModalityValue(("minima_cuantia",), None, False)
+SMMLV_TIME_ORDER = base((D.TOPIC, ASEO), (D.VALUE, MoneyValue(100, Comparator.GTE), smmlv(2025)), (D.TIME, year(2025)),
+                        (D.ORDER, ORDER_VALUE), (D.CARDINALITY, TOP_10))
+
+
+def depends_on(outcome, dep_id: str) -> bool:
+    return outcome.disposition is fo.DeltaDisposition.DEPENDENCY and outcome.dependency.dep_id == dep_id
+
+
+def test_h6_with_a_change_of_universe_that_carries_a_modality_is_its_dependency():  # zeus_int p1_h6_dep
+    b = base((D.TOPIC, ASEO), (D.BUYER, VALLE, SCOPE_76), (D.MODALITY, LITERAL))
+    assert depends_on(answer(b, to(CONTRACTS)), "DEP-MODALITY-UNIVERSE")  # the same turn without a pending
+    assert depends_on(answer(b, set_op(D.GEOGRAPHY, ANTIOQUIA), to(CONTRACTS, i=1)), "DEP-MODALITY-UNIVERSE")
+
+
+def test_r3_1_with_a_dependency_in_its_frame_is_that_dependency():  # zeus_int p2_dep_launder A, B, B2
+    with_modality = base((D.TOPIC, ASEO), (D.MODALITY, LITERAL), (D.ORDER, ORDER_VALUE), (D.CARDINALITY, TOP_10))
+    assert depends_on(answer(with_modality, clear(ORDER), to(CONTRACTS, i=1)), "DEP-MODALITY-UNIVERSE")
+    assert depends_on(answer(SMMLV_TIME_ORDER, clear(TIME_POS), clear(ORDER, 1)), "DEP-SMMLV-RECALC")
+    assert depends_on(answer(SMMLV_TIME_ORDER, set_op(D.TIME, year(2026)), clear(ORDER, 1)), "DEP-SMMLV-RECALC")
+    assert said(answer(SMMLV_TIME_ORDER, clear(ORDER))) == ("CLARIFY", "DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER")
+
+
+def test_one_cause_whose_frame_drops_the_time_of_a_smmlv_bound_is_the_recalc():  # zeus_int p9_more
+    b = base((D.TOPIC, ASEO), (D.VALUE, MoneyValue(100, Comparator.GTE), smmlv(2025)), (D.TIME, year(2025)))
+    outcome = answer(b, clear(TIME_POS), op(fa.PatchOpKind.KEEP, GEO_POS, 1))
+    assert depends_on(outcome, "DEP-SMMLV-RECALC")  # never a pending whose answer runs another year's wage (§15.5)
+    assert said(answer(b, op(fa.PatchOpKind.KEEP, GEO_POS))) == ("CLARIFY", "KEEP_ON_EMPTY_SLOT")
+
+
+def test_h6_with_a_dependency_first_is_that_dependency():  # zeus_int p2_dep_launder C
+    b = base((D.TOPIC, ASEO), (D.BUYER, VALLE, SCOPE_76), (D.VALUE, MoneyValue(100, Comparator.GTE), smmlv(2025)),
+             (D.TIME, year(2025)))
+    assert depends_on(answer(b, set_op(D.GEOGRAPHY, ANTIOQUIA), clear(TIME_POS, 1)), "DEP-SMMLV-RECALC")
+
+
+def test_a_relative_turn_whose_rest_raises_a_dependency_is_that_dependency():  # zeus_int p9_more, H4
+    redirect = to(CONTRACTS)
+    outcome = fo.relative_outcome(base((D.TOPIC, ASEO), (D.MODALITY, LITERAL)), (redirect,), base_trace_id="t0",
+                                  origin=redirect.origin, answer_slots=frozenset({LOWER}), anchor_expired=False,
+                                  pending_present=False)
+    assert depends_on(outcome, "DEP-MODALITY-UNIVERSE")
+    lawful = fo.relative_outcome(base((D.TOPIC, ASEO)), (redirect,), base_trace_id="t0", origin=redirect.origin,
+                                 answer_slots=frozenset({LOWER}), anchor_expired=False, pending_present=False)
+    assert said(lawful) == ("CLARIFY", "RELATIVE_TO_PREVIOUS_VALUE")
+    assert [r.subject for r in lawful.pending.frame.requests] == [CONTRACTS]
+    assert said(fo.relative_outcome(base((D.TOPIC, ASEO)), (redirect,), base_trace_id="t0", origin=redirect.origin,
+                                    answer_slots=frozenset({LOWER}), anchor_expired=False, pending_present=True)) == (
+        "INFORM", "RELATIVE_TO_PREVIOUS_VALUE")
+
+
+def test_the_law_names_a_frame_that_raises_a_dependency():
+    b = base((D.TOPIC, ASEO), (D.MODALITY, LITERAL))
+    redirect = to(CONTRACTS)
+    assert fo.law_violations(b, (redirect,), (), frozenset({LOWER}), "t0", redirect.origin) == [
+        "frame raises a §19 dependency"]
+
+
+# ---- F3 and F4 (ZEUS on the integration) ------------------------------------------------------------------------------
+def test_the_policy_a_placed_condition_needs_is_judged_on_the_universe_the_patch_leaves():  # zeus_int p6_misc
+    processes = base((D.TOPIC, ASEO))
+    outcome = answer(processes, set_op(D.STATE, terminated(True)), to(CONTRACTS, i=1))
+    assert said(outcome) == ("CLARIFY", "UNRESOLVED_VALUE:STATE")
+    contracts = base((D.TOPIC, ASEO), subjects=(CONTRACTS,))  # leaving contracts: no complement to accredit, but
+    left = answer(contracts, set_op(D.STATE, terminated(True)), to(PROCESSES, i=1))  # Terminado is no process state
+    assert said(left) == ("INFORM", "STATE_NOT_IN_UNIVERSE") and not left.causes
+
+
+def test_a_dual_anchor_reduced_is_a_change_of_universe_for_h8():  # §14 and the model (zeus_int p8_model_dual)
+    dual_modality = base((D.TOPIC, ASEO), (D.MODALITY, LITERAL), subjects=(PROCESSES, CONTRACTS))
+    for subject in (PROCESSES, CONTRACTS):
+        assert depends_on(answer(dual_modality, to(subject)), "DEP-MODALITY-UNIVERSE")
+    dual_terminated = base((D.TOPIC, ASEO), (D.STATE, terminated(False)), subjects=(PROCESSES, CONTRACTS))
+    assert said(answer(dual_terminated, to(PROCESSES))) == ("CLARIFY", "STATE_NOT_IN_UNIVERSE")  # no process literal
+    assert said(answer(dual_terminated, to(CONTRACTS))) == ("EXECUTE", None)
 
 
 # ---- §7.1–§7.2 and search_effects ------------------------------------------------------------------------------------
