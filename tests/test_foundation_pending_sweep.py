@@ -107,10 +107,13 @@ def lift_state(state: "M.State") -> fa.AcceptedInterpretation:
 
 
 def typed_only(ops) -> tuple["M.Op", ...]:
-    """The operations that exist as a typed ``PatchOp``: a resolved one. The model also carries the A.6 labels and the
-    operations an authority could not resolve (status ``asks:…`` / ``unresolved``): there is nothing typed to lift for them,
-    so they are no part of an answer nor of the asking patch F24 compares with (§8.3: «las mismas operaciones»)."""
-    return tuple(o for o in ops if o.status == "ok" and o.kind not in LABELS)
+    """The operations that exist as a typed ``PatchOp``: a resolved one, and the open operation of an H5/H6 question (the
+    producer's provisional label: the authority resolved its value, only its reading is ambiguous: status ``asks2:…``).
+    The model also carries the A.6 labels and the operations an authority could not resolve (status ``asks:…`` /
+    ``unresolved``): there is nothing typed to lift for them, so they are no part of an answer nor of the asking patch F24
+    compares with (§8.3: «las mismas operaciones»)."""
+    return tuple(o._replace(status="ok") if o.status.startswith("asks2:") else o for o in ops
+                 if (o.status == "ok" or o.status.startswith("asks2:")) and o.kind not in LABELS)
 
 
 def repeats_asked_unresolved(mp: "M.Pending", ops) -> bool:
@@ -244,7 +247,8 @@ def differential() -> tuple[int, Counter, list]:
             labelled = any(o.kind == "NO_SELECTION" for o in ops)
             plain = tuple(o for o in ops if o.kind != "NO_SELECTION")
             expected = M.answer(cfg, mp, ops)
-            got = T.P.respond(pending, lift_turn(plain, labelled), trace_id="t2", now=T.T0 + T.MINUTE, asked_ops=asked)
+            got = T.P.respond(pending, lift_turn(plain, labelled), trace_id="t2", now=T.T0 + T.MINUTE, asked_ops=asked,
+                              no_asked_patch=not asked)
             total += 1
             outcomes[(mp.reason, expected.kind, expected.code)] += 1
             bad = compare(expected, got, pending)
@@ -329,8 +333,12 @@ def spec_row(pending, ops, asked_ops):
     if ops and sorted(_spec_identity(o) for o in ops) == sorted(_spec_identity(o) for o in asked_ops):
         return 7, None
     present = {c.slot.key for c in pending.frame.conditions} | {"UNIVERSE"} if pending.frame is not None else {"UNIVERSE"}
-    kept = [o for o in ops if not (pending.candidate_patches and o.op is fa.PatchOpKind.KEEP
-                                   and o.slot.key in present and touches[o.slot.key] == 1)]
+    dropped = [o for o in ops if not (o.op is fa.PatchOpKind.KEEP and o.slot.key in present and touches[o.slot.key] == 1)]
+    if dropped and sorted(_spec_identity(o) for o in dropped) == sorted(_spec_identity(o) for o in asked_ops):
+        return 7, None  # M2A4-D20 (HERA, ZEUS P1-1): F24 on the answer once its identity KEEPs go, for EVERY pending
+    kept = dropped if pending.candidate_patches else list(ops)  # what is COMPOSED loses them only with candidates (U27)
+    if pending.candidate_patches and kept and _is_part_of(kept, asked_ops):  # and a PART of it tells no candidate apart
+        return 7, None
     touched = {key for o in kept for key in fd.covered_keys((o,))}
     inside = {s.key for slot in pending.answer_slots for s in fd.covered(slot)}
     if not touched & inside:
@@ -344,6 +352,16 @@ def spec_row(pending, ops, asked_ops):
                   if sorted(_spec_identity(o) for o in c.patch.ops) == sorted(_spec_identity(o) for o in kept)]
         return (4, chosen[0].candidate_id) if len(chosen) == 1 else (7, None)
     return 4, None
+
+
+def _is_part_of(ops, asked) -> bool:
+    """Every operation of ``ops`` is one of ``asked``, each asked operation used once (a multiset, written by crossing off)."""
+    remaining = [_spec_identity(o) for o in asked]
+    for identity in (_spec_identity(o) for o in ops):
+        if identity not in remaining:
+            return False
+        remaining.remove(identity)
+    return True
 
 
 def _spec_identity(op):
@@ -474,20 +492,31 @@ def _expired(case):
     return case[0], case[1], True
 
 
+def h1_problems(case) -> list[str]:
+    """M2A4-D2: a ``CONTEXT_EXPIRED_CONFIRM`` pending × every answer in language, with or without KEEPs of filler, with the
+    asking patch the caller gives, with NONE of it (it declares no asking patch) and with a wrong one: never an execution."""
+    got = _created(case)
+    if got is None or got[2].pending is None or got[2].pending.reason != "CONTEXT_EXPIRED_CONFIRM":
+        return []
+    base, outcome, creation = got
+    pending, out = creation.pending, []
+    for ops in _answers(pending, creation.asked_ops, base):
+        for asked in (creation.asked_ops, (), (T.clear_op(T.TIME_POS, 60),)):
+            d = T.P.respond(pending, T.P.PendingTurn(T.facts(anchor_expired=True), tuple(ops)), trace_id="t2",
+                            now=T.T0 + T.MINUTE, asked_ops=asked, no_asked_patch=False)
+            if d.kind.value != "REASK":
+                out.append(f"{[(o.op.value, o.slot.key) for o in ops]} -> {d.kind.value}")
+    event = T.respond(pending, T.P.OptionEvent(pending.pending_id, "c1"))
+    return out if event.kind.value in ("PENDING_ANSWER", "DEPENDENCY") else out + ["the event does not confirm"]
+
+
 @PROPS
 @given(st_case(rich=False).map(_expired))
 def test_h1_no_language_answer_executes_over_the_expired_anchor(case):
     """M2A4-D2 (P1-2): every pending ``CONTEXT_EXPIRED_CONFIRM`` M2A-3 creates × every answer in language, with or without a
-    KEEP of filler (the shape ZEUS used: the asking patch + one KEEP, which the contract's model executed)."""
-    got = _created(case)
-    if got is None or got[2].pending is None or got[2].pending.reason != "CONTEXT_EXPIRED_CONFIRM":
-        return
-    base, outcome, creation = got
-    pending = creation.pending
-    for ops in _answers(pending, creation.asked_ops, base):
-        d = T.respond(pending, T.P.PendingTurn(T.facts(anchor_expired=True), tuple(ops)), asked_ops=creation.asked_ops)
-        assert d.kind.value == "REASK", ([(o.op.value, o.slot.key) for o in ops], d.kind)
-    assert T.respond(pending, T.P.OptionEvent(pending.pending_id, "c1")).kind.value in ("PENDING_ANSWER", "DEPENDENCY")
+    KEEP of filler (the shape ZEUS used: the asking patch + one KEEP, which the contract's model executed), whether or not
+    the caller has the asking patch: D2 stops it on its own, F24 is not what holds it."""
+    assert h1_problems(case) == []
 
 
 def _has_expired_confirm(case) -> bool:
@@ -520,7 +549,7 @@ def _differential_problems(mutated) -> list:
         for ops in [o for o in answer_pool(mp) if not repeats_asked_unresolved(mp, o)][::2]:
             turn = lift_turn(ops)
             got = mutated.respond(pending, mutated.PendingTurn(turn.facts, turn.ops, False, turn.unresolved),
-                                  trace_id="t2", now=T.T0 + T.MINUTE, asked_ops=asked)
+                                  trace_id="t2", now=T.T0 + T.MINUTE, asked_ops=asked, no_asked_patch=not asked)
             if compare(M.answer(cfg, mp, ops), got, pending):
                 return [(mp.reason, ops)]
     return []
@@ -537,7 +566,8 @@ def _sweep_kills(name: str) -> bool:
         if name == "answer_on_base_not_frame":
             _, made = T.authority_month()
             bases[made.pending.pending_id] = T.base_of((D.TOPIC, "x"), (D.BUYER, "x"), (D.TIME, "x"))
-        if _differential_problems(mutated) or any(_case_problems(mutated, case) for case in seed_cases()):
+        if (_differential_problems(mutated) or any(_case_problems(mutated, case) for case in seed_cases())
+                or any(h1_problems(case) for case in seed_cases())):
             return True
         try:
             find(st.one_of(st_case(rich=False), st_case()), lambda case: bool(_case_problems(mutated, case)),
@@ -553,7 +583,9 @@ def _sweep_kills(name: str) -> bool:
             sys.modules.pop(f"m2a4_mut_{stem}", None)
 
 
-SWEEP_MUTANTS = ("answer_on_base_not_frame", "answer_with_the_anchors_trace", "f24_off", "f24_after_normalizing",
+SWEEP_MUTANTS = ("answer_on_base_not_frame", "answer_with_the_anchors_trace", "f24_off",
+                 "f24_only_before_normalizing", "subset_of_the_asking_patch_accepted",
+                 "f24_part_counts_what_is_unresolved", "f24_not_judged_on_the_normalized_answer_of_every_pending",
                  "f25_executes", "f29_executes", "normalization_without_candidates", "normalization_drops_every_keep",
                  "expired_confirm_selected_in_language", "p_composed_instead_of_the_candidate", "conflict_not_decided_on_p",
                  "still_asking_executes", "selection_by_the_slot_only", "answered_rule_not_exempt")

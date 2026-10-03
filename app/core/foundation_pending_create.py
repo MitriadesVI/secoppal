@@ -280,11 +280,11 @@ def ask_fresh(question: AuthorityQuestion, *, frame: AcceptedInterpretation | No
         return Creation(DeltaDisposition.DEPENDENCY, None, asked_ops=asked_ops, dependency=DEP_M1_PENDING_FRAME)
     if type(frame) is not AcceptedInterpretation or frame.base_trace_id is not None:
         raise ContractError("INVALID_FRESH_FRAME")  # a new search has no base
-    found = law_violations(frame, (), question.candidates, question.answer_slots, asked_trace_id, question.origin,
-                           RULE_OF_CODE.get(question.reason))
-    if found:
-        return Creation(DeltaDisposition.INFORM, _inform_code(question.reason), asked_ops=asked_ops,
-                        violations=tuple(found))
+    # the same judgement as every other pending: a frame that raises a §19 dependency is that DEPENDENCY (U29), then §8.4
+    _, refused = _judge(frame, question.reason, (), asked_ops, question.candidates, question.answer_slots,
+                        asked_trace_id, question.origin)
+    if refused is not None:
+        return refused
     pending = _build(question.reason, frame, None, question.origin, question.candidates, question.answer_slots,
                      asked_trace_id, now)
     return Creation(DeltaDisposition.CLARIFY, question.reason, pending, asked_ops)

@@ -17,6 +17,10 @@ pending without frame) there is no base to compose on, so the rest of P is a new
 Admisible sola(P), and ``CLARIFY NO_ANCHOR`` otherwise (M2A4-D1, A9: a continuation never starts a search). A cancel with
 nothing to apply (no operations, no new search) cancels and executes nothing: ``INFORM``, code ``None`` (M2A4-D12).
 
+A relative turn (§7.1 row 6) that carries the directive cancels too (§8.4: «salvo que §8.3 la cancele antes», M2A4-D21): INFORM
+with the cancellation and no pending. A text turn that meets a pending WITH candidates must give the asking patch (F24) or
+declare there was none (``no_asked_patch``, M2A4-D22): the empty tuple is never «none» by omission.
+
 Rows 5–8 are ``REASK`` over the same pending with ``asks + 1`` (plazo, frame, question and candidates untouched); an answer
 that fails with ``asks`` at the cap CANCELS the pending (§8.3, cause d: control ``CANCEL_PENDING``, the label of the failed
 answer, nothing left; M2A4-D10). An expired pending (``now`` ≥ its deadline) is cancelled by cause e at THIS turn: a text
@@ -193,10 +197,12 @@ def _pure_cancel(pending: PendingClarification, cause: CancelCause, scope: TurnS
 
 def _starts_a_search_alone(facts: TurnFacts) -> bool:
     """M2A4-D1: with no base to compose on, the rest of P starts a search only if ¬Continuación(P) ∧ Admisible sola(P)
-    (a mark of continuation wins, A9). Three-valued like ``classify_turn``: a fact that decides nothing may stay ``None``."""
-    if facts.admissible_alone is False or facts.continuation is True:
+    (a mark of continuation wins, A9) and, as in ``classify_turn``, the floor of D7 holds: never a search without an own
+    condition (``own_conditions = 0`` is no search, whatever else the facts say). Three-valued like ``classify_turn``: a fact
+    that decides nothing may stay ``None``."""
+    if facts.admissible_alone is False or facts.continuation is True or facts.own_conditions == 0:
         return False
-    for name in ("admissible_alone", "continuation"):
+    for name in ("admissible_alone", "continuation", "own_conditions"):
         if getattr(facts, name) is None:
             raise ContractError(f"UNDETERMINED_FACT:{name}")
     return True
@@ -276,6 +282,11 @@ def _text(pending: PendingClarification, turn: PendingTurn, trace_id: str, now: 
                                            and fragment_base(pending) is None) else facts
     classification = classify_turn(probe)
     scope = classification.scope
+    if scope is TurnScope.OUT_RELATIVE_TO_PREVIOUS and facts.cancel_directive:
+        # §8.4: «la pendiente intacta, salvo que §8.3 la cancele antes (filas 2 y 3)», and only §7.1 row 6 gets there: a
+        # relative turn that carries the directive cancels (M2A4-D21). What is left of P (the relative condition, no typed
+        # origin nor answer slots here) is told, not asked: INFORM, no pending (the user reformulates).
+        return PendingDecision(DecisionKind.INFORM, scope, HOST_CODES["H4"], cancel_pending(pending, CancelCause.DIRECTIVE))
     if scope in _INFORM_ROWS:  # §7.1 rows 4, 4b, 5, 6: INFORM, the pending intact (a pending vigente never gets another)
         code = HOST_CODES["H4"] if scope is TurnScope.OUT_RELATIVE_TO_PREVIOUS else classification.code
         return PendingDecision(DecisionKind.INFORM, scope, code, pending=pending)
@@ -291,16 +302,19 @@ def _text(pending: PendingClarification, turn: PendingTurn, trace_id: str, now: 
 
 
 def respond(pending: PendingClarification | None, turn: OptionEvent | ResetEvent | PendingTurn, *, trace_id: str,
-            now: datetime, asked_ops: tuple[PatchOp, ...]) -> PendingDecision:
+            now: datetime, asked_ops: tuple[PatchOp, ...], no_asked_patch: bool = False) -> PendingDecision:
     """The decision of a turn that meets ``pending`` (the one the store holds, or ``None`` if none): see the module. ``now``
     is the injected instant, ``trace_id`` the turn's own trace (the id of the pending it may create), ``asked_ops`` the
     operations of the turn that asked (F24; ``Creation.asked_ops`` gives them when the pending is created). It has NO
-    default: without them F24 is silently off and the product would choose for the user (M2A4-D13); pass ``()`` only to say
-    there were none (an event turn needs none)."""
+    default, and an empty tuple is not a way to say «none»: without them F24 is silently off and the product would choose
+    for the user (M2A4-D13, D22). A text turn that meets a pending WITH candidates and brings no ``asked_ops`` must say it
+    (``no_asked_patch=True``: the asking turn had no typed operation), or it is refused (``ASKED_OPS_UNDECLARED``). A
+    ``CONTEXT_EXPIRED_CONFIRM`` needs neither: its one candidate IS the asking patch."""
     if type(trace_id) is not str or not trace_id.strip():
         raise ContractError("INVALID_TRACE_ID")
     asked_ops = tuple(asked_ops)
-    if any(type(op) is not PatchOp for op in asked_ops):
+    if any(type(op) is not PatchOp for op in asked_ops) or type(no_asked_patch) is not bool or (
+            no_asked_patch and asked_ops):
         raise ContractError("INVALID_ASKED_OPS")
     if type(turn) in (OptionEvent, ResetEvent):
         return _event(pending, turn, now)
@@ -310,4 +324,6 @@ def respond(pending: PendingClarification | None, turn: OptionEvent | ResetEvent
         raise ContractError("NO_PENDING")
     if pending_expired(pending, now):  # §17.2 e: the turn proceeds as if there were none; the cancellation is written
         return PendingDecision(DecisionKind.EXPIRED, None, None, cancel_pending(pending, CancelCause.EXPIRED))
+    if pending.candidate_patches and not asked_ops and not no_asked_patch and not holds_expired_anchor(pending):
+        raise ContractError("ASKED_OPS_UNDECLARED")  # M2A4-D22: F24 never off by omission
     return _text(pending, turn, trace_id, now, asked_ops)
