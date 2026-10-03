@@ -177,3 +177,20 @@ Lo aplica la regla `u25_sf198` de `build_sealed_gold.py`, que deja la marca U26 
 comprueba (G11) desde la extracción sellada.
 
 Ningún id cambia de lado DEV/TEST. `M2A_GOLD` sigue siendo 209.
+
+---
+
+# Sección R3d: adjudicación U27 (2026-10-02)
+
+**Autor de la decisión:** el usuario (2026-10-02), tras el NO_GO del ZEUS focal sobre `109095fe`. **Registro:** ARES,
+R3d. La aplica `build_sealed_gold.py` (`u27_expired_echo`, un parche como U1/U2/D1), que deja la marca U27 en las notas
+de la etiqueta A. Los registros pasan a `adjudicated_by = ["U27"]`.
+
+| Caso | Diferencia A/B | Adjudicación | Motivo |
+|---|---|---|---|
+| SF138 | `expected_echo`: A `[]`, B `["CONTEXT_EXPIRED"]` | la de B: `["CONTEXT_EXPIRED"]` en A | §11 (segunda adición, R3d): todo turno que encuentra el ancla vencida y no la confirma ni la reemplaza emite `CONTEXT_EXPIRED` |
+| SF140 | ídem | ídem | ídem |
+
+La disposición y lo demás no cambian. El verificador valida ahora el eco guardado: `CONTEXT_EXPIRED` en todo turno
+sobre ancla vencida que no la confirma ni la reemplaza, y nunca en `EXECUTE` ni `NEW_SEARCH`. Tiene mutantes
+`U27_*`. Ningún id cambia de lado DEV/TEST. `M2A_GOLD` sigue siendo 209.

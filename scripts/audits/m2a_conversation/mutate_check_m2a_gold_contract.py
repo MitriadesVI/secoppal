@@ -252,7 +252,17 @@ def mutants(rows: list[dict]) -> dict:
     def z11_sf199_other_motive(L):  # 4b only for motives with a sealed case (G8)
         L["disposition_reason"] = "UNSUPPORTED_PROPOSAL:NO_ACTION"
 
+    # ---- R3d (U27): the CONTEXT_EXPIRED echo (§11) ---------------------------------------------------------------
+    def drop_expired_echo(L):
+        L["expected_echo"] = [e for e in L["expected_echo"] if e != "CONTEXT_EXPIRED"]
+
+    def expired_echo_on_execute(L):
+        L["expected_echo"] = sorted(set(L["expected_echo"]) | {"CONTEXT_EXPIRED"})
+
     return {
+        "U27_SF198_expired_echo_dropped": ("SF198", drop_expired_echo),
+        "U27_SF138_expired_echo_dropped": ("SF138", drop_expired_echo),
+        "U27_SF001_expired_echo_on_execute": ("SF001", expired_echo_on_execute),
         "ZEUS_R3b_Z1_SF200_keeps_base_order": ("SF200", z1_sf200_keeps_base_order),
         "ZEUS_R3b_Z2_SF059_drops_carried_geo": ("SF059", z2_sf059_drops_carried_geo),
         "ZEUS_R3b_Z3_SF200_invents_order": ("SF200", z3_sf200_invents_order),

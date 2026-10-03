@@ -372,6 +372,33 @@ Los marcados «a completar» los completa el orquestador al integrar.
   (`u25_sf198`); la sección R3c de `gold/ADJUDICATION_R3.md`; el sello.
 - **Si cambia, tocar.** Lo mismo, y re-sellar con motivo.
 
+### U27. R3d: arreglos acotados tras el ZEUS focal (2026-10-02)
+- **Decisión.**
+  - **FONDO-1.** En «Selección», las causas del paso 2 de §6 se deciden sobre P **antes** de normalizar; con una
+    pendiente vigente, una causa así es la fila 7. Sólo con candidatos, y después de ese chequeo, se quitan los `KEEP`
+    de ranuras del `frame` que ninguna otra operación de P toca. Los 80 casos `KEEP` + escritura que ejecutaban (H5,
+    R3-1, MONTH_YEAR) ya no ejecutan.
+  - **FONDO-2.** «Reset» o la cancelación de `CONTEXT_EXPIRED_CONFIRM` (§17.2 a, c, d; también agotar `asks`)
+    eliminan el ancla: `anchor_trace_id = None`, nunca vuelve a vigente, y el siguiente fragmento es
+    `CLARIFY NO_ANCHOR`. En la fila 2 con esa pendiente, el resto de P es búsqueda nueva si es admisible sola; si no,
+    `NO_ANCHOR`. §10.1: sólo «continuar» devuelve el ancla a vigente; una búsqueda nueva la reemplaza.
+  - **F24.** Una respuesta idéntica al parche del turno que preguntó no la resuelve (fila 7). Por eso «continuar» de
+    `CONTEXT_EXPIRED_CONFIRM` va sólo por evento (fila 1). El coste de H6 (A sólo se alcanza repitiendo sus dos ops) es
+    parte del gate de M2A-4.
+  - **Forma.**
+    - §11: `CONTEXT_EXPIRED` en todo turno sobre ancla vencida no confirmada ni reemplazada, como segunda adición de
+      la «Derivación exacta».
+    - Alcance de «Selección»: filas 4, 5, 7 y 8; una P vacía es la fila 8.
+    - El verificador valida ese eco, con mutantes `U27_*`. SF138 y SF140 se adjudican con el eco de B.
+    - §8.4 dice ahora «las tres condiciones».
+- **Quién.** Usuario. Rige la barandilla de U26.
+- **Dónde.**
+  - Contrato §8.3, §8.4, §10.1, §10.2, §11, §17, Anexo B y D.3.
+  - Modelo multi-op (`answer`, `normalized`, `Pending.asked`) y su test de conflictos.
+  - `check_m2a_gold_contract.py` y sus mutantes; `build_sealed_gold.py` (`u27_expired_echo`).
+  - La sección R3d de `gold/ADJUDICATION_R3.md`; el sello.
+- **Si cambia, tocar.** Lo mismo, y re-sellar con motivo.
+
 ## Estado
 
 - **M2A-3 LANGUAGE R3 = FROZEN.** Se activa con el GO de ZEUS sobre el re-sellado de R3b-2 (contrato §20.4). Hasta
@@ -431,4 +458,5 @@ Los marcados «a completar» los completa el orquestador al integrar.
 | `4636a73a`, `b8372757` | R3b-1: reparación del NO_GO de ZEUS (U20–U24), sin re-sellar: contrato, herramientas y gates; después, entrada de etiquetado, registro y matriz |
 | `7b30b221` | R3b-2: cierre y re-sellado único (U25), sello `3693d19f…` |
 | `55571ec5` | R3c: último arreglo (U26) y re-sellado |
-| commit siguiente a `55571ec5` | remate de forma de R3c (barandilla): pins de F16, P-3, A8.1 no comparable y dos causas no acreditadas; «componer sobre `frame`» declarado gate de M2A-4; §6.7: C1 lo emite el productor; re-sellado |
+| `109095fe` | remate de forma de R3c (barandilla): pins de F16, P-3, A8.1 no comparable y dos causas no acreditadas; «componer sobre `frame`» declarado gate de M2A-4; §6.7: C1 lo emite el productor; re-sellado |
+| commit siguiente a `109095fe` | R3d: arreglos acotados (U27) y re-sellado |

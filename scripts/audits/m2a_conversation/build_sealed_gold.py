@@ -18,6 +18,8 @@ candidate only by the patches below (``ADJUDICATION_2026-10-02.md``):
       of ``gold/ADJUDICATION_R3.md``): SF199 takes B's primary reading, SF202 is retired (labelled, not sealed), and
       SF195's SET_ORDER polarity is POSITIVE. A primary disagreement that is not adjudicated stops the build.
   U26 release r3c — SF198 carries the echo CONTEXT_EXPIRED (sticky expiry, contract §10.1/§11); no other change.
+  U27 release r3d — SF138 and SF140 take label B's echo CONTEXT_EXPIRED in label A (§11, second addition); no other
+      change.
 
 REAL records are not touched (the REAL Gold never enters git). Usage:
   python scripts/audits/m2a_conversation/build_sealed_gold.py          # write
@@ -91,7 +93,18 @@ def d1_sf168(rec: dict) -> None:
     }
 
 
-PATCHES = {"SF166": u1_sf166, "SF063": u2_sf063, "SF168": d1_sf168}
+def u27_expired_echo(rec: dict) -> None:
+    """U27 (R3d): CLARIFY CONTEXT_EXPIRED_CONFIRM carries CONTEXT_EXPIRED; A left it out, B wrote it. Adjudicated to B."""
+    rec["adjudicated_by"] = sorted(set(rec["adjudicated_by"]) | {"U27"})
+    L = rec["label_A"]
+    if L["expected_echo"] != ["CONTEXT_EXPIRED"] and rec["label_B"]["expected_echo"] == ["CONTEXT_EXPIRED"]:
+        L["expected_echo"] = ["CONTEXT_EXPIRED"]
+        L["notes"] = (L["notes"] + " | U27 (usuario, 2026-10-02; R3d): expected_echo = [\"CONTEXT_EXPIRED\"], la etiqueta "
+                      "B (§11: todo turno que encuentra el ancla vencida y no la confirma ni la reemplaza).")
+
+
+PATCHES = {"SF166": u1_sf166, "SF063": u2_sf063, "SF168": d1_sf168, "SF138": u27_expired_echo,
+           "SF140": u27_expired_echo}
 
 
 # ---- U3 (release r3): additions from the blind labels A/B + the user's adjudication of their differences ----------
@@ -320,10 +333,10 @@ def build() -> dict[str, str]:
     idx = json.loads((SRC / "M2A_GOLD_AND_FRONTIER_INDEX.json").read_text(encoding="utf-8"))
     idx["sealed"] = True
     idx["release"] = "M2A_GOLD r3b (2026-10-02)"
-    idx["rules"] = idx["rules"] + " + U1/U2 (usuario, 2026-10-02) + D1 + U3 (enmienda R3) + U25 (enmienda R3b) + U26 (R3c)"
+    idx["rules"] = idx["rules"] + " + U1/U2 (usuario, 2026-10-02) + D1 + U3 (enmienda R3) + U25 (enmienda R3b) + U26 (R3c) + U27 (R3d)"
     idx["note"] = ("Copia sellada. Difiere del candidato asesor por U1 (SF166), U2 (SF063) y D1 (SF168), ver "
                    + ADJ_DOC + ", por las adiciones U3 (SF192–SF195) y U25 (SF196–SF201; SF202 etiquetado y "
-                   "retirado) y por U26 (eco de SF198), ver " + ADJ_DOC_R3 + ". REAL sin cambios.")
+                   "retirado), U26 (eco de SF198) y U27 (eco de SF138/SF140), ver " + ADJ_DOC_R3 + ". REAL sin cambios.")
     syn = idx["slices"]["SYNTHETIC"]["M2A_GOLD"]
     syn["ids"] = sorted(r["gold_id"] for r in out)
     syn["n"] = len(out)

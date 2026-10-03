@@ -81,6 +81,8 @@ def test_sealed_gold_reproduces_from_candidate_and_adjudications():
     assert rows["SF166"]["expected_disposition"] == "CLARIFY"  # U1: 2023 outside the D10 catalog
     assert {rows["SF063"][k]["prior"]["pending"]["asks"] for k in ("label_A", "label_B")} == {2}  # U2
     assert rows["SF168"]["invalid_persisted_state"]  # D1
+    assert all(rows[g]["adjudicated_by"] == ["U27"] and rows[g][k]["expected_echo"] == ["CONTEXT_EXPIRED"]
+               for g in ("SF138", "SF140") for k in ("label_A", "label_B"))  # U27 (R3d): B's echo
     r3 = {gid: rows[gid] for gid in ("SF192", "SF193", "SF194", "SF195")}  # U3: added from the blind labels A/B
     assert all(r["adjudicated_by"] == (["U25", "U3"] if gid == "SF195" else ["U3"]) and r["primary_agreement"]
                for gid, r in r3.items())

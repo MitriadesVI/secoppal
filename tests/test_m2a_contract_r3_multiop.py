@@ -141,6 +141,7 @@ class Pending(NamedTuple):
     frame: State
     candidates: tuple[tuple[Op, ...], ...]
     answer_slots: frozenset[str]
+    asked: tuple[Op, ...] = ()  # the patch of the turn that asked (record asked_trace_id): F24, R3d
 
 
 class Response(NamedTuple):
@@ -443,10 +444,11 @@ def r31_candidates(frame: State, e_order: bool) -> tuple[tuple[Op, ...], ...]:
     return (c1, *alternatives) if e_order else (c1,)
 
 
-def _pending(base, reason, open_ops, frame_ops, candidates, extra_slots=frozenset()) -> Pending:
+def _pending(base, reason, open_ops, frame_ops, candidates, extra_slots=frozenset(), asked=None) -> Pending:
     candidates = tuple(sorted(tuple(sorted(c)) for c in candidates))
     slots = covered(open_ops) | covered(op for c in candidates for op in c) | extra_slots
-    return Pending(reason, tuple(sorted(frame_ops)), apply(base, frame_ops), candidates, frozenset(slots))
+    asked = tuple(sorted((*open_ops, *frame_ops) if asked is None else asked))  # the asking turn = open + resolved
+    return Pending(reason, tuple(sorted(frame_ops)), apply(base, frame_ops), candidates, frozenset(slots), asked)
 
 
 def _without(ops, removed) -> tuple[Op, ...]:
@@ -517,8 +519,11 @@ def respond(cfg: Config, ops, *, law: bool = True) -> Response:
 
 
 def normalized(frame: State, ops) -> tuple[Op, ...]:
-    """§8.3 «Selección» (R3c, U26): a KEEP of a slot that exists in the frame is the identity and is dropped."""
-    return tuple(op for op in ops if not (op.kind == "KEEP" and occupied(frame, op.slot)))
+    """§8.3 «Selección» (R3d, U27): with candidates and AFTER the §6 step-2 check, a KEEP of a slot the frame has and
+    no other operation of P touches is the identity and is dropped."""
+    others = {op: covered(o for o in ops if o is not op) for op in ops}
+    return tuple(op for op in ops if not (op.kind == "KEEP" and occupied(frame, op.slot)
+                                          and op.slot not in others[op]))
 
 
 def identity(ops) -> list[tuple]:
@@ -532,14 +537,22 @@ def selects(candidate: tuple[Op, ...], ops) -> bool:
 
 
 def answer(cfg: Config, pending: Pending, ops) -> Response:
-    """§8.3 rows 4, 5, 6, 7 and 8 (row 1 is an event; rows 2 and 3 need control the model leaves out)."""
+    """§8.3: rows 6 (label) and then «Selección» (rows 4, 5, 7, 8; R3d). Row 1 is an event; rows 2 and 3 need control
+    the model leaves out."""
     labels = [op for op in ops if op.kind == "NO_SELECTION"]
-    ops = normalized(pending.frame, [op for op in ops if op not in labels])
-    touched_slots = covered(ops)
+    ops = tuple(op for op in ops if op not in labels)
     if labels:  # §8.3 row 5 before row 6: an answer plus an edit of another slot is re-asked as such
+        touched_slots = covered(ops)
         if touched_slots & pending.answer_slots and touched_slots - pending.answer_slots:
             return Response("REASK", "ANSWER_EDITS_OTHER_SLOT", pending=pending, clause="§8.3 5")
         return Response("REASK", "OPTION_NOT_CHOSEN", pending=pending, clause="§8.3 6")
+    if any(c.refusal == "DELTA_SLOT_CONFLICT" for c in causes(pending.frame, ops)):  # §6 step 2 on P, before
+        return Response("REASK", "ANSWER_UNRESOLVED", pending=pending, clause="§8.3 7 (§6 paso 2)")  # normalizing
+    if ops and identity(ops) == identity(pending.asked):  # F24 (R3d): re-sending the asking turn does not answer
+        return Response("REASK", "ANSWER_UNRESOLVED", pending=pending, clause="§8.3 7 (F24)")
+    if pending.candidates:
+        ops = normalized(pending.frame, ops)
+    touched_slots = covered(ops)
     if not touched_slots & pending.answer_slots:
         return Response("REASK", "PENDING_UNANSWERED", pending=pending, clause="§8.3 8")
     if touched_slots - pending.answer_slots:
@@ -666,9 +679,9 @@ def prior_pendings(base: State, e_order: bool) -> dict[str, Pending | None]:
     options = {"none": None}
     if occupied(base, "ORDER") and occupied(base, "CARDINALITY"):
         options["R3-1"] = _pending(base, REFUSAL_A3[LEAVES][0], (), (), r31_candidates(base, e_order),
-                                   frozenset({"ORDER", "CARDINALITY"}))
+                                   frozenset({"ORDER", "CARDINALITY"}), asked=(Op("CLEAR", "ORDER"),))
     options["ONE_SLOT"] = _pending(base, HOST["H10"][1], (Op("SET", "TIME/POSITIVE", "x", "asks:H10"),), (), ())
-    two = _pending(base, HOST["H5"][1], (), (), H5_CANDIDATES)
+    two = _pending(base, HOST["H5"][1], (), (), H5_CANDIDATES, asked=(Op("SET", "BUYER/POSITIVE", "x", "asks2:H5"),))
     if not law_violations(base, (), two.candidates, two.answer_slots):
         options["TWO_CANDIDATES"] = two
     return options
@@ -828,6 +841,23 @@ def test_the_r3b_controls_answer_as_the_contract_says():
     assert respond(r31, (Op("SET_ORDER", "ORDER", OrderKey.VALUE.value),)).code == "ANSWER_UNRESOLVED"
 
 
+def test_r3d_a_step2_conflict_in_an_answer_never_executes():
+    """ZEUS on 109095fe (zeus_r3c/probe_keepset.py): KEEP + a writer of the same slot is a §6 step-2 conflict decided
+    on P before normalizing; with a pending it is row 7, for every pending and every such two-operation answer."""
+    seen = Counter()
+    for cfg in configs():
+        if cfg.pending is None or cfg.expired:
+            continue
+        for first, second in itertools.combinations(OPS, 2):
+            pair = (first, second)
+            if {op.kind for op in pair} & {"KEEP"} and len({op.slot for op in pair}) == 1 and first.kind != second.kind \
+                    and not set(pair) & set(LABEL_ITEMS):
+                r = respond(cfg, pair)
+                seen[r.kind] += 1
+                assert r.kind != "EXECUTE", (cfg.profile, cfg.pending.reason, pair)
+    assert seen["REASK"] and not seen["EXECUTE"]
+
+
 def test_each_fail_closed_rule_is_pinned_by_a_concrete_combination():
     """ZEUS model mutants (zeus_r3b/model_mut.py) that the sweep alone let live: each rule answers as §6 says."""
     pick = {(c.profile, c.dual, c.expired, c.wire, c.pending is None): c for c in configs()}
@@ -857,11 +887,14 @@ def test_r3c_zeus_witnesses():
     cfg = Config("H6", base, False, False, h6, "current")
     change_buyer = (Op("CLEAR", "BUYER/POSITIVE"), Op("SET", "GEOGRAPHY/POSITIVE", "x"))
     both = apply(base, (Op("SET", "GEOGRAPHY/POSITIVE", "x"),))
-    assert respond(cfg, change_buyer).state == apply(base, change_buyer)
-    for said in ((Op("SET", "GEOGRAPHY/POSITIVE", "x"),),  # «buscar con ambos»
-                 (Op("KEEP", "BUYER/POSITIVE"), Op("SET", "GEOGRAPHY/POSITIVE", "x"))):  # «mantén la entidad y en …»
-        assert respond(cfg, said) == Response("EXECUTE", state=both, clause="§8.3 4")
-    assert respond(cfg, (Op("KEEP", "BUYER/POSITIVE"),)).code == "PENDING_UNANSWERED"  # only the identity: row 8
+    assert respond(cfg, change_buyer).state == apply(base, change_buyer)  # A: only by repeating its two ops (M2A-4)
+    said = (Op("KEEP", "BUYER/POSITIVE"), Op("SET", "GEOGRAPHY/POSITIVE", "x"))  # «buscar con ambos», «mantén … y en …»
+    assert respond(cfg, said) == Response("EXECUTE", state=both, clause="§8.3 4")
+    resent = (Op("SET", "GEOGRAPHY/POSITIVE", "x"),)  # the asking turn again: F24, the product does not choose (R3d)
+    assert respond(cfg, resent) == Response("REASK", "ANSWER_UNRESOLVED", pending=h6, clause="§8.3 7 (F24)")
+    assert respond(cfg, (Op("KEEP", "BUYER/POSITIVE"),)).code == "PENDING_UNANSWERED"  # empty after normalizing: row 8
+    assert respond(cfg, (Op("KEEP", "BUYER/POSITIVE"), Op("CLEAR", "BUYER/POSITIVE"),
+                         Op("SET", "GEOGRAPHY/POSITIVE", "x"))).clause == "§8.3 7 (§6 paso 2)"  # conflict before
     orc = next(c for c in configs() if c.profile == "OR" and not c.dual and not c.expired and c.wire == "normal"
                and c.pending is None)
     assert respond(orc, (Op("SET", "TOPIC/POSITIVE", "w"),)) == Response(

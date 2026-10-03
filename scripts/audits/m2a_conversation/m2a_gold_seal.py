@@ -93,6 +93,7 @@ ADJUDICATIONS = {
     "U25": "R3b: SF196–SF201 añadidos (SF199 = lectura de B; SF202 etiquetado y retirado); SF195 SET_ORDER POSITIVE "
            "(gold/ADJUDICATION_R3.md, sección R3b)",
     "U26": "R3c: SF198 lleva el eco CONTEXT_EXPIRED (vencimiento pegajoso) (gold/ADJUDICATION_R3.md, sección R3c)",
+    "U27": "R3d: SF138 y SF140 toman el eco CONTEXT_EXPIRED de la etiqueta B (gold/ADJUDICATION_R3.md, sección R3d)",
 }
 
 

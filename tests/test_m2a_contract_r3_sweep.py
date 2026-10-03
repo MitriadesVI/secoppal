@@ -792,11 +792,15 @@ def test_r3c_is_in_the_contract():
     expiry = _flat(CT.section(text, "**Vencimiento pegajoso (R3c, U26).**", "Si además había una pendiente"))
     for clause in ("Un turno que encuentra el ancla vencida y no la confirma ni la reemplaza lleva el eco "
                    "`CONTEXT_EXPIRED`, guardado en su registro", "sea cual sea el plazo transcurrido",
-                   "Vuelve a estar vigente sólo con «continuar» (`CONTEXT_EXPIRED_CONFIRM`), con «reset» o una "
-                   "cancelación, o con una búsqueda nueva", "No hay campos nuevos en el tipo"):
+                   "Vuelve a estar vigente sólo con «continuar» (`CONTEXT_EXPIRED_CONFIRM`), que se confirma por evento",
+                   "la **eliminan**: `anchor_trace_id = None`, nunca vuelve a vigente, y el siguiente fragmento es "
+                   "`CLARIFY NO_ANCHOR`", "Una búsqueda nueva la reemplaza", "No hay campos nuevos en el tipo"):
         assert clause in expiry, clause
     echo = next(r for r in CT.table(text, "| Clase | Obligatoria cuando |") if r[0] == "`CONTEXT_EXPIRED`")
-    assert "no la confirma ni la reemplaza" in echo[1]
+    assert "no la confirma ni la reemplaza, sea cual sea su alcance o disposición" in echo[1]
+    assert "**Segunda adición** (R3d, U27)" in text  # «Derivación exacta», so INV-M2A-12 derives it
+    assert "| «reset» o cancelación de `CONTEXT_EXPIRED_CONFIRM` | ninguno: `anchor_trace_id = None`" in text
+    assert "Una `PendingClarification` sólo puede existir si se cumplen las tres condiciones:" in text
     law = _flat(CT.section(text, "### 8.4 Ley de la pendiente posible (R3b, U20)", "## 9."))
     for clause in ("existe **al menos una** respuesta que ejecuta",
                    "`VALUE_WITHOUT_COMPARATOR` lleva `answer_slots = {VALUE.lower, VALUE.upper}`",
@@ -824,8 +828,13 @@ def test_r3b_p2_keep_conflict_and_semantic_selection_are_in_the_contract():
     step = _flat(CT.section(text, "2. **Orden fijo:**", "3. **Arrastre por identidad"))
     assert "`KEEP` + `SET`/`SET_ORDER`/`REPLACE_UNIVERSE` de la misma ranura **aunque los valores coincidan**" in step
     assert "Un `CLEAR` de la dimensión entera cubre cada una de sus ranuras" in step
-    selection = _flat(CT.section(text, "**Selección (R3b, U22; R3c, U26).**", "### 8.4"))
-    for clause in ("se normaliza P quitando los `KEEP` de ranuras que existen en `frame`",
+    selection = _flat(CT.section(text, "**Selección (R3b, U22; R3c, U26; R3d, U27).**", "### 8.4"))
+    for clause in ("para las filas 4, 5, 7 y 8; las filas 1–3 y 6 se deciden antes",
+                   "se deciden sobre P tal cual: con una pendiente vigente, una causa así es la fila 7",
+                   "Una respuesta idéntica al parche del turno que originó la pregunta",
+                   "«continuar» de `CONTEXT_EXPIRED_CONFIRM` sólo se confirma por evento (fila 1)",
+                   "se quitan los `KEEP` de ranuras que existen en `frame` y que ninguna otra operación de P toca",
+                   "Una P vacía tras normalizar es la fila 8",
                    "Si P toca ranuras fuera de `answer_slots`, es la fila 5 (o la 8 si no toca ninguna de dentro)",
                    "coincidencia **exacta** de (op, ranura, valor canónico codificado) o (`REPLACE_UNIVERSE`, destino)",
                    "exactamente uno coincide ⇒ fila 4, y se compone su parche completo sobre `frame`; ninguno o varios "

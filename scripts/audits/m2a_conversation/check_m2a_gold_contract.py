@@ -28,6 +28,8 @@ CARDINALITY left without ORDER) give INFORM with the top code of the contract's 
 R3c (U26): an executed answer to the R3-1 pending is exactly C1 or one SET_ORDER candidate (§6.7); CONTEXT_EXPIRED_CONFIRM
 needs a «continuar» without refusal causes (H1); row 4b enters the Gold only for motives with a sealed case (G8); G11
 reads the sealed §19 extraction (an R3-1 SET_ORDER option ⇒ E-ORDER; 4b INVALID_PROPOSAL ⇔ M2A-5).
+R3d (U27): a stored echo carries CONTEXT_EXPIRED on every turn over an expired anchor that neither confirms nor
+replaces it, and never on EXECUTE/NEW_SEARCH (§11, second addition).
 Not checkable from Gold fields (needs the producer's evidence): the continuation guard of §7.2/§8.3 itself — a
 NEW_SEARCH relabel of a pending answer that keeps its conditions is representable; M2A-8 gates it.
 It proves the Gold is REPRESENTABLE by the contract; it does not DERIVE each disposition from §7.2/§8.3, which needs
@@ -495,6 +497,12 @@ def check_label(r: Report, rec: dict, lab: str, L: dict) -> None:
         r.bad(gid, lab, "NEW_SEARCH without own conditions (host floor)")
     if reason == "CONTEXT_EXPIRED_CONFIRM" and not (gap is not None and gap > 1800):
         r.bad(gid, lab, "CONTEXT_EXPIRED_CONFIRM within the 30 min window")
+    echo = L.get("expected_echo")  # §11 (R3d): stored echoes carry CONTEXT_EXPIRED iff the expired anchor is kept
+    if echo is not None and gap is not None and gap > 1800 and disp not in ("EXECUTE", "NEW_SEARCH") \
+            and "CONTEXT_EXPIRED" not in echo:
+        r.bad(gid, lab, "turn over an expired anchor that neither confirms nor replaces it, without CONTEXT_EXPIRED (§11)")
+    if echo is not None and disp in ("EXECUTE", "NEW_SEARCH") and "CONTEXT_EXPIRED" in echo:
+        r.bad(gid, lab, f"{disp} carries CONTEXT_EXPIRED: the anchor was confirmed or replaced (§10.1, §11)")
     if reason == "CONTEXT_EXPIRED_CONFIRM" and prior["state"] != "PENDING" and structural_causes(pir, ops):
         r.bad(gid, lab, "CONTEXT_EXPIRED_CONFIRM whose «continuar» has a refusal cause (§6 H1: INFORM, no loop)")
     if tk in ("DELTA", "ANSWER_TO_CLARIFICATION") and disp == "EXECUTE" and gap is not None and gap > 1800:

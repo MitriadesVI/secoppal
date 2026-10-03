@@ -1,8 +1,8 @@
 {
  "sealed": true,
  "schema": "m2a-followup-gold/2.1",
- "rules": "contrato M1 v1.4 + F1-F30 + A1-A9 + A8.1 + A9.1 + U1/U2 (usuario, 2026-10-02) + D1 + U3 (enmienda R3) + U25 (enmienda R3b) + U26 (R3c)",
- "note": "Copia sellada. Difiere del candidato asesor por U1 (SF166), U2 (SF063) y D1 (SF168), ver docs/audits/m2a_conversation/gold/ADJUDICATION_2026-10-02.md, por las adiciones U3 (SF192–SF195) y U25 (SF196–SF201; SF202 etiquetado y retirado) y por U26 (eco de SF198), ver docs/audits/m2a_conversation/gold/ADJUDICATION_R3.md. REAL sin cambios.",
+ "rules": "contrato M1 v1.4 + F1-F30 + A1-A9 + A8.1 + A9.1 + U1/U2 (usuario, 2026-10-02) + D1 + U3 (enmienda R3) + U25 (enmienda R3b) + U26 (R3c) + U27 (R3d)",
+ "note": "Copia sellada. Difiere del candidato asesor por U1 (SF166), U2 (SF063) y D1 (SF168), ver docs/audits/m2a_conversation/gold/ADJUDICATION_2026-10-02.md, por las adiciones U3 (SF192–SF195) y U25 (SF196–SF201; SF202 etiquetado y retirado), U26 (eco de SF198) y U27 (eco de SF138/SF140), ver docs/audits/m2a_conversation/gold/ADJUDICATION_R3.md. REAL sin cambios.",
  "slices": {
   "REAL": {
    "M2A_GOLD": {
@@ -226,7 +226,7 @@
   "SYNTHETIC": {
    "M2A_GOLD": {
     "n": 160,
-    "sha256": "eb0defc686e805848f39f58db5d3e475c30e18d8f38ea0d417e15398194c5f57",
+    "sha256": "811357432db35ea76c3b3b62c0eafdb2d40314aad03bda584f9f054ca9306a9a",
     "ids": [
      "SF001",
      "SF002",
@@ -797,6 +797,14 @@
   "SF063": {
    "before_sha256": "42c84f7d9b8798f6d10a7b9d18a57ae702c507edad507c4d2ae3824188c5f684",
    "after_sha256": "2fdd2688be54b6a6a48df904cc520745ce00b63bb17132f918479e94ba76024e"
+  },
+  "SF138": {
+   "before_sha256": "f59d172cde12917554ee44c0f921a3a215d767b2ae9bcc75203da5cf4b11bc84",
+   "after_sha256": "367d8835f6ca5b296b9d2b96748324330aa0bd07895f47465b8d0a417d68fecd"
+  },
+  "SF140": {
+   "before_sha256": "d3a9c089b40dab2e6b2ab8a4c8894cbc0c69cb0419ccb68a61fcd50fbd05e545",
+   "after_sha256": "40391d7a6b639454539536d297cf639afcec309d7483520a599d26242406ae5c"
   },
   "SF166": {
    "before_sha256": "75c251a4e64a1714aa8f338811e6f5c5ed1456097d4c19d0a774cab66292a3e2",
