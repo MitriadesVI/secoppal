@@ -129,7 +129,8 @@ Los marcados «a completar» los completa el orquestador al integrar.
   - D-6, genérica: `OUT_UNSUPPORTED_PROPOSAL` / `INFORM UNSUPPORTED_PROPOSAL:<motivo>`, 0 llamadas, ancla intacta.
     Motivos y dueños: `MULTI_REQUEST` → M2b; `UNSUPPORTED_CONDITION` → extensión o versionado del lenguaje;
     `UNSUPPORTED_SOURCE` → contrato M1; `INVALID_PROPOSAL` → productor (M2A-5); `NO_ACTION` → contrato M2a (sólo sin
-    pendiente). Exclusiones: un universo no dicho (Q-R8-3) y `UNACCREDITED_MODALITY_FAMILY` (va por §6.1).
+    pendiente). Exclusiones: un universo no dicho (Q-R8-3, cerrada el 2026-10-03 como IN/DELTA por §7.1 fila 8: U29)
+    y `UNACCREDITED_MODALITY_FAMILY` (va por §6.1).
 - **Quién.** Usuario.
 - **Motivo.** Re-sellar una sola vez, con todos los huecos de representabilidad cerrados.
 - **Dónde.** Contrato: §6, §6.3, §6.5, §6.7, §7.1 fila 4b, §18, §19, §20, A.1, A.3, Anexo B, C.1 y Anexo D
@@ -417,6 +418,31 @@ Los marcados «a completar» los completa el orquestador al integrar.
   (sello `7dd39b4b…`).
 - **Si cambia, tocar.** Este registro; el documento de deudas; el plan (filas M2A-4 y M2A-6) al integrar.
 
+### U29. Hallazgos del ZEUS conjunto sobre la integración (2026-10-03)
+- **Decisión.**
+  - **F1 (fondo).** Una dependencia §19 `COMPOSICION` no se pierde al pasar por el `frame` de una pendiente. Se repara
+    como aplicación de §8.4 y §19, **sin cambiar el contrato**: §8.2 y §8.4 dicen que nada abierto entra en un
+    `frame`, §15.5 y §19 fallan cerrado, y H1 ya lo hacía bien.
+    - Un `frame` que, compuesto desde la base, levanta una DEPENDENCY de §19 no es lícito, y el turno responde esa
+      DEPENDENCY.
+    - El reducer (M2A-3) lo repara en su carril.
+    - El modelo simbólico del gate multi-op aplica la misma regla, con un caso por tipo de pendiente (H6, R3-1, una
+      causa, H4) y un barrido por pares sin ningún `CLARIFY` cuyo `frame` levante una dependencia.
+  - **F2.** Con `buyer_scope` nulo, H6 no dispara. Es **gate de activación de M2A-6**: D-BUYER debe tipar
+    `buyer_scope` antes de activar M2a en runtime. Consta también en `M2A4_M2A6_ENTRY_DEBTS.md`.
+  - **F7.** Q-R8-3 (un universo no dicho en un delta) queda **cerrada** como IN/DELTA por §7.1 fila 8: en un delta,
+    el universo lo aporta el ancla.
+    - El contrato no se toca: su Anexo D.2 sigue diciendo «Q-R8-3 de M2A-3 sigue abierta».
+    - El estado vigente es el de este registro; U12 está actualizada.
+- **Quién.** Usuario.
+- **Motivo.** ZEUS conjunto sobre la integración (2026-10-03).
+- **Dónde.**
+  - `tests/test_m2a_contract_r3_multiop.py`: `frame_dependency` y `law_violations` responden DEPENDENCY;
+    `frame_defects` lo comprueba de forma independiente; test U29.
+  - `M2A4_M2A6_ENTRY_DEBTS.md` (F2) y U12 en este registro (F7).
+  - Contrato, Gold y sello sin cambios (sello `7dd39b4b…`).
+- **Si cambia, tocar.** Lo mismo; el reducer de M2A-3 (F1) y el plan de M2A-6 (F2) al integrar.
+
 ## Estado
 
 - **M2A-3 LANGUAGE R3 = FROZEN.** Activo desde el GO de ZEUS sobre `57530a07` (sello `7dd39b4b…`, contrato §20.4).
@@ -478,4 +504,5 @@ Los marcados «a completar» los completa el orquestador al integrar.
 | `55571ec5` | R3c: último arreglo (U26) y re-sellado |
 | `109095fe` | remate de forma de R3c (barandilla): pins de F16, P-3, A8.1 no comparable y dos causas no acreditadas; «componer sobre `frame`» declarado gate de M2A-4; §6.7: C1 lo emite el productor; re-sellado |
 | `57530a07` | R3d: arreglos acotados (U27) y re-sellado |
-| commit siguiente a `57530a07` | sólo documentación: U28 y deudas de entrada de M2A-4/M2A-6 (sello sin cambios) |
+| `3f88bb38` | sólo documentación: U28 y deudas de entrada de M2A-4/M2A-6 (sello sin cambios) |
+| commit siguiente a `3f88bb38` | U29: F1 en el modelo simbólico; F2 y F7 registradas (sello sin cambios) |
