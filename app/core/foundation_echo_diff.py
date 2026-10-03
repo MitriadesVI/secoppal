@@ -15,6 +15,14 @@ three departures of the contract, because an echo that hid an unexplained change
 * A8.1 (§6.5, §15.2): a VALUE bound that no operation addresses leaves while the patch sets the opposite bound;
 * F16 (§6.5): a carried POSITIVE value leaves while the patch sets the same canonical value NEGATIVE.
 
+``answer_diff`` is the same reading for the answer to a pending question (contract §11: «delta **o respuesta** ejecutados
+con algo **del ancla** que sobrevive»; INV-M2A-12: eco = ejecución). The frame of a pending is what the asking turn
+composed and never executed, so the answer's difference is read against the ANCHOR, in two steps that each keep the
+reader's own checks: anchor to frame (by the operations the asking turn left in the frame) and frame to the effective
+(by the answer). What the frame carried and the answer left stands as carried; what the frame placed and the answer left
+stands as placed (announced now, once); what left the anchor, in either step, leaves with that step's departure; what the
+frame placed and the answer replaced was never executed and is nobody's fact.
+
 Pure over typed values (INV-M2A-24): no regex, no lexicon, no authority; values are read only through
 ``foundation_accepted`` (``canonical_value``).
 """
@@ -26,7 +34,7 @@ from dataclasses import dataclass, replace
 from enum import Enum
 
 from app.core.foundation_accepted import (
-    AcceptedCondition, AcceptedInterpretation, PatchOpKind, SemanticPatch, Slot, canonical_value,
+    AcceptedCondition, AcceptedInterpretation, PatchOp, PatchOpKind, SemanticPatch, Slot, canonical_value,
 )
 from app.core.interpretation_contract import POLARIZED_SLOT_DIMENSIONS, ContractError, Polarity, ValueSide
 from app.core.semantic_dimensions import SemanticDimension
@@ -103,10 +111,18 @@ def _departure(old: AcceptedCondition, placers, written: frozenset[Slot], cleare
 
 def composed_diff(base: AcceptedInterpretation, effective: AcceptedInterpretation, patch: SemanticPatch) -> TurnDiff:
     """The diff of ``effective`` against ``base`` under ``patch``; ``ContractError`` when the triple is inconsistent."""
-    if type(base) is not AcceptedInterpretation or type(effective) is not AcceptedInterpretation:
-        raise ContractError("ECHO_DIFF_NEEDS_INTERPRETATIONS")
     if type(patch) is not SemanticPatch:
         raise ContractError("ECHO_DIFF_NEEDS_A_PATCH")
+    return ops_diff(base, effective, patch.ops)
+
+
+def ops_diff(base: AcceptedInterpretation, effective: AcceptedInterpretation, ops: tuple[PatchOp, ...]) -> TurnDiff:
+    """``composed_diff`` over a bare tuple of operations (a frame's operations are a subset of a turn's, not a patch;
+    the tuple may be empty: then the effective is the base)."""
+    if type(base) is not AcceptedInterpretation or type(effective) is not AcceptedInterpretation:
+        raise ContractError("ECHO_DIFF_NEEDS_INTERPRETATIONS")
+    if type(ops) is not tuple or any(type(op) is not PatchOp for op in ops):
+        raise ContractError("ECHO_DIFF_NEEDS_OPERATIONS")
     before = {condition.condition_id: condition for condition in base.conditions}
     carried, placed = [], []
     for condition in effective.conditions:
@@ -117,15 +133,15 @@ def composed_diff(base: AcceptedInterpretation, effective: AcceptedInterpretatio
             carried.append(condition)
         else:
             raise ContractError("ECHO_CARRIED_CONDITION_CHANGED")
-    placers = tuple(op for op in patch.ops if op.op in PLACERS)
+    placers = tuple(op for op in ops if op.op in PLACERS)
     if Counter(map(_shape, placed)) != Counter(_shape(op.condition) for op in placers):
         raise ContractError("ECHO_PLACED_WITHOUT_OPERATION")
     written = frozenset(op.slot for op in placers)
-    cleared = frozenset(slot for op in patch.ops if op.op is PatchOpKind.CLEAR for slot in _covers(op.slot))
+    cleared = frozenset(slot for op in ops if op.op is PatchOpKind.CLEAR for slot in _covers(op.slot))
     standing = {condition.condition_id for condition in effective.conditions}
     removed = tuple(Removal(old, _departure(old, placers, written, cleared))
                     for old in base.conditions if old.condition_id not in standing)
-    redirects = tuple(op for op in patch.ops if op.op is PatchOpKind.REPLACE_UNIVERSE)
+    redirects = tuple(op for op in ops if op.op is PatchOpKind.REPLACE_UNIVERSE)
     universe_before = tuple((request.subject, request.universe_kind) for request in base.requests)
     universe_after = tuple((request.subject, request.universe_kind) for request in effective.requests)
     if not redirects and effective.requests != base.requests:
@@ -133,6 +149,31 @@ def composed_diff(base: AcceptedInterpretation, effective: AcceptedInterpretatio
     if redirects and universe_after != tuple((op.universe.subject, op.universe.universe_kind) for op in redirects):
         raise ContractError("ECHO_UNIVERSE_NOT_THE_REQUESTED")
     wide_value_clear = any(op.op is PatchOpKind.CLEAR and op.slot.dimension is SemanticDimension.VALUE
-                           and op.slot.side is None for op in patch.ops)
+                           and op.slot.side is None for op in ops)
     return TurnDiff(tuple(carried), tuple(placed), removed, bool(redirects), universe_before != universe_after,
-                    wide_value_clear, any(op.op is PatchOpKind.SET_ORDER for op in patch.ops))
+                    wide_value_clear, any(op.op is PatchOpKind.SET_ORDER for op in ops))
+
+
+def answer_diff(anchor: AcceptedInterpretation, frame: AcceptedInterpretation, frame_ops: tuple[PatchOp, ...],
+                effective: AcceptedInterpretation, answer: SemanticPatch) -> TurnDiff:
+    """The diff of an executed answer against the ANCHOR: ``frame_ops`` turn the anchor into the frame (what the asking
+    turn left in it), ``answer`` turns the frame into the effective. Each step is read (and refused) by ``ops_diff``."""
+    first = ops_diff(anchor, frame, frame_ops)
+    second = composed_diff(frame, effective, answer)
+    anchor_by_id = {condition.condition_id: condition for condition in anchor.conditions}
+    carried_by_frame = {condition.condition_id for condition in first.carried}
+    placed_by_frame = {condition.condition_id for condition in first.placed}
+    standing = {condition.condition_id for condition in second.carried}
+    placed_by_answer = {condition.condition_id for condition in second.placed}
+    carried = tuple(c for c in second.carried if c.condition_id in carried_by_frame)
+    placed = tuple(c for c in effective.conditions
+                   if c.condition_id in placed_by_answer or (c.condition_id in placed_by_frame and c.condition_id in standing))
+    left_with_the_answer = [Removal(anchor_by_id[r.condition.condition_id], r.departure) for r in second.removed
+                            if r.condition.condition_id in carried_by_frame]  # a frame's replacement is nobody's fact
+    order = {condition.condition_id: rank for rank, condition in enumerate(anchor.conditions)}
+    removed = tuple(sorted((*first.removed, *left_with_the_answer), key=lambda r: order[r.condition.condition_id]))
+    universe_before = tuple((request.subject, request.universe_kind) for request in anchor.requests)
+    universe_after = tuple((request.subject, request.universe_kind) for request in effective.requests)
+    return TurnDiff(carried, placed, removed, first.universe_replaced or second.universe_replaced,
+                    universe_before != universe_after, first.wide_value_clear or second.wide_value_clear,
+                    first.set_order or second.set_order)
