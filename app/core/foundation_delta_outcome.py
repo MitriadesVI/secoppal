@@ -20,7 +20,8 @@ The pending is returned as DATA (``PendingQuestion``: frame, open operations, ca
 ``PendingClarification`` and its protocol is M2A-4's. §8.4 judges a candidate by the causes of §6 step 3b only, and a
 candidate «executes» with the host rule its pending answers exempted (``executes(..., answered=rule)``): H6's «buscar
 con ambos» is the answer to H6, not a new H6 (ZEUS NO_GO on 15e72829, P1). M2A-4 composes a chosen candidate with the
-same exemption.
+same exemption. The frame of every pending (one cause, H3–H11, H4) is read from the base: a §19 COMPOSICION
+dependency it raises decides the turn as DEPENDENCY, never a pending (``frame_obstacle``).
 """
 
 from __future__ import annotations
@@ -201,10 +202,15 @@ def _compose(base, ops, trace) -> Composed | DeltaRefusal:
     return compose_ops(base, ops, base_trace_id=trace) if ops else Composed(base, frozenset(), frozenset(), False)
 
 
-def _questions(base, ops, composed: Composed) -> tuple[Finding, ...]:
-    """What cannot sit in a frame (§8.2, §8.4): a host question, whether an operation opens it or the composed state
-    itself raises it (a state the frame cannot resolve). H11 (the whole turn) is the one question a frame may hold."""
-    return tuple(f for f in host_findings(base, ops, composed) if f.kind is FindingKind.QUESTION and f.rule != "H11")
+def frame_obstacle(base, frame_ops, composed: Composed) -> Finding | None:
+    """What cannot sit in a frame (§8.2, §8.4: «una operación que pregunta o no está acreditada nunca entra en un
+    frame»), read on the frame composed FROM THE BASE, in the order of §6 step 4: a host question, whether an operation
+    opens it or the composed state raises it (H11, the whole turn, is the one question a frame may hold), or a §19
+    COMPOSICION dependency. A frame judged on its own would launder the dependency: a candidate composed on a frame
+    that already changed the universe or dropped the TIME no longer sees H8 or DEP-SMMLV-RECALC (ZEUS NO_GO on the
+    integration 8066e03d, F1)."""
+    return next((f for f in host_findings(base, tuple(frame_ops), composed)
+                 if f.kind is FindingKind.DEPENDENCY or (f.kind is FindingKind.QUESTION and f.rule != "H11")), None)
 
 
 def executes(frame: AcceptedInterpretation, ops, trace: str, *, answered: str | None = None) -> bool:
@@ -268,15 +274,18 @@ def _has_executing_answer(frame, answer_slots, candidates, trace: str, origin: C
 
 def law_violations(base, frame_ops, candidates, answer_slots, trace: str, origin: ConditionOrigin,
                    answered: str | None = None) -> list[str]:
-    """§8.4: (1) the frame is a valid effective with nothing open; (2) every candidate composes on it without causes of
-    §6 step 3b — the candidates are judged by those causes, never by host questions; ``answer_slots`` ⊇ the
-    candidates' slots; (3) at least one answer executes (``answered``: the host rule the pending answers)."""
+    """§8.4: (1) the frame is a valid effective with nothing open and raises no §19 COMPOSICION dependency (both read
+    from the base); (2) every candidate composes on it without causes of §6 step 3b — the candidates are judged by those
+    causes, never by host questions; ``answer_slots`` ⊇ the candidates' slots; (3) at least one answer executes
+    (``answered``: the host rule the pending answers)."""
     frame_ops = tuple(frame_ops)
     composed = _compose(base, frame_ops, trace)
     if isinstance(composed, DeltaRefusal):
         return ["frame has a refusal cause"]
-    if _questions(base, frame_ops, composed):
-        return ["frame holds an open question"]
+    obstacle = frame_obstacle(base, frame_ops, composed)
+    if obstacle is not None:
+        return ["frame raises a §19 dependency" if obstacle.kind is FindingKind.DEPENDENCY
+                else "frame holds an open question"]
     frame, out = composed.effective, []
     for candidate in candidates:
         if isinstance(_compose(frame, candidate, trace), DeltaRefusal):
@@ -298,7 +307,13 @@ def _slots(ops) -> frozenset[Slot]:
 def _ask(base, code: str, frame_ops, open_ops, candidates, answer_slots, trace, origin,
          answered: str | None = None) -> DeltaOutcome:
     """CLARIFY with its pending when §8.4 allows it; INFORM with the same code otherwise (never a pending that cannot
-    exist)."""
+    exist). A frame that raises a §19 COMPOSICION dependency first decides the turn as that DEPENDENCY, as H1 does
+    («decide esa dependencia»): the declared red of §19 is never laundered into a pending."""
+    composed = _compose(base, tuple(frame_ops), trace)
+    if isinstance(composed, Composed):
+        obstacle = frame_obstacle(base, frame_ops, composed)
+        if obstacle is not None and obstacle.kind is FindingKind.DEPENDENCY:
+            return DeltaOutcome(DeltaDisposition.DEPENDENCY, None, dependency=obstacle.dependency)
     if law_violations(base, frame_ops, candidates, answer_slots, trace, origin, answered):
         return DeltaOutcome(DeltaDisposition.INFORM, code)
     frame = _compose(base, tuple(frame_ops), trace).effective
@@ -329,7 +344,8 @@ def delta_outcome(base: AcceptedInterpretation, patch: SemanticPatch, *, base_tr
                                PatchOp(PatchOpKind.CLEAR, SLOT_BY_KEY[CARDINALITY_KEY], None, None, at)),)
         slots = _slots(top.ops) | _slots(op for c in candidates for op in c) | extra
         outcome = _ask(base, top.published, _without(ops, top.ops), top.ops, candidates, slots, trace, origin)
-        return DeltaOutcome(outcome.disposition, outcome.code, pending=outcome.pending, causes=causes)
+        return DeltaOutcome(outcome.disposition, outcome.code, pending=outcome.pending,
+                            dependency=outcome.dependency, causes=causes)
     composed = compose_ops(base, ops, base_trace_id=trace)
     findings = host_findings(base, ops, composed)
     first = findings[0] if findings else None
