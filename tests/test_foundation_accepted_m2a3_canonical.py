@@ -427,6 +427,58 @@ def test_the_a1_a3_closed_lists_never_widen():
     assert annex_failures(fa) == []
 
 
+# ---- 7. Provenance as the contract writes it (phase 2): year, year_source and inheritance origins --------------------
+def provenance_failures(m) -> list[str]:
+    """§3.2: ``year`` is the vigencia of a SMMLV conversion, ``year_source`` a year's provenance (also a TIME's, §11):
+    independent. §15.4/§11: an inherited UNIT names its origin; an inherited YEAR may; an origin needs an
+    inheritance."""
+    out = []
+    accepted = {
+        "TIME year source without a SMMLV year": lambda: m.Provenance(year_source=m.YearSource.STATED),
+        "TIME year inferred by the clock": lambda: m.Provenance(year_source=m.YearSource.CLOCK_INFERRED),
+        "SMMLV year without a year source": lambda: m.Provenance(unit=m.Unit.SMMLV, source_amount="500",
+                                                                 unit_source=m.UnitSource.STATED, year=2025),
+        "inherited year without origin": lambda: m.Provenance(year_source=m.YearSource.PREVIOUS_ACCEPTED_TIME),
+        "inherited year with origin": lambda: m.Provenance(year_source=m.YearSource.PREVIOUS_ACCEPTED_TIME,
+                                                           inherited_from="t0"),
+        "inherited unit with origin": lambda: m.Provenance(unit=m.Unit.MILLONES, source_amount="5",
+                                                           unit_source=m.UnitSource.PREVIOUS_ACCEPTED_VALUE,
+                                                           inherited_from="t0"),
+    }
+    for label, build in accepted.items():
+        if (code := _code(build)) is not None:
+            out.append(f"refused {label}: {code}")
+    refused = {
+        "inherited unit without origin": lambda: m.Provenance(unit=m.Unit.MILLONES, source_amount="5",
+                                                              unit_source=m.UnitSource.PREVIOUS_ACCEPTED_VALUE),
+        "an origin without an inheritance": lambda: m.Provenance(year_source=m.YearSource.STATED, inherited_from="t0"),
+        "SMMLV without its year": lambda: m.Provenance(unit=m.Unit.SMMLV, source_amount="500",
+                                                       unit_source=m.UnitSource.STATED),
+    }
+    for label, build in refused.items():
+        if _code(build) is None:
+            out.append(f"accepted {label}")
+    return out
+
+
+def test_provenance_follows_the_contract():
+    assert provenance_failures(fa) == []
+
+
+def test_the_decoding_surface_reads_the_accredited_value():
+    negative = condition(fa, D.TOPIC, 1, "c1")  # vias, token mode, excluded
+    positive = condition(fa, D.TOPIC, 0, "c2")  # obras: another value
+    assert fa.canonical_value(negative) != negative.value  # the polarity is gone from the identity
+    assert fa.canonical_value(negative) != fa.canonical_value(positive)
+    lower = condition(fa, D.VALUE, 0, "v")  # >= 500_000_000, MILLONES
+    assert fa.money_bound(lower) == (500_000_000, True, True) and fa.unit_class(lower) == "PESOS"
+    assert fa.time_years(condition(fa, D.TIME, 0, "t")) == (2025, 2025)
+    assert fa.geo_divipola(condition(fa, D.GEOGRAPHY, 1, "g")) == "76001"
+    assert fa.state_datasets(condition(fa, D.STATE, 0, "s")) == frozenset()
+    with pytest.raises(ContractError, match="NOT_A_MONEY_VALUE"):
+        fa.money_bound(negative)
+
+
 # ---- mutants ---------------------------------------------------------------------------------------------------------
 def _mutant(*replacements: tuple[str, str]) -> types.ModuleType:
     source = SOURCE
@@ -496,6 +548,21 @@ MUTANTS = {
         LOGIC, "    return None if _conjunction_only(logic) else ConditionExpression(logic.operator, None, tuple(\n"
                "        g for c in logic.children for g in (c.children if c.operator is LogicOperator.AND "
                "and logic.operator is LogicOperator.AND else (c,))))"),),
+    # Provenance (phase 2)
+    "year_coupled_to_its_source_again": (provenance_failures, (
+        "        if self.year is not None:\n            _int(self.year, \"PROVENANCE_YEAR\", 1)",
+        "        if (self.year is None) != (self.year_source is None):\n            _fail(\"YEAR_WITHOUT_SOURCE\")\n"
+        "        if self.year is not None:\n            _int(self.year, \"PROVENANCE_YEAR\", 1)"),),
+    "inherited_unit_without_origin_accepted": (provenance_failures, (
+        "        if self.unit_source is UnitSource.PREVIOUS_ACCEPTED_VALUE and self.inherited_from is None:",
+        "        if False:"),),
+    "inherited_year_requires_origin_again": (provenance_failures, (
+        "        if self.unit_source is UnitSource.PREVIOUS_ACCEPTED_VALUE and self.inherited_from is None:",
+        "        if (self.unit_source is UnitSource.PREVIOUS_ACCEPTED_VALUE\n"
+        "                or self.year_source is YearSource.PREVIOUS_ACCEPTED_TIME) and self.inherited_from is None:"),),
+    "origin_without_inheritance_accepted": (provenance_failures, (
+        "        if self.inherited_from is not None and not (self.unit_source is UnitSource.PREVIOUS_ACCEPTED_VALUE",
+        "        if False and not (self.unit_source is UnitSource.PREVIOUS_ACCEPTED_VALUE"),),
     # A.1 / A.3 (phase 1c)
     "inform_accepts_every_clarify_code": (annex_failures, (
         "        return (code in INFORM_CODES or code in INFORM_CAPABLE_CLARIFY_CODES or unresolved",

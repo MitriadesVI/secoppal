@@ -34,8 +34,8 @@ from __future__ import annotations
 
 import hashlib
 import json
-from dataclasses import dataclass
-from datetime import datetime, timezone
+from dataclasses import dataclass, replace
+from datetime import datetime, timedelta, timezone
 from enum import Enum
 
 from app.core.foundation_authority_values import (
@@ -509,6 +509,57 @@ def slot_of(dimension: SemanticDimension, value: tuple[str, ...]) -> Slot:
     return Slot(dimension)
 
 
+# ---- decoded facts of an accredited value: the one decoding surface of the M2a reducer (M2A-3; R1) ----------------
+# The reducer never imports the closed value types (C1.x pin): it reads these plain facts, decoded here.
+def canonical_value(condition) -> tuple[str, ...]:
+    """The encoded value without its polarity: the canonical identity F16, F3/F22 and Nuevo(P, A) compare."""
+    decoded = decode_value(condition.value)
+    if getattr(decoded, "excluded", False):
+        decoded = replace(decoded, excluded=False)
+    return decoded.encode()
+
+
+def money_bound(condition) -> tuple[int, bool, bool]:
+    """``(amount_cop, is_lower, is_inclusive)`` of a VALUE condition (contract §15.2)."""
+    decoded = decode_value(condition.value)
+    if type(decoded) is not MoneyValue:
+        _fail("NOT_A_MONEY_VALUE")
+    return (decoded.amount_cop, decoded.comparator in _LOWER,
+            decoded.comparator in (_Comparator.GTE, _Comparator.LTE))
+
+
+def unit_class(condition) -> str | None:
+    """The comparability class of a VALUE bound (§15.2): ``SMMLV``, ``PESOS`` (any peso scale) or None (unknown)."""
+    unit = condition.provenance.unit
+    return None if unit is None else ("SMMLV" if unit is Unit.SMMLV else "PESOS")
+
+
+def time_years(condition) -> tuple[int, int] | None:
+    """``(first, last)`` civil year a TIME interval covers; None for an open bound."""
+    decoded = decode_value(condition.value)
+    if type(decoded) is not TimeValue:
+        _fail("NOT_A_TIME_VALUE")
+    if decoded.start is None or decoded.end_exclusive is None:
+        return None
+    return decoded.start.year, (decoded.end_exclusive - timedelta(days=1)).year
+
+
+def geo_divipola(condition) -> str | None:
+    """The DIVIPOLA code of a GEOGRAPHY value (None for a region or an uncoded place)."""
+    decoded = decode_value(condition.value)
+    if type(decoded) is not GeoValue:
+        _fail("NOT_A_GEO_VALUE")
+    return decoded.divipola
+
+
+def state_datasets(condition) -> frozenset[str]:
+    """The datasets a STATE value carries literals for (H8, §14): the state exists in those."""
+    decoded = decode_value(condition.value)
+    if type(decoded) is not StateValue:
+        _fail("NOT_A_STATE_VALUE")
+    return frozenset(entry[0] for entry in decoded.literals)
+
+
 # ---- ConditionOrigin / Provenance (contract §3.2) -----------------------------------------------------------------
 @dataclass(frozen=True, slots=True)
 class ConditionOrigin:
@@ -575,8 +626,9 @@ class Provenance:
                 _instance(value, kind, f"PROVENANCE_{name.upper()}")
         if (self.unit is None) != (self.unit_source is None):
             _fail("UNIT_WITHOUT_SOURCE")
-        if (self.year is None) != (self.year_source is None):
-            _fail("YEAR_WITHOUT_SOURCE")
+        # ``year`` is the vigencia of a SMMLV conversion and ``year_source`` the provenance of a year, also of a TIME
+        # (contract §3.2, §11 YEAR_INHERITED / YEAR_CLOCK_INFERRED): independent fields. The M2A-1a coupling of the two
+        # had no clause and refused a TIME whose year source is stated (M2A-3 phase 2).
         if self.year is not None:
             _int(self.year, "PROVENANCE_YEAR", 1)
         if self.source_amount is not None and not _canonical_decimal(self.source_amount):
@@ -590,9 +642,13 @@ class Provenance:
                 and len(self.buyer_scope) in (2, 5)):
             _fail("INVALID_PROVENANCE_BUYER_SCOPE")
         _opt_text(self.inherited_from, "PROVENANCE_INHERITED_FROM")
-        inherited = (self.unit_source is UnitSource.PREVIOUS_ACCEPTED_VALUE
-                     or self.year_source is YearSource.PREVIOUS_ACCEPTED_TIME)
-        if inherited != (self.inherited_from is not None):
+        # An inherited UNIT names where it comes from (contract §15.4: ``unit.inherited``, ``PREVIOUS_ACCEPTED_VALUE``,
+        # ``inherited_from``; §11 UNIT_INHERITED «de dónde sale»). An inherited YEAR is ``year_source =
+        # PREVIOUS_ACCEPTED_TIME`` (§11 YEAR_INHERITED, §16) and may carry it; an origin needs an inheritance.
+        if self.unit_source is UnitSource.PREVIOUS_ACCEPTED_VALUE and self.inherited_from is None:
+            _fail("INHERITANCE_WITHOUT_ORIGIN")
+        if self.inherited_from is not None and not (self.unit_source is UnitSource.PREVIOUS_ACCEPTED_VALUE
+                                                    or self.year_source is YearSource.PREVIOUS_ACCEPTED_TIME):
             _fail("INHERITANCE_WITHOUT_ORIGIN")
 
     def check_dimension(self, dimension: SemanticDimension) -> None:
