@@ -251,6 +251,10 @@ def _cases() -> list[Case]:
                       provenance=fa.Provenance(year_source=source, inherited_from=inherited))
         out.append(delta(name, BASE_BT, [set_(placed)], [E("CARRIED", "BUYER/POSITIVE", "c1"), UNI,
                                                          *[E(c, "TIME/POSITIVE", "p1") for c in classes]]))
+    across_years = cond(D.TIME, TimeValue(date(2025, 10, 1), date(2026, 10, 2), "range", False), "p1", trace="t1", n=1,
+                        provenance=fa.Provenance(year_source=fa.YearSource.RELATIVE_TO_CLOCK))
+    out.append(delta("relative_window_across_years", BASE_BT, [set_(across_years)],
+                     [E("CARRIED", "BUYER/POSITIVE", "c1"), UNI, E("RELATIVE_WINDOW_RESOLVED", "TIME/POSITIVE", "p1")]))
     out += [
         # VALUE_RANGE_REPLACED: A8.1, or a whole-VALUE CLEAR followed by a SET that does not restore a side
         delta("value_range_a81", interp(money("c1", 500, Comparator.LT), trace="t0"),

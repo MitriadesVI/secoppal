@@ -172,13 +172,34 @@ def with_receipt(patch: fa.SemanticPatch, echo_class: str) -> fa.SemanticPatch:
     return fa.SemanticPatch(tuple(ops), patch.origin_kind)
 
 
+YEAR_SOURCE_OF = {"RELATIVE_WINDOW_RESOLVED": fa.YearSource.RELATIVE_TO_CLOCK,
+                  "YEAR_INHERITED": fa.YearSource.PREVIOUS_ACCEPTED_TIME,
+                  "YEAR_CLOCK_INFERRED": fa.YearSource.CLOCK_INFERRED}
+# FINDING (reported, not resolved here): ``m2a_oracle_typing.tcond`` types a TIME's ``year_source`` only when the interval
+# lies in ONE civil year, so a window across years («últimos 12 meses», SF029 in TEST) reaches the typed turn without the
+# provenance the Gold op states (RELATIVE_TO_CLOCK). The echo cannot announce what the typed turn does not say; it
+# announces it the moment the typed condition carries it (proved below). Declared red, with the proof.
+UNTYPED_YEAR = "the oracle's typing omits year_source for a TIME across several civil years (m2a_oracle_typing.tcond)"
+
+
+def with_year_source(patch: fa.SemanticPatch, echo_class: str) -> fa.SemanticPatch:
+    """The year provenance the Gold op states, on the TIME conditions the typing left without one."""
+    source, ops = YEAR_SOURCE_OF[echo_class], []
+    for op in patch.ops:
+        condition = op.condition
+        if condition is not None and condition.dimension is D.TIME and condition.provenance.year_source is None:
+            op = replace(op, condition=replace(condition, provenance=replace(condition.provenance, year_source=source)))
+        ops.append(op)
+    return fa.SemanticPatch(tuple(ops), patch.origin_kind)
+
+
 def silent_emitted(label_gap, disposition: str) -> set[str]:
     expired = label_gap is not None and label_gap >= EXPIRY_SECONDS
     record = make_record(RESOLUTION[disposition])
     return {item.echo_class.value for item in fe.echo_items(None, None, None, record, anchor_expired=expired)}
 
 
-def executed_emitted(case: dict, receipt: str | None = None) -> tuple[set[str] | None, str | None, list[str]]:
+def executed_emitted(case: dict, change=None) -> tuple[set[str] | None, str | None, list[str]]:
     """``(classes emitted, why it could not run, the reference's problems with the emitted echo: [] = justified)``."""
     actual, scope, problem = run(case["inputs"])
     if problem is not None or actual is None:
@@ -186,8 +207,8 @@ def executed_emitted(case: dict, receipt: str | None = None) -> tuple[set[str] |
     if actual["disposition"] not in ("NEW_SEARCH", "EXECUTE"):
         return None, f"NOT_EXECUTED:{actual['disposition']}", []
     patch = fa.SemanticPatch.from_dict(case["inputs"]["patch"])
-    if receipt is not None:
-        patch = with_receipt(patch, receipt)
+    if change is not None:  # a SYNTHETIC input an authority will provide (a receipt, a provenance)
+        patch = change(patch)
     expired = facts_of(case["inputs"]).anchor_expired
     base = base_of(case["inputs"]["base"])
     if actual["disposition"] == "NEW_SEARCH":
@@ -197,7 +218,7 @@ def executed_emitted(case: dict, receipt: str | None = None) -> tuple[set[str] |
         composed = fd.compose(base, patch, base_trace_id="t0")
         assert isinstance(composed, fd.Composed)
         effective, resolution, patch_arg, base_trace = composed.effective, fa.TurnResolution.DELTA, patch, "t0"
-        if receipt is None:  # the effective the oracle froze is the one the reducer composes
+        if change is None:  # the effective the oracle froze is the one the reducer composes
             assert effective.to_dict() == actual["effective"]
         justified = problems(fe.echo_items, base, patch, composed)
     record = make_record(resolution, patch=patch_arg, effective=effective, base_trace_id=base_trace)
@@ -240,16 +261,26 @@ def measure(partition: str, real_dir: str | None = None) -> dict:
         elif all(m in UNREPRESENTABLE for m in missing):
             rows[gid] = ("RED", "; ".join(f"{m}: {UNREPRESENTABLE[m]}" for m in sorted(missing)))
         elif all(m in NEEDS_RECEIPT for m in missing):
-            with_it, _, with_problems = executed_emitted(case, receipt=sorted(missing)[0])
+            with_it, _, with_problems = executed_emitted(case, lambda patch: with_receipt(patch, sorted(missing)[0]))
             if with_it is not None and wanted <= with_it and not with_problems:
                 rows[gid] = ("RED", "; ".join(f"{m}: {NEEDS_RECEIPT[m]} (green with the synthetic receipt)" for m in sorted(missing)))
             else:
                 rows[gid] = ("FAIL", f"missing {sorted(missing)} even with the receipt")
+        elif missing and missing <= set(YEAR_SOURCE_OF) and _proved_with_year_source(case, wanted, missing):
+            rows[gid] = ("RED", f"{', '.join(sorted(missing))}: {UNTYPED_YEAR} (green with the year provenance)")
         elif missing == {"VALUE_RANGE_REPLACED"} and _clear_alone(case):
             rows[gid] = ("RED", f"VALUE_RANGE_REPLACED: {CHECKER_DISAGREES['VALUE_RANGE_REPLACED']}")
         else:
             rows[gid] = ("FAIL", f"missing {sorted(missing)}")
     return rows
+
+
+def _proved_with_year_source(case: dict, wanted: set[str], missing: set[str]) -> bool:
+    """With the year provenance on the typed TIME conditions the echo is what the Gold owes and what the typed turn justifies."""
+    if len(missing) != 1:
+        return False
+    with_it, _, unjustified = executed_emitted(case, lambda patch: with_year_source(patch, next(iter(missing))))
+    return with_it is not None and wanted <= with_it and not unjustified
 
 
 def _clear_alone(case: dict) -> bool:
