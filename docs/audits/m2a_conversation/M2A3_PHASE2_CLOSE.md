@@ -3,7 +3,8 @@
 **Fecha:** 2026-10-02. **Rama:** `mission/m2a-3-reducer`. **Contrato:** R3d sellado (`57530a07`, sello `7dd39b4b…`,
 fusionado en `10c0c576`). **Oráculo:** M2A-8a0 congelado, primero `f7d1b8b8` (artefacto `4aa343c7…`, fusionado en
 `b2ad0a62`) y después `f95275b4` (artefacto `a753efad…`, fusionado en `434ab1bd`), más el arreglo de su test de lector
-estricto `9535b41f` (fusionado en `0ef76f97`). Todo de sólo lectura aquí.
+estricto `9535b41f` (fusionado en `0ef76f97`) y el de A8.1 con unidad desconocida `9e54d2f5` (mismo artefacto,
+fusionado en `013e4429`). Todo de sólo lectura aquí. **La reparación del NO_GO de ZEUS sobre `15e72829` está en §6.**
 
 **Estado: DEV y TEST al 100 % de los APLICABLES, sintético y REAL (§3).** TEST se midió una sola vez.
 
@@ -24,8 +25,9 @@ En `95d9e828` se habían corregido en el tipo dos exigencias de 1a sin cláusula
 Con esa corrección, 23 de los 29 casos aplicables cuyas entradas el tipo rechazaba pasaron a construirse. Desde
 `f95275b4` el oráculo entrega además año y fuente juntos y el origen de todo año heredado: sus datos cumplen las dos
 lecturas. En `9535b41f` su test de lector estricto dejó de fijar el código `YEAR_WITHOUT_SOURCE` y está en verde con
-este tipo. **Divergencia declarada:** si se quiere volver a la regla de 1a (más estricta), es una decisión del
-usuario. Las dos lecturas dan el mismo resultado sobre el Gold.
+este tipo. **Estrechado por ZEUS (P2-5, §6):** de la relajación sólo quedan esas dos lecturas (un TIME lleva
+`year_source` sin `year`; un año heredado no exige origen). Una vigencia SMMLV vuelve a exigir su fuente, y
+`year_source` / `inherited_from` vuelven a vivir sólo en VALUE y TIME.
 
 ## 2. Lo implementado (tres módulos de una responsabilidad, registrados en `tests/m2a_steps/m2a_3.py`)
 
@@ -36,8 +38,10 @@ usuario. Las dos lecturas dan el mismo resultado sobre el Gold.
   - **TARGET_NOT_ADDRESSABLE** (§4.2), también si la víctima de F16 o de A8.1 está dentro de un grupo.
   - **DELTA_SLOT_CONFLICT**, incluido `KEEP` + escritura aunque los valores coincidan (U22).
   - **KEEP_ON_EMPTY_SLOT.**
-  - **OP_NOT_ACCREDITED:\<DIM\>**: F16 fail-closed y P-3; A8 con unidades no comparables; O1B (`REPLACE_UNIVERSE` a
-    oportunidades ⇒ `UNIVERSE`, §19 DEP-O1B); política sin dueño (§6.6, inventario de la fase 1).
+  - **OP_NOT_ACCREDITED:\<DIM\>**, una causa por OPERACIÓN (§6 paso 3b): F16 fail-closed y P-3; A8 con unidades no
+    comparables o desconocidas; O1B (`REPLACE_UNIVERSE` a oportunidades ⇒ `UNIVERSE`, §19 DEP-O1B); política sin dueño
+    (§6.6, inventario de la fase 1): una condición colocada que la necesita (MODALITY `family`, −Terminado sobre
+    contratos), un cambio de universo que arrastra una política o una condición así (⇒ `UNIVERSE`), la lente O1B.
   - **DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER** (R3-1), decidido sobre el estado.
   - **Composición:** CLEAR → SET/SET_ORDER/REPLACE_UNIVERSE; arrastre byte-idéntico con la excepción P-1;
     sustituciones A8.1 y F16; efectos `VALUE_RANGE_REPLACED`, `POLARITY_INVERTED` y `TOPIC_REPLACED`.
@@ -58,24 +62,26 @@ usuario. Las dos lecturas dan el mismo resultado sobre el Gold.
   - **Dependencias declaradas de §19:** DEP-SMMLV-RECALC y DEP-MODALITY-UNIVERSE.
   - **Ley §8.4:**
     - el marco es válido y no tiene preguntas abiertas;
-    - los candidatos componen;
+    - los candidatos componen sin causas del paso 3b (§8.4.2; nunca se los juzga por las preguntas del host);
     - hay al menos una respuesta que ejecuta, buscada con testigos abstractos de una operación, como en el modelo del
-      contrato.
+      contrato; un candidato ejecuta con la regla a la que responde exenta (`executes(..., answered=...)`).
   - **Pendiente:** se devuelve como datos (`PendingQuestion`); la construye M2A-4.
   - **`relative_outcome`:** §7.1 fila 6.
 - **`app/core/foundation_turn_scope.py`** — `classify_turn(TurnFacts)`: §7.1 filas 1–6 (incluida 4b) y §7.2 / §8 filas
   2–3 para el alcance.
   - Los hechos se leen en tres valores: el alcance sólo sale si no depende de los que faltan.
-  - `ABSENT` se rechaza (`REFERENT_SIGNAL_ABSENT`). La fila que §7.2 no decide se rechaza (`UNDECIDED:ADMISSIBLE_ALONE`,
-    ola F).
+  - `ABSENT` se rechaza (`REFERENT_SIGNAL_ABSENT`). «Nuevo ≠ ∅ ∧ Marco ∧ ¬Admisible sola» no tiene fila en §7.2, así que
+    §7.2 no dice búsqueda nueva y la fila 8 de §7.1 («lo demás: delta») la cierra: `IN` / `DELTA` (INV-M2A-20).
   - `search_effects` da los efectos de una búsqueda nueva (`CONTEXT_RESET`, `TOPIC_REPLACED`).
 - **`app/core/foundation_accepted.py`** — la superficie de decodificación de R1 (`canonical_value`, `money_bound`,
-  `unit_class`, `time_years`, `geo_divipola`, `state_datasets`) y las dos correcciones de §1.
+  `unit_class`, `time_years`, `geo_divipola`, `state_datasets`, `state_class`, `modality_family_policy`) y las dos
+  correcciones de §1, estrechadas en §6.
 
 Fuera, declarado:
 
 - **H2** (pendiente vigente): M2A-4.
 - **H5, H7, H9, H10:** lecturas de una autoridad que se resuelven al tipar el valor; un valor resuelto ya las pasó.
+  Nadie construye todavía su pendiente: deuda de M2A-4 (§7, punto 8).
 - **§8.3, §10 y §17.**
 - **`HostViewDecision`:** el sujeto `unspecified` sigue fallando cerrado en el tipo.
 
@@ -129,30 +135,78 @@ No medibles:
   - P6: políticas. P7: TARGET. P8: efectos.
   - Comprobaciones propias de H1, H3, H6, H8, H11, H12, «dos causas ⇒ INFORM» y DEP-O1B, escritas desde el contrato.
   - Estrés local: 6 semillas × 4.000 casos sin violaciones.
-- **27 mutantes del reducer, todos muertos.** Incluyen los que el manifiesto del oráculo declara indiscriminables por el
-  Gold: `f16_any_value`, `set_clears_whole_dimension`, `clear_dimension_only_positive`, `redirect_keeps_old_kind` y el
-  sobredisparo de H6. El resto es uno por regla.
+- **32 mutantes del reducer, todos muertos** (27 de la fase 2 y 5 de la reparación, §6). Incluyen los que el
+  manifiesto del oráculo declara indiscriminables por el Gold: `f16_any_value`, `set_clears_whole_dimension`,
+  `clear_dimension_only_positive`, `redirect_keeps_old_kind` y el sobredisparo de H6. El resto es uno por regla.
+- **`tests/test_foundation_delta_rules.py`** (reparación, §6): un test directo por regla, para que cada mutante de una
+  línea muera con la configuración del gate y no sólo cuando el generador llega a él.
 - **`tests/test_foundation_delta_tables.py`**, tablas exhaustivas del dominio cerrado:
-  - INV-M2A-18 (A8.1): 408 filas.
+  - INV-M2A-18 (A8.1): 900 filas (408 antes de la reparación; ahora con la unidad desconocida).
   - INV-M2A-19 (F16, P-3, F17, F3): 15 filas.
   - §7.2 sobre las 768 combinaciones (con INV-M2A-05 e INV-M2A-20) y §7.1 filas 1–6.
   - Pines de las constantes copiadas.
 - **`tests/test_foundation_accepted_m2a3_canonical.py`:** 4 mutantes nuevos de procedencia. Siguen vivos los de las
   fases 1b y 1c.
 
-## 5. Gates (resultado literal), sobre el árbol final
+## 5. Gates (resultado literal)
 
-- `pytest -p no:cacheprovider --hypothesis-seed=0` con `M2A_GOLD_REAL_DIR`, 18 archivos. Incluye:
-  - los focales y pines de las fases 1–1c;
-  - el barrido, el multi-op y la extracción s19;
-  - los cuatro tests del oráculo, incluido `test_m2a_oracle_inputs_strict_reader.py`;
-  - los tres de la fase 2.
+**Fase 2 (`4a68e2bc`):** 18 archivos con `M2A_GOLD_REAL_DIR`, **1536 passed**; `ruff` limpio; semgrep delta
+`TOTAL=0 BASELINE=0 NEW_DELTA=0`; `seal OK 7dd39b4b…`; `oracle OK a753efad…`.
 
-  Resultado: **1536 passed**, 0 skipped, 0 xfailed.
-- `ruff` (configuración del repo): limpio.
-- `olympus-semgrep-delta --base fa0b6de8`: `TOTAL=0 BASELINE=0 NEW_DELTA=0`. `semgrep` directo: 0.
-- `m2a_gold_seal.py verify --real-dir`: `seal OK 7dd39b4b…`.
-- `m2a_reducer_oracle.py check --real-dir`: `oracle OK a753efad…`.
-- Escáner de privacidad sobre los archivos de cada commit: sin nada bloqueante.
+**Reparación de ZEUS (`00ee88e5`, código y tests; este registro va en el commit siguiente):**
+
+- `pytest -p no:cacheprovider --hypothesis-seed=0` con `M2A_GOLD_REAL_DIR`, 17 archivos (`test_foundation_accepted_*` ×3,
+  `test_foundation_delta_*` ×3, `test_m2a3_*` ×2, `test_m2a_boundaries`, `test_m2a_contract_r3_multiop`, `…_r3_sweep`,
+  `…_s19_extraction`, `test_m2a_gold_seal`, `test_m2a_oracle_inputs_strict_reader`, `test_m2a_oracle_vs_contract_model`,
+  `test_m2a_reducer_oracle`, `test_m2a_transition_oracle`): **1785 passed**, 0 skipped, 0 xfailed.
+- DEV (`python -m tests.test_m2a3_oracle_link DEV`): sintético **54/54** (transiciones 47 + 3, 0 violaciones;
+  clasificación 52/52); con REAL **72/72** (64 + 4; 69/69). TEST se mide una sola vez, sobre el SHA congelado, y se
+  reporta en la entrega.
+- Mutantes: los 32 del suite muertos; arnés externo (35 de ZEUS re-anclados + 12 propios, `pytest -x
+  --hypothesis-seed=0` sobre propiedades, tablas, enlace, observabilidad y reglas, con control sin mutar en verde):
+  **46 muertos, 1 equivalente declarado** (§6).
+- `ruff --select E,W,F --ignore E501` (la selección del `Makefile`) sobre los archivos del carril: limpio. El repo
+  entero da 789 errores preexistentes, ninguno en archivos del carril.
+- `olympus-semgrep-delta --base fa0b6de8`: archivos del carril `TOTAL=0 BASELINE=0 NEW_DELTA=0`; repo entero
+  `TOTAL=42 BASELINE=42 NEW_DELTA=0`.
+- `m2a_gold_seal.py verify --real-dir`: `seal OK 7dd39b4b…`. `m2a_reducer_oracle.py check` (con y sin `--real-dir`):
+  `oracle OK a753efad…`.
 
 Corrí esos tests, no la suite global.
+
+## 6. Reparación del NO_GO de ZEUS sobre `15e72829` (≡ `4a68e2bc` en `app/`)
+
+| Hallazgo | Reparación | Tests directos (`tests/test_foundation_delta_rules.py` salvo indicación) |
+|---|---|---|
+| **P1 (fondo)** H6 nunca daba `CLARIFY`: la ley de §8.4 juzgaba los candidatos por las preguntas del host y «buscar con ambos» volvía a disparar H6 | §8.4.2 juzga cada candidato sólo por las causas del paso 3b; §8.4.3 hace ejecutar un candidato con la regla que responde exenta (`executes(frame, ops, trace, answered=rule)`). Misma clase revisada: H1 «continuar» y R3-1 C1 no responden a una regla del host y no cambian | `test_h6_asks_with_its_two_candidates_and_buscar_con_ambos_executes` (forma de `e6.py`), `…_for_a_region_without_a_territorial_code` (SF123), `…_reads_only_a_carried_territorial_buyer…`, `…_with_a_candidate_that_does_not_compose_informs`, `test_a_frame_never_holds_a_second_question`, `test_answer_slots_must_cover_the_candidates` |
+| **P2-3** condición que necesita política compone sin ella | `needs_host_policy`: SET de MODALITY `family` (operador o `family_policy`) y STATE −Terminado sobre una petición de contratos (la inversión F16 de +Terminado incluida) ⇒ `OP_NOT_ACCREDITED:<DIM>`; un `REPLACE_UNIVERSE` que arrastra una condición así ⇒ `…:UNIVERSE` | `test_a_condition_that_needs_a_host_policy_is_not_accredited`, `test_a_negated_terminado_over_contracts_needs_the_complement_policy`, `test_a_change_of_universe_carrying_a_condition_that_needs_a_policy_is_refused` |
+| **P2-4** una op contaba como varias causas | Una causa por operación para `TARGET_NOT_ADDRESSABLE` y `OP_NOT_ACCREDITED` (como el modelo del contrato); la ranura es la de la operación (`UNIVERSE` para `REPLACE_UNIVERSE`) y la cláusula la de su primera razón | `test_a_change_of_universe_with_carried_policies_is_one_cause`, `test_the_sf075_shape_is_dep_o1b_on_the_universe_with_or_without_time`, `test_the_o1b_lens_counts_only_a_change_of_the_state`, `test_an_operation_on_a_group_is_one_target_cause…` |
+| **P2-5** relajación del tipo demasiado ancha | `year` exige `year_source`; `year_source` e `inherited_from` sólo en VALUE/TIME (`check_dimension`); en VALUE, `year_source` exige `year`. Quedan sólo: TIME con `year_source` sin `year`, y año heredado sin origen | `provenance_failures` (`tests/test_foundation_accepted_m2a3_canonical.py`) con 5 mutantes de procedencia nuevos |
+| **P2-6** A8.1 trataba una unidad `None` como comparable | `_comparable` exige las dos unidades conocidas y de la misma clase. El oráculo lo aplicó por su lado en `9e54d2f5` | tabla A8.1 con la unidad desconocida (`tests/test_foundation_delta_tables.py`), `test_a81_never_compares_an_unknown_unit`; el generador produce `unit=None` |
+| **P2-7** 12 mutantes de ZEUS vivos | tests directos por regla (arriba y H1, R3-1, H3, H8, H11/H12, §7.1–§7.2, `search_effects`); el generador produce además regiones sin código, MODALITY `family`; propiedades nuevas (forma de cada pendiente, §6.6, una causa por op, dimensión de `UNRESOLVED_VALUE` dentro de `answer_slots`) | los 35 de ZEUS, re-anclados, y 12 propios mueren con la configuración del gate (semilla 0); 5 entran además en `REDUCER_MUTANTS` |
+| **P3** `UNDECIDED:ADMISSIBLE_ALONE` sin `TurnScope` | §7.1 fila 8: `IN` / `DELTA`; `is_new_content` eliminado (sin uso) | la tabla de §7.2 (las 768 combinaciones, 0 rechazos), `test_a_new_framed_but_not_admissible_turn_is_a_delta` |
+
+Lecturas que esta reparación fija y conviene que ZEUS mire:
+
+- **Unidad desconocida ARRASTRADA ⇒ `INFORM UNRESOLVED_VALUE:VALUE`**, no `CLARIFY`: §8.4 (3) no encuentra respuesta sobre
+  `answer_slots = {la cota nueva}` que componga, porque ninguna unidad elegida se compara con una desconocida. Con la
+  unidad desconocida en la cota NUEVA y la arrastrada conocida, sí: `CLARIFY`.
+- **Ancla dual reducida** a una de sus peticiones: el universo de la petición que queda no cambia, así que sus
+  políticas se arrastran (P-1) y no hay causa §6.6.
+- **Mutante equivalente declarado:** quitar `answered` de la llamada de H6 a la ley no cambia ningún desenlace, porque
+  «cambiar de comprador» ejecuta siempre que compone. El parámetro se mantiene porque es la semántica del contrato y la
+  que usará M2A-4.
+
+## 7. Deuda registrada para M2A-4 (U28; ZEUS puntos 8 y 9; no se tocan aquí)
+
+- **(8)** H5, H7, H9 y H10 no tienen punto de entrada que construya su pendiente bajo §8.4. `compose` no las evalúa
+  (§15.4, §16.1, INV-M2A-07: son lecturas de la autoridad), pero alguien tiene que levantar su `PendingClarification`
+  (H5 con dos candidatos).
+- **(9)** `classify_turn`, fila 2 de §8.3 con una pendiente `CONTEXT_EXPIRED_CONFIRM`: `TurnFacts` no lleva el tipo de
+  pendiente, así que «reset + fragmento» sin marco se clasifica `IN` / `DELTA` sobre el `frame` (el ancla vencida).
+  R3d manda búsqueda nueva si el resto es admisible solo y, si no, `CLARIFY NO_ANCHOR`; nunca componer sobre el
+  `frame` vencido.
+- **Composición de la opción elegida:** al aplicar un candidato (§8.3 filas 1 y 4), M2A-4 compone con la regla que la
+  pendiente responde exenta (`executes(..., answered=...)`); re-juzgar «buscar con ambos» como un turno nuevo volvería a
+  disparar H6.
+
