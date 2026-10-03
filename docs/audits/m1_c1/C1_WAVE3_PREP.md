@@ -8,9 +8,26 @@ para adjudicación de HERA; no cambia ADR-103 ni concede permisos de runtime.
 Autoridad leída: C0 §5.1–5.3 y filas C1.3/C1.4 de §6; ADR-103 enm. 4
 D1(b/e/f), D3 y D13; C1.2 candidato y deuda de frontera; IR v2 real
 `interpretation_contract.py`, `foundation_operations.py`, `foundation_lift_v1.py`.
-D1/D3 de C1.2 siguen siendo decisiones del microgate separado. Su resultado
-`GO_CON_MATIZ` no es un postimage autorizado del hook. Este prep no cambia jobs
-vacíos, rescate de vocabulario, UNSUPPORTED explícito ni conversiones v1.
+D1/D3 de C1.2 quedan cerrados documentalmente por la orden humana que HERA
+transmitió en esta misión, conforme al microgate separado
+`outputs/C1_D1_D3_MICROGATE.md` (`GO_CON_MATIZ`, base anterior). Ese resultado
+no es un postimage autorizado del hook. Este prep no cambia código ejecutable.
+
+- D1: jobs vacío válido sólo sin requests; requests presentes exigen al menos
+  un job y pertenencia exacta de cada request a uno. No es bicondicional:
+  un job no-SEARCH acreditado puede existir sin requests según sus reglas.
+  La pareja vacía v1 conserva `NO_ACTION/NO_REQUEST`, sin sintetizar SEARCH.
+  La fila jobs de C0 §5.1.2 se alinea por la ampliación documental expresa;
+  una restricción adicional del wire v2 se debe declarar en C1.3.
+- D3: rechazo de operación/sujeto ajenos al vocabulario del wire elegido y
+  pares dimensión-operador fuera de su tabla, sin inferencia, rescate ni
+  ejecución alternativa. `UNSUPPORTED` explícito conserva operador libre y
+  label; no rescata un par inválido. Se preservan las conversiones deterministas
+  v1 acreditadas (jobs por operación, COUNT/SUM_VALUE→TOTAL,
+  GEOGRAPHY→DEPARTMENT), sin convertirlas en defaults implícitos del wire v2.
+
+La evidencia del microgate es externa y read-only; el cambio C0 sólo registra
+la excepción D1 ya aceptada, no rediseña el contrato ni concede implementación.
 
 ## A. C1.3: decoder y perfiles
 
@@ -89,7 +106,7 @@ Graft callers y lectura de fuente acreditan:
 | `turn_ledger` | `CAPABILITY`, `Stage`, `record`; insuficiencia aún no demostrada |
 | INV-SEP legacy | manifiesto 88653752 + `test_m1_wave1_parity_pins.py`; hook nuevo no está en su whitelist actual |
 
-D1/D3 se adjudican antes de habilitar C1.3. C1.4 no depende de que el proveedor
+D1/D3 están cerrados con los matices anteriores. C1.4 no depende de que el proveedor
 produzca wire 5 para probar IR oráculo. C1.6 y CUTOVER siguen fuera de alcance:
 MODE_FRONTIER no se convierte aquí en DISPATCH_FRONTIER. Graft actualizado al
 leer (grafo externo a repo); la fuente manda sobre topología indexada.
@@ -163,3 +180,14 @@ corresponden al root; este prep no los emite.
 Rondas de reparación: **0/4**. No suite global, providers, fuentes, ejecución app,
 freeze ni autoauditoría. Estos gates acreditan el prep y preservación actual;
 no acreditan C1.3/C1.4 implementados ni autorizan el postimage pendiente.
+
+Ampliación documental final autorizada por HERA: sólo fila jobs de C0 §5.1.2,
+conservando la implicación D1 y todos los demás bytes de C0. Comprobación
+estructural por diff de esa ruta: una fila retirada y una añadida, ambas
+`InterpretationProposal`, con regla de requests y no bicondicional:
+**DOC_STRUCTURAL=PASS; ONLY_C0_JOBS_ROW_CHANGED=YES; NO_BICONDITIONAL=YES**.
+Tras el delta documental corrí `pytest -q tests/test_c1_wave3_prep_boundary.py`
+con el Python acreditado: **8 passed**, no la suite. `git diff --check` y ausencia
+de app delta siguen exit 0. Expanded y Semgrep no se repitieron: no cambió Python.
+Claim ampliado volvió a timeout 10s; no hay baseline del state API acreditado
+para este worker: **GAP_REPORT=STATE_UNAVAILABLE**, sin bloquear la entrega.

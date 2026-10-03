@@ -195,7 +195,7 @@ ProposedJob(frozen):
 |---|---|
 | `ProposedRequest` (`:163`) | **Sale** `operation` (pasa al job). `subject: Subject` (antes `str`). `universe_claim/universe_evidence` son `None` **sí y sólo sí** `subject is UNSPECIFIED`. |
 | `ProposedCondition` (`:196`) | **Entra** `level: GeoLevel \| None`: obligatorio con GEOGRAPHY, prohibido con el resto. `operator ∈ OPERATORS[dimension]` (tabla cerrada); UNSUPPORTED conserva el operador libre + `unsupported_label`. |
-| `InterpretationProposal` (`:260`) | **Entra** `jobs: tuple[ProposedJob, ...]`, no vacío. `schema_version == 2` (`:275`). |
+| `InterpretationProposal` (`:260`) | **Entra** `jobs: tuple[ProposedJob, ...]`. `jobs` vacío sólo es válido sin `requests`; con `requests` se exige al menos un job y cada request pertenece exactamente a uno. No es bicondicional: un job no-SEARCH acreditado puede existir sin requests según sus reglas propias. `schema_version == 2` (`:275`). |
 | `SemanticDimension` (`semantic_dimensions.py`) | **Entran** `ORDER` y `CARDINALITY` (aditivo; `legacy_shadow.DIMENSION_ORDER` debe incluirlos o `tests/test_legacy_shadow.py:375` falla: cambio declarado). |
 | `AcceptanceStatus` (`:55`) | **Entra** `HANDOFF` (con propuesta, sin resoluciones ni políticas, `reason = OPERATION_HANDOFF:<OP>:<OWNER>`). |
 | `InterpretationAcceptance` (`:415`) | **Entra** `view_decisions: tuple[HostViewDecision, ...] = ()` (§5.6). |
