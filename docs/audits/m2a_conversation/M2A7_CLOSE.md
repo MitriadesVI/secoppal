@@ -5,11 +5,13 @@
 §19, Anexo A y Anexo D (U26/U27). **Gold:** `M2A_GOLD` sellado (`7dd39b4b…`). Sin cambio de runtime: ningún módulo fuera de M2a
 importa lo nuevo (pin `consumer_problems`); la integración con la presentación es de M2A-6.
 
-**Rondas.** Ronda 1: `3666cf6e` (ZEUS fresco: NO_GO sobre `44a99b56` = `3666cf6e` + prep `e269af2f`). Ronda 3 (esta,
-reparación del NO_GO; decisiones de HERA registradas como M2A7-D15…D21): la respuesta a una pendiente se lee contra el ancla,
-`anchor_expired` pierde su valor por defecto, `CONTEXT_RESET` sólo sin pendiente vigente, el arnés Gold pasa a cuatro veredictos
-con §19 como única autoridad de los rojos declarados, y un recibo que contradice la procedencia es un error. **Una parte de
-P1-2 se detiene por la salvaguarda de HERA (§6, F-6).**
+**Rondas.** Ronda 1: `3666cf6e` (ZEUS fresco: NO_GO sobre `44a99b56` = `3666cf6e` + prep `e269af2f`). Ronda 3 (reparación
+del NO_GO; decisiones de HERA registradas como M2A7-D15…D21): la respuesta a una pendiente se lee contra el ancla,
+`anchor_expired` pierde su valor por defecto, `CONTEXT_RESET` sólo sin pendiente vigente, el arnés Gold pasa a veredictos con §19
+como única autoridad de los rojos declarados, y un recibo que contradice la procedencia es un error. Una parte de P1-2 se detuvo
+por la salvaguarda de HERA (F-6). Ronda 4 (esta; decisiones M2A7-D22 y D23): HERA cierra F-6 con la opción (a), Gold §7 literal: la
+respuesta a una pendiente sin ancla se lee contra su frame, y el `DELTA` que cancela una pendiente se lee como una respuesta; el
+arnés separa `MEASURED_AT_INTEGRATION` de `FAIL_EXTERNAL`.
 
 Este documento se escribe antes del freeze y no se toca después, para no invalidarlo. Los gates sobre el SHA congelado se
 reportan en la entrega.
@@ -27,15 +29,17 @@ tipos sólo por `foundation_accepted`):
   operaciones que el turno que preguntó dejó en él; frame → efectiva por la respuesta).
 - **`app/core/foundation_echo.py`** — dos entradas puras, sin leer el texto, sin resolver, sin decidir semántica:
   - `echo_items(base, effective, patch, record, *, anchor_expired)` para `NEW_SEARCH`, `DELTA`, `PROTOCOL_EVENT`, página y los
-    turnos que no ejecutan; **rechaza** un `PENDING_ANSWER`.
-  - `echo_items_for_answer(anchor, frame, frame_ops, effective, record, *, anchor_expired)` para la respuesta a una pendiente.
+    turnos que no ejecutan; **rechaza** un `PENDING_ANSWER` y un `DELTA` con `CANCEL_PENDING` (componen sobre el frame).
+  - `echo_items_for_answer(anchor, frame, frame_ops, effective, record, *, anchor_expired)` para el turno que compone sobre el
+    frame de una pendiente: la respuesta (`PENDING_ANSWER`) o el `DELTA` que la cancela (`control = CANCEL_PENDING`). Con ancla,
+    dos pasos contra el ancla (D15); sin ancla (`anchor = None`), contra el frame (D22).
   Orden determinista: clase (el de §11), luego ranura (§4.2).
 
 ### 1.1 Qué eco debe cada estado tipado
 
 | Clase | Se emite cuando (fuente tipada) |
 |---|---|
-| `CARRIED` | `DELTA` o respuesta ejecutados: un ítem por condición **del ancla** que sobrevive sin tocar (un `KEEP` no la toca) y uno por el universo dicho si ningún `REPLACE_UNIVERSE` lo toca. Un botón de orden/filtro no lleva `CARRIED` |
+| `CARRIED` | `DELTA` o respuesta ejecutados: un ítem por condición **del ancla** (del frame, si la pendiente no tiene ancla) que sobrevive sin tocar (un `KEEP` no la toca) y uno por el universo dicho si ningún `REPLACE_UNIVERSE` lo toca. Un botón de orden/filtro no lleva `CARRIED` |
 | `UNIT_INHERITED` / `UNIT_SHARED_IN_RANGE` | `Provenance.unit_source` = `PREVIOUS_ACCEPTED_VALUE` / `SIBLING_IN_RANGE` de una condición **colocada** (el segundo lleva las dos cotas) |
 | `YEAR_INHERITED` / `YEAR_CLOCK_INFERRED` / `RELATIVE_WINDOW_RESOLVED` | `Provenance.year_source` = `PREVIOUS_ACCEPTED_TIME` / `CLOCK_INFERRED` / `RELATIVE_TO_CLOCK` de una condición colocada; además `RELATIVE_WINDOW_RESOLVED` con el recibo `time.relative_to_previous` (primera adición de §11) |
 | `VALUE_RANGE_REPLACED` | un lado VALUE del ancla ausente de la efectiva: A8.1 (nadie lo cita y el parche pone el lado opuesto) o `CLEAR(VALUE)` de la dimensión entera seguido de un `SET` que no repone ese lado |
@@ -49,7 +53,7 @@ tipos sólo por `foundation_accepted`):
 | `CONTEXT_EXPIRED` | `anchor_expired` y el turno no ejecuta ninguna efectiva (§10.1, R3c/R3d) |
 | `VIEW_DERIVED` / `VIEW_REDERIVED` | **no representables hoy** (D10) |
 
-## 2. Decisiones (IDs `M2A7-Dn`; D15–D21 son decisiones de HERA sobre el NO_GO de la ronda 1)
+## 2. Decisiones (IDs `M2A7-Dn`; D15–D23 son decisiones de HERA sobre el NO_GO de la ronda 1 y su seguimiento)
 
 - **M2A7-D1. Firma y hechos inyectados.** El contrato fija `echo_items(base, efectiva, patch, record)`. `anchor_expired` es el hecho
   inyectado de §10 (mismo patrón que `delta_outcome`); decidirlo, sticky incluido, es de M2A-6. **Keyword obligatorio, sin valor por
@@ -102,8 +106,8 @@ tipos sólo por `foundation_accepted`):
   que el turno que preguntó dejó en el frame (`PendingQuestion.frame_ops` de `delta_outcome`; vacío cuando el frame es el ancla,
   p. ej. «continuar» de `CONTEXT_EXPIRED_CONFIRM`). `echo_items` rechaza un `PENDING_ANSWER` (un eco relativo al frame llamaría
   «arrastrado» a lo que el turno que preguntó cambió). Los frames de los tests salen de `delta_outcome`/`compose` reales de M2A-3
-  (R3-1 con A8.1, año heredado y tema reemplazado en el frame; «continuar» tras vencimiento). **Detenido en la parte sin ancla:**
-  F-6.
+  (R3-1 con A8.1, año heredado y tema reemplazado en el frame; «continuar» tras vencimiento). La parte sin ancla, que la ronda 3
+  detuvo (F-6), la cierra D22.
 - **M2A7-D16. `anchor_expired` sin valor por defecto (HERA).** Omitirlo fallaba abierto y revalidaba el ancla vencida (§10.1):
   ahora es keyword obligatorio en las dos entradas y omitirlo es `TypeError`. Seguimiento para M2A-6:
   `foundation_delta_outcome.py:327` (`delta_outcome(..., anchor_expired: bool = False)`) tiene el mismo patrón (archivo de M2A-3, no tocado).
@@ -131,35 +135,62 @@ tipos sólo por `foundation_accepted`):
 - **M2A7-D21. Primera adición de §11 en el arnés.** Un relativo al referente previo (§16.3, `time.relative_to_previous`) emite también
   `RELATIVE_WINDOW_RESOLVED`: el Gold derivado la exige en SF037, SF042 y SF174 (`gap_codes = RELATIVE_ANCHOR`, `year_source =
   PREVIOUS_ACCEPTED_TIME`); salen `RED_S19` (`DEP-TIME-RELATIVE`) demostrados con el recibo sintético, ya no verdes.
+- **M2A7-D22. Una pendiente sin ancla se lee contra su frame; el `DELTA` que cancela se lee como una respuesta (HERA, opción
+  (a), Gold §7 literal; cierra F-6).** El Gold es la autoridad de significado y seis casos lo fijan: SF056, SF058, SF059, SF060,
+  SF188 (respuestas, `ANSWER_TO_CLARIFICATION`) y SF191 (`DELTA` con `CANCEL_PENDING`) esperan `["CARRIED"]`.
+  1. La respuesta a una pendiente **sin ancla** (`base_trace_id = None`, §7.2 c): el «previo» es el frame y el eco se calcula contra el
+     frame; lo que sobrevive del frame es `CARRIED`. No se pierde el motivo de D15: un frame sin ancla sólo contiene lo resuelto de
+     P, sin ancla de la que esconder sustituciones o procedencias. `echo_items_for_answer` acepta el caso por una rama explícita
+     (`anchor = None`): `frame_ops` debe ir vacío (`ECHO_FRAME_OPERATIONS_WITHOUT_AN_ANCHOR`: no hay diferencia de la que ser
+     operaciones) y un frame ausente se rechaza (`ECHO_DIFF_NEEDS_INTERPRETATIONS`).
+  2. La respuesta **con ancla** queda como estaba (D15: dos pasos contra el ancla).
+  3. El `DELTA` con `CANCEL_PENDING` compone sobre el frame (§8.3 fila 2, §17.3): misma regla que una respuesta. Entra por la misma
+     función (`over_a_frame`) y `echo_items` lo rechaza; con ancla, dos pasos; sin ancla, contra el frame (SF191). Una búsqueda nueva
+     que cancela una pendiente no es un `DELTA`: es `NEW_SEARCH` y no emite `CONTEXT_RESET` (D17).
+  4. Salvaguarda: ningún caso de `M2A_GOLD` contradice 1–3. Los seis están modelados por escenarios equivalentes (frame tipado como lo
+     resolvió P, respuesta compuesta con el `compose` real) cuyo eco coincide con la etiqueta
+     (`test_the_six_pendings_without_an_anchor_have_their_scenario_and_it_gives_the_label_echo`), y SF200 (con ancla: R3-1,
+     `delta_outcome` real) da `CARRIED` en las dos lecturas.
+  Propiedades: una respuesta, o un `DELTA` que cancela, sin ancla da exactamente el eco del `DELTA` sobre ese frame; con ancla, el
+  `DELTA` que cancela da exactamente el eco de la respuesta.
+- **M2A7-D23. `MEASURED_AT_INTEGRATION` es una categoría propia (HERA).** Los casos que el oráculo no tipa porque **sus `owners`
+  son los carriles de integración** (M2A-4 crea la pendiente, M2A-6 construye el parche de un botón; este carril no puede importarlos)
+  no son un defecto de un artefacto sellado: son una medición que sólo existe en integración. `FAIL_EXTERNAL` queda para causas
+  demostradas en el tipado del oráculo (SF167, R0301, SF029, `NO_MEDIBLE`…) o en el checker (R0202). La pertenencia sale del propio
+  `owners` del oráculo, no de una lista de este carril. Orden de veredictos de un caso no tipable: `RED_S19` (una regla `DEP-*` que
+  §19 lista para él), `MEASURED_AT_INTEGRATION`, `FAIL_EXTERNAL`.
 - **Declaradas, sin cambio (P3).** (a) El módulo y la referencia de las propiedades son dos lectores de la diferencia, y no divergen
   ni en los escenarios ni en las propiedades. (b) `CARRIED` es un ítem por condición (el Gold lo exige por clase). (c) La procedencia en
   `NEW_SEARCH` se anuncia más allá de O13 (que da `ops = []` a la búsqueda nueva): cada condición de la efectiva es del turno.
 
 ## 3. Pruebas
 
-- `tests/test_foundation_echo.py` — 79 escenarios con la lista **exacta** de ítems que el contrato debe (compuestos con el `compose`/`delta_outcome`
-  reales; 12 son respuestas a una pendiente), 32 rechazos de turnos incoherentes (`REFUSALS`), 2 omisiones de `anchor_expired` (`TypeError`),
-  las fuentes de procedencia enumeradas desde los enums, cada `EchoClass` producida o declarada no representable, la premisa de VIEW y el
-  `xfail` estricto del tope sin recibo.
+- `tests/test_foundation_echo.py` — 87 escenarios con la lista **exacta** de ítems que el contrato debe (compuestos con el `compose`/`delta_outcome`
+  reales; 20 pasan por la entrada de respuesta: con ancla, sin ancla —los seis casos de F-6, SF200— y el `DELTA` que cancela), 34 rechazos de
+  turnos incoherentes (`REFUSALS`), 2 omisiones de `anchor_expired` (`TypeError`), las fuentes de procedencia enumeradas desde los enums, cada
+  `EchoClass` producida o declarada no representable, la premisa de VIEW y el `xfail` estricto del tope sin recibo.
 - `tests/test_foundation_echo_properties.py` — INV-M2A-12 con Hypothesis: los turnos tipados del reducer (`st_case`) más cinco generadores
   focalizados (VALUE, plan/procedencia, diferencia, respuesta R3-1 con operaciones en el frame, búsqueda fresca); el eco se juzga contra
-  una referencia escrita desde el contrato y desde `Composed`. Respuestas: contra una referencia con los dos `Composed`, y un
-  **diferencial** contra la entrada de delta cuando una sola composición sobre el ancla da la misma efectiva (821 respuestas generadas,
-  397 con operaciones en el frame, 821 reproducidas en un paso). Y que el generador **alcanza** cada clase.
-- `tests/test_foundation_echo_mutants.py` — 91 mutantes (§5).
+  una referencia escrita desde el contrato y desde `Composed`. Respuestas: contra una referencia con los dos `Composed`, un **diferencial**
+  contra la entrada de delta cuando una sola composición sobre el ancla da la misma efectiva (821 respuestas generadas, 397 con operaciones
+  en el frame, 821 reproducidas en un paso), la pendiente **sin ancla** igual al `DELTA` sobre su frame y el `DELTA` que cancela igual a la
+  respuesta. Y que el generador **alcanza** cada clase.
+- `tests/test_foundation_echo_mutants.py` — 97 mutantes (§5).
 - `tests/test_foundation_echo_gold.py` — cobertura del Gold (§4).
 
 ## 4. Cobertura de `M2A_GOLD` (209 = 49 REAL + 160 sintéticos)
 
-Medida con `tests/test_foundation_echo_gold.py`; REAL con el directorio privado (sólo ids y clases salen del módulo).
+Medida con `tests/test_foundation_echo_gold.py`; REAL con el directorio privado (sólo ids y clases salen del módulo). Cinco veredictos
+(D18, D23): GREEN; RED_S19 (§19 es la única autoridad); MEASURED_AT_INTEGRATION; FAIL_EXTERNAL (causa demostrada en el tipado del
+oráculo o en el checker); FAIL (defecto de este carril).
 
-| Medida | Casos | GREEN | RED_S19 | FAIL_EXTERNAL | FAIL |
-|---|---|---|---|---|---|
-| DEV sintético | 77 | 59 | 8 | 10 | 0 |
-| DEV + REAL | 101 | 76 | 11 | 14 | 0 |
-| TEST sintético (una vez, en el freeze) | 83 | 60 | 7 | 16 | 0 |
-| TEST + REAL (la misma medición) | 108 | 77 | 11 | 20 | 0 |
-| **Total (DEV + TEST, con REAL)** | **209** | **153** | **22** | **34** | **0** |
+| Medida | Casos | GREEN | RED_S19 | MEASURED_AT_INTEGRATION | FAIL_EXTERNAL | FAIL |
+|---|---|---|---|---|---|---|
+| DEV sintético | 77 | 59 | 8 | 8 | 2 | 0 |
+| DEV + REAL | 101 | 76 | 11 | 8 | 6 | 0 |
+| TEST sintético (una vez, en el freeze) | 83 | 60 | 7 | 10 | 6 | 0 |
+| TEST + REAL (la misma medición) | 108 | 77 | 11 | 10 | 10 | 0 |
+| **Total (DEV + TEST, con REAL)** | **209** | **153** | **22** | **18** | **16** | **0** |
 
 **RED_S19 (22):** R0106, R0107, R0304, R0459, R0529, R0531, R0532, SF007, SF008, SF021, SF037, SF042, SF063, SF075, SF080, SF081, SF082,
 SF126, SF160, SF174, SF185, SF200. Por fila de §19: `DEP-DERIVED-VIEW` (R0106, R0107, R0529, R0531, R0532, SF063, SF081, SF082, SF126,
@@ -167,52 +198,53 @@ SF185), `DEP-MODALITY-UNIVERSE` (R0459, SF007, SF008, SF080, SF160), `DEP-TIME-R
 `time.relative_to_previous`), `DEP-E-ORDER` (SF021: verde con `topn.capped`), `DEP-SMMLV-RECALC` (R0304), `DEP-O1B-OPPORTUNITIES` (SF075),
 `DEP-E-ORDER-CANDIDATES` (SF200).
 
-**FAIL_EXTERNAL (34), con su causa en el artefacto sellado:**
+**MEASURED_AT_INTEGRATION (18):** SF047, SF048, SF049, SF050, SF052, SF055, SF056, SF057, SF058, SF059, SF060, SF149, SF150, SF151, SF152,
+SF188, SF190, SF191. Los `owners` del oráculo son M2A-4 (`PENDING_PRIOR`: SF047, SF048, SF049, SF050, SF052, SF055, SF056, SF057, SF188,
+SF190, SF191), M2A-4 y M2A-6 (`PENDING_PRIOR` + `EVENT_OR_PROTOCOL`: SF058, SF059, SF060) o M2A-6 (`EVENT_OR_PROTOCOL`: SF149, SF150,
+SF151, SF152). Los seis de F-6 (SF056, SF058, SF059, SF060, SF188, SF191) tienen su escenario equivalente (D22). SF149–SF152 (botones de
+orden y de quitar filtro) tienen los suyos (`protocol_event_*`, eco `[]`).
+
+**FAIL_EXTERNAL (16), con su causa demostrada en el artefacto sellado:**
 
 | Causa | n | Casos |
 |---|---|---|
-| El oráculo no tipa: `PENDING_PRIOR` | 11 | SF047, SF048, SF049, SF050, SF052, SF055, SF056, SF057, SF188, SF190, SF191 |
-| El oráculo no tipa: `OPS_AB_DISAGREE` | 7 | R0274, R0281, SF025, SF026, SF030, SF036, SF161 |
-| El oráculo no tipa: `EVENT_OR_PROTOCOL` | 4 | SF149, SF150, SF151, SF152 |
-| El oráculo no tipa: `PENDING_PRIOR` + `EVENT_OR_PROTOCOL` | 3 | SF058, SF059, SF060 |
-| El oráculo no tipa: `PRIOR_AB_DISAGREE` | 3 | R0075, R0282, R0336 |
-| El oráculo no tipa: `HOST_FACT_NOT_IN_GOLD:STATE_LITERALS_OF_THE_UNIVERSE` | 2 | R0094, SF078 |
+| El oráculo no tipa por razón propia: `OPS_AB_DISAGREE` | 7 | R0274, R0281, SF025, SF026, SF030, SF036, SF161 |
+| El oráculo no tipa por razón propia: `PRIOR_AB_DISAGREE` | 3 | R0075, R0282, R0336 |
+| El oráculo no tipa por razón propia: `HOST_FACT_NOT_IN_GOLD:STATE_LITERALS_OF_THE_UNIVERSE` | 2 | R0094, SF078 |
 | El tipado del oráculo añade `year_source = PREVIOUS_ACCEPTED_TIME` a una cota SMMLV que la operación del Gold no declara | 2 | R0301, SF167 |
 | El tipado del oráculo omite `year_source = RELATIVE_TO_CLOCK` en un TIME de varios años civiles | 1 | SF029 |
 | `derive_effects` del checker contradice el texto de Gold §6/§11 (F-1) | 1 | R0202 |
 
-Lecturas de TEST: la ronda 1 se midió sobre `c7d8e6ad` y `3666cf6e`; esta ronda, **una sola vez**, sobre el código de esta ronda
-(`0f260409`, `app/` idéntico al del freeze). Que SF056/058/059/060/188/191 estén en `FAIL_EXTERNAL` por pendientes **no** cierra la
-contradicción de F-6: el eco no se midió sobre ellos.
+Lecturas de TEST: la ronda 1 se midió sobre `c7d8e6ad` y `3666cf6e`; la ronda 3 sobre `0f260409`; esta ronda, **una sola vez**, sobre el
+código de esta ronda (`4b5afabf`, `app/` idéntico al del freeze). Los GREEN y los FAIL no cambian respecto de la ronda 3: sólo se
+reparten distinto los que el oráculo no tipa.
 
 ## 5. Mutantes
 
-91 mutantes: 63 del eco y 28 del diff, cada uno con una sola sustitución textual exacta. Los 91 mueren con los escenarios, los
-rechazos y las omisiones; 69 mueren también con las propiedades (los 22 restantes son guardas de llamadas incoherentes, el
+97 mutantes: 69 del eco y 28 del diff, cada uno con una sola sustitución textual exacta. Los 97 mueren con los escenarios, los
+rechazos y las omisiones; 75 mueren también con las propiedades (los 22 restantes son guardas de llamadas incoherentes, el
 `display_key`, o formas que ningún generador alcanza hoy: `SCENARIO_ONLY`, con su motivo en el archivo). Control sin mutar: pasa todos
-los jueces. Mutantes de esta ronda: `answer_read_against_the_frame` (revierte P1-2: el eco de la respuesta contra el frame),
-`anchor_expired_default_restored` y `answer_anchor_expired_default_restored` (reponen el valor por defecto), `echo_items_takes_an_answer`,
-`answer_entry_takes_any_turn`, `answer_without_an_anchor_accepted`, `context_reset_over_a_cancelled_pending`,
-`order_receipt_contradiction_accepted` y nueve del `answer_diff` (primer paso sin leer, remociones del frame u olvidadas de la respuesta,
-colocado por el frame, arrastrado de un solo paso, universo y marcas de un solo paso). Siguen los seis del encargo original.
+los jueces. Siguen los seis del encargo original (eco omitido, eco sin justificación, clase cambiada, tope sin anunciar, defecto de
+orden sin anunciar, `CONTEXT_EXPIRED` omitido) y los de la ronda 3: `answer_read_against_the_frame` (revierte D15),
+`anchor_expired_default_restored` y `answer_anchor_expired_default_restored` (reponen el valor por defecto),
+`context_reset_over_a_cancelled_pending`, `order_receipt_contradiction_accepted` y nueve del `answer_diff`. De la ronda 4 (D22):
+`answer_without_an_anchor_read_against_the_anchor` (la rama sin ancla, aceptada pero leída contra el ancla ausente: muere),
+`answer_without_an_anchor_refused` (la rama sin ancla rechazada otra vez), `answer_without_an_anchor_read_as_a_new_search` (sin
+`CARRIED`), `answer_frame_operations_without_an_anchor_accepted`, `cancelling_delta_read_against_the_frame` (el `DELTA` que cancela,
+con ancla, leído contra el frame: muere), `cancelling_delta_not_routed_to_the_frame_entry` y `every_delta_is_a_cancelling_delta`.
 
 ## 6. Hallazgos y seguimientos (se reportan, no se resuelven aquí)
 
-- **F-6 (STOP, salvaguarda de HERA sobre P1-2): contradicción entre «una pendiente sin ancla ⇒ eco de búsqueda nueva» y el Gold.**
-  Los casos que responden a una pendiente **sin ancla** (frame = lo ya resuelto de un primer turno; `prior.state = PENDING`; sin
-  `gold_id` previo ni ancla que el Gold declare) son **SF056, SF058, SF059, SF060, SF188** (`ANSWER_TO_CLARIFICATION`, `EXECUTE`) y **SF191**
-  (`DELTA` con `CANCEL_PENDING`, `EXECUTE`): las etiquetas guardan `expected_echo = ["CARRIED"]` y Gold §7 da `CARRIED` a una respuesta ejecutada con
-  una condición del previo que sobrevive. El eco de una búsqueda nueva no lleva `CARRIED`. Bajo «exactamente» (Gold §7) no coinciden. **No lo
-  ajusté:** `echo_items_for_answer` rechaza el ancla `None` (`ECHO_ANSWER_WITHOUT_ANCHOR`) y `echo_items` rechaza el `PENDING_ANSWER`,
-  así que esos casos no tienen camino de eco hasta que HERA decida. Con ancla, ningún caso del Gold contradice D15: SF200 (R3-1, el frame es
-  el ancla) da `CARRIED` en ambas lecturas. Opciones para HERA: (a) «previo» = frame también sin ancla (Gold §7 literal: `CARRIED` de las
-  condiciones del frame, y el resto como búsqueda nueva); (b) enmienda del Gold; (c) la lectura propuesta, con esos seis casos como rojo.
-  Pregunta relacionada: un `DELTA` con `CANCEL_PENDING` (A7/F23) compone **sobre el frame** y tiene la misma trampa que la respuesta
-  (las operaciones del frame no se anuncian nunca); se deja sin tocar hasta la decisión, `echo_items` lo trata frame-relativo.
+- **F-6 (CERRADO por HERA, ronda 4: M2A7-D22).** Los seis casos del Gold que responden (o cancelan) una pendiente sin ancla fijaban
+  `CARRIED`; la lectura «búsqueda nueva» no coincidía bajo «exactamente». HERA eligió el Gold §7 literal; ningún caso lo contradice.
 - **F-7 (M2A-4/M2A-6): `frame_ops` no está en el tipo persistido.** `PendingClarification` guarda `frame`, no las operaciones que el
-  turno que preguntó dejó en él (`PendingQuestion.frame_ops` sí las tiene al crearla). Sin ellas el eco de una respuesta no distingue
-  `CLEAR` de A8.1 ni un `CLEAR` + `SET` negado de F16 (el estado final es idéntico). M2A-4 debe conservarlas o M2A-6 recomponerlas;
-  cambiar el tipo (`m2a-pending/1`, protegido) es decisión de HERA.
+  turno que preguntó dejó en él (`PendingQuestion.frame_ops` sí las tiene al crearla). Con ancla, sin ellas el eco de una respuesta no
+  distingue `CLEAR` de A8.1 ni un `CLEAR` + `SET` negado de F16 (el estado final es idéntico). M2A-4 debe conservarlas o M2A-6
+  recomponerlas; cambiar el tipo (`m2a-pending/1`, protegido) es decisión de HERA. **Seguimiento declarado (M2A-6).**
+- **F-9 (U3): `topn.capped` contra el valor.** Un recibo `topn.capped` con `n_requested <= n` debería ser `ContractError`
+  (como `order.direction_defaulted` sobre `STATED`); exige decodificar la cardinalidad y `foundation_accepted` (protegido) no tiene ese
+  hecho. Pedir a M2A-1 un `cardinality_capped(condition)`; con él, el mismo helper puede derivar el tope y el `xfail` estricto pasaría
+  a verde. **Seguimiento declarado (U3).**
 - **F-1 (HERA, checker sellado).** `check_m2a_gold_contract.derive_effects` marca `VALUE_RANGE_REPLACED` para un `CLEAR(VALUE)` de la dimensión
   entera sin `SET` (R0202), mientras Gold §6 dice «No se marca: CLEAR(VALUE) sin SET» y §11 «seguido de `SET`». El eco sigue el texto.
 - **F-2 (oráculo M2A-8a0).** `m2a_oracle_typing.tcond` tipa `year_source` de un TIME sólo si cae en un único año civil (SF029), y añade
@@ -223,13 +255,16 @@ colocado por el frame, arrastrado de un solo paso, universo y marcas de un solo 
   coincide con el eco (D8, D17). Quien alimente el eco desde el reporte del reducer no debe tomarlos.
 - **F-5 (herramienta).** `olympus-state own claim`/`release` no respondieron en 60 s y se terminaron; no es bloqueante.
 - **F-8 (M2A-3).** `delta_outcome(..., anchor_expired: bool = False)` (línea 327) y `test_m2a3_oracle_link.facts_of` (`>=`): D16 y D19.
+- **F-10 (abierto, sin decidir): un frame ausente.** `PendingClarification.frame` puede ser `None` («nada resuelto»); sin ancla y sin
+  frame no hay «previo» y `echo_items_for_answer` lo rechaza (`ECHO_DIFF_NEEDS_INTERPRETATIONS`). Ningún caso del Gold lo ejercita.
 
 ## 7. Para M2A-6
 
 - Llamar `echo_items(base, effective, patch, record, anchor_expired=…)` (el keyword es obligatorio) con un registro borrador
   (`echo=()`) y guardar `dataclasses.replace(record, echo=items)`; comparar lo guardado es igualdad de tuplas.
-- Para un `PENDING_ANSWER`, `echo_items_for_answer(anchor, frame, frame_ops, effective, record, anchor_expired=…)` con el **ancla** (no el
-  frame), el frame de la pendiente y las operaciones que el turno que preguntó dejó en él. Un `ancla = None` está rechazado hasta F-6.
+- Para un `PENDING_ANSWER`, o un `DELTA` con `CANCEL_PENDING` (componen sobre el frame): `echo_items_for_answer(anchor, frame,
+  frame_ops, effective, record, anchor_expired=…)`. Con ancla: el **ancla** (no el frame), el frame de la pendiente y las operaciones
+  que el turno que preguntó dejó en él. Sin ancla (`base_trace_id = None`): `anchor = None`, `frame_ops = ()` y el frame de la pendiente.
 - Pasar `anchor_expired` también en el turno que lo confirma o lo reemplaza (el eco no emite `CONTEXT_EXPIRED` en un turno que ejecuta).
 - Una búsqueda nueva que cancela una pendiente lleva `control = CANCEL_PENDING` y no emite `CONTEXT_RESET`.
 - `VIEW_*`, `TOPN_CAPPED` (recibo `topn.capped`), `RELATIVE_WINDOW_RESOLVED` por `time.relative_to_previous` y los `year_source` de varios
