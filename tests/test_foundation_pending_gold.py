@@ -9,8 +9,9 @@ on dicts and the protocol of pendings was not its subject. This adapter types th
   §6.7 R3-1, C1 «quitar orden y límite» = ``CLEAR(ORDER)`` + ``CLEAR(CARDINALITY)`` and the ``SET_ORDER`` of the option), its
   ``answer_slots`` are the Gold's ``candidate_slots``;
 * the **turn** of a case is typed from its ops: an ``ANSWER`` is a SET (the producer of the wire does the typing), an event
-  names the option its value equals, ``CANCEL_PENDING`` is the directive, ``gap_codes`` ``ANY_OPTION`` is the label
-  ``no_selection`` and an ``unresolved`` value is a slot nobody resolved; «selecciona oN» is the producer emitting the whole
+  names the option its value equals, ``CANCEL_PENDING`` is the directive, an ``unresolved`` value is a slot nobody resolved
+  (``gap_codes`` ``ANY_OPTION`` would be the label ``no_selection``, but that is a labeller's note, not an op: SF061 is
+  not measured, ZEUS P3-5); «selecciona oN» is the producer emitting the whole
   patch of option N (§6.7: «el productor emite las operaciones completas de C1»);
 * its facts are the closed facts of P. The Gold carries NONE of them (the oracle types them only for the cases of M2A-3), so
   they are not derived from the verdict: an ANSWER (``turn_kind = ANSWER_TO_CLARIFICATION``) takes the declared neutral
@@ -54,13 +55,21 @@ TRACE_ASKED, TRACE_ANSWER = "tA", "t1"
 ANSWER_KIND = "ANSWER_TO_CLARIFICATION"
 
 
+# The decisive input of these cases is taken from the label's ``gap_codes``, a labeller's note, not from a typed fact: the
+# label ``no_selection`` of the wire (§8.3 row 6) is not in the Gold as an op (ZEUS P3-5).
+GAP_DERIVED_INPUT = ("ANY_OPTION",)
+
+
 def status_of(gid: str) -> str:
-    """``RED_DECLARED`` (§19), ``MEASURED`` (an answer: the facts are the declared neutral ones of an answer) or
-    ``NO_MEDIBLE`` (the turn is a NEW_SEARCH or a DELTA: only the producer's facts could say so, and the Gold has none)."""
+    """``RED_DECLARED`` (§19), ``MEASURED`` (an answer: the facts are the declared neutral ones of an answer, and every input
+    is a typed op of the Gold) or ``NO_MEDIBLE``: the turn is a NEW_SEARCH or a DELTA (only the producer's facts could say so,
+    and the Gold has none) or its decisive input comes from the label's ``gap_codes`` (SF061: ``no_selection``)."""
     if gid in RED_DECLARED:
         return "RED_DECLARED"
-    kinds = {GOLD[gid][which]["turn_kind"] for which in ("label_A", "label_B")}
-    return "MEASURED" if kinds == {ANSWER_KIND} else "NO_MEDIBLE"
+    labels = [GOLD[gid][which] for which in ("label_A", "label_B")]
+    if any(label["turn_kind"] != ANSWER_KIND or any(g in GAP_DERIVED_INPUT for g in label["gap_codes"]) for label in labels):
+        return "NO_MEDIBLE"
+    return "MEASURED"
 
 
 def owned_ids(partition: str | None = None) -> list[str]:
@@ -148,7 +157,7 @@ def typed_turn(gid: str, label: dict, pending: fa.PendingClarification, options:
         answer = next(op for op in label["ops"] if op["op"] == "ANSWER")
         chosen = next(o for o in listed if o["value_hint"] == answer["value_hint"])
         return None, T.P.OptionEvent(pending.pending_id, options["options"][chosen["option_id"]])
-    no_selection = "ANY_OPTION" in label["gap_codes"]
+    no_selection = informational and any(g in GAP_DERIVED_INPUT for g in label["gap_codes"])  # a note, never a measurement
     ops, unresolved = [], set()
     for i, op in enumerate(label["ops"]):
         if op["op"] == "CANCEL_PENDING" or no_selection:  # the label «no_selection» is all the producer says
@@ -249,7 +258,7 @@ def test_every_case_has_one_status_and_the_denominators_are_these():
     """MEASURED (answers, no §19 dependency) / NO_MEDIBLE (needs the producer's facts) / RED_DECLARED (§19). A case moves
     only by an edit of this test."""
     dev, test = by_status("DEV"), by_status("TEST")
-    assert dev == {"MEASURED": ["SF059", "SF061", "SF189"], "NO_MEDIBLE": ["SF047", "SF048", "SF050", "SF191"],
+    assert dev == {"MEASURED": ["SF059", "SF189"], "NO_MEDIBLE": ["SF047", "SF048", "SF050", "SF061", "SF191"],
                    "RED_DECLARED": ["SF199"]}
     assert test == {"MEASURED": ["SF051", "SF053", "SF056", "SF058", "SF060", "SF188"],
                     "NO_MEDIBLE": ["SF049", "SF052", "SF055", "SF057", "SF190"],

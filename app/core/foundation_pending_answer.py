@@ -10,10 +10,10 @@ frame, §3.1 ``base_trace_id``). Nothing here reads text (INV-M2A-24): an answer
 2. F24: P identical (same multiset of (op, slot, encoded value / destination)) to the patch of the turn that asked does
    not answer: row 7. The comparison is made BEFORE normalizing, as the contract writes it (U27);
 3. with candidates, the ``KEEP``s of slots the frame holds that no other operation of P touches are the identity and go;
-   an empty P is row 8. M2A4-D20 (HERA, on ZEUS P1-1): F24 is judged AGAIN on what is left once the identity KEEPs go, for
-   EVERY pending: if it is the asking patch it answers nothing, row 7; and, with candidates, so does a PART of it
-   (``adds_nothing``: the turn that asked may have carried other resolved operations). A KEEP of filler no longer reaches
-   the option that is the asking patch;
+   an empty P is row 8. M2A4-D20 (HERA, on ZEUS P1-1; narrowed to the pendings WITH candidates by D26, where F24 protects the
+   selection): F24 is judged AGAIN on what is left once the identity KEEPs go: if it is the asking patch, or a PART of it
+   (``adds_nothing``: the turn that asked may have carried other resolved operations), it answers nothing, row 7. A KEEP of
+   filler no longer reaches the option that is the asking patch;
 4. P touching no slot of ``answer_slots`` is row 8; touching them and others, row 5 (F25);
 5. with candidates, EXACTLY one must equal P by identity (its whole patch is composed, never P) or it is row 7; with none,
    P is composed on the frame.
@@ -204,16 +204,13 @@ def answer_in_language(pending: PendingClarification, ops, *, no_selection: bool
     if ops and not said and ops_identity(ops) == ops_identity(asked):  # step 2, F24: before normalizing (P is not
         # identical to the asking patch if it also says something no authority resolved)
         return _reask(7, "ANSWER_UNRESOLVED")
-    # M2A4-D20 (HERA, on ZEUS P1-1): F24 holds for EVERY pending, not only the one whose candidate is the asking patch (§8.4:
-    # «un candidato idéntico al parche que preguntó sólo se alcanza por evento»): once the identity KEEPs go, an answer that
-    # is the asking patch answers nothing. Judged for every pending; whether the KEEPs also go from what is COMPOSED stays
-    # with the candidates (U27, M2A4-D4). Never an empty answer: that is row 8 (F29).
-    stripped = without_identity_keeps(pending.frame, ops, unresolved)
-    if stripped and not said and ops_identity(stripped) == ops_identity(asked):
-        return _reask(7, "ANSWER_UNRESOLVED")
     if pending.candidate_patches:  # step 3
-        ops = stripped
-        # and a PART of it tells no candidate from another (the turn that asked may carry other resolved operations)
+        ops = without_identity_keeps(pending.frame, ops, unresolved)
+        # M2A4-D20 (HERA, on ZEUS P1-1; narrowed by D26): where F24 protects the SELECTION of a candidate, it is judged on the
+        # answer once its identity KEEPs are gone too (§8.4: «un candidato idéntico al parche que preguntó sólo se alcanza por
+        # evento»): the asking patch answers nothing, nor does a PART of it (the turn that asked may carry other resolved
+        # operations). Never an empty answer: that is row 8 (F29). With no candidate it blocks no execution, and the sealed
+        # codes of rows 5 and 8 stand (D26): only the sealed F24, above, applies.
         if not said and adds_nothing(ops, asked):
             return _reask(7, "ANSWER_UNRESOLVED")
     touched = covered_keys(ops) | said

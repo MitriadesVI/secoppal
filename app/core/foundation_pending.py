@@ -17,8 +17,8 @@ pending without frame) there is no base to compose on, so the rest of P is a new
 Admisible sola(P), and ``CLARIFY NO_ANCHOR`` otherwise (M2A4-D1, A9: a continuation never starts a search). A cancel with
 nothing to apply (no operations, no new search) cancels and executes nothing: ``INFORM``, code ``None`` (M2A4-D12).
 
-A relative turn (§7.1 row 6) that carries the directive cancels too (§8.4: «salvo que §8.3 la cancele antes», M2A4-D21): INFORM
-with the cancellation and no pending. A text turn that meets a pending WITH candidates must give the asking patch (F24) or
+A turn of §7.1 rows 4, 5 or 6 that carries the directive cancels too (§17.2 a; M2A4-D21, D27): INFORM, the same code, the
+cancellation and no pending; only row 4b leaves the pending intact (§7.1 says so, and says it only there). A text turn that meets a pending WITH candidates must give the asking patch (F24) or
 declare there was none (``no_asked_patch``, M2A4-D22): the empty tuple is never «none» by omission.
 
 Rows 5–8 are ``REASK`` over the same pending with ``asks + 1`` (plazo, frame, question and candidates untouched); an answer
@@ -61,6 +61,7 @@ NO_ANCHOR = "NO_ANCHOR"
 _ANSWER_OPS = frozenset({PatchOpKind.SET, PatchOpKind.SET_ORDER, PatchOpKind.REPLACE_UNIVERSE})
 _INFORM_ROWS = frozenset({TurnScope.OUT_OPERATION_CHANGE, TurnScope.OUT_UNSUPPORTED_PROPOSAL,
                           TurnScope.OUT_REFERENT_EXTENSIONAL, TurnScope.OUT_RELATIVE_TO_PREVIOUS})
+_CANCELLED_BY_DIRECTIVE = _INFORM_ROWS - {TurnScope.OUT_UNSUPPORTED_PROPOSAL}  # rows 4, 5, 6: not 4b (§7.1)
 
 
 @dataclass(frozen=True, slots=True)
@@ -282,11 +283,13 @@ def _text(pending: PendingClarification, turn: PendingTurn, trace_id: str, now: 
                                            and fragment_base(pending) is None) else facts
     classification = classify_turn(probe)
     scope = classification.scope
-    if scope is TurnScope.OUT_RELATIVE_TO_PREVIOUS and facts.cancel_directive:
-        # §8.4: «la pendiente intacta, salvo que §8.3 la cancele antes (filas 2 y 3)», and only §7.1 row 6 gets there: a
-        # relative turn that carries the directive cancels (M2A4-D21). What is left of P (the relative condition, no typed
-        # origin nor answer slots here) is told, not asked: INFORM, no pending (the user reformulates).
-        return PendingDecision(DecisionKind.INFORM, scope, HOST_CODES["H4"], cancel_pending(pending, CancelCause.DIRECTIVE))
+    if scope in _CANCELLED_BY_DIRECTIVE and facts.cancel_directive:
+        # §17.2 (a): the directive cancels. §7.1 exempts explicitly ONLY row 4b («ancla y pendiente intactas (no se consumen
+        # ni se cancelan)»), and §8.4 adds that row 6 gets here «salvo que §8.3 la cancele antes» (M2A4-D21, D27): rows 4, 5
+        # and 6 with the directive cancel; the rest of the turn is as it was (INFORM, 0 calls, the same code). A relative
+        # condition has no typed origin nor answer slots here, so it is told, not asked: no pending (the user reformulates).
+        code = HOST_CODES["H4"] if scope is TurnScope.OUT_RELATIVE_TO_PREVIOUS else classification.code
+        return PendingDecision(DecisionKind.INFORM, scope, code, cancel_pending(pending, CancelCause.DIRECTIVE))
     if scope in _INFORM_ROWS:  # §7.1 rows 4, 4b, 5, 6: INFORM, the pending intact (a pending vigente never gets another)
         code = HOST_CODES["H4"] if scope is TurnScope.OUT_RELATIVE_TO_PREVIOUS else classification.code
         return PendingDecision(DecisionKind.INFORM, scope, code, pending=pending)

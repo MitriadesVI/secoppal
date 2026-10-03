@@ -266,10 +266,12 @@ def ask_authority(question: AuthorityQuestion, *, base: AcceptedInterpretation, 
 
 
 def ask_fresh(question: AuthorityQuestion, *, frame: AcceptedInterpretation | None, asked_trace_id: str,
-              now: datetime, asked_ops=()) -> Creation:
+              now: datetime, asked_ops) -> Creation:
     """The pending of a new search that asks (§7.2 c): ``frame`` is what P resolved, with no base
     (``base_trace_id = None``). It comes from ``from_acceptance`` (M2A-1b); ``None``, or a frame M2a cannot judge, is the
-    declared red ``DEP-M1-PENDING-FRAME``. The previous anchor stays until the pending is resolved or cancelled (§10.2)."""
+    declared red ``DEP-M1-PENDING-FRAME``. The previous anchor stays until the pending is resolved or cancelled (§10.2).
+    ``asked_ops`` are the typed operations of the asking turn, with NO default (M2A4-D28): F24 reads them back from here
+    (``Creation.asked_ops``), and a default of ``()`` would be the silent omission ``respond`` refuses (D22)."""
     if type(question) is not AuthorityQuestion:
         raise ContractError("INVALID_AUTHORITY_QUESTION")
     asked_ops = tuple(asked_ops)

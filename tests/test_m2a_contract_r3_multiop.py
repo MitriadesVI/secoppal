@@ -576,13 +576,12 @@ def answer(cfg: Config, pending: Pending, ops) -> Response:
         return Response("REASK", "ANSWER_UNRESOLVED", pending=pending, clause="§8.3 7 (§6 paso 2)")  # normalizing
     if ops and identity(ops) == identity(pending.asked):  # F24 (R3d): re-sending the asking turn does not answer
         return Response("REASK", "ANSWER_UNRESOLVED", pending=pending, clause="§8.3 7 (F24)")
-    stripped = normalized(pending.frame, ops)
-    if stripped and identity(stripped) == identity(pending.asked):  # M2A4-D20: F24 also on the normalized answer, any pending
-        return Response("REASK", "ANSWER_UNRESOLVED", pending=pending, clause="§8.3 7 (F24 normalized, M2A4-D20)")
     if pending.candidates:
-        ops = stripped
-        if adds_nothing(ops, pending.asked):  # M2A4-D20: and a PART of the asking patch tells no candidate from another
-            return Response("REASK", "ANSWER_UNRESOLVED", pending=pending, clause="§8.3 7 (F24 part, M2A4-D20)")
+        ops = normalized(pending.frame, ops)
+        # M2A4-D20 (narrowed by D26): where F24 protects the selection of a candidate, it is judged on the normalized answer
+        # too, and a PART of the asking patch tells no candidate from another; with no candidate the sealed codes stand
+        if adds_nothing(ops, pending.asked):
+            return Response("REASK", "ANSWER_UNRESOLVED", pending=pending, clause="§8.3 7 (F24 normalized, M2A4-D20)")
     touched_slots = covered(ops)
     if not touched_slots & pending.answer_slots:
         return Response("REASK", "PENDING_UNANSWERED", pending=pending, clause="§8.3 8")

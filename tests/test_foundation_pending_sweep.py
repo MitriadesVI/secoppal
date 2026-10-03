@@ -334,10 +334,10 @@ def spec_row(pending, ops, asked_ops):
         return 7, None
     present = {c.slot.key for c in pending.frame.conditions} | {"UNIVERSE"} if pending.frame is not None else {"UNIVERSE"}
     dropped = [o for o in ops if not (o.op is fa.PatchOpKind.KEEP and o.slot.key in present and touches[o.slot.key] == 1)]
-    if dropped and sorted(_spec_identity(o) for o in dropped) == sorted(_spec_identity(o) for o in asked_ops):
-        return 7, None  # M2A4-D20 (HERA, ZEUS P1-1): F24 on the answer once its identity KEEPs go, for EVERY pending
     kept = dropped if pending.candidate_patches else list(ops)  # what is COMPOSED loses them only with candidates (U27)
-    if pending.candidate_patches and kept and _is_part_of(kept, asked_ops):  # and a PART of it tells no candidate apart
+    # M2A4-D20 (HERA, ZEUS P1-1; narrowed by D26): with candidates, F24 on the answer once its identity KEEPs go, and a PART of
+    # the asking patch tells no candidate apart. Without them the sealed codes of rows 5 and 8 stand.
+    if pending.candidate_patches and kept and _is_part_of(kept, asked_ops):
         return 7, None
     touched = {key for o in kept for key in fd.covered_keys((o,))}
     inside = {s.key for slot in pending.answer_slots for s in fd.covered(slot)}
@@ -585,7 +585,7 @@ def _sweep_kills(name: str) -> bool:
 
 SWEEP_MUTANTS = ("answer_on_base_not_frame", "answer_with_the_anchors_trace", "f24_off",
                  "f24_only_before_normalizing", "subset_of_the_asking_patch_accepted",
-                 "f24_part_counts_what_is_unresolved", "f24_not_judged_on_the_normalized_answer_of_every_pending",
+                 "f24_part_counts_what_is_unresolved", "f24_normalized_for_every_pending",
                  "f25_executes", "f29_executes", "normalization_without_candidates", "normalization_drops_every_keep",
                  "expired_confirm_selected_in_language", "p_composed_instead_of_the_candidate", "conflict_not_decided_on_p",
                  "still_asking_executes", "selection_by_the_slot_only", "answered_rule_not_exempt")
