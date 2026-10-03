@@ -311,7 +311,8 @@ def pending_problems(outcome_module, outcome) -> list[str]:
                        for i, ops in enumerate(p.candidates))
     try:
         fa.PendingClarification("p1", "t1", T0, T0 + timedelta(minutes=30), 1, p.frame, "t0", None, None, p.reason,
-                                candidates, p.answer_slots)
+                                candidates, p.answer_slots, frame_ops=p.frame_ops,
+                                asked_ops=(*p.frame_ops, *p.open_ops))
     except ContractError as error:
         return [f"P5 the CLARIFY's pending is not constructible: {error}"]
     answered = next((rule for rule, code in fo.HOST_CODES.items() if code == p.reason), None)

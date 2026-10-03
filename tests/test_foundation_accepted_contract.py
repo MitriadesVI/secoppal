@@ -144,8 +144,15 @@ def pending(m=fa, candidates=None):
                 m.PatchOp(m.PatchOpKind.SET, time.slot, time, None, time.origin)), m.PatchOriginKind.TEXT)),
         )
     slots = frozenset(slot for c in candidates for slot in c.patch.slots)
-    return m.PendingClarification("p1", "t1", T0, T0 + timedelta(minutes=30), 1, interpretation(m), "t0", (0, 3),
-                                  RAW, "BUYER_OR_PLACE_AFTER_ACTOR", tuple(candidates), slots)
+    # R4 synthetic type fixture: explicitly declare identity over this base and an
+    # original asking input independent of the selectable candidates (not recovered history).
+    base = interpretation(m)
+    asking_condition = condition(m, D.BUYER, 0, "asked-buyer")
+    asking_input = (m.PatchOp(m.PatchOpKind.SET, asking_condition.slot, asking_condition,
+                             None, asking_condition.origin),)
+    return m.PendingClarification("p1", "t1", T0, T0 + timedelta(minutes=30), 1, base, "t0", (0, 3),
+                                  RAW, "BUYER_OR_PLACE_AFTER_ACTOR", tuple(candidates), slots,
+                                  frame_ops=(), asked_ops=asking_input)
 
 
 def result_set(m=fa, effective=None):
@@ -239,9 +246,9 @@ def reader_failures(m) -> list[str]:
             if "schema" in node:
                 tampered = json.loads(json.dumps(payload))
                 current = _at(tampered, path)["schema"]
-                _at(tampered, path)["schema"] = current.rsplit("/", 1)[0] + "/2"
+                _at(tampered, path)["schema"] = current.rsplit("/", 1)[0] + "/unknown"
                 if not _raises(kind.from_dict, tampered):
-                    out.append(f"{kind.__name__}: unknown schema {current}->/2 at {path} accepted")
+                    out.append(f"{kind.__name__}: unknown schema {current}->/unknown at {path} accepted")
     return out
 
 
@@ -433,12 +440,12 @@ def test_property_patch_round_trip(item):
 
 
 @PROPS
-@given(st.lists(st_patch(), min_size=1, max_size=3), st.integers(1, 2))
-def test_property_pending_round_trip(patches, asks):
+@given(st.lists(st_patch(), min_size=1, max_size=3), st.integers(1, 2), st_patch())
+def test_property_pending_round_trip(patches, asks, asking_input):
     candidates = tuple(fa.CandidatePatch(f"k{i}", f"opt{i}", p) for i, p in enumerate(patches))
     slots = frozenset(s for p in patches for s in p.slots)
     item = fa.PendingClarification("p1", "t1", T0, T0 + timedelta(minutes=30), asks, None, None, None, None,
-                                   "PENDING_UNANSWERED", candidates, slots)
+                                   "PENDING_UNANSWERED", candidates, slots, frame_ops=(), asked_ops=asking_input.ops)
     _round_trip(item)
 
 
@@ -494,8 +501,11 @@ def test_candidate_patch_is_generic():
     assert {type(c) for c in item.candidate_patches} == {fa.CandidatePatch}
     assert item.candidate_patches[1].patch.slots == {fa.Slot(D.GEOGRAPHY, Polarity.POSITIVE),
                                                     fa.Slot(D.TIME, Polarity.POSITIVE)}
+    # New synthetic asking input for this shape probe; no original typed TIME value.
+    asking_input = patch()
     no_options = fa.PendingClarification("p", "t", T0, T0 + timedelta(minutes=1), 1, None, None, None, None,
-                                         "MONTH_YEAR_AMBIGUOUS", (), frozenset({fa.Slot(D.TIME, Polarity.POSITIVE)}))
+                                         "MONTH_YEAR_AMBIGUOUS", (), frozenset({fa.Slot(D.TIME, Polarity.POSITIVE)}),
+                                         frame_ops=(), asked_ops=asking_input.ops)
     _round_trip(no_options)
     # The module's classes are a closed, pinned set: no «BUYER or GEO» / «double slot» special type can appear.
     defined = {name for name, obj in vars(fa).items() if isinstance(obj, type) and obj.__module__ == fa.__name__}
@@ -513,7 +523,8 @@ def test_answer_slots_cover_the_candidates():
     with pytest.raises(ContractError, match="CANDIDATE_OUTSIDE_ANSWER_SLOTS"):
         fa.PendingClarification(item.pending_id, item.asked_trace_id, T0, T0 + timedelta(minutes=1), 1, None, None,
                                 None, None, item.reason, item.candidate_patches,
-                                frozenset({fa.Slot(D.BUYER, Polarity.POSITIVE)}))
+                                frozenset({fa.Slot(D.BUYER, Polarity.POSITIVE)}),
+                                frame_ops=(), asked_ops=item.asked_ops)
 
 
 @pytest.mark.parametrize("build, code", [

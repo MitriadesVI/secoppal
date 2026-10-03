@@ -34,6 +34,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+from collections import Counter
 from dataclasses import dataclass, replace
 from datetime import datetime, timedelta, timezone
 from enum import Enum
@@ -55,7 +56,7 @@ from app.core.semantic_dimensions import SemanticDimension
 RECORD_SCHEMA = "m2a-record/1"
 ACCEPTED_SCHEMA = "m2a-accepted/1"
 PATCH_SCHEMA = "m2a-patch/1"
-PENDING_SCHEMA = "m2a-pending/1"
+PENDING_SCHEMA = "m2a-pending/2"
 RESULTSET_SCHEMA = "m2a-resultset/1"
 
 _HEX = frozenset("0123456789abcdef")
@@ -1183,8 +1184,26 @@ class CandidatePatch:
 
 _PENDING_FIELDS = ("schema", "pending_id", "asked_trace_id", "created_at_utc", "expires_at_utc", "asks", "frame",
                    "base_trace_id", "ambiguous_span", "ambiguous_raw_sha256", "reason", "candidate_patches",
-                   "answer_slots")
+                   "answer_slots", "frame_ops", "asked_ops")
 MAX_ASKS = 2
+
+
+def _pending_op_identity(op: PatchOp) -> tuple:
+    """C3: F24's semantic identity, retaining encoded polarity and multiplicity."""
+    payload = (tuple(op.condition.value) if op.condition is not None else
+               (op.universe.subject.value, op.universe.universe_kind.value) if op.universe is not None else ())
+    return op.op.value, op.slot.key, payload
+
+
+def _pending_op_key(op: PatchOp) -> tuple:
+    return _pending_op_identity(op), json.dumps(op.to_dict(), sort_keys=True, allow_nan=False, ensure_ascii=False)
+
+
+def _read_pending_ops(value, label: str) -> tuple[PatchOp, ...]:
+    ops = tuple(PatchOp.from_dict(item) for item in _list(value, label))
+    if ops != tuple(sorted(ops, key=_pending_op_key)):
+        _fail("NONCANONICAL_" + label)
+    return ops
 
 
 @dataclass(frozen=True, slots=True)
@@ -1201,6 +1220,8 @@ class PendingClarification:
     reason: str
     candidate_patches: tuple[CandidatePatch, ...]
     answer_slots: frozenset[Slot]
+    frame_ops: tuple[PatchOp, ...]
+    asked_ops: tuple[PatchOp, ...]
 
     def __post_init__(self) -> None:
         _text(self.pending_id, "PENDING_ID")
@@ -1214,6 +1235,17 @@ class PendingClarification:
         if self.frame is not None:
             _instance(self.frame, AcceptedInterpretation, "PENDING_FRAME")
         _opt_text(self.base_trace_id, "PENDING_BASE_TRACE_ID")
+        _records(self.frame_ops, PatchOp, "PENDING_FRAME_OPS")
+        _records(self.asked_ops, PatchOp, "PENDING_ASKED_OPS")
+        if self.base_trace_id is None and self.frame_ops:
+            _fail("PENDING_FRAME_OPS_WITHOUT_BASE")
+        frame_counts = Counter(_pending_op_identity(op) for op in self.frame_ops)
+        asked_counts = Counter(_pending_op_identity(op) for op in self.asked_ops)
+        if any(count > asked_counts[identity] for identity, count in frame_counts.items()):
+            _fail("PENDING_FRAME_OPS_OUTSIDE_ASKED_OPS")
+        # Only these causal witnesses commute. Keep every duplicate and full provenance.
+        object.__setattr__(self, "frame_ops", tuple(sorted(self.frame_ops, key=_pending_op_key)))
+        object.__setattr__(self, "asked_ops", tuple(sorted(self.asked_ops, key=_pending_op_key)))
         if (self.ambiguous_span is None) != (self.ambiguous_raw_sha256 is None):
             _fail("AMBIGUOUS_SPAN_WITHOUT_RAW")
         if self.ambiguous_span is not None:
@@ -1239,6 +1271,8 @@ class PendingClarification:
                 "created_at_utc": self.created_at_utc.isoformat(), "expires_at_utc": self.expires_at_utc.isoformat(),
                 "asks": self.asks, "frame": None if self.frame is None else self.frame.to_dict(),
                 "base_trace_id": self.base_trace_id,
+                "frame_ops": [op.to_dict() for op in self.frame_ops],
+                "asked_ops": [op.to_dict() for op in self.asked_ops],
                 "ambiguous_span": None if self.ambiguous_span is None else list(self.ambiguous_span),
                 "ambiguous_raw_sha256": self.ambiguous_raw_sha256, "reason": self.reason,
                 "candidate_patches": [candidate.to_dict() for candidate in self.candidate_patches],
@@ -1261,6 +1295,8 @@ class PendingClarification:
             data["ambiguous_raw_sha256"], data["reason"],
             tuple(CandidatePatch.from_dict(item) for item in _list(data["candidate_patches"], "CANDIDATE_PATCHES")),
             frozenset(Slot.from_dict(key) for key in slot_keys),
+            frame_ops=_read_pending_ops(data["frame_ops"], "PENDING_FRAME_OPS"),
+            asked_ops=_read_pending_ops(data["asked_ops"], "PENDING_ASKED_OPS"),
         )
 
 

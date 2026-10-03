@@ -143,13 +143,16 @@ def wire(cid: str, dimension: D, operator: str, quote: str, raw: str, *, rid: st
                              (RawSpan(at, at + len(quote), quote),), **extra)
 
 
-def pending(reason: str, candidates=(), answer_slots=frozenset()) -> fa.PendingClarification:
+def pending(reason: str, candidates=(), answer_slots=frozenset(), *, asking_input) -> fa.PendingClarification:
     now = datetime(2026, 10, 2, 12, 0, tzinfo=timezone.utc)
     return fa.PendingClarification("p1", "t-turn", now, now + timedelta(minutes=30), 1, None, None, None, None,
-                                   reason, tuple(candidates), frozenset(answer_slots))
+                                   reason, tuple(candidates), frozenset(answer_slots),
+                                   frame_ops=(), asked_ops=asking_input)
 
 
 ORDER_SLOT, CARDINALITY_SLOT = fa.Slot(D.ORDER), fa.Slot(D.CARDINALITY)
+# R4 synthetic asking input: independent of candidates, for type-shape probes only.
+R4_SHAPE_ASKING_INPUT = (fa.PatchOp(fa.PatchOpKind.CLEAR, ORDER_SLOT, None, None, _origin()),)
 
 
 def r31_candidate() -> fa.CandidatePatch:
@@ -532,11 +535,12 @@ def probes() -> dict[str, str | None]:
         "P-clear-order": refusal(lambda: ProposedSlotDirective("d2", DirectiveKind.CLEAR, (RawSpan(0, 1, "x"),),
                                                                D.ORDER)),
         # D-1: the answer_slots check is isolated with a reason the type already admits.
-        "P-d1-literal": refusal(lambda: pending("TARGET_NOT_ADDRESSABLE", (r31_candidate(),), {ORDER_SLOT})),
+        "P-d1-literal": refusal(lambda: pending("TARGET_NOT_ADDRESSABLE", (r31_candidate(),), {ORDER_SLOT},
+                                                                  asking_input=R4_SHAPE_ASKING_INPUT)),
         "P-d1-option1": refusal(lambda: pending("TARGET_NOT_ADDRESSABLE", r31_candidates(),
-                                                {ORDER_SLOT, CARDINALITY_SLOT})),
+                                                {ORDER_SLOT, CARDINALITY_SLOT}, asking_input=R4_SHAPE_ASKING_INPUT)),
         "P-d1-provisional": refusal(lambda: pending("TARGET_NOT_ADDRESSABLE", r31_candidates(provisional=True),
-                                                    {ORDER_SLOT, CARDINALITY_SLOT})),
+                                                    {ORDER_SLOT, CARDINALITY_SLOT}, asking_input=R4_SHAPE_ASKING_INPUT)),
         # D-6: the non-admitted proposals are valid wire records, so they reach M2a with an anchor.
         "P-d6-multi-wire": refusal(lambda: proposal(raw_m, Operation.FOLLOWUP_DELTA, (
             wire("t1", D.TOPIC, "contains", "aseo", raw_m, rid="r1"),
@@ -551,7 +555,7 @@ def probes() -> dict[str, str | None]:
 
 
 def representable(code: str) -> bool:
-    return refusal(lambda: pending(code)) is None
+    return refusal(lambda: pending(code, asking_input=R4_SHAPE_ASKING_INPUT)) is None
 
 
 # Facts of the type that hold now AND must keep holding after M2A-3 1c (they are not gaps).
@@ -578,7 +582,8 @@ TYPE_GAPS = {
     "PENDING-R3-1": ("la pendiente de R3-1 (C1 + SET_ORDER alternativos, answer_slots {ORDER, CARDINALITY}) no se "
                      "construye sin su código (R3-1, D-1 opción 1)",
                      lambda: refusal(lambda: pending("DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER", r31_candidates(),
-                                                     {ORDER_SLOT, CARDINALITY_SLOT})) is None),
+                                                     {ORDER_SLOT, CARDINALITY_SLOT},
+                                                     asking_input=R4_SHAPE_ASKING_INPUT)) is None),
     "SCOPE-OUT_UNSUPPORTED_PROPOSAL": ("TurnScope sin OUT_UNSUPPORTED_PROPOSAL (D-6)",
                                        lambda: "OUT_UNSUPPORTED_PROPOSAL" in {s.value for s in fa.TurnScope}),
     "SCOPE-RESOLUTION-INFORM": ("OUT_SCOPE_RESOLUTION sin OUT_UNSUPPORTED_PROPOSAL → INFORM (D-6)",

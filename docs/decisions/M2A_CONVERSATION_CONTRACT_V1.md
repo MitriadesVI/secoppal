@@ -112,7 +112,7 @@ M2a no inventa vocabulario semántico. Usa el de `main`:
 
 Todos inmutables (`frozen`), serializables con `to_dict()` y releídos por un lector **estricto** (clave desconocida,
 esquema desconocido o digest incorrecto ⇒ registro inválido). Esquemas versionados: `m2a-record/1`,
-`m2a-accepted/1`, `m2a-patch/1`, `m2a-pending/1`, `m2a-resultset/1`.
+`m2a-accepted/1`, `m2a-patch/1`, `m2a-pending/2`, `m2a-resultset/1`.
 
 ### 3.1 `AcceptedTurnRecord` (`m2a-record/1`) — una línea por turno Foundation
 
@@ -182,7 +182,7 @@ Provenance:       # hechos cerrados; nunca texto libre
 
 ### 3.3 `SemanticPatch` (`m2a-patch/1`) — §5
 
-### 3.4 `PendingClarification` (`m2a-pending/1`) — §8
+### 3.4 `PendingClarification` (`m2a-pending/2`) — §8
 
 ### 3.5 `ResultSetRef` (`m2a-resultset/1`) — §9
 
@@ -524,7 +524,7 @@ no la sustituye por léxico. Si tras 3 iteraciones del prompt v5.1 sobre DEV el 
 ### 8.1 Tipo
 
 ```text
-PendingClarification (m2a-pending/1):
+PendingClarification (m2a-pending/2):
   pending_id; asked_trace_id; created_at_utc; expires_at_utc; asks: 1 | 2
   frame: AcceptedInterpretation | None    # lo ya resuelto del turno que preguntó, SIN lo abierto
                                           # (None sólo si el turno que preguntó no tenía nada resuelto)
@@ -533,7 +533,7 @@ PendingClarification (m2a-pending/1):
   ambiguous_raw_sha256: str | None        #   span (p. ej. CONTEXT_EXPIRED_CONFIRM)
   reason: <código cerrado de §A.3>
   candidate_patches: tuple[CandidatePatch, ...]   # 0..n
-  answer_slots: frozenset[Slot]           # ranuras que una respuesta abierta puede fijar; ⊇ ranuras de los candidatos
+  answer_slots: frozenset[Slot]; frame_ops: tuple[PatchOp, ...]; asked_ops: tuple[PatchOp, ...]  # R4; answer_slots ⊇ ranuras de los candidatos
 
 CandidatePatch:
   candidate_id; display_key
@@ -1237,3 +1237,61 @@ Sigue siendo R3 y aún no está en `main`; queda un único re-sellado final (R3b
 **Estado del sello.** R3b rompió el sello r3 de `4cf1cad3` a propósito. Se re-selló en R3b-2 (U25), tras el
 etiquetado ciego y la adjudicación de los controles, en R3c (U26) y en R3d (U27); el `seal_sha256` está en el sello.
 Tras R3c, un ZEUS que sólo encuentre P1 de forma se repara sin reabrir el diseño (barandilla del usuario, U26).
+
+
+## Anexo E — Enmienda R4 causal (usuario, 2026-10-03)
+
+Esta enmienda cambia exclusivamente la representación de la pendiente y conserva las disposiciones, códigos,
+clases de eco, dependencias de §19 y expectativas Gold. `m2a-record/1` conserva su schema exterior: su miembro
+`pending` delega al tipo de §8, ahora `m2a-pending/2`; no fija literalmente una versión interna.
+
+`PendingClarification` requiere explícitamente `frame_ops: tuple[PatchOp, ...]` y `asked_ops: tuple[PatchOp, ...]`.
+`frame_ops` guarda sólo las operaciones resueltas del turno preguntado que construyeron el frame desde su base.
+`asked_ops` guarda el multiconjunto completo de sus operaciones tipadas originales, incluida la parte abierta
+cuando tiene forma PatchOp. No se reconstruyen desde el frame, los candidatos ni el texto del turno anterior.
+
+- **C1 — Sin base:** `base_trace_id is None ⇒ frame_ops == ()`. `asked_ops` puede ser no vacío. El frame fresco
+  procede de la aceptación resuelta de P, sin convertir el ancla conservada del chat en base del nuevo frame.
+- **C2 — Con base:** la base A debe ser exactamente el registro de `base_trace_id` del mismo chat, en store íntegro
+  y con publicación acreditada. `frame_ops == ()` exige frame byte-idéntico a A; en otra rama la composición tipada
+  sobre A y esa referencia debe producir exactamente el frame canónico entero, incluidos ids, requests, lógica,
+  políticas, orígenes y procedencia. La composición vacía usa la rama de identidad vigente, no `compose_ops(A, ())`.
+  El codec sólo acredita estructura y leyes locales; no acredita replay porque no dispone de A. La creación conserva
+  la comprobación exacta de `_frame_of`. El consumo posterior M2A-4 de una pendiente releída debe exigir contexto de
+  base y referencia acreditados y comprobar el replay antes de aceptar, componer o ejecutar. Falta de base, binding
+  distinto, replay rechazado o frame distinto implica `ContractError`, cero fuente y cero ejecución, sin mutar
+  pendiente/ancla ni inventar reason labels. M2A-6 entrega ese contexto por la referencia persistida, sin reconstruir
+  operaciones. Esta enmienda de tipo no declara implementado ese gate de consumo.
+- **C3 — Contención causal:** para toda identidad semántica i, `count(frame_ops, i) ≤ count(asked_ops, i)`.
+  `I(op) = (op.op.value, op.slot.key, payload)`, donde payload es `tuple(op.condition.value)` para SET/SET_ORDER,
+  `(op.universe.subject.value, op.universe.universe_kind.value)` para REPLACE_UNIVERSE, y `()` para CLEAR/KEEP.
+  Se conserva la identidad de §8.3/F24, con el valor codificado y su polaridad; no la igualdad Python, ids de condición,
+  `canonical_value` de F16 ni un set. La contención conserva multiplicidad y no sustituye el replay de C2.
+- **C4 — Sin efectos:** no persisten effects, banderas F16/A8.1 ni EchoItems derivados. El eco posterior debe explicar
+  causalmente A→F→E conforme §6/§11, incluidas desapariciones del ancla; no se reinstala «sólo lo que sobrevive en E».
+  La diferencia de testigos acredita estado causal distinto, no corrección del renderer.
+- **C5 — Dominio cerrado:** sólo PatchOp existentes por su codec estricto; no raw query, regex, params legacy,
+  labels nuevos ni valores desconocidos fabricados. `raw_sha256` dentro del origen mantiene su enlace tipado vigente.
+  F24 obtiene el asking patch exclusivamente de `pending.asked_ops` en la fase posterior de M2A-4: sin input lateral
+  del caller, texto, búsqueda del turno anterior ni ledger alternativo. Una tupla vacía explícita acredita ausencia de
+  operación tipada; una clave ausente es inválida. REASK conserva ambos testigos.
+- **C6 — Forma persistida única:** ambos multiconjuntos se ordenan por
+  `K(op) = (I(op), json.dumps(op.to_dict(), sort_keys=True, ensure_ascii=False, allow_nan=False))`.
+  El constructor escribe esta forma; el reader comprueba el orden recibido antes de normalizar y rechaza otra
+  permutación. No deduplica; preserva ids, autoridad, origen, políticas y procedencia completos. La regla no modifica
+  SemanticPatch general, condiciones dentro de ranura, requests, árboles OR/NOT ni candidatos.
+
+CLEAR+SET conserva ambas operaciones y sigue componiendo CLEAR antes de SET conforme §6.2. CLEAR ancho y estrecho
+conservan sus identidades distintas. Duplicados CLEAR/KEEP no se colapsan; múltiples escritores SET/SET_ORDER/
+REPLACE_UNIVERSE de la misma ranura siguen causando `DELTA_SLOT_CONFLICT`, aunque sean byte-idénticos. `asked_ops`
+puede conservar operaciones conflictivas que abrieron una pregunta; no se exige su composición sobre A o F.
+
+La fuente original posterior de asked_ops es `question.frame_ops + question.open_ops` con multiplicidad, o los inputs
+originales explícitos de ask_authority/ask_fresh. H1 conserva el parche original completo aunque frame_ops sea vacío;
+NO_ANCHOR/ANCHOR_UNREADABLE sin operaciones tipadas declaran ambas tuplas vacías. No se usan alternativas como originales.
+
+El reader requiere ambas claves, schema v2 y miembros estrictos; rechaza v1, claves ausentes/extra, datos malformados,
+orden no canónico y violaciones C1/C3. No hay compatibilidad ni migración ficticia. Hallar registros productivos v1
+requiere STOP de preservación y revisión del coordinador. Los digests de pendiente/registro cubren ambos campos por
+sus algoritmos vigentes. El re-sello sólo actualiza digest del contrato, SHA de la extracción de §19 y digest del sello;
+los 209 casos, bytes, labels, reasons, expectativas, record hashes y particiones DEV/TEST quedan idénticos.

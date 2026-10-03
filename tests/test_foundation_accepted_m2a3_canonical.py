@@ -409,9 +409,14 @@ def annex_failures(m) -> list[str]:
     if m.INFORM_CAPABLE_CLARIFY_CODES - m.CLARIFY_CODES:
         out.append("an INFORM-capable code is not a CLARIFY code")
     # an INFORM-only code never leaves a pending (§7.1 row 4b; R3c STALE_OPTION)
+    # R4: independent synthetic asking input for a negative reason-code shape probe.
+    asking_condition = condition(m, D.BUYER, 0, "synthetic-asking")
+    asking_input = (m.PatchOp(m.PatchOpKind.SET, asking_condition.slot, asking_condition,
+                             None, asking_condition.origin),)
     for code in ("STALE_OPTION", "UNSUPPORTED_PROPOSAL:MULTI_REQUEST", "CLEAR_ON_EMPTY_SLOT"):
         if _code(lambda: m.PendingClarification("p1", "t1", T0, T0 + timedelta(minutes=30), 1, None, None, None,
-                                                None, code, (), frozenset())) != "UNKNOWN_PENDING_REASON":
+                                                None, code, (), frozenset(), frame_ops=(),
+                                                asked_ops=asking_input)) != "UNKNOWN_PENDING_REASON":
             out.append(f"a pending accepts the INFORM-only reason {code}")
     # row 4b: OUT_UNSUPPORTED_PROPOSAL is INFORM and makes 0 calls
     scope = m.TurnScope("OUT_UNSUPPORTED_PROPOSAL")
