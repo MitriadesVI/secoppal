@@ -1,6 +1,6 @@
 {
  "adjudications": {
-  "note": "R0205 entra en M2A_GOLD por A8.1 + money_comparators («en adelante» = GTE) sin re-etiquetado. Única re-etiqueta: SF166 (U1, usuario 2026-10-02); SF063 sólo normaliza el preestado (U2); SF168 se declara (D1).",
+  "note": "R0205 entra en M2A_GOLD por A8.1 + money_comparators («en adelante» = GTE) sin re-etiquetado. Única re-etiqueta: SF166 (U1, usuario 2026-10-02); SF063 sólo normaliza el preestado (U2); SF168 se declara (D1). r3: U3 añade SF192–SF195 desde las etiquetas ciegas A/B + adjudicación. r3b: U25 añade SF196–SF201 del mismo modo y adjudica la polaridad de SET_ORDER en SF195.",
   "orchestrator_classification": {
    "R0075": {
     "destination": "M2A_GOLD",
@@ -54,6 +54,28 @@
    ],
    "U2": [
     "SF063"
+   ],
+   "U25": [
+    "SF195",
+    "SF196",
+    "SF197",
+    "SF198",
+    "SF199",
+    "SF200",
+    "SF201"
+   ],
+   "U26": [
+    "SF198"
+   ],
+   "U27": [
+    "SF138",
+    "SF140"
+   ],
+   "U3": [
+    "SF192",
+    "SF193",
+    "SF194",
+    "SF195"
    ]
   },
   "rules": {
@@ -71,16 +93,21 @@
    "D1": "SF168: declarado prueba de estado persistido inválido",
    "G-FU-03": "PendingClarification.candidate_patches[]",
    "U1": "SF166: año 2023 fuera del catálogo D10 ⇒ CLARIFY SMMLV_YEAR_AMBIGUOUS (control de no extrapolación)",
-   "U2": "SF063: preestado normalizado a alcanzable (asks 3 -> 2)"
+   "U2": "SF063: preestado normalizado a alcanzable (asks 3 -> 2)",
+   "U25": "R3b: SF196–SF201 añadidos (SF199 = lectura de B; SF202 etiquetado y retirado); SF195 SET_ORDER POSITIVE (gold/ADJUDICATION_R3.md, sección R3b)",
+   "U26": "R3c: SF198 lleva el eco CONTEXT_EXPIRED (vencimiento pegajoso) (gold/ADJUDICATION_R3.md, sección R3c)",
+   "U27": "R3d: SF138 y SF140 toman el eco CONTEXT_EXPIRED de la etiqueta B (gold/ADJUDICATION_R3.md, sección R3d)",
+   "U3": "R3: SF192–SF195 añadidos; etiquetado ciego A/B y adjudicación del usuario (gold/ADJUDICATION_R3.md)"
   }
  },
- "base_commit": "8c1f8c54",
+ "base_commit": "fa0b6de8",
  "gates": {
+  "contract_dependencies_reproduce": true,
   "import_manifest_ok": true,
   "representability": {
    "checker": "scripts/audits/m2a_conversation/check_m2a_gold_contract.py",
    "report": "docs/audits/m2a_conversation/gold/REPRESENTABILITY_REPORT.json",
-   "report_sha256": "5aead3cf2294208d4ec742b186ef51c76fd12ddf95e0ce2d60ba2f1d89569dab",
+   "report_sha256": "bbd649e79fb1c6af0d0ed25cdb401792c1ed1ab92641fd9503dadd03fb198590",
    "violations": 0
   },
   "sealed_gold_reproduces_from_candidate": true
@@ -96,9 +123,18 @@
   "docs/audits/m2a_conversation/IMPORT_MANIFEST.sha256": "a6d11cca79ece570561c2381351028789097e58445ea1acfd351f87238c44351",
   "docs/audits/m2a_conversation/M2A0_H7B_REVIEW.md": "7f9e9f3e836e83de77ef31265ddbd2e26913f98288d7a2a531637c41de7fd381",
   "docs/audits/m2a_conversation/gold/ADJUDICATION_2026-10-02.md": "160edec8efee339021060713e2b306af74c0591e5addd7968fd5f0323a164fa0",
-  "docs/decisions/M2A_CONVERSATION_CONTRACT_V1.md": "2a582145c7b44e4c241900158608f72a729e009f885ec19994980ea57cc0dc49",
-  "scripts/audits/m2a_conversation/build_sealed_gold.py": "9c9e14ad924df52aca23c947b8e092a5d27327b8fe47d4d12b2e0551996e2941",
-  "scripts/audits/m2a_conversation/check_m2a_gold_contract.py": "c5b3d4771a85821fb20e7917aeb6c7dc8e446b3d77cfdc53497af1c9dce4ba91"
+  "docs/audits/m2a_conversation/gold/ADJUDICATION_R3.md": "4df4827e7f31f2e58ff61983aa33ce89d220e79ae987e2577b5e117adac030a0",
+  "docs/audits/m2a_conversation/labeling_r3/R3_LABELER_INPUT.md": "4766d610cd8d1d920b7880f8bc9313488b84b32e15dc89a8baf6b22885dfeab8",
+  "docs/audits/m2a_conversation/labeling_r3/labels_A.jsonl": "cfc932e8c17b5d34beede7537c3fa408ece31d6a9384eba0ebdaa6ef3c70c68e",
+  "docs/audits/m2a_conversation/labeling_r3/labels_B.jsonl": "025d1b3044808449a46bca8516e605bdffca985458de3027da8b4f2217f68299",
+  "docs/audits/m2a_conversation/labeling_r3b/R3B_LABELER_INPUT.md": "9208876dde6786979303684c0767f21d19bbff9aebc172f84611afbf6eb4f053",
+  "docs/audits/m2a_conversation/labeling_r3b/labels_A.jsonl": "cfa473734c7bd6e9d8993a47c4e7926891738c7b198234f72bd1c9e3da409e7c",
+  "docs/audits/m2a_conversation/labeling_r3b/labels_B.jsonl": "67da48076ed01c6e6d31e1d1952587ea55463262abfc468674f027be7240ce37",
+  "docs/decisions/M2A_CONVERSATION_CONTRACT_V1.md": "182a2e10d8821d2c4abe8e212c90bf1eaa0f48e42c0ceb16f3d2ec926edeca2c",
+  "scripts/audits/m2a_conversation/build_sealed_gold.py": "3bc1ede5b44694a12e6c23921f5a9032a88afed3f7f83fc69f77106584f46cac",
+  "scripts/audits/m2a_conversation/check_m2a_gold_contract.py": "aa060868e76b47fe59b9ec1e9c8b93f127b860c52bada0fed6fdba9c71b4065e",
+  "scripts/audits/m2a_conversation/extract_contract_dependencies.py": "01348d04c50c4cf4fe54db19723771b794b206e9fdff490e4df08e166e7e3b5c",
+  "scripts/audits/m2a_conversation/m2a_contract_text.py": "a58e0846329d91bc0ea1a5b378e3f449ac4f9c9ab540b042eb4b25507a9e71cc"
  },
  "partition": {
   "DEV": {
@@ -202,7 +238,10 @@
     "SF186",
     "SF187",
     "SF189",
-    "SF191"
+    "SF191",
+    "SF195",
+    "SF196",
+    "SF199"
    ]
   },
   "TEST": {
@@ -309,7 +348,14 @@
     "SF182",
     "SF185",
     "SF188",
-    "SF190"
+    "SF190",
+    "SF192",
+    "SF193",
+    "SF194",
+    "SF197",
+    "SF198",
+    "SF200",
+    "SF201"
    ]
   },
   "rule": "por slice y disposición; orden sha256(salt:id); posiciones pares → TEST, impares → DEV; fija desde el sello r2: un id conserva su lado en re-sellados posteriores",
@@ -334,16 +380,19 @@
    "records": 150,
    "sha256": "1887f7ff39ce3e23e8c9153f6766b05b07a587d5c116804f161e364a71687351"
   },
+  "docs/audits/m2a_conversation/gold/CONTRACT_S19_DEPENDENCIES.json": {
+   "sha256": "4f6c3bf29f8bd8f735d211e08b620aaa4ff69a71b280ccc2dc7ff50409ae704e"
+  },
   "docs/audits/m2a_conversation/gold/FOLLOWUP_FRONTIER_synthetic.jsonl": {
    "records": 41,
    "sha256": "8b4924464380bb974cae5f0e003228f8d5a31b8b3d00c7c110350bdf73a5ea1e"
   },
   "docs/audits/m2a_conversation/gold/M2A_GOLD_AND_FRONTIER_INDEX.json": {
-   "sha256": "a16f0ace4733e0b5f64c03195c049d879dd0d7160742f831ac882a9c461ee2ea"
+   "sha256": "93c545fd42423446e20e19f34bc8c26e41431f33a3b5ec2b38acdd61393e571f"
   },
   "docs/audits/m2a_conversation/gold/M2A_GOLD_synthetic.jsonl": {
-   "records": 150,
-   "sha256": "46228df320930e0ffd274636a2bbee7eaee00cae93939c71f7ffecb14e260be1"
+   "records": 160,
+   "sha256": "811357432db35ea76c3b3b62c0eafdb2d40314aad03bda584f9f054ca9306a9a"
   }
  },
  "real_private": {
@@ -566,9 +615,9 @@
    "SF135": "29fcde7d6b9949211214548233c93aaf41fb9be4e3b780b64f88dfcec110773d",
    "SF136": "b38328b6e1b5e6e94906dfa25398f38e79ead18c66b68d35b2ca340fa99da0da",
    "SF137": "005b978356b94119d4720f0ecfd480b9480ee679f1598079c793cfbc67016b96",
-   "SF138": "f59d172cde12917554ee44c0f921a3a215d767b2ae9bcc75203da5cf4b11bc84",
+   "SF138": "367d8835f6ca5b296b9d2b96748324330aa0bd07895f47465b8d0a417d68fecd",
    "SF139": "0b4e0b18a9a27a67ade5314f2734444df2edb0fd5ab729f414afe482f17d9ea1",
-   "SF140": "d3a9c089b40dab2e6b2ab8a4c8894cbc0c69cb0419ccb68a61fcd50fbd05e545",
+   "SF140": "40391d7a6b639454539536d297cf639afcec309d7483520a599d26242406ae5c",
    "SF141": "d975482e16b8bb505959d54c44ce7dcad6044037ab7356f581fc41ad0615b54b",
    "SF142": "bbdeef4c24dcf60888e59fbb9404c8e58c400c1431d8ef119a935c3d777ea1fd",
    "SF143": "2e99b7d39b78ef527115932b57d4f98cb52c6cb7febbf7ef4d0f1331d718913a",
@@ -619,12 +668,22 @@
    "SF188": "a188b103cdb89c9732a207e51423dcb8379aded485aab017a24ef434d4086056",
    "SF189": "1ca0650325e4b44386bbbed9dd43e71c68a266970b45e0720fbc42ecfd5b810d",
    "SF190": "4e2b0a9c7fefe26c8a62246c4a0656ed5b300ac4235b56db38f9de9d69c17842",
-   "SF191": "c9c9aa163a87ea2244855c10e29d2a34f0d95e8f3d085a25c152d2e8108efb81"
+   "SF191": "c9c9aa163a87ea2244855c10e29d2a34f0d95e8f3d085a25c152d2e8108efb81",
+   "SF192": "ec026d8b2b82495bad949b02c95089d253c433e8aee7180d592e24d39da40d29",
+   "SF193": "68f60fea5dc268b87c399f59ec97f031ac9745c3202c3981d1fc250db3f1a168",
+   "SF194": "207f1dc2269e6ef073b404a21e5fb6726bdbbeaadcc524adefe8c7701ddc4624",
+   "SF195": "90123057ae4b312226a80e5fd39b35d288a40e509a47d7319e7896bcde6e6a68",
+   "SF196": "9802d3a17535d67347410d58dd28c534e6ff65eab62f3994d53959acd61bfd42",
+   "SF197": "dc211bc4f7ccc682985afff0ede80c621cd6cdb410a446834ca3451c5943ca71",
+   "SF198": "89af5854e5b0e233a0dd82086fe520fec0b30f2b358d2ed6ea5c3e216debf9ea",
+   "SF199": "4618a49d2755b76bbc18201e3279c4ba2fe44768b2d06c5041c33671c8355432",
+   "SF200": "7a5e705a60b0d0b3b22179406c991be41ee2a958b6572bd9cd98555173a13a90",
+   "SF201": "3460bbac8bacfe2b75956ea64fe38014bf6a4c8209bd5cc86dd9923d5d127dd6"
   }
  },
  "seal_schema": "m2a-gold-seal/1",
- "seal_sha256": "bb2e981229ec8263a961994388ee4bae5b84a15ac523d0f0435de7a328cd2216",
- "sealed_on": "2026-10-01",
+ "seal_sha256": "7dd39b4b322990925c5138b6492df909803da3fdc98f7a771e07bc17bd2a03b3",
+ "sealed_on": "2026-10-02",
  "slices": {
   "FOLLOWUP_FRONTIER": {
    "REAL": {
@@ -1127,11 +1186,11 @@
    },
    "SYNTHETIC": {
     "by_disposition": {
-     "CLARIFY": 12,
-     "EXECUTE": 117,
-     "INFORM": 1,
+     "CLARIFY": 16,
+     "EXECUTE": 119,
+     "INFORM": 4,
      "NEW_SEARCH": 16,
-     "REASK": 4
+     "REASK": 5
     },
     "ids": [
      "SF001",
@@ -1283,10 +1342,20 @@
      "SF188",
      "SF189",
      "SF190",
-     "SF191"
+     "SF191",
+     "SF192",
+     "SF193",
+     "SF194",
+     "SF195",
+     "SF196",
+     "SF197",
+     "SF198",
+     "SF199",
+     "SF200",
+     "SF201"
     ],
-    "index_sha256": "46228df320930e0ffd274636a2bbee7eaee00cae93939c71f7ffecb14e260be1",
-    "n": 150
+    "index_sha256": "811357432db35ea76c3b3b62c0eafdb2d40314aad03bda584f9f054ca9306a9a",
+    "n": 160
    }
   }
  },
@@ -1298,8 +1367,8 @@
   },
   "M2A_GOLD": {
    "REAL": 49,
-   "SYNTHETIC": 150,
-   "TOTAL": 199
+   "SYNTHETIC": 160,
+   "TOTAL": 209
   }
  }
 }

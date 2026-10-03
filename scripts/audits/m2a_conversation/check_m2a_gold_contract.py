@@ -11,11 +11,25 @@ What it proves, per label (A and B) of every Gold record:
   G5  A8.1 is numeric over typed bounds (no lexicon) and A9.1 is structural over the turn's dimensions;
   G6  every CLARIFY with alternatives is a list of generic candidate patches;
   G7  rows/page need a result set: no protocol turn executes over a prior that never reached the source;
-  G8  partition: GOLD ∩ FRONTIER = ∅, GOLD scopes ⊆ IN*, deferred ledger gaps never reach GOLD;
+  G8  partition: GOLD ∩ FRONTIER = ∅, GOLD scopes ⊆ IN* ∪ {OUT_UNSUPPORTED_PROPOSAL} (§7.1 row 4b with an anchor or a
+      pending is answered by M2a itself: U25), deferred ledger gaps never reach GOLD;
   G9  structural coherence of each disposition (host floor, window, pending answers, F25, two candidates);
   G10 no hybrid over a pending, unit inherited from exactly one unit, SMMLV executed over one year at most;
   G11 reachable pre-states: asks ≤ 2; SMMLV executed only over one year of the D10 catalog (or a declared invalid
       persisted state, D1).
+R3 (contract amendment, 2026-10-02): the reason vocabulary is READ from annex A.3 of the contract through the one
+contract parser (``m2a_contract_text``), and a parameterised code's tail is bounded by the contract (``<DIM>``: R3-3;
+``<motivo>``: §7.1 row 4b). G9 also checks ``DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER`` (§6.7; only C1 is sealed, the
+SET_ORDER candidates are E-ORDER's, §19) and ``KEEP_ON_EMPTY_SLOT`` (§6.1); G10 also checks the F16 fail-closed branch
+(§6.5, R3-4) and P-3 (a negation never inverts a positive created by the same patch).
+R3b (U20/U25): two or more structural refusal causes visible in the Gold fields (slot conflict, KEEP of an empty slot,
+CARDINALITY left without ORDER) give INFORM with the top code of the contract's closed precedence (§6 step 3b);
+``inherited`` may be null only on a KEEP (schema 2.1, O5).
+R3c (U26): an executed answer to the R3-1 pending is exactly C1 or one SET_ORDER candidate (§6.7); CONTEXT_EXPIRED_CONFIRM
+needs a «continuar» without refusal causes (H1); row 4b enters the Gold only for motives with a sealed case (G8); G11
+reads the sealed §19 extraction (an R3-1 SET_ORDER option ⇒ E-ORDER; 4b INVALID_PROPOSAL ⇔ M2A-5).
+R3d (U27): a stored echo carries CONTEXT_EXPIRED on every turn over an expired anchor that neither confirms nor
+replaces it, and never on EXECUTE/NEW_SEARCH (§11, second addition).
 Not checkable from Gold fields (needs the producer's evidence): the continuation guard of §7.2/§8.3 itself — a
 NEW_SEARCH relabel of a pending answer that keeps its conditions is representable; M2A-8 gates it.
 It proves the Gold is REPRESENTABLE by the contract; it does not DERIVE each disposition from §7.2/§8.3, which needs
@@ -30,6 +44,7 @@ from __future__ import annotations
 
 import argparse
 import collections
+import importlib.util
 import json
 import re
 import sys
@@ -40,6 +55,7 @@ sys.path.insert(0, str(ROOT))
 
 from app.core.foundation_authority_values import MAX_TOP_N  # noqa: E402
 from app.core.foundation_operator_table import OPERATORS  # noqa: E402
+from app.core.foundation_operations import Operation  # noqa: E402
 from app.core.semantic_dimensions import SemanticDimension  # noqa: E402
 from app.data.smmlv import SMMLV_COP_BY_YEAR  # noqa: E402  (D10: the catalog M2a may convert with)
 
@@ -57,16 +73,33 @@ GOLD_OP_TO_CONTRACT = {
 SLOTS = {"TIME", "VALUE.lower", "VALUE.upper", "VALUE", "GEOGRAPHY", "BUYER", "ACTOR", "TOPIC", "STATE",
          "MODALITY", "CONTRACT_TYPE_OR_NATURE", "ORDER", "CARDINALITY", "UNIVERSE"}
 TURN_KINDS = {"DELTA", "NEW_SEARCH", "ANSWER_TO_CLARIFICATION", "PROTOCOL"}
-GOLD_SCOPES = {"IN", "IN_NEW_SEARCH", "IN_PROTOCOL"}
+GOLD_SCOPES = {"IN", "IN_NEW_SEARCH", "IN_PROTOCOL", "OUT_UNSUPPORTED_PROPOSAL"}  # 4b: answered by M2a (U25)
 DISPOSITIONS = {"EXECUTE", "NEW_SEARCH", "CLARIFY", "REASK", "INFORM"}
-REASONS = {
-    "CONTEXT_EXPIRED_CONFIRM", "BUYER_OR_PLACE_AFTER_ACTOR", "REGION_NOT_IN_LIST", "RELATIVE_TO_PREVIOUS_VALUE",
-    "UNIT_AMBIGUOUS", "MONTH_YEAR_AMBIGUOUS", "EMPTY_SEARCH_AFTER_DELTA", "STATE_NOT_IN_UNIVERSE",
-    "TERRITORY_VS_CARRIED_BUYER", "NO_ANCHOR", "ANCHOR_UNREADABLE", "TARGET_NOT_ADDRESSABLE",
-    "VALUE_WITHOUT_COMPARATOR", "SMMLV_YEAR_AMBIGUOUS", "OPTION_NOT_CHOSEN", "ANSWER_EDITS_OTHER_SLOT",
-    "PENDING_UNANSWERED", "ANSWER_UNRESOLVED", "CLEAR_ON_EMPTY_SLOT", "REFERENT_EXTENSIONAL",
+# The vocabulary of reasons is the contract's annex A.3, read through the one contract parser (U19); never a copy.
+_SPEC = importlib.util.spec_from_file_location("m2a_contract_text", Path(__file__).with_name("m2a_contract_text.py"))
+contract_text = importlib.util.module_from_spec(_SPEC)
+_SPEC.loader.exec_module(contract_text)
+_CONTRACT = contract_text.read()
+_A3 = {d: c for d, c in contract_text.annex_a3(_CONTRACT).items() if d in DISPOSITIONS}
+REASONS = {code for codes in _A3.values() for code in codes if ":" not in code}
+REASON_PREFIXES = tuple(sorted({code.split(":", 1)[0] + ":" for codes in _A3.values() for code in codes if ":" in code}))
+_DIM_NAMED, _DIM_EXCLUDED = contract_text.dim_parameter(_CONTRACT)
+# R3b (U20/U22, ZEUS P2): a reason is valid only with the dispositions annex A.3 pairs it with. INFORM also admits the
+# closed list of CLARIFY codes the contract allows when the pending cannot exist, several causes meet or the anchor
+# expired (A.3 «INFORM con un código de CLARIFY»).
+_INFORM_CAPABLE = set(contract_text.inform_capable_codes(_CONTRACT))
+PAIRS = {d: set(c) for d, c in _A3.items()}
+PAIRS["INFORM"] = PAIRS["INFORM"] | _INFORM_CAPABLE
+PRECEDENCE = contract_text.refusal_precedence(_CONTRACT)  # §6 step 3b (R3b, U20), highest first
+R31_REASON = "DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER"
+GOLD_4B_MOTIVES = {"INVALID_PROPOSAL"}  # G8 (R3c): §7.1 row 4b enters the Gold only for motives with a sealed case
+S19 = json.loads((Path(__file__).resolve().parents[3] / "docs/audits/m2a_conversation/gold/CONTRACT_S19_DEPENDENCIES.json")
+                 .read_text(encoding="utf-8"))  # the sealed §19 extraction (U19)
+REASON_TAILS = {  # the domain the contract declares for each parameter (A.3 «Parámetros (R3)»)
+    "UNRESOLVED_VALUE:": {d.value for d in SemanticDimension} - _DIM_EXCLUDED | _DIM_NAMED,
+    "OPERATION_CHANGE:": {op.value for op in Operation},
+    "UNSUPPORTED_PROPOSAL:": set(contract_text.row_4b_motives(_CONTRACT)),
 }
-REASON_PREFIXES = ("UNRESOLVED_VALUE:", "OPERATION_CHANGE:")
 RETIRED_REASONS = {"SMMLV_UNSUPPORTED", "INHERITED_UNIT_IMPLAUSIBLE", "TOPN_CAP_EXCEEDED"}  # A1, A2, P8
 EFFECTS = {"VALUE_RANGE_REPLACED", "TOPIC_REPLACED", "POLARITY_INVERTED", "VIEW_REDERIVED", "UNIVERSE_CHANGED",
            "TOPN_CARRIED", "TOPN_CAPPED", "ORDER_DIRECTION_DEFAULTED", "PENDING_CANCELLED", "CONTEXT_RESET"}
@@ -204,6 +237,25 @@ def check_ir(r: Report, gid: str, lab: str, ir: dict | None, where: str) -> None
         r.bad(gid, lab, f"{where}: more than one bound per VALUE side")
 
 
+def structural_causes(pir: dict | None, ops: list[dict]) -> list[str]:
+    """§6 step 3b causes readable from Gold fields alone, sorted by the contract's closed precedence."""
+    p_ir = pir or {"conditions": []}
+    present = ({slot_of(c) for c in p_ir["conditions"]} | {c["dimension"] for c in p_ir["conditions"]}
+               | ({"ORDER"} if p_ir.get("order") else set()) | ({"CARDINALITY"} if p_ir.get("cardinality") else set())
+               | {"UNIVERSE"})
+    writes = collections.Counter(o["slot"] for o in ops if o["op"] in ("SET", "SET_ORDER", "SET_UNIVERSE"))
+    keeps = {o["slot"] for o in ops if o["op"] == "KEEP"}
+    clears = {o["slot"] for o in ops if o["op"] == "CLEAR"}
+    found = ["DELTA_SLOT_CONFLICT" for s in set(writes) | keeps
+             if writes[s] > 1 or (s in keeps and (writes[s] or s in clears))]
+    found += ["KEEP_ON_EMPTY_SLOT" for s in keeps if s not in present]
+    if (p_ir.get("order") and p_ir.get("cardinality") and "ORDER" in clears and "CARDINALITY" not in clears
+            and not writes["ORDER"]):
+        found.append("DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER")
+    rank = {code: n for n, code in enumerate(PRECEDENCE)}
+    return sorted(found, key=rank.__getitem__)
+
+
 def check_label(r: Report, rec: dict, lab: str, L: dict) -> None:
     gid = rec["gold_id"]
     prior, res, ops = L["prior"], L["resulting_ir"], L["ops"]
@@ -217,6 +269,18 @@ def check_label(r: Report, rec: dict, lab: str, L: dict) -> None:
         r.bad(gid, lab, f"disposition {disp}")
     if reason is not None and reason not in REASONS and not reason.startswith(REASON_PREFIXES):
         r.bad(gid, lab, f"reason {reason}")
+    elif reason is not None and reason.startswith(REASON_PREFIXES):
+        head, tail = reason.split(":", 1)
+        if tail not in REASON_TAILS.get(head + ":", set()):
+            r.bad(gid, lab, f"reason {reason}: tail outside the domain the contract declares")
+    if disp in ("EXECUTE", "NEW_SEARCH") and reason is not None:
+        r.bad(gid, lab, f"{disp} carries a reason ({reason})")
+    if reason is not None and disp in PAIRS:
+        shape = reason if reason in REASONS else reason.split(":", 1)[0] + ":" + {
+            "UNRESOLVED_VALUE": "<DIM>", "OPERATION_CHANGE": "<op>", "UNSUPPORTED_PROPOSAL": "<motivo>"}.get(
+            reason.split(":", 1)[0], "?")
+        if shape not in PAIRS[disp]:
+            r.bad(gid, lab, f"reason {reason} is not valid with {disp} (annex A.3 pairs)")
     if reason in RETIRED_REASONS:
         r.bad(gid, lab, f"retired reason {reason}")
     eff = derive_effects(L)
@@ -243,6 +307,8 @@ def check_label(r: Report, rec: dict, lab: str, L: dict) -> None:
             r.bad(gid, lab, f"slot {o['slot']}")
         if (o["slot"] is None) != (o["op"] == "CANCEL_PENDING"):
             r.bad(gid, lab, "slot null iff CANCEL_PENDING")
+        if not isinstance(o["inherited"], dict) and not (o["inherited"] is None and o["op"] == "KEEP"):
+            r.bad(gid, lab, "inherited is an object; null only on a KEEP (schema 2.1, O5)")
         r.counts["op:" + GOLD_OP_TO_CONTRACT.get(o["op"], "?")] += 1
     gaps = set(L.get("gap_codes") or [])
     for g in gaps & LIVE_GAPS:
@@ -259,7 +325,8 @@ def check_label(r: Report, rec: dict, lab: str, L: dict) -> None:
         times = [c for c in pir0["conditions"] if c["dimension"] == "TIME" and c["polarity"] == "POSITIVE"]
         rel = [o for o in ops if o["slot"] == "TIME" and o["depends_on_prior_value"]]
         if disp == "EXECUTE" and not (len(times) == 1 and rel and
-                                      all(o["inherited"]["year_source"] == "PREVIOUS_ACCEPTED_TIME" for o in rel)):
+                                      all((o["inherited"] or {}).get("year_source") == "PREVIOUS_ACCEPTED_TIME"
+                                          for o in rel)):
             r.bad(gid, lab, "relative temporal executed without a unique active referent (A5)")
         else:
             r.note("A5_unique_temporal_referent", gid)
@@ -328,6 +395,14 @@ def check_label(r: Report, rec: dict, lab: str, L: dict) -> None:
     # G3 carry identity / attribution, only where an executed effective exists over an anchor
     if res is not None and pir is not None and tk in ("DELTA", "ANSWER_TO_CLARIFICATION") and disp == "EXECUTE":
         t = touched(ops)
+        if tk == "ANSWER_TO_CLARIFICATION" and (prior.get("pending") or {}).get("reason") == R31_REASON:
+            # §6.7: the R3-1 candidates are known structurally, C1 or one SET_ORDER; the answer composes one of them whole
+            c1 = {**pir, "order": None, "cardinality": None}
+            set_order = (res["conditions"] == pir["conditions"] and res["cardinality"] == pir["cardinality"]
+                         and res["order"] is not None and res["order"] != pir["order"])
+            if res != c1 and not set_order:
+                r.bad(gid, lab, "executed answer to the R3-1 pending is neither C1 nor one SET_ORDER candidate (§6.7)")
+            t |= {"ORDER"}
         rk = collections.Counter(key(c) for c in res["conditions"])
         for c in pir["conditions"]:
             s = slot_of(c)
@@ -422,6 +497,14 @@ def check_label(r: Report, rec: dict, lab: str, L: dict) -> None:
         r.bad(gid, lab, "NEW_SEARCH without own conditions (host floor)")
     if reason == "CONTEXT_EXPIRED_CONFIRM" and not (gap is not None and gap > 1800):
         r.bad(gid, lab, "CONTEXT_EXPIRED_CONFIRM within the 30 min window")
+    echo = L.get("expected_echo")  # §11 (R3d): stored echoes carry CONTEXT_EXPIRED iff the expired anchor is kept
+    if echo is not None and gap is not None and gap > 1800 and disp not in ("EXECUTE", "NEW_SEARCH") \
+            and "CONTEXT_EXPIRED" not in echo:
+        r.bad(gid, lab, "turn over an expired anchor that neither confirms nor replaces it, without CONTEXT_EXPIRED (§11)")
+    if echo is not None and disp in ("EXECUTE", "NEW_SEARCH") and "CONTEXT_EXPIRED" in echo:
+        r.bad(gid, lab, f"{disp} carries CONTEXT_EXPIRED: the anchor was confirmed or replaced (§10.1, §11)")
+    if reason == "CONTEXT_EXPIRED_CONFIRM" and prior["state"] != "PENDING" and structural_causes(pir, ops):
+        r.bad(gid, lab, "CONTEXT_EXPIRED_CONFIRM whose «continuar» has a refusal cause (§6 H1: INFORM, no loop)")
     if tk in ("DELTA", "ANSWER_TO_CLARIFICATION") and disp == "EXECUTE" and gap is not None and gap > 1800:
         r.bad(gid, lab, "fragment executed over an expired anchor (F11)")
     if reason in ("NO_ANCHOR", "ANCHOR_UNREADABLE") and prior["state"] not in ("NONE", "UNREADABLE"):
@@ -446,11 +529,71 @@ def check_label(r: Report, rec: dict, lab: str, L: dict) -> None:
             r.bad(gid, lab, "CLEAR_ON_EMPTY_SLOT is not a lone CLEAR of an absent slot")
     if reason in ("BUYER_OR_PLACE_AFTER_ACTOR", "TERRITORY_VS_CARRIED_BUYER") and len(L.get("alternatives") or []) != 2:
         r.bad(gid, lab, f"{reason} without two candidate patches")
+    if reason == "DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER":  # contract §6.7 (R3-1, D-1 option 1)
+        p_ir = pir or {}
+        c1 = {**p_ir, "order": None, "cardinality": None}
+        if not (p_ir.get("order") and p_ir.get("cardinality")):
+            r.bad(gid, lab, "DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER without ORDER and CARDINALITY in the anchor")
+        if not any(o["op"] == "CLEAR" and o["slot"] == "ORDER" for o in ops) or any(
+                (o["op"] == "CLEAR" and o["slot"] == "CARDINALITY") or o["op"] == "SET_ORDER" for o in ops):
+            r.bad(gid, lab, "DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER: the ops do not leave CARDINALITY without ORDER")
+        if res is not None or (disp == "CLARIFY" and (L.get("alternatives") or []) != [c1]):  # INFORM: none (§8.4)
+            r.bad(gid, lab, "DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER: sealed alternatives must be exactly C1 (§6.7, §19)")
+    if reason == "DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER" and disp == "CLARIFY" and not (
+            rec.get("partial_alternatives") or {}).get("dependency"):
+        r.bad(gid, lab, "R3-1 pending sealed without declaring its alternatives partial (§19 DEP-E-ORDER-CANDIDATES)")
+    if reason == "DELTA_SLOT_CONFLICT":  # §6 steps 2 and 3b (R3b: KEEP + SET of one slot conflicts too)
+        def _slots(kinds):
+            return [o["slot"] for o in ops if o["op"] in kinds]
+        sets = _slots(("SET",)) + _slots(("SET_ORDER",)) + _slots(("SET_UNIVERSE",))
+        keeps, clears = set(_slots(("KEEP",))), set(_slots(("CLEAR",)))
+        conflict = (len(sets) != len(set(sets)) or keeps & clears or keeps & set(sets))
+        if not conflict:
+            r.bad(gid, lab, "DELTA_SLOT_CONFLICT without two ops in conflict on one slot")
+    if disp == "INFORM" and (L.get("alternatives") or res is not None):
+        r.bad(gid, lab, "INFORM with alternatives or a resulting IR (INFORM never leaves a pending, §8.4)")
+    if disp == "CLARIFY" and reason != "CONTEXT_EXPIRED_CONFIRM" and prior.get("gap_seconds") is not None \
+            and prior["gap_seconds"] > 1800 and prior["state"] != "PENDING":
+        r.bad(gid, lab, f"pending {reason} born over an expired anchor (§6 H1, R3b: only CONTEXT_EXPIRED_CONFIRM)")
+    if reason == "KEEP_ON_EMPTY_SLOT":  # contract §6.1 (CLARIFY, or INFORM when §6 3b or §8.4 forbid the pending)
+        p_ir = pir or {"conditions": []}
+        present = ({slot_of(c) for c in p_ir["conditions"]} | {c["dimension"] for c in p_ir["conditions"]}
+                   | ({"ORDER"} if p_ir.get("order") else set()) | ({"CARDINALITY"} if p_ir.get("cardinality") else set())
+                   | {"UNIVERSE"})
+        if res is not None or not any(o["op"] == "KEEP" and o["slot"] not in present for o in ops):
+            r.bad(gid, lab, "KEEP_ON_EMPTY_SLOT without a KEEP of a slot absent from the anchor")
+    causes = structural_causes(pir, ops) if tk == "DELTA" and prior["state"] != "PENDING" else []
+    if len(causes) > 1 and (disp, reason) != ("INFORM", causes[0]):  # §6 step 3b (R3b, U20)
+        r.bad(gid, lab, f"{len(causes)} refusal causes {causes} must give INFORM {causes[0]} (§6 3b)")
+    if causes and disp == "EXECUTE":
+        r.bad(gid, lab, f"refusal cause {causes[0]} executed")
+    if L["m2a_scope"] == "OUT_UNSUPPORTED_PROPOSAL" and (disp != "INFORM" or str(reason).split(":", 1)[-1] not in
+                                                         GOLD_4B_MOTIVES or prior["state"] not in ("EXECUTED", "PENDING")):
+        r.bad(gid, lab, "OUT_UNSUPPORTED_PROPOSAL is §7.1 row 4b: INFORM UNSUPPORTED_PROPOSAL:<motivo> over an anchor "
+                        "or a pending")
+    if str(reason).startswith("UNSUPPORTED_PROPOSAL:") and L["m2a_scope"] != "OUT_UNSUPPORTED_PROPOSAL":
+        r.bad(gid, lab, "UNSUPPORTED_PROPOSAL:<motivo> outside its scope OUT_UNSUPPORTED_PROPOSAL (§7.1 row 4b)")
+
+    # G10 F16 fail-closed branch (§6.5, R3-4) and P-3: a negation over several carried positives, over a value
+    # contained in a positive, or against a positive created by the same patch never executes; it clarifies with
+    # UNRESOLVED_VALUE:<DIM> (the dimension of the slot).
+    for o in ops:
+        if o["op"] != "SET" or o["polarity"] != "NEGATIVE" or not o["slot"] or o["slot"].startswith("VALUE"):
+            continue
+        carried = [c for c in (pir or {"conditions": []})["conditions"]
+                   if c["dimension"] == o["slot"] and c["polarity"] == "POSITIVE"]
+        same_patch = any(p["op"] == "SET" and p["slot"] == o["slot"] and p["polarity"] == "POSITIVE"
+                         and p["value_hint"] == o["value_hint"] for p in ops)
+        several = len(carried) > 1 and any(c["value_hint"] == o["value_hint"] for c in carried)
+        if (several or same_patch) and disp in ("EXECUTE", "NEW_SEARCH") and tk != "NEW_SEARCH":
+            r.bad(gid, lab, "F16 fail-closed branch executed (several positives or same-patch +X/-X, §6.5 R3-4/P-3)")
+        if (several or same_patch) and disp == "CLARIFY" and reason != f"UNRESOLVED_VALUE:{o['slot']}":
+            r.bad(gid, lab, f"F16 fail-closed branch with reason {reason} (§6.5: UNRESOLVED_VALUE:{o['slot']})")
 
     # G10 pending, inheritance and SMMLV invariants (INV-M2A-08/-23, F5/A1, A2)
     if prior["state"] == "PENDING" and tk == "DELTA" and disp == "EXECUTE" and not ctrl:
         r.bad(gid, lab, "delta executed over a pending without CANCEL_PENDING (hybrid)")
-    if pir is not None and any(o["inherited"].get("unit_source") == "PREVIOUS_ACCEPTED_VALUE" for o in ops):
+    if pir is not None and any((o["inherited"] or {}).get("unit_source") == "PREVIOUS_ACCEPTED_VALUE" for o in ops):
         units = {c["unit"] for c in pir["conditions"] if c["dimension"] == "VALUE"}
         if len(units) != 1:
             r.bad(gid, lab, f"unit inherited from {len(units)} active units (F5/A1 needs exactly one)")
@@ -463,6 +606,12 @@ def check_label(r: Report, rec: dict, lab: str, L: dict) -> None:
 
     # G11 reachable pre-states (contract §8.1 asks ≤ 2; §15.5 SMMLV only over one catalogued year)
     pend = prior.get("pending") or {}
+    owners = set(S19["case_owners"].get(gid, []))  # §19 is the one authority of dependencies (U19/U23; R3c)
+    if pend.get("reason") == R31_REASON and len(pend.get("options") or []) > 1 and "E-ORDER" not in owners:
+        r.bad(gid, lab, "pre-state carries an R3-1 SET_ORDER option but §19 does not make the case depend on E-ORDER")
+    if (reason == "UNSUPPORTED_PROPOSAL:INVALID_PROPOSAL") != ("DEP-M2A5-WIRE-CARDINALITY" in S19["case_dependencies"].get(
+            gid, [])):
+        r.bad(gid, lab, "4b INVALID_PROPOSAL and the §19 dependency on M2A-5 (IR v2 wire) must go together")
     if pend.get("asks") is not None and not 1 <= pend["asks"] <= 2:
         r.bad(gid, lab, f"unreachable pending pre-state: asks={pend['asks']}")
     for where, ir, executed in (("prior", pir, prior["state"] in ("EXECUTED", "EXECUTED_EMPTY")),
