@@ -27,10 +27,10 @@ from hypothesis import strategies as st
 import app.core.foundation_accepted as fa
 from app.core.interpretation_contract import ContractError
 from tests.test_foundation_delta_properties import st_base, st_case
-from tests.test_foundation_echo import CASES, REFUSALS
+from tests.test_foundation_echo import CASES, OMISSIONS, REFUSALS
 from tests.test_foundation_echo_properties import (
-    PATCHED_RESOLUTIONS, composed_of, fresh_problems, not_ready_problems, page_problems, problems, silent_problems,
-    st_plan_turn, st_value_turn,
+    ANSWER_TURNS, PATCHED_RESOLUTIONS, answer_problems, answers_of, composed_of, differential_problems, fresh_problems,
+    not_ready_problems, page_problems, problems, silent_problems, st_difference_turn, st_plan_turn, st_value_turn,
 )
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -69,7 +69,9 @@ def _drop():
 # ---- the mutants: (diff changes, echo changes) ---------------------------------------------------------------------
 UNIT_TABLE = "UNIT_ECHO = {UnitSource.PREVIOUS_ACCEPTED_VALUE: EchoClass.UNIT_INHERITED,\n"
 PLAN_CARD = "        if condition.dimension is SemanticDimension.CARDINALITY and RULE_TOPN_CAPPED in condition.receipt_rules:"
-RESET = "        if resolution is TurnResolution.NEW_SEARCH and base is not None and not anchor_expired:"
+RESET = ("        if (resolution is TurnResolution.NEW_SEARCH and base is not None and not anchor_expired\n"
+         "                and record.control is not PendingControl.CANCEL_PENDING):")
+CANCELLED = "\n                and record.control is not PendingControl.CANCEL_PENDING):"
 DEFAULTED = ("        defaulted = (ORDER_ECHO.get(condition.provenance.order_direction_source) is not None\n"
              "                     or RULE_ORDER_DEFAULTED in condition.receipt_rules)")
 CARRIED_ITEMS = "        items += [_item(EchoClass.CARRIED, condition.slot, (condition.condition_id,)) for condition in diff.carried]"
@@ -116,15 +118,20 @@ ECHO_MUTANTS = {
                                       " if i.condition_ids[0] in {c.condition_id for c in diff.placed}]")],
     # CONTEXT_RESET, CONTEXT_EXPIRED, what a turn executes
     "context_reset_omitted": [(RESET, "        if False:")],
-    "context_reset_over_an_expired_anchor": [(RESET, "        if resolution is TurnResolution.NEW_SEARCH and base is not None:")],
-    "context_reset_without_an_anchor": [(RESET, "        if resolution is TurnResolution.NEW_SEARCH and not anchor_expired:")],
+    "context_reset_over_an_expired_anchor": [(RESET, "        if (resolution is TurnResolution.NEW_SEARCH and base is not None"
+                                                     + CANCELLED)],
+    "context_reset_without_an_anchor": [(RESET, "        if (resolution is TurnResolution.NEW_SEARCH and not anchor_expired"
+                                                + CANCELLED)],
+    "context_reset_over_a_cancelled_pending": [(RESET, "        if (resolution is TurnResolution.NEW_SEARCH and base is not None "
+                                                       "and not anchor_expired):")],
     "context_expired_omitted": [("    if anchor_expired and not executes:", "    if False:")],
     "context_expired_on_an_executing_turn": [("    if anchor_expired and not executes:", "    if anchor_expired:")],
     "context_expired_without_the_fact": [("    if anchor_expired and not executes:", "    if not executes:")],
     "a_page_echoes_its_execution": [("    if executes and resolution is not TurnResolution.PROTOCOL_PAGE:", "    if executes:")],
     "a_turn_without_effective_executes": [(
-        "    executes = resolution in EXECUTING and (effective is not None or resolution is TurnResolution.PROTOCOL_PAGE)",
-        "    executes = resolution in EXECUTING")],
+        "    return record.resolution in EXECUTING and (\n"
+        "        effective is not None or record.resolution is TurnResolution.PROTOCOL_PAGE)",
+        "    return record.resolution in EXECUTING")],
     "difference_echo_on_a_fresh_search": [(
         "        if resolution in PATCHED:\n"
         "            items += _difference_items(effective, diff, carried=resolution is not TurnResolution.PROTOCOL_EVENT)",
@@ -160,8 +167,27 @@ ECHO_MUTANTS = {
         '        if base is None:\n            raise ContractError("ECHO_COMPOSITION_WITHOUT_BASE")', "        pass")],
     "effective_of_another_base_accepted": [("        if effective.base_trace_id != record.base_trace_id:", "        if False:")],
     "anchor_expired_not_typed": [("    if type(anchor_expired) is not bool:", "    if False:")],
-    "record_not_typed": [("    if type(record) is not AcceptedTurnRecord:", "    if False:")],
+    "record_not_typed": [("    if type(record) is not AcceptedTurnRecord:\n        raise ContractError(\"ECHO_NEEDS_A_RECORD\")\n"
+                          "    if type(anchor_expired) is not bool:", "    if type(anchor_expired) is not bool:")],
     "base_not_typed": [("    if base is not None and type(base) is not AcceptedInterpretation:", "    if False:")],
+    # round 3: the answer is read against the anchor; the expiry fact has no default; a receipt may not contradict
+    "anchor_expired_default_restored": [("               anchor_expired: bool) -> tuple[EchoItem, ...]:",
+                                         "               anchor_expired: bool = False) -> tuple[EchoItem, ...]:")],
+    "answer_anchor_expired_default_restored": [(
+        "                          record: AcceptedTurnRecord, *, anchor_expired: bool) -> tuple[EchoItem, ...]:",
+        "                          record: AcceptedTurnRecord, *, anchor_expired: bool = False) -> tuple[EchoItem, ...]:")],
+    "answer_read_against_the_frame": [(
+        "    diff = answer_diff(anchor, frame, tuple(frame_ops), effective, record.patch)",
+        "    diff = composed_diff(frame, effective, record.patch)")],
+    "echo_items_takes_an_answer": [(
+        "    if resolution is ANSWERED:\n        raise ContractError(\"ECHO_ANSWER_HAS_ITS_OWN_ENTRY\")  "
+        "# echo_items_for_answer: against the anchor, not the frame", "    if False:\n        pass")],
+    "answer_entry_takes_any_turn": [("    if record.resolution is not ANSWERED:", "    if False:")],
+    "answer_without_an_anchor_accepted": [("    if anchor is None:\n        raise ContractError(\"ECHO_ANSWER_WITHOUT_ANCHOR\")",
+                                           "    if False:\n        pass")],
+    "order_receipt_contradiction_accepted": [(
+        "            raise ContractError(\"ECHO_RECEIPT_CONTRADICTS_PROVENANCE\")  # a default the user's own words contradict",
+        "            pass")],
 }
 
 DIFF_MUTANTS = {
@@ -185,13 +211,31 @@ DIFF_MUTANTS = {
     "a81_departure_cited": [("            return Departure.A81_OPPOSITE_BOUND", "            return Departure.CITED")],
     "f16_departure_cited": [("            return Departure.F16_POSITIVE_INVERTED", "            return Departure.CITED")],
     "whole_value_clear_flag_off": [("    wide_value_clear = any(", "    wide_value_clear = False and any(")],
-    "a_one_side_clear_is_a_whole_one": [("                           and op.slot.side is None for op in patch.ops)", "                           for op in patch.ops)")],
-    "set_order_flag_off": [("any(op.op is PatchOpKind.SET_ORDER for op in patch.ops))", "False)")],
-    "universe_changed_is_the_operation": [("universe_before != universe_after,", "bool(redirects),")],
+    "a_one_side_clear_is_a_whole_one": [("                           and op.slot.side is None for op in ops)", "                           for op in ops)")],
+    "set_order_flag_off": [("any(op.op is PatchOpKind.SET_ORDER for op in ops))", "False)")],
+    "universe_changed_is_the_operation": [("bool(redirects), universe_before != universe_after,", "bool(redirects), bool(redirects),")],
     "requests_changed_without_operation_accepted": [("    if not redirects and effective.requests != base.requests:", "    if False:")],
     "universe_not_the_requested_accepted": [(
         "    if redirects and universe_after != tuple((op.universe.subject, op.universe.universe_kind) for op in redirects):",
         "    if False:")],
+    "answer_first_step_not_read": [("    first = ops_diff(anchor, frame, frame_ops)", "    first = ops_diff(frame, frame, ())")],
+    "answer_forgets_the_frames_removals": [("(*first.removed, *left_with_the_answer)", "(*left_with_the_answer,)")],
+    "answer_forgets_the_answers_removals": [("(*first.removed, *left_with_the_answer)", "(*first.removed,)")],
+    "answer_forgets_what_the_frame_placed": [(
+        "                   if c.condition_id in placed_by_answer or (c.condition_id in placed_by_frame and c.condition_id in standing))",
+        "                   if c.condition_id in placed_by_answer)")],
+    "answer_counts_what_the_frame_placed_as_carried": [(
+        "    carried = tuple(c for c in second.carried if c.condition_id in carried_by_frame)", "    carried = second.carried")],
+    "answer_universe_replaced_by_the_answer_only": [("first.universe_replaced or second.universe_replaced", "second.universe_replaced")],
+    "answer_universe_read_from_the_frame": [(
+        "    universe_before = tuple((request.subject, request.universe_kind) for request in anchor.requests)\n"
+        "    universe_after = tuple((request.subject, request.universe_kind) for request in effective.requests)\n"
+        "    return TurnDiff(carried,",
+        "    universe_before = tuple((request.subject, request.universe_kind) for request in frame.requests)\n"
+        "    universe_after = tuple((request.subject, request.universe_kind) for request in effective.requests)\n"
+        "    return TurnDiff(carried,")],
+    "answer_value_clear_of_the_answer_only": [("first.wide_value_clear or second.wide_value_clear", "second.wide_value_clear")],
+    "answer_set_order_of_the_answer_only": [("first.set_order or second.set_order", "second.set_order")],
     "fresh_acceptance_carries": [("    return TurnDiff((), effective.conditions, (), False, False, False, False)",
                                   "    return TurnDiff(effective.conditions, (), (), False, False, False, False)")],
 }
@@ -201,22 +245,31 @@ MUTANTS = {**{f"echo.{name}": ((), changes) for name, changes in ECHO_MUTANTS.it
 
 
 # ---- the judges ----------------------------------------------------------------------------------------------------
-def killed_by_the_cases(echo_items) -> str | None:
+def killed_by_the_cases(module) -> str | None:
     for case in CASES:
         try:
-            if case.run(echo_items) != case.expected:
+            if case.run(module) != case.expected:
                 return f"scenario {case.name}"
         except Exception:  # noqa: BLE001 - an exception where items were owed is a kill
             return f"scenario {case.name} (raised)"
-    for name, args, kwargs, code in REFUSALS:
+    for name, entry, args, kwargs, code in REFUSALS:
         try:
-            echo_items(*args, **kwargs)
+            getattr(module, entry)(*args, **kwargs)
         except ContractError as error:
             if code in str(error):
                 continue
         except Exception:  # noqa: BLE001
             pass
         return f"refusal {name}"
+    for name, entry, args in OMISSIONS:
+        try:
+            getattr(module, entry)(*args)
+        except TypeError as error:
+            if "anchor_expired" in str(error):
+                continue
+        except Exception:  # noqa: BLE001
+            pass
+        return f"omission {name}"
     return None
 
 
@@ -234,20 +287,31 @@ def _finds(strategy, bad) -> bool:
     return True
 
 
-def killed_by_the_properties(echo_items) -> str | None:
+def killed_by_the_properties(module) -> str | None:
+    echo_items = module.echo_items
+
     def composed_bad(case):
         base, patch, _ = case[0]
         composed = composed_of(base, patch)
         return composed is not None and bool(problems(echo_items, base, patch, composed, case[1]))
 
-    deltas = st.tuples(st.one_of(st_plan_turn(), st_value_turn(), st_case(), st_case(rich=False)),
+    def answer_bad(case):
+        return any(answer_problems(module.echo_items_for_answer, case[0], pending, answer, second)
+                   for pending, answer, second in answers_of(case))
+
+    deltas = st.tuples(st.one_of(st_difference_turn(), st_plan_turn(), st_value_turn(), st_case(), st_case(rich=False)),
                        st.sampled_from(PATCHED_RESOLUTIONS))
     if _finds(deltas, composed_bad):
         return "property: a composed turn"
+    if _finds(ANSWER_TURNS, answer_bad):
+        return "property: an answer against the anchor"
+    if _finds(ANSWER_TURNS, lambda case: bool(differential_problems(module, case))):
+        return "property: the answer is the delta"
     if _finds(st.one_of(st_case(), st_case(rich=False)),
               lambda case: bool(not_ready_problems(echo_items, case[0], case[1]))):
         return "property: a delta that is not ready"
-    if _finds(st.tuples(st_base(), st.one_of(st.none(), st_base()), st.booleans()),
+    controls = st.sampled_from([None, fa.PendingControl.CANCEL_PENDING])
+    if _finds(st.tuples(st_base(), st.one_of(st.none(), st_base()), st.booleans(), controls),
               lambda case: bool(fresh_problems(echo_items, *case))):
         return "property: a fresh acceptance"
     if _finds(st.tuples(st_base(), st.booleans()), lambda case: bool(page_problems(echo_items, *case))):
@@ -277,6 +341,15 @@ SCENARIO_ONLY = {
     "echo.record_not_typed": "the guard of an incoherent call",
     "echo.base_not_typed": "the guard of an incoherent call",
     "echo.display_key_is_the_class_only": "the display key is a field the scenarios read, not a claim of the reference",
+    "echo.anchor_expired_default_restored": "a default on a keyword: every generated call passes it; the omissions kill it",
+    "echo.answer_anchor_expired_default_restored": "a default on a keyword: every generated call passes it; the omissions kill it",
+    "echo.answer_entry_takes_any_turn": "the guard of an incoherent call",
+    "echo.echo_items_takes_an_answer": "the guard of an incoherent call",
+    "echo.answer_without_an_anchor_accepted": "the guard of an incoherent call (undecided: M2A7_CLOSE.md F-6)",
+    "diff.answer_set_order_of_the_answer_only": "the R3-1 pending, the one that leaves frame operations today, never holds a "
+                                                "SET_ORDER (it would restore the ORDER: no pending); the scenario does",
+    "diff.answer_value_clear_of_the_answer_only": "no candidate M2A-3 builds sets a VALUE bound after a frame CLEAR(VALUE); "
+                                                  "the scenario does",
 }
 
 
@@ -285,10 +358,10 @@ def test_every_mutant_is_killed(name):
     diff_changes, echo_changes = MUTANTS[name]
     try:
         module = mutant(diff_changes, echo_changes)
-        by_cases = killed_by_the_cases(module.echo_items)
+        by_cases = killed_by_the_cases(module)
         assert by_cases is not None, f"{name} survives the scenarios and the refusals"
         if name not in SCENARIO_ONLY:
-            assert killed_by_the_properties(module.echo_items) is not None, f"{name} survives the properties"
+            assert killed_by_the_properties(module) is not None, f"{name} survives the properties"
     finally:
         _drop()
 
@@ -297,8 +370,8 @@ def test_the_unmutated_module_survives_every_judge():
     """The control: the harness kills a mutant because the mutation is wrong, not because a judge is."""
     try:
         module = mutant()
-        assert killed_by_the_cases(module.echo_items) is None
-        assert killed_by_the_properties(module.echo_items) is None
+        assert killed_by_the_cases(module) is None
+        assert killed_by_the_properties(module) is None
     finally:
         _drop()
 

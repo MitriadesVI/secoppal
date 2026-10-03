@@ -34,10 +34,12 @@ from app.core.foundation_authority_values import Comparator
 from app.core.foundation_authority_values import OrderKey
 from tests.test_foundation_echo import (
     LOWER, SOURCE_OWES, UPPER, buyer, clear, interp, make_record, money, order, set_, set_order, summary, time, top, topic,
+    keep, universe,
 )
+from app.core.foundation_operations import Subject
 
 PROPS = settings(max_examples=250, deadline=None, suppress_health_check=[HealthCheck.too_slow, HealthCheck.data_too_large])
-PATCHED_RESOLUTIONS = (fa.TurnResolution.DELTA, fa.TurnResolution.PENDING_ANSWER, fa.TurnResolution.PROTOCOL_EVENT)
+PATCHED_RESOLUTIONS = (fa.TurnResolution.DELTA, fa.TurnResolution.PROTOCOL_EVENT)  # an answer has its own entry
 EFFECT_DERIVED = {"POLARITY_INVERTED", "TOPIC_REPLACED", "UNIVERSE_CHANGED", "VALUE_RANGE_REPLACED"}
 EXACT = {"CARRIED", "UNIT_INHERITED", "UNIT_SHARED_IN_RANGE", "YEAR_INHERITED", "YEAR_CLOCK_INFERRED",
          "RELATIVE_WINDOW_RESOLVED", "TOPN_CARRIED", "TOPN_CAPPED", "ORDER_DIRECTION_DEFAULTED"}
@@ -45,6 +47,22 @@ RELATIVE_RULE = "time.relative_to_previous"
 
 
 # ---- the reference: from the contract and from compose's own account, never from the module ------------------------
+def contradictory(conditions) -> bool:
+    """An ORDER whose receipt says «defaulted» over a direction the user STATED: the echo refuses it (a receipt that
+    contradicts the provenance is never echoed). The reducer's generators attach the receipt to every ORDER."""
+    return any(c.dimension is D.ORDER and fe.RULE_ORDER_DEFAULTED in c.receipt_rules
+               and c.provenance.order_direction_source is fa.OrderDirectionSource.STATED for c in conditions)
+
+
+def refused_for_its_receipt(call) -> list[str]:
+    """What the echo must do with a contradictory effective: refuse with ``ECHO_RECEIPT_CONTRADICTS_PROVENANCE``."""
+    try:
+        call()
+    except Exception as error:  # noqa: BLE001
+        return [] if "ECHO_RECEIPT_CONTRADICTS_PROVENANCE" in str(error) else [f"refused for another reason: {error}"]
+    return ["echoed a receipt that contradicts the provenance"]
+
+
 def provenance_owed(placed) -> set[tuple]:
     """§11 per placed condition, from the enumerated table ``SOURCE_OWES`` of the contract."""
     out = set()
@@ -95,8 +113,10 @@ def problems(echo_items, base, patch, composed, resolution=fa.TurnResolution.DEL
     """Every way the echo of this composed turn departs from the reference (empty = exact)."""
     effective = composed.effective
     record = make_record(resolution, patch=patch, effective=effective, base_trace_id="t0")
+    if contradictory(effective.conditions):
+        return refused_for_its_receipt(lambda: echo_items(base, effective, patch, record, anchor_expired=False))
     try:
-        items = echo_items(base, effective, patch, record)
+        items = echo_items(base, effective, patch, record, anchor_expired=False)
     except Exception as error:  # noqa: BLE001 - a lawful turn is never refused
         return [f"refused a lawful turn: {type(error).__name__}: {error}"]
     got = summary(items)
@@ -218,6 +238,68 @@ def st_plan_turn(draw):
     return base, fa.SemanticPatch(tuple(ops), fa.PatchOriginKind.TEXT), False
 
 
+@st.composite
+def st_answer_turn(draw):
+    """A turn that opens the R3-1 pending (``CLEAR(ORDER)`` over an ordered base that keeps a CARDINALITY) and leaves 0-3
+    other operations in its FRAME: a TOPIC, a TIME with every year source, bounds with every unit source (A8.1 included),
+    a buyer, the clearing of a slot, a change of universe. What the frame did must be announced by the answer."""
+    pick = lambda options: draw(st.sampled_from(options))  # noqa: E731
+    sources = [None, fa.OrderDirectionSource.STATED, fa.OrderDirectionSource.DEFAULTED]
+    base = interp(buyer("c1"), topic("c4", "aseo"), time("c5", 2025), money("c6", 500, Comparator.LT),
+                  order("c2", source=pick(sources)), top("c3", pick([10, 250]), rules=pick([(), (fe.RULE_TOPN_CAPPED,)])),
+                  trace="t0")
+    extras = []
+    for n, kind in enumerate(draw(st.lists(st.sampled_from(["topic", "time", "value", "buyer", "clear_time", "universe"]),
+                                           unique=True, max_size=3)), start=1):
+        if kind == "topic":
+            extras.append(set_(topic(f"p{n}", pick(["vias", "aseo"]), trace="t1", n=n)))
+        elif kind == "time":
+            source = pick(list(fa.YearSource))
+            extras.append(set_(time(f"p{n}", 2026, trace="t1", n=n, provenance=fa.Provenance(
+                year_source=source, inherited_from="t0" if source is fa.YearSource.PREVIOUS_ACCEPTED_TIME else None))))
+        elif kind == "value":
+            unit = pick(list(fa.UnitSource))
+            extras.append(set_(money(f"p{n}", pick([100, 900]), pick([Comparator.GTE, Comparator.LT]), unit_source=unit,
+                                     trace="t1", n=n, inherited_from="t0" if unit is fa.UnitSource.PREVIOUS_ACCEPTED_VALUE
+                                     else None)))
+        elif kind == "buyer":
+            extras.append(set_(buyer(f"p{n}", "VALLE", trace="t1", n=n)))
+        elif kind == "clear_time":
+            extras.append(clear(fa.Slot(D.TIME)))
+        else:
+            extras.append(universe(Subject.PROCESSES))
+    ops = [clear(fa.Slot(D.ORDER)), *extras]
+    return base, fa.SemanticPatch(tuple(ops), fa.PatchOriginKind.TEXT), False
+
+
+@st.composite
+def st_difference_turn(draw):
+    """The difference classes the general generator reaches rarely: a base with a TOPIC, a TIME, a buyer (single or dual
+    anchor) and a patch of replacements, restatements, F16 negations, changes of universe and clearings."""
+    pick = lambda options: draw(st.sampled_from(options))  # noqa: E731
+    parts = [topic("c1", "aseo"), time("c2", 2025), buyer("c3")]
+    if draw(st.booleans()):
+        parts.append(topic("c4", "vias"))
+    if draw(st.booleans()):
+        parts.append(topic("c5", "obras", excluded=True))  # a whole-dimension CLEAR covers the negative slot too
+    base = interp(*parts, subject=pick([Subject.CONTRACTS, Subject.PROCESSES]), dual=draw(st.booleans()), trace="t0")
+    makers = {
+        "topic_other": lambda n: set_(topic(f"p{n}", "vias", trace="t1", n=n)),
+        "topic_same": lambda n: set_(topic(f"p{n}", "aseo", trace="t1", n=n)),
+        "negate_aseo": lambda n: set_(topic(f"p{n}", "aseo", excluded=True, trace="t1", n=n)),
+        "negate_other": lambda n: set_(topic(f"p{n}", "obras", excluded=True, trace="t1", n=n)),
+        "universe_processes": lambda n: universe(Subject.PROCESSES),
+        "universe_contracts": lambda n: universe(Subject.CONTRACTS),
+        "clear_time": lambda n: clear(fa.Slot(D.TIME)),
+        "clear_topic": lambda n: clear(fa.Slot(D.TOPIC)),
+        "keep_time": lambda n: keep(fa.Slot(D.TIME, Polarity.POSITIVE)),
+        "time_other": lambda n: set_(time(f"p{n}", 2026, trace="t1", n=n)),
+    }
+    kinds = draw(st.lists(st.sampled_from(sorted(makers)), unique=True, min_size=1, max_size=3))
+    return base, fa.SemanticPatch(tuple(makers[kind](n) for n, kind in enumerate(kinds, start=1)),
+                                  fa.PatchOriginKind.TEXT), False
+
+
 def not_ready_problems(echo_items, base, patch) -> list[str]:
     """A DELTA that did not reach READY has a patch and no effective (§3.1): it executes nothing."""
     record = make_record(fa.TurnResolution.DELTA, patch=patch, effective=None, base_trace_id="t0")
@@ -231,6 +313,69 @@ def not_ready_problems(echo_items, base, patch) -> list[str]:
         if got != ([("CONTEXT_EXPIRED", None, ())] if expired else []):
             out.append(f"expired={expired}: {got}")
     return out
+
+
+def answers_of(case):
+    """Every lawful answer to the pending the REAL ``delta_outcome`` builds for this turn: ``(pending, answer, second step)``;
+    the frame, its operations and the candidates come from M2A-3, never from this file."""
+    base, patch, expired = case
+    outcome = fo.delta_outcome(base, patch, base_trace_id="t0", anchor_expired=expired)  # expired: H1, «continuar»
+    if outcome.disposition.value != "CLARIFY" or outcome.pending is None:
+        return []
+    out = []
+    for ops in outcome.pending.candidates:
+        answer = fa.SemanticPatch(tuple(ops), fa.PatchOriginKind.TEXT)
+        second = fd.compose(outcome.pending.frame, answer, base_trace_id="t1")
+        if isinstance(second, fd.Composed):
+            out.append((outcome.pending, answer, second))
+    return out
+
+
+def answer_problems(entry, anchor, pending, answer, second) -> list[str]:
+    """The answer read against the ANCHOR, against a reference written from the two ``Composed`` of the reducer: the exact
+    classes, and UNIVERSE_CHANGED iff the universes of the anchor and of what ran differ."""
+    effective = second.effective
+    record = make_record(fa.TurnResolution.PENDING_ANSWER, patch=answer, effective=effective, base_trace_id="t1")
+    call = lambda: entry(anchor, pending.frame, pending.frame_ops, effective, record, anchor_expired=False)  # noqa: E731
+    if contradictory(effective.conditions):
+        return refused_for_its_receipt(call)
+    try:
+        got = summary(call())
+    except Exception as error:  # noqa: BLE001 - a lawful answer is never refused
+        return [f"refused a lawful answer: {type(error).__name__}: {error}"]
+    frame_placed = (fd.compose_ops(anchor, pending.frame_ops, base_trace_id="t0").placed_ids
+                    if pending.frame_ops else frozenset())
+    anchor_ids = {c.condition_id for c in anchor.conditions}
+    placed = [c for c in effective.conditions if c.condition_id in second.placed_ids or c.condition_id in frame_placed]
+    carried = [c for c in effective.conditions if c.condition_id in anchor_ids and c.condition_id not in second.placed_ids]
+    ops = (*pending.frame_ops, *answer.ops)
+    owed = {("CARRIED", c.slot.key, (c.condition_id,)) for c in carried}
+    if not any(op.op is fa.PatchOpKind.REPLACE_UNIVERSE for op in ops):
+        owed.add(("CARRIED", "UNIVERSE", ()))
+    if any(op.op is fa.PatchOpKind.SET_ORDER for op in ops):
+        owed |= {("TOPN_CARRIED", c.slot.key, (c.condition_id,)) for c in carried if c.dimension is D.CARDINALITY}
+    owed |= provenance_owed(placed) | plan_owed(effective.conditions)
+    exact = {item for item in got if item[0] in EXACT}
+    out = [f"missing {item}" for item in sorted(owed - exact, key=repr)] + [
+        f"unjustified {item}" for item in sorted(exact - owed, key=repr)]
+    universes = lambda i: [(r.subject, r.universe_kind) for r in i.requests]  # noqa: E731
+    if (universes(anchor) != universes(effective)) != ("UNIVERSE_CHANGED" in {item[0] for item in got}):
+        out.append("UNIVERSE_CHANGED disagrees with the universes of the anchor and of what ran")
+    return out
+
+
+def one_step_of(anchor, pending, answer, second):
+    """The same turn as ONE composition over the anchor (the frame's operations and the answer's), when it composes to the
+    same effective: then the answer's echo must be the delta's echo (a differential check against the delta entry)."""
+    try:
+        combined = fa.SemanticPatch((*pending.frame_ops, *answer.ops), fa.PatchOriginKind.TEXT)
+    except Exception:  # noqa: BLE001 - mixed origins or no operations: not a delta
+        return None
+    one = fd.compose(anchor, combined, base_trace_id="t0")
+    drop = lambda e: {k: v for k, v in e.to_dict().items() if k != "base_trace_id"}  # noqa: E731
+    if isinstance(one, fd.Composed) and drop(one.effective) == drop(second.effective):
+        return combined, one
+    return None
 
 
 def composed_of(base, patch):
@@ -259,6 +404,16 @@ def test_the_echo_is_exactly_the_reference_on_plan_and_provenance_turns(case, re
 
 
 @PROPS
+@given(st_difference_turn(), st.sampled_from(PATCHED_RESOLUTIONS))
+def test_the_echo_is_exactly_the_reference_on_difference_turns(case, resolution):
+    base, patch, _ = case
+    composed = composed_of(base, patch)
+    if composed is None:
+        return
+    assert problems(fe.echo_items, base, patch, composed, resolution) == []
+
+
+@PROPS
 @given(st_value_turn(), st.sampled_from(PATCHED_RESOLUTIONS))
 def test_the_echo_is_exactly_the_reference_on_value_range_turns(case, resolution):
     base, patch, _ = case
@@ -276,7 +431,7 @@ def test_value_range_turns_reach_a81_and_the_clear_then_set_shape(case):
     if composed is None:
         return
     record = make_record(fa.TurnResolution.DELTA, patch=patch, effective=composed.effective, base_trace_id="t0")
-    classes = {i.echo_class.value for i in fe.echo_items(base, composed.effective, patch, record)}
+    classes = {i.echo_class.value for i in fe.echo_items(base, composed.effective, patch, record, anchor_expired=False)}
     assert ("VALUE_RANGE_REPLACED" in classes) == bool(
         {fd.DeltaEffect.VALUE_RANGE_REPLACED} & composed.effects or value_range_problems_owed(base, patch, composed))
 
@@ -327,10 +482,12 @@ def test_the_permutation_of_the_operations_changes_nothing(case, rng):
     shuffled = fa.SemanticPatch(tuple(ops), patch.origin_kind)
     other = composed_of(base, shuffled)
     assert other is not None and other.effective == composed.effective
+    if contradictory(composed.effective.conditions):
+        return
     first = fe.echo_items(base, composed.effective, patch, make_record(
-        fa.TurnResolution.DELTA, patch=patch, effective=composed.effective, base_trace_id="t0"))
+        fa.TurnResolution.DELTA, patch=patch, effective=composed.effective, base_trace_id="t0"), anchor_expired=False)
     second = fe.echo_items(base, other.effective, shuffled, make_record(
-        fa.TurnResolution.DELTA, patch=shuffled, effective=other.effective, base_trace_id="t0"))
+        fa.TurnResolution.DELTA, patch=shuffled, effective=other.effective, base_trace_id="t0"), anchor_expired=False)
     assert first == second
 
 
@@ -341,11 +498,13 @@ def test_the_record_accepts_the_echo_and_reads_it_back(case):
     composed = composed_of(base, patch)
     if composed is None:
         return
+    if contradictory(composed.effective.conditions):
+        return
     record = make_record(fa.TurnResolution.DELTA, patch=patch, effective=composed.effective, base_trace_id="t0")
-    items = fe.echo_items(base, composed.effective, patch, record)
+    items = fe.echo_items(base, composed.effective, patch, record, anchor_expired=False)
     stored = replace(record, echo=items)
     assert fa.AcceptedTurnRecord.from_dict(stored.to_dict()) == stored
-    assert fe.echo_items(base, composed.effective, patch, stored) == items
+    assert fe.echo_items(base, composed.effective, patch, stored, anchor_expired=False) == items
 
 
 def silent_problems(echo_items, base, expired, resolution) -> list[str]:
@@ -364,15 +523,18 @@ def silent_problems(echo_items, base, expired, resolution) -> list[str]:
     return out
 
 
-def fresh_problems(echo_items, effective, anchor, expired) -> list[str]:
-    """A fresh acceptance owes its own provenance and plan, and CONTEXT_RESET over a standing anchor; no difference."""
-    record = make_record(fa.TurnResolution.NEW_SEARCH, effective=effective)
+def fresh_problems(echo_items, effective, anchor, expired, control=None) -> list[str]:
+    """A fresh acceptance owes its own provenance and plan, and CONTEXT_RESET over a standing anchor when no pending was
+    vigente (``control`` is ``CANCEL_PENDING`` when a pending was); no difference."""
+    record = make_record(fa.TurnResolution.NEW_SEARCH, effective=effective, control=control)
+    if contradictory(effective.conditions):
+        return refused_for_its_receipt(lambda: echo_items(anchor, effective, None, record, anchor_expired=expired))
     try:
         got = summary(echo_items(anchor, effective, None, record, anchor_expired=expired))
     except Exception as error:  # noqa: BLE001
         return [f"refused: {error}"]
     owed = provenance_owed(effective.conditions) | plan_owed(effective.conditions)
-    if anchor is not None and not expired:
+    if anchor is not None and not expired and control is None:
         owed.add(("CONTEXT_RESET", None, ()))
     return [] if set(got) == owed and len(got) == len(owed) else [f"{sorted(got, key=repr)} != {sorted(owed, key=repr)}"]
 
@@ -398,15 +560,71 @@ def test_a_turn_that_executes_nothing_echoes_nothing_but_the_expiry(case):
 
 
 @PROPS
-@given(st_base(), st.one_of(st.none(), st_base()), st.booleans())
-def test_a_fresh_acceptance_echoes_its_own_provenance_and_plan_and_the_reset(effective, anchor, expired):
-    assert fresh_problems(fe.echo_items, effective, anchor, expired) == []
+@given(st_base(), st.one_of(st.none(), st_base()), st.booleans(), st.sampled_from([None, fa.PendingControl.CANCEL_PENDING]))
+def test_a_fresh_acceptance_echoes_its_own_provenance_and_plan_and_the_reset(effective, anchor, expired, control):
+    assert fresh_problems(fe.echo_items, effective, anchor, expired, control) == []
 
 
 @PROPS
 @given(st_base(), st.booleans())
 def test_a_page_is_the_same_plan_again_and_echoes_nothing(effective, expired):
     assert page_problems(fe.echo_items, effective, expired) == []
+
+
+ANSWER_TURNS = st.one_of(st_answer_turn(), st_case(), st_case(rich=False))
+
+
+@PROPS
+@given(ANSWER_TURNS)
+def test_the_answer_is_exactly_the_reference_against_the_anchor(case):
+    base = case[0]
+    for pending, answer, second in answers_of(case):
+        assert answer_problems(fe.echo_items_for_answer, base, pending, answer, second) == []
+
+
+def differential_problems(module, case) -> list[str]:
+    """For every answer that ONE composition over the anchor reproduces, the answer entry's echo is the delta entry's."""
+    base, out = case[0], []
+    for pending, answer, second in answers_of(case):
+        one = one_step_of(base, pending, answer, second)
+        if one is None or contradictory(second.effective.conditions):
+            continue
+        combined, composed = one
+        record = make_record(fa.TurnResolution.DELTA, patch=combined, effective=composed.effective, base_trace_id="t0")
+        try:
+            as_delta = module.echo_items(base, composed.effective, combined, record, anchor_expired=False)
+            as_answer = module.echo_items_for_answer(
+                base, pending.frame, pending.frame_ops, second.effective,
+                make_record(fa.TurnResolution.PENDING_ANSWER, patch=answer, effective=second.effective, base_trace_id="t1"),
+                anchor_expired=False)
+        except Exception as error:  # noqa: BLE001
+            out.append(f"refused: {type(error).__name__}: {error}")
+            continue
+        if as_answer != as_delta:
+            out.append("the answer's echo is not the delta's over the same effective")
+    return out
+
+
+@PROPS
+@given(ANSWER_TURNS)
+def test_the_answer_is_the_delta_when_one_composition_gives_the_same_effective(case):
+    assert differential_problems(fe, case) == []
+
+
+def test_the_generated_pendings_reach_answers_with_and_without_frame_operations():
+    seen = {"answers": 0, "with_frame_ops": 0, "one_step": 0}
+
+    @settings(max_examples=2500, deadline=None, database=None, derandomize=True,
+              suppress_health_check=[HealthCheck.too_slow, HealthCheck.data_too_large])
+    @given(ANSWER_TURNS)
+    def count(case):
+        for pending, answer, second in answers_of(case):
+            seen["answers"] += 1
+            seen["with_frame_ops"] += bool(pending.frame_ops)
+            seen["one_step"] += one_step_of(case[0], pending, answer, second) is not None
+
+    count()
+    assert seen["answers"] >= 200 and seen["with_frame_ops"] >= 100 and seen["one_step"] >= 30, seen
 
 
 # ---- the generator reaches what the claims are about (a property over nothing proves nothing) -----------------------
@@ -420,13 +638,14 @@ def test_the_generated_turns_reach_every_representable_class():
         def run_all(case):
             base, patch, _ = case
             composed = composed_of(base, patch)
-            if composed is not None:
+            if composed is not None and not contradictory(composed.effective.conditions):
                 record = make_record(fa.TurnResolution.DELTA, patch=patch, effective=composed.effective,
                                      base_trace_id="t0")
-                seen.update(item.echo_class.value for item in fe.echo_items(base, composed.effective, patch, record))
+                seen.update(item.echo_class.value for item in fe.echo_items(
+                    base, composed.effective, patch, record, anchor_expired=False))
         run_all()
 
-    for strategy in (st_case(), st_case(rich=False), st_value_turn(), st_plan_turn()):  # each on its own
+    for strategy in (st_case(), st_case(rich=False), st_value_turn(), st_plan_turn(), st_difference_turn()):  # each alone
         collect(strategy)
     # CONTEXT_RESET / CONTEXT_EXPIRED need a record, not a composition: the fresh and silent properties reach them
     reachable = {c.value for c in fa.EchoClass} - {c.value for c in fe.NOT_REPRESENTABLE} - {"CONTEXT_RESET", "CONTEXT_EXPIRED"}

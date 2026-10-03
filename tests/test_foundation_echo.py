@@ -18,6 +18,7 @@ import pytest
 
 import app.core.foundation_accepted as fa
 import app.core.foundation_delta as fd
+import app.core.foundation_delta_outcome as fo
 import app.core.foundation_echo as fe
 from app.core.foundation_authority_values import (
     BuyerKind, BuyerValue, CardinalityBasis, CardinalityValue, Comparator, MoneyValue, OrderDirection, OrderKey,
@@ -137,13 +138,13 @@ def expiry_pending(frame, patch) -> fa.PendingClarification:
 
 
 def make_record(resolution: fa.TurnResolution, *, patch=None, effective=None, base_trace_id=None, pending=None,
-                echo=()) -> fa.AcceptedTurnRecord:
+                echo=(), control=None) -> fa.AcceptedTurnRecord:
     """A coherent record: the turn executes (an ``ExecutionReceipt``) only if its resolution does."""
     executes = resolution in fe.EXECUTING and effective is not None
     scope = EXPECTED_STEP.get(resolution, fa.TurnScope.IN)
     return fa.AcceptedTurnRecord(
         "t1", "chat-1", "turn-1", T0, T0, "foundation-v5", None if resolution is fa.TurnResolution.PROTOCOL_EVENT else RAW_TURN,
-        scope, resolution, None, base_trace_id, patch, effective,
+        scope, resolution, control, base_trace_id, patch, effective,
         fa.ExecutionReceipt(True, True, True, (PLAN,)) if executes else None, None, pending, tuple(echo),
         "t1" if executes or resolution is fa.TurnResolution.PROTOCOL_PAGE else "t0")
 
@@ -168,9 +169,11 @@ class Case:
     args: tuple
     kwargs: dict
     expected: list
+    entry: str = "echo_items"  # or "echo_items_for_answer"
 
-    def run(self, echo_items=fe.echo_items) -> list[tuple]:
-        return summary(echo_items(*self.args, **self.kwargs))
+    def run(self, module=fe) -> list[tuple]:
+        """The echo of this case by the module's entry (a mutant module is judged with the same cases)."""
+        return summary(getattr(module, self.entry)(*self.args, **self.kwargs))
 
 
 def delta(name, base, ops, expected, *, expired=False, resolution=fa.TurnResolution.DELTA,
@@ -182,9 +185,31 @@ def delta(name, base, ops, expected, *, expired=False, resolution=fa.TurnResolut
     return Case(name, (base, composed.effective, patch, record), {"anchor_expired": expired}, expected)
 
 
-def fresh(name, effective, expected, *, base=None, expired=False) -> Case:
-    record = make_record(fa.TurnResolution.NEW_SEARCH, effective=effective)
+def fresh(name, effective, expected, *, base=None, expired=False, control=None) -> Case:
+    record = make_record(fa.TurnResolution.NEW_SEARCH, effective=effective, control=control)
     return Case(name, (base, effective, None, record), {"anchor_expired": expired}, expected)
+
+
+def answer(name, anchor, frame_ops, answer_ops, expected, *, expired=False) -> Case:
+    """The answer to a pending (§8.3 rows 1 and 4): the frame is ``compose(anchor, frame_ops)``, the effective is
+    ``compose(frame, answer)`` (both by the REAL reducer), the entry reads it against the anchor."""
+    frame = fd.compose_ops(anchor, tuple(frame_ops), base_trace_id="t0").effective if frame_ops else anchor
+    patch = fa.SemanticPatch(tuple(answer_ops), fa.PatchOriginKind.TEXT)
+    composed = fd.compose(frame, patch, base_trace_id="t1")
+    assert isinstance(composed, fd.Composed), f"{name}: the reducer refused {composed}"
+    record = make_record(fa.TurnResolution.PENDING_ANSWER, patch=patch, effective=composed.effective, base_trace_id="t1")
+    return Case(name, (anchor, frame, tuple(frame_ops), composed.effective, record), {"anchor_expired": expired}, expected,
+                entry="echo_items_for_answer")
+
+
+def asked(name, anchor, ops, expected, *, candidate=0, first_expired=False) -> Case:
+    """An answer to the pending ``delta_outcome`` (the REAL M2A-3 reducer) builds for ``ops`` over ``anchor``: the frame,
+    the operations it kept and the candidate come from it, never from this file."""
+    outcome = fo.delta_outcome(anchor, fa.SemanticPatch(tuple(ops), fa.PatchOriginKind.TEXT), base_trace_id="t0",
+                               anchor_expired=first_expired)
+    assert outcome.disposition is fo.DeltaDisposition.CLARIFY, f"{name}: {outcome.disposition} {outcome.code}"
+    pending = outcome.pending
+    return answer(name, anchor, pending.frame_ops, pending.candidates[candidate], expected)
 
 
 def not_ready(name, base, ops, expected, *, expired=False) -> Case:
@@ -222,7 +247,7 @@ def _cases() -> list[Case]:
               [E("CARRIED", "TOPIC/POSITIVE", "c1"), E("CARRIED", "TOPIC/POSITIVE", "c2"), UNI]),
         delta("carried_dual_anchor", interp(buyer("c1"), dual=True, trace="t0"), [set_(topic("p1", "aseo", trace="t1", n=1))],
               [E("CARRIED", "BUYER/POSITIVE", "c1"), UNI]),
-        delta("carried_provenance_was_announced_by_the_turn_that_produced_it", interp(
+        delta("carried_provenance_was_announced_when_it_was_executed", interp(
             money("c1", 100, Comparator.GTE, unit_source=fa.UnitSource.PREVIOUS_ACCEPTED_VALUE, inherited_from="t-0"),
             time("c2", provenance=fa.Provenance(year_source=fa.YearSource.CLOCK_INFERRED)), trace="t0"),
               [set_(topic("p1", "aseo", trace="t1", n=1))],
@@ -305,9 +330,6 @@ def _cases() -> list[Case]:
         delta("topn_capped_by_its_receipt", interp(buyer("c1"), trace="t0"),
               [set_order(order("p1", trace="t1", n=1)), set_(top("p2", 250, rules=(fe.RULE_TOPN_CAPPED,), trace="t1", n=2))],
               [E("CARRIED", "BUYER/POSITIVE", "c1"), UNI, E("TOPN_CAPPED", "CARDINALITY", "p2")]),
-        delta("topn_capped_without_its_receipt_is_not_announced", interp(buyer("c1"), trace="t0"),
-              [set_order(order("p1", trace="t1", n=1)), set_(top("p2", 250, trace="t1", n=2))],
-              [E("CARRIED", "BUYER/POSITIVE", "c1"), UNI]),
         delta("topn_capped_is_announced_at_every_execution", interp(order("c1"), top("c2", 250, rules=(fe.RULE_TOPN_CAPPED,))),
               [set_(topic("p1", "aseo", trace="t1", n=1))],
               [E("CARRIED", "ORDER", "c1"), E("CARRIED", "CARDINALITY", "c2"), UNI, E("TOPN_CAPPED", "CARDINALITY", "c2")]),
@@ -327,8 +349,6 @@ def _cases() -> list[Case]:
               [set_order(order("p1", key=OrderKey.DATE, source=fa.OrderDirectionSource.STATED, trace="t1", n=1))],
               [E("CARRIED", "BUYER/POSITIVE", "c1"), UNI]),
         # turns with a patch that are not a text delta: a pending's answer and an event
-        delta("pending_answer_is_a_delta", BASE_BT, [set_(topic("p1", "aseo", trace="t1", n=1))], [*CARRY_BT],
-              resolution=fa.TurnResolution.PENDING_ANSWER),
         # a button event is no delta and no answer: no CARRIED line (Gold SF149-SF152), its effects still apply
         delta("protocol_event_keeps_its_effects", ORDERED, [set_order(order("p1", key=OrderKey.DATE, origin=event_origin()))],
               [E("TOPN_CARRIED", "CARDINALITY", "c2")], resolution=fa.TurnResolution.PROTOCOL_EVENT,
@@ -355,11 +375,55 @@ def _cases() -> list[Case]:
         fresh("new_search_without_an_anchor", new_effective, [E("YEAR_CLOCK_INFERRED", "TIME/POSITIVE", "n2")]),
         fresh("new_search_replacing_an_expired_anchor", new_effective, [E("YEAR_CLOCK_INFERRED", "TIME/POSITIVE", "n2")],
               base=BASE_BT, expired=True),
+        fresh("new_search_that_cancels_a_pending_echoes_no_reset", new_effective, [E("YEAR_CLOCK_INFERRED", "TIME/POSITIVE", "n2")],
+              base=BASE_BT, control=fa.PendingControl.CANCEL_PENDING),
         fresh("new_search_has_no_difference_echo", interp(topic("n1", "vias", trace="t1", n=1), trace=None), [E("CONTEXT_RESET", None)],
               base=TOPIC_BASE),
         fresh("new_search_announces_its_plan", interp(order("n1", source=fa.OrderDirectionSource.DEFAULTED, trace="t1", n=1),
               top("n2", 250, rules=(fe.RULE_TOPN_CAPPED,), trace="t1", n=2), trace=None),
               [E("TOPN_CAPPED", "CARDINALITY", "n2"), E("ORDER_DIRECTION_DEFAULTED", "ORDER", "n1")]),
+    ]
+    # the answer to a pending: read against the ANCHOR, so what the asking turn did inside the frame is announced now
+    anchored = interp(topic("c1", "aseo"), money("c4", 500, Comparator.LT), order("c2"), top("c3", 10), trace="t0")
+    inherited = time("p1", 2025, trace="t1", n=1, provenance=fa.Provenance(
+        year_source=fa.YearSource.PREVIOUS_ACCEPTED_TIME, inherited_from="t0"))
+    out += [
+        asked("answer_announces_the_a81_the_frame_made", anchored,
+              [clear(fa.Slot(D.ORDER)), set_(money("p1", 900, Comparator.GTE, trace="t1", n=1))],
+              [E("CARRIED", "TOPIC/POSITIVE", "c1"), UNI, E("VALUE_RANGE_REPLACED", "VALUE/upper", "c4", "p1")]),
+        asked("answer_announces_the_provenance_and_the_replacement_the_frame_made", interp(
+            topic("c1", "aseo"), order("c2"), top("c3", 10), trace="t0"),
+              [clear(fa.Slot(D.ORDER)), set_(inherited), set_(topic("p2", "vias", trace="t1", n=2))],
+              [UNI, E("YEAR_INHERITED", "TIME/POSITIVE", "p1"), E("TOPIC_REPLACED", "TOPIC/POSITIVE", "c1", "p2")]),
+        asked("answer_that_confirms_an_expired_anchor_echoes_like_the_delta", BASE_BT,
+              [set_(topic("p1", "aseo", trace="t1", n=1))], [*CARRY_BT], first_expired=True),
+        answer("answer_replaces_what_the_frame_placed", BASE_BT, [set_(time("p1", 2026, trace="t1", n=1))],
+               [set_(time("p2", 2024, trace="t1", n=2))], [E("CARRIED", "BUYER/POSITIVE", "c1"), UNI]),
+        answer("answer_a81_removes_what_the_frame_placed_and_the_anchor_never_had", TOPIC_BASE,
+               [set_(money("p1", 100, Comparator.GTE, trace="t1", n=1))],
+               [set_(money("p3", 50, Comparator.LT, trace="t1", n=3))], [E("CARRIED", "TOPIC/POSITIVE", "c1"), UNI]),
+        answer("answer_clears_what_the_frame_carried_and_what_it_placed_stands_as_placed", BASE_BT,
+               [set_(topic("p1", "aseo", trace="t1", n=1))], [clear(wide(D.TIME))],
+               [E("CARRIED", "BUYER/POSITIVE", "c1"), UNI]),
+        answer("answer_with_no_frame_operations_is_the_delta_over_the_anchor", BASE_BT, [],
+               [set_(topic("p1", "aseo", trace="t1", n=1))], [*CARRY_BT]),
+        answer("answer_a81_removes_what_the_anchor_carried_and_the_frame_replaced_a_topic", interp(
+            topic("c1", "aseo"), money("c4", 500, Comparator.LT), trace="t0"),
+               [set_(topic("p1", "vias", trace="t1", n=1))], [set_(money("p2", 900, Comparator.GTE, trace="t1", n=2))],
+               [UNI, E("VALUE_RANGE_REPLACED", "VALUE/upper", "c4", "p2"), E("TOPIC_REPLACED", "TOPIC/POSITIVE", "c1", "p1")]),
+        answer("answer_after_a_frame_that_changed_the_universe", BASE_BT, [universe(Subject.PROCESSES)],
+               [set_(topic("p3", "aseo", trace="t1", n=3))],
+               [E("CARRIED", "BUYER/POSITIVE", "c1"), E("CARRIED", "TIME/POSITIVE", "c2"), E("UNIVERSE_CHANGED", "UNIVERSE", "c2")]),
+        answer("answer_after_a_frame_that_cleared_the_whole_value", RANGE, [clear(wide(D.VALUE))],
+               [set_(money("p3", 200, Comparator.GTE, trace="t1", n=3))],
+               [UNI, E("VALUE_RANGE_REPLACED", "VALUE/upper", "c2", "p3")]),
+        answer("answer_after_a_frame_that_set_the_order", ORDERED, [set_order(order("p1", key=OrderKey.DATE, trace="t1", n=1))],
+               [set_(topic("p3", "aseo", trace="t1", n=3))],
+               [E("CARRIED", "CARDINALITY", "c2"), UNI, E("TOPN_CARRIED", "CARDINALITY", "c2")]),
+        answer("answer_that_changes_the_universe", BASE_BT, [set_(topic("p1", "aseo", trace="t1", n=1))],
+               [universe(Subject.PROCESSES)],
+               [E("CARRIED", "BUYER/POSITIVE", "c1"), E("CARRIED", "TIME/POSITIVE", "c2"),
+                E("UNIVERSE_CHANGED", "UNIVERSE", "c2")]),
     ]
     # CONTEXT_EXPIRED: the turn found the anchor expired and neither confirms nor replaces it
     patch = fa.SemanticPatch((set_(topic("p1", "aseo", trace="t1", n=1)),), fa.PatchOriginKind.TEXT)
@@ -393,9 +457,10 @@ def test_every_scenario(case):
 
 @pytest.mark.parametrize("case", CASES, ids=lambda case: case.name)
 def test_the_echo_is_deterministic_and_the_record_stores_it(case):
-    first, second = fe.echo_items(*case.args, **case.kwargs), fe.echo_items(*case.args, **case.kwargs)
+    entry = getattr(fe, case.entry)
+    first, second = entry(*case.args, **case.kwargs), entry(*case.args, **case.kwargs)
     assert first == second
-    record = replace(case.args[3], echo=first)  # the type refuses duplicates and bad items
+    record = replace(case.args[-1], echo=first)  # the type refuses duplicates and bad items
     assert fa.AcceptedTurnRecord.from_dict(record.to_dict()) == record
     ranks = [(fe.CLASS_RANK[item.echo_class], fe._slot_rank(item.slot)) for item in first]
     assert ranks == sorted(ranks)  # the order is the contract's: by class (§11), then by slot (§4.2)
@@ -500,7 +565,12 @@ def _tampered(change) -> tuple:
 
 
 def _refusals() -> list[tuple]:
-    """``(name, args, kwargs, code)``: a turn the echo must REFUSE with ``ContractError(code)`` (never echo)."""
+    """``(name, entry, args, kwargs, code)``: a turn the echo must REFUSE with ``ContractError(code)`` (never echo)."""
+    return [*((name, "echo_items", args, {"anchor_expired": False, **kwargs}, code)
+              for name, args, kwargs, code in _delta_refusals()), *_answer_refusals()]
+
+
+def _delta_refusals() -> list[tuple]:
     base, effective, patch, record = _delta().args
     other = fa.SemanticPatch((set_(topic("p9", "vias", trace="t1", n=1)),), fa.PatchOriginKind.TEXT)
     pending = expiry_pending(BASE_BT, patch)
@@ -563,19 +633,74 @@ def _refusals() -> list[tuple]:
     ]
 
 
+def _answer_refusals() -> list[tuple]:
+    """The answer entry and the one rule of ``echo_items`` that sends an answer to it, plus the receipt that contradicts
+    its provenance (a default the user's own words contradict)."""
+    case = next(c for c in CASES if c.name == "answer_announces_the_a81_the_frame_made")
+    anchor, frame, frame_ops, effective, record = case.args
+    ok = {"anchor_expired": False}
+    delta_args = _delta().args
+    foreign = make_record(fa.TurnResolution.PENDING_ANSWER, patch=record.patch, effective=effective, base_trace_id="t-other")
+    stated_default = delta("stated", interp(buyer("c1"), trace="t0"), [set_order(order(
+        "p1", key=OrderKey.DATE, source=fa.OrderDirectionSource.STATED, rules=(fe.RULE_ORDER_DEFAULTED,), trace="t1", n=1))], [])
+    return [
+        ("echo_items_does_not_take_an_answer", "echo_items", (anchor, effective, record.patch, record), ok,
+         "ECHO_ANSWER_HAS_ITS_OWN_ENTRY"),
+        ("answer_entry_needs_an_answer", "echo_items_for_answer", (anchor, frame, frame_ops, delta_args[1], delta_args[3]), ok,
+         "ECHO_NOT_AN_ANSWER"),
+        ("answer_entry_needs_a_record", "echo_items_for_answer", (anchor, frame, frame_ops, effective, None), ok,
+         "ECHO_NEEDS_A_RECORD"),
+        ("answer_without_an_anchor_is_not_decided", "echo_items_for_answer", (None, frame, frame_ops, effective, record), ok,
+         "ECHO_ANSWER_WITHOUT_ANCHOR"),
+        ("answer_anchor_as_a_dict", "echo_items_for_answer", (anchor.to_dict(), frame, frame_ops, effective, record), ok,
+         "ECHO_INVALID_BASE"),
+        ("answer_effective_outside_the_record", "echo_items_for_answer", (anchor, frame, frame_ops, frame, record), ok,
+         "ECHO_ARGUMENTS_OUTSIDE_THE_RECORD"),
+        ("answer_effective_of_another_frame", "echo_items_for_answer", (anchor, frame, frame_ops, effective, foreign), ok,
+         "ECHO_EFFECTIVE_OF_ANOTHER_BASE"),
+        ("answer_flag_not_typed", "echo_items_for_answer", (anchor, frame, frame_ops, effective, record),
+         {"anchor_expired": None}, "ECHO_INVALID_ANCHOR_EXPIRED"),
+        ("answer_frame_that_the_operations_do_not_explain", "echo_items_for_answer", (anchor, frame, (), effective, record), ok,
+         "ECHO_PLACED_WITHOUT_OPERATION"),
+        ("answer_frame_that_is_not_an_interpretation", "echo_items_for_answer", (anchor, None, frame_ops, effective, record), ok,
+         "ECHO_DIFF_NEEDS_INTERPRETATIONS"),
+        ("receipt_that_contradicts_the_provenance", "echo_items", stated_default.args, stated_default.kwargs,
+         "ECHO_RECEIPT_CONTRADICTS_PROVENANCE"),
+    ]
+
+
+# Calls that leave out a keyword-only argument with no default: a TypeError, never an echo (an omitted
+# ``anchor_expired`` would silently revalidate an expired anchor, §10.1).
+def _omissions() -> list[tuple]:
+    case = next(c for c in CASES if c.name == "answer_announces_the_a81_the_frame_made")
+    delta_args = _delta().args
+    return [("echo_items_without_the_expiry_fact", "echo_items", delta_args),
+            ("echo_items_for_answer_without_the_expiry_fact", "echo_items_for_answer", case.args)]
+
+
 REFUSALS = _refusals()
+OMISSIONS = _omissions()
 
 
 @pytest.mark.parametrize("refusal", REFUSALS, ids=lambda refusal: refusal[0])
 def test_an_incoherent_turn_is_refused_not_echoed(refusal):
-    _, args, kwargs, code = refusal
+    _, entry, args, kwargs, code = refusal
     with pytest.raises(ContractError, match=code):
-        fe.echo_items(*args, **kwargs)
+        getattr(fe, entry)(*args, **kwargs)
+
+
+@pytest.mark.parametrize("omission", OMISSIONS, ids=lambda omission: omission[0])
+def test_the_expiry_fact_has_no_default(omission):
+    _, entry, args = omission
+    with pytest.raises(TypeError, match="anchor_expired"):
+        getattr(fe, entry)(*args)
 
 
 def test_every_refusal_has_its_own_name_and_the_codes_are_the_modules():
     assert len({refusal[0] for refusal in REFUSALS}) == len(REFUSALS)
-    assert {refusal[3] for refusal in REFUSALS} >= {
+    assert {refusal[4] for refusal in REFUSALS} >= {
+        "ECHO_ANSWER_HAS_ITS_OWN_ENTRY", "ECHO_NOT_AN_ANSWER", "ECHO_ANSWER_WITHOUT_ANCHOR",
+        "ECHO_RECEIPT_CONTRADICTS_PROVENANCE", "ECHO_DIFF_NEEDS_INTERPRETATIONS",
         "ECHO_UNCITED_REMOVAL", "ECHO_CARRIED_CONDITION_CHANGED", "ECHO_PLACED_WITHOUT_OPERATION",
         "ECHO_REQUESTS_CHANGED_WITHOUT_OPERATION", "ECHO_UNIVERSE_NOT_THE_REQUESTED", "ECHO_NEEDS_A_RECORD",
         "ECHO_INVALID_BASE", "ECHO_INVALID_ANCHOR_EXPIRED", "ECHO_ARGUMENTS_OUTSIDE_THE_RECORD",
@@ -591,6 +716,15 @@ def test_an_expiry_question_over_an_expired_anchor_is_the_expired_echo():
 
 def test_the_echo_never_reads_the_records_own_echo():
     base, effective, patch, record = _delta().args
-    stored = fe.echo_items(base, effective, patch, record)
+    stored = fe.echo_items(base, effective, patch, record, anchor_expired=False)
     again = replace(record, echo=stored)
-    assert fe.echo_items(base, effective, patch, again) == stored  # the field it computes is not an input
+    assert fe.echo_items(base, effective, patch, again, anchor_expired=False) == stored  # the field it computes is no input
+
+
+@pytest.mark.xfail(strict=True, reason="DEP-E-ORDER (§19): the cap is announced by its receipt `topn.capped`, which no authority "
+                   "emits yet, and foundation_accepted (protected) has no decoding fact for a cardinality: INV-M2A-21 asks for "
+                   "the announcement of a capped top-N whatever the receipt, so this fails today and must start passing")
+def test_a_capped_top_n_without_its_receipt_is_announced():
+    case = delta("capped_without_receipt", interp(buyer("c1"), trace="t0"),
+                 [set_order(order("p1", trace="t1", n=1)), set_(top("p2", 250, trace="t1", n=2))], [])
+    assert "TOPN_CAPPED" in {item[0] for item in case.run()}
