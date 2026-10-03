@@ -77,6 +77,7 @@ class TurnScope(str, Enum):
     OUT_NO_ANCHOR = "OUT_NO_ANCHOR"
     OUT_ANCHOR_NOT_SEARCH = "OUT_ANCHOR_NOT_SEARCH"
     OUT_OPERATION_CHANGE = "OUT_OPERATION_CHANGE"
+    OUT_UNSUPPORTED_PROPOSAL = "OUT_UNSUPPORTED_PROPOSAL"  # §7.1 row 4b (R3, D-6)
     OUT_REFERENT_EXTENSIONAL = "OUT_REFERENT_EXTENSIONAL"
     OUT_RELATIVE_TO_PREVIOUS = "OUT_RELATIVE_TO_PREVIOUS"
 
@@ -183,16 +184,32 @@ class TotalQuality(str, Enum):
     NOT_APPLICABLE = "not_applicable"
 
 
-# Contract annex A.3. Parameterized codes: ``UNRESOLVED_VALUE:<DIM>``, ``OPERATION_CHANGE:<op>``,
-# ``ANCHOR_NOT_SEARCH:<op>``.
+# Contract annex A.3 (amended R3/R3b/R3c). Parameterized codes: ``UNRESOLVED_VALUE:<DIM>``, ``OPERATION_CHANGE:<op>``,
+# ``UNSUPPORTED_PROPOSAL:<motivo>``, ``ANCHOR_NOT_SEARCH:<op>``.
 CLARIFY_CODES = frozenset({
     "CONTEXT_EXPIRED_CONFIRM", "BUYER_OR_PLACE_AFTER_ACTOR", "REGION_NOT_IN_LIST", "SMMLV_YEAR_AMBIGUOUS",
     "RELATIVE_TO_PREVIOUS_VALUE", "UNIT_AMBIGUOUS", "MONTH_YEAR_AMBIGUOUS", "EMPTY_SEARCH_AFTER_DELTA",
     "STATE_NOT_IN_UNIVERSE", "TERRITORY_VS_CARRIED_BUYER", "NO_ANCHOR", "ANCHOR_UNREADABLE",
-    "TARGET_NOT_ADDRESSABLE", "VALUE_WITHOUT_COMPARATOR",
+    "TARGET_NOT_ADDRESSABLE", "VALUE_WITHOUT_COMPARATOR", "DELTA_SLOT_CONFLICT", "KEEP_ON_EMPTY_SLOT",
+    "DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER",
 })
 REASK_CODES = frozenset({"OPTION_NOT_CHOSEN", "ANSWER_EDITS_OTHER_SLOT", "PENDING_UNANSWERED", "ANSWER_UNRESOLVED"})
-INFORM_CODES = frozenset({"CLEAR_ON_EMPTY_SLOT", "REFERENT_EXTENSIONAL"})
+INFORM_CODES = frozenset({"CLEAR_ON_EMPTY_SLOT", "REFERENT_EXTENSIONAL", "STALE_OPTION"})
+# A.3 «INFORM con un código de CLARIFY» (R3b, U20): the only CLARIFY codes also valid with INFORM (their pending may be
+# impossible, §8.4; or §6 step 3b gathers several causes; or H1). Plus ``UNRESOLVED_VALUE:<DIM>``. Never
+# ``CONTEXT_EXPIRED_CONFIRM``, ``NO_ANCHOR`` nor ``ANCHOR_UNREADABLE``: their pending is always possible.
+INFORM_CAPABLE_CLARIFY_CODES = frozenset({
+    "DELTA_SLOT_CONFLICT", "TARGET_NOT_ADDRESSABLE", "KEEP_ON_EMPTY_SLOT", "DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER",
+    "SMMLV_YEAR_AMBIGUOUS", "RELATIVE_TO_PREVIOUS_VALUE", "BUYER_OR_PLACE_AFTER_ACTOR", "TERRITORY_VS_CARRIED_BUYER",
+    "REGION_NOT_IN_LIST", "STATE_NOT_IN_UNIVERSE", "UNIT_AMBIGUOUS", "MONTH_YEAR_AMBIGUOUS",
+    "EMPTY_SEARCH_AFTER_DELTA", "VALUE_WITHOUT_COMPARATOR",
+})
+# ``<DIM>`` (A.3, R3-3): the dimension keys of the §4.2 slots — the eleven slot dimensions and UNIVERSE; never a
+# dimension that is not a slot. ``<motivo>`` (§7.1 row 4b, D-6): its closed list.
+DIMENSION_KEYS = frozenset({dimension.value for dimension in SLOT_DIMENSIONS} | {"UNIVERSE"})
+UNSUPPORTED_PROPOSAL_MOTIVES = frozenset({
+    "MULTI_REQUEST", "UNSUPPORTED_CONDITION", "UNSUPPORTED_SOURCE", "INVALID_PROPOSAL", "NO_ACTION",
+})
 
 
 def reason_code_allowed(code: str, resolution: TurnResolution) -> bool:
@@ -200,14 +217,15 @@ def reason_code_allowed(code: str, resolution: TurnResolution) -> bool:
     if type(code) is not str:
         return False
     head, sep, tail = code.partition(":")
+    unresolved = sep == ":" and head == "UNRESOLVED_VALUE" and tail in DIMENSION_KEYS
     if resolution is TurnResolution.CLARIFY:
-        return code in CLARIFY_CODES or (sep == ":" and head == "UNRESOLVED_VALUE"
-                                         and tail in {d.value for d in SLOT_DIMENSIONS})
+        return code in CLARIFY_CODES or unresolved
     if resolution is TurnResolution.REASK:
         return code in REASK_CODES
     if resolution is TurnResolution.INFORM:
-        return code in INFORM_CODES or (sep == ":" and head == "OPERATION_CHANGE"
-                                        and tail in {op.value for op in Operation})
+        return (code in INFORM_CODES or code in INFORM_CAPABLE_CLARIFY_CODES or unresolved
+                or (sep == ":" and head == "OPERATION_CHANGE" and tail in {op.value for op in Operation})
+                or (sep == ":" and head == "UNSUPPORTED_PROPOSAL" and tail in UNSUPPORTED_PROPOSAL_MOTIVES))
     if resolution is TurnResolution.HANDOFF_LEGACY:
         return sep == ":" and head == "ANCHOR_NOT_SEARCH" and tail in {op.value for op in Operation}
     return False
@@ -1315,6 +1333,7 @@ OUT_SCOPE_RESOLUTION = {
     TurnScope.OUT_NO_ANCHOR: TurnResolution.CLARIFY,
     TurnScope.OUT_ANCHOR_NOT_SEARCH: TurnResolution.HANDOFF_LEGACY,
     TurnScope.OUT_OPERATION_CHANGE: TurnResolution.INFORM,
+    TurnScope.OUT_UNSUPPORTED_PROPOSAL: TurnResolution.INFORM,
     TurnScope.OUT_REFERENT_EXTENSIONAL: TurnResolution.INFORM,
     TurnScope.OUT_RELATIVE_TO_PREVIOUS: TurnResolution.CLARIFY,
 }

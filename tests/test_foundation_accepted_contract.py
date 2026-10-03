@@ -587,9 +587,9 @@ def test_reason_codes_are_the_closed_annex_lists():
     for retired in ("SMMLV_UNSUPPORTED", "INHERITED_UNIT_IMPLAUSIBLE", "TOPN_CAP_EXCEEDED",
                     "DELTA_OR_NEW_AMBIGUOUS", "SELF_CONTAINED_REQUEST"):
         assert not any(fa.reason_code_allowed(retired, r) for r in fa.TurnResolution)
-    assert {e.value for e in fa.TurnScope} == {
+    assert {e.value for e in fa.TurnScope} == {  # A.1 amended by R3 (D-6): OUT_UNSUPPORTED_PROPOSAL, row 4b
         "IN", "IN_NEW_SEARCH", "IN_PROTOCOL", "OUT_NO_ANCHOR", "OUT_ANCHOR_NOT_SEARCH", "OUT_OPERATION_CHANGE",
-        "OUT_REFERENT_EXTENSIONAL", "OUT_RELATIVE_TO_PREVIOUS"}
+        "OUT_UNSUPPORTED_PROPOSAL", "OUT_REFERENT_EXTENSIONAL", "OUT_RELATIVE_TO_PREVIOUS"}
     assert {e.value for e in fa.PatchOpKind} == {"SET", "CLEAR", "KEEP", "SET_ORDER", "REPLACE_UNIVERSE"}
 
 

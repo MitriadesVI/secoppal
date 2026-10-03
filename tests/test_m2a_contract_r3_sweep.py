@@ -15,9 +15,9 @@ Two sides, kept apart on purpose:
 
 * CONTRACT side (amended, phase B1): every row of ``SWEEP`` is answered by the contract; the pins read the contract
   text. No row is HUECO any more.
-* TYPE side (``app/core/foundation_accepted.py``, exclusive owner M2A-3, phase 1c after the r3 re-seal): what the type
-  still lacks is listed in ``TYPE_GAPS`` and runs as a STRICT xfail with its reason. It is a declared red, never a
-  green: the day M2A-3 lands an item, its xfail turns into an XPASS that fails until the marker is removed.
+* TYPE side (``app/core/foundation_accepted.py``, exclusive owner M2A-3): ``TYPE_GAPS`` lists what the amended
+  contract required of the type. It ran as STRICT xfails until M2A-3 phase 1c landed every item; the markers are
+  removed there and each item is now a plain check that must hold.
 
 A new invariant in the types fails ``test_every_type_invariant_is_swept`` until it is swept.
 ``python -m tests.test_m2a_contract_r3_sweep`` prints the tables.
@@ -544,8 +544,9 @@ def probes() -> dict[str, str | None]:
         "P-d6-unsupported-wire": refusal(lambda: proposal(raw_b, Operation.FOLLOWUP_DELTA, (
             wire("u", D.UNSUPPORTED, "is", "solo", raw_b, unsupported_label="exclusive_scope"),))),
         # P-3: +X and −X both created by the patch (nothing carried): the type admits it, only §6.5 stops it.
-        "P-p3": refusal(lambda: effective((cond("c1", D.BUYER), cond("x1", D.TOPIC, start=4),
-                                           cond("x2", D.TOPIC, SAMPLE[D.TOPIC][1], start=6)))),
+        # conditions in the canonical slot order of M2A-3 1b (D-CANON-1: TOPIC/+, TOPIC/-, BUYER/+)
+        "P-p3": refusal(lambda: effective((cond("x1", D.TOPIC, start=4),
+                                           cond("x2", D.TOPIC, SAMPLE[D.TOPIC][1], start=6), cond("c1", D.BUYER)))),
     }
 
 
@@ -562,8 +563,8 @@ TYPE_ADMITS = {
     "UNRESOLVED_VALUE:WHATEVER": False, "DELTA_CONTRADICTS_CARRIED": False,
 }
 
-# What the amended contract requires and the type (app/core/foundation_accepted.py) still lacks. Exclusive owner:
-# M2A-3, phase 1c, after the r3 re-seal. Each item is a STRICT xfail: declared red, never a false green.
+# What the amended contract requires of the type (app/core/foundation_accepted.py). Exclusive owner: M2A-3. Landed in
+# phase 1c after the r3 re-seal: each item was a STRICT xfail until then and is now a plain check.
 TYPE_GAPS = {
     "A3-DELTA_SLOT_CONFLICT": ("CLARIFY_CODES sin DELTA_SLOT_CONFLICT (R3-2)",
                                lambda: representable("DELTA_SLOT_CONFLICT")),
@@ -846,11 +847,8 @@ def test_r3b_p2_keep_conflict_and_semantic_selection_are_in_the_contract():
     assert "`INFORM UNSUPPORTED_PROPOSAL:INVALID_PROPOSAL` por §7.1 fila 4b, con la pendiente intacta" in dame_20
 
 
-# ---- the type side: declared red until M2A-3 phase 1c (strict xfail; never a false green) -------------------------
-@pytest.mark.parametrize("gap", [
-    pytest.param(gap, id=gap, marks=pytest.mark.xfail(
-        strict=True, reason=f"tipo: {TYPE_GAPS[gap][0]}; dueño M2A-3, fase 1c tras el re-sellado r3"))
-    for gap in TYPE_GAPS])
+# ---- the type side: landed by M2A-3 phase 1c (the strict xfail markers are removed; each item must hold) ----------
+@pytest.mark.parametrize("gap", list(TYPE_GAPS))
 def test_the_type_implements_the_amended_contract(gap):
     assert TYPE_GAPS[gap][1]()
 
@@ -882,7 +880,7 @@ def render() -> str:
     count = Counter(r.verdict for r in SWEEP)
     lines += ["", "Totales: " + ", ".join(f"{k} {count[k]}" for k in ("CUBIERTO", "HUECO", "DEPENDENCIA",
                                                                         "NO_ALCANZABLE"))]
-    lines += ["", "### Lado del tipo: rojo declarado (xfail estricto) hasta M2A-3 fase 1c", "",
+    lines += ["", "### Lado del tipo: implementado en M2A-3 fase 1c (antes, xfail estricto)", "",
               "| Id | Falta | ¿Ya en el tipo? |", "|---|---|---|"]
     lines += [f"| `{gap}` | {cell(text)} | {'sí' if check() else 'no'} |" for gap, (text, check) in TYPE_GAPS.items()]
     lines += ["", "### Sondas", "", "| Sonda | Resultado del tipo |", "|---|---|"]

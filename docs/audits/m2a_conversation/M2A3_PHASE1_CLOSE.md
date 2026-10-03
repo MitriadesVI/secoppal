@@ -190,3 +190,41 @@ Fase 1b:
 - `privacy_scan_public_tree.py <REAL privado> <copia de los archivos del commit>`: limpio.
 
 Corrí esos tests, no la suite global (módulo sin consumidor; la global corresponde a la integración).
+
+## 7. Fase 1c: el tipo adopta el contrato R3 sellado (2026-10-02)
+
+Contrato integrado por `git merge --no-ff 57530a07` (R3d, sello `7dd39b4b…`, 209 casos); es la autoridad y aquí es de
+sólo lectura. «M2A-3 LANGUAGE R3 = FROZEN» activo.
+
+Cambios en `app/core/foundation_accepted.py`, todos sacados literalmente de A.1/A.3 y de §7.1 fila 4b:
+
+- `TurnScope.OUT_UNSUPPORTED_PROPOSAL`, con `OUT_SCOPE_RESOLUTION` ⇒ `INFORM`.
+- `CLARIFY_CODES` añade `DELTA_SLOT_CONFLICT`, `KEEP_ON_EMPTY_SLOT` y `DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER`.
+- `INFORM_CODES` añade `STALE_OPTION`.
+- `INFORM_CAPABLE_CLARIFY_CODES`: los 14 códigos de CLARIFY que A.3 (R3b, U20) declara también válidos con INFORM,
+  más `UNRESOLVED_VALUE:<DIM>`. Nunca `CONTEXT_EXPIRED_CONFIRM`, `NO_ANCHOR` ni `ANCHOR_UNREADABLE`.
+- `DIMENSION_KEYS`: las once dimensiones de ranura y `UNIVERSE` (R3-3).
+- `UNSUPPORTED_PROPOSAL_MOTIVES`: la lista cerrada de la fila 4b.
+
+Con esto STOP-1 tiene un código representable para universo (`UNRESOLVED_VALUE:UNIVERSE`). Cómo lo usa `compose`
+para SF075 (rojo declarado, S01 del barrido) es de la fase 2 y lo decide el contrato R3, no este tipo.
+
+En `tests/test_m2a_contract_r3_sweep.py` (carril del contrato; no lo fija el sello):
+
+- se quitaron los 29 xfail estrictos de `TYPE_GAPS`, que ahora son comprobaciones normales y en verde;
+- la sonda `P-p3` se construye en el orden canónico de ranura 1b (TOPIC/+, TOPIC/−, BUYER/+). Su intención (el tipo
+  admite +X y −X creados por el mismo parche) y su resultado esperado (`None`) no cambian.
+
+Batería nueva `annex_failures`, con 6 mutantes, que fija el lado negativo de A.1/A.3: nada fuera de las listas
+cerradas se admite.
+
+Gates de la fase 1c:
+
+- `pytest -p no:cacheprovider --hypothesis-seed=0` sobre el barrido, multi-op y s19 más los 8 archivos de la fase 1:
+  **642 passed**, 0 xfail. Barrido 45, multi-op 12, s19 21.
+- `ruff`: limpio.
+- `olympus-semgrep-delta --base fa0b6de8`: `TOTAL=0 BASELINE=0 NEW_DELTA=0`.
+- `m2a_gold_seal.py verify`: `seal OK 7dd39b4b…`, también con `--real-dir`.
+- `check_m2a_gold_contract.py --real-dir`: `"violations": 0`.
+
+Corrí esos tests, no la suite global.

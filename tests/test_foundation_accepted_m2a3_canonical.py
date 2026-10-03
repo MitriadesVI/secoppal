@@ -30,6 +30,7 @@ import json
 import sys
 import types
 from dataclasses import replace
+from datetime import timedelta
 
 import pytest
 from hypothesis import HealthCheck, find, given, settings
@@ -42,7 +43,7 @@ from app.core.interpretation_contract import (
     Polarity, ValueSide,
 )
 from app.core.semantic_dimensions import SemanticDimension as D
-from tests.test_foundation_accepted_contract import PROPS, SOURCE, VALUES, condition, request
+from tests.test_foundation_accepted_contract import PROPS, SOURCE, T0, VALUES, condition, record, request
 
 AND, OR, NOT, ATOM = LogicOperator.AND, LogicOperator.OR, LogicOperator.NOT, LogicOperator.ATOM
 
@@ -369,6 +370,63 @@ def test_property_canonical_form_is_invariant_to_unobservable_permutations(case)
     assert canonical_violation(fa, case) is None
 
 
+# ---- 6. A.1 / A.3 as amended by R3 (phase 1c): what each disposition may NEVER carry ---------------------------------
+# The positive side (every A.1/A.3 entry the contract requires) is ``tests/test_m2a_contract_r3_sweep.py``; this battery
+# pins the negative side, so a widening of the closed lists is caught, not only a narrowing.
+NOT_A_SLOT = ("RETRIEVAL_INTENT", "UNSUPPORTED", "CONTROL_LANGUAGE", "universe", "", "VALUE/lower")
+
+
+def annex_failures(m) -> list[str]:
+    out = []
+    allowed, R = m.reason_code_allowed, m.TurnResolution
+    dims = sorted(m.DIMENSION_KEYS)
+    if set(dims) != {d.value for d in SLOT_DIMENSIONS} | {"UNIVERSE"}:
+        out.append(f"<DIM> is not the slot dimensions plus UNIVERSE: {dims}")
+    if m.UNSUPPORTED_PROPOSAL_MOTIVES != {"MULTI_REQUEST", "UNSUPPORTED_CONDITION", "UNSUPPORTED_SOURCE",
+                                          "INVALID_PROPOSAL", "NO_ACTION"}:
+        out.append("<motivo> is not the closed list of §7.1 row 4b")
+    expect = {  # (code, resolution) -> allowed?
+        **{(f"UNRESOLVED_VALUE:{d}", r): True for d in dims for r in (R.CLARIFY, R.INFORM)},
+        **{(f"UNRESOLVED_VALUE:{d}", r): False for d in NOT_A_SLOT for r in (R.CLARIFY, R.INFORM)},
+        **{(f"UNSUPPORTED_PROPOSAL:{x}", R.INFORM): True for x in m.UNSUPPORTED_PROPOSAL_MOTIVES},
+        **{(f"UNSUPPORTED_PROPOSAL:{x}", R.INFORM): False for x in ("", "WHATEVER", "PROVIDER_ERROR",
+                                                                      "OPERATION_CHANGE", "multi_request")},
+        **{(f"UNSUPPORTED_PROPOSAL:{x}", R.CLARIFY): False for x in m.UNSUPPORTED_PROPOSAL_MOTIVES},
+        **{(code, R.INFORM): False for code in ("CONTEXT_EXPIRED_CONFIRM", "NO_ANCHOR", "ANCHOR_UNREADABLE")},
+        **{(code, R.CLARIFY): False for code in (*m.REASK_CODES, *m.INFORM_CODES)},
+        **{(code, R.REASK): False for code in (*m.CLARIFY_CODES, *m.INFORM_CODES)},
+        **{(code, R.INFORM): True for code in (*m.INFORM_CODES, *m.INFORM_CAPABLE_CLARIFY_CODES)},
+        ("UNRESOLVED_VALUE:UNIVERSE", R.CLARIFY): True, ("UNRESOLVED_VALUE:UNIVERSE", R.INFORM): True,  # R3-3
+        ("STALE_OPTION", R.INFORM): True, ("STALE_OPTION", R.CLARIFY): False,
+        ("DELTA_SLOT_CONFLICT", R.CLARIFY): True, ("KEEP_ON_EMPTY_SLOT", R.CLARIFY): True,
+        ("DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER", R.CLARIFY): True,
+        ("OP_NOT_ACCREDITED:VALUE", R.CLARIFY): False, ("OP_NOT_ACCREDITED:VALUE", R.INFORM): False,  # a refusal,
+        ("BASE_INVALID", R.CLARIFY): False, ("DELTA_CONTRADICTS_CARRIED", R.CLARIFY): False,  # never a reason
+    }
+    for (code, resolution), wanted in expect.items():
+        if allowed(code, resolution) is not wanted:
+            out.append(f"{code} with {resolution.value}: {'refused' if wanted else 'accepted'}")
+    if m.INFORM_CAPABLE_CLARIFY_CODES - m.CLARIFY_CODES:
+        out.append("an INFORM-capable code is not a CLARIFY code")
+    # an INFORM-only code never leaves a pending (§7.1 row 4b; R3c STALE_OPTION)
+    for code in ("STALE_OPTION", "UNSUPPORTED_PROPOSAL:MULTI_REQUEST", "CLEAR_ON_EMPTY_SLOT"):
+        if _code(lambda: m.PendingClarification("p1", "t1", T0, T0 + timedelta(minutes=30), 1, None, None, None,
+                                                None, code, (), frozenset())) != "UNKNOWN_PENDING_REASON":
+            out.append(f"a pending accepts the INFORM-only reason {code}")
+    # row 4b: OUT_UNSUPPORTED_PROPOSAL is INFORM and makes 0 calls
+    scope = m.TurnScope("OUT_UNSUPPORTED_PROPOSAL")
+    if m.OUT_SCOPE_RESOLUTION.get(scope) is not R.INFORM:
+        out.append("OUT_UNSUPPORTED_PROPOSAL does not lead to INFORM")
+    for resolution in (R.CLARIFY, R.NEW_SEARCH):
+        if _code(lambda: record(m, resolution, with_patch=False, scope=scope)) != "OUT_SCOPE_RESOLUTION_MISMATCH":
+            out.append(f"OUT_UNSUPPORTED_PROPOSAL accepted with {resolution.value}")
+    return out
+
+
+def test_the_a1_a3_closed_lists_never_widen():
+    assert annex_failures(fa) == []
+
+
 # ---- mutants ---------------------------------------------------------------------------------------------------------
 def _mutant(*replacements: tuple[str, str]) -> types.ModuleType:
     source = SOURCE
@@ -438,6 +496,25 @@ MUTANTS = {
         LOGIC, "    return None if _conjunction_only(logic) else ConditionExpression(logic.operator, None, tuple(\n"
                "        g for c in logic.children for g in (c.children if c.operator is LogicOperator.AND "
                "and logic.operator is LogicOperator.AND else (c,))))"),),
+    # A.1 / A.3 (phase 1c)
+    "inform_accepts_every_clarify_code": (annex_failures, (
+        "        return (code in INFORM_CODES or code in INFORM_CAPABLE_CLARIFY_CODES or unresolved",
+        "        return (code in INFORM_CODES or code in CLARIFY_CODES or unresolved"),),
+    "unsupported_proposal_motive_open": (annex_failures, (
+        'and head == "UNSUPPORTED_PROPOSAL" and tail in UNSUPPORTED_PROPOSAL_MOTIVES))',
+        'and head == "UNSUPPORTED_PROPOSAL" and bool(tail)))'),),
+    "dim_without_universe": (annex_failures, (
+        'DIMENSION_KEYS = frozenset({dimension.value for dimension in SLOT_DIMENSIONS} | {"UNIVERSE"})',
+        'DIMENSION_KEYS = frozenset({dimension.value for dimension in SLOT_DIMENSIONS})'),),
+    "dim_open_to_every_dimension": (annex_failures, (
+        'unresolved = sep == ":" and head == "UNRESOLVED_VALUE" and tail in DIMENSION_KEYS',
+        'unresolved = sep == ":" and head == "UNRESOLVED_VALUE" and tail in DIMENSION_KEYS | {"RETRIEVAL_INTENT"}'),),
+    "clarify_accepts_inform_codes": (annex_failures, (
+        "        return code in CLARIFY_CODES or unresolved",
+        "        return code in CLARIFY_CODES or code in INFORM_CODES or unresolved"),),
+    "out_unsupported_proposal_as_clarify": (annex_failures, (
+        "    TurnScope.OUT_UNSUPPORTED_PROPOSAL: TurnResolution.INFORM,",
+        "    TurnScope.OUT_UNSUPPORTED_PROPOSAL: TurnResolution.CLARIFY,"),),
 }
 
 
