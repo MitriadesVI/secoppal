@@ -21,8 +21,9 @@ Which turn echoes what (§11, Gold schema 2.1 §7 «sí y sólo sí», plus the 
 * ``CONTEXT_EXPIRED``: the turn found the anchor expired and neither confirms nor replaces it, whatever its scope or
   disposition (§10.1, R3c/R3d): ``anchor_expired`` and the turn executes no effective;
 * ``CONTEXT_RESET``: a new search that executes over a standing (not expired) anchor;
-* by DIFFERENCE (turns with a patch; ``foundation_echo_diff``): ``CARRIED`` (each condition that survives untouched, and
-  the said universe when no ``REPLACE_UNIVERSE`` touches it), ``VALUE_RANGE_REPLACED`` (A8.1, or a ``CLEAR`` of the whole
+* by DIFFERENCE (turns with a patch; ``foundation_echo_diff``): ``CARRIED`` (a delta or an answer only, never a button
+  event: each condition that survives untouched, and the said universe when no ``REPLACE_UNIVERSE`` touches it),
+  ``VALUE_RANGE_REPLACED`` (A8.1, or a ``CLEAR`` of the whole
   VALUE dimension followed by a ``SET`` that leaves a side unreplaced), ``TOPIC_REPLACED`` (F3/F22),
   ``POLARITY_INVERTED`` (F16), ``UNIVERSE_CHANGED`` (with the carried TIME, which date field it now applies to),
   ``TOPN_CARRIED`` (a carried CARDINALITY and a ``SET_ORDER``, F10);
@@ -125,7 +126,7 @@ def echo_items(base: AcceptedInterpretation | None, effective: AcceptedInterpret
         items += _provenance_items(diff)
         items += _plan_items(effective)
         if resolution in PATCHED:
-            items += _difference_items(effective, diff)
+            items += _difference_items(effective, diff, carried=resolution is not TurnResolution.PROTOCOL_EVENT)
     if anchor_expired and not executes:
         items.append(_item(EchoClass.CONTEXT_EXPIRED, None, ()))
     return tuple(sorted(items, key=lambda item: (CLASS_RANK[item.echo_class], _slot_rank(item.slot))))
@@ -163,10 +164,14 @@ def _plan_items(effective: AcceptedInterpretation) -> list[EchoItem]:
 
 
 # ---- by the difference between the base and the effective -----------------------------------------------------------
-def _difference_items(effective: AcceptedInterpretation, diff: TurnDiff) -> list[EchoItem]:
-    items = [_item(EchoClass.CARRIED, condition.slot, (condition.condition_id,)) for condition in diff.carried]
-    if not diff.universe_replaced:
-        items.append(_item(EchoClass.CARRIED, UNIVERSE_SLOT, ()))  # the said universe survives untouched
+def _difference_items(effective: AcceptedInterpretation, diff: TurnDiff, *, carried: bool) -> list[EchoItem]:
+    """``carried``: the turn is a delta or an answer (§11 CARRIED, Gold §7); a button event (order, remove a filter) is
+    neither, and the Gold gives it no CARRIED line (SF149-SF152), though its effects below still apply."""
+    items = []
+    if carried:
+        items += [_item(EchoClass.CARRIED, condition.slot, (condition.condition_id,)) for condition in diff.carried]
+        if not diff.universe_replaced:
+            items.append(_item(EchoClass.CARRIED, UNIVERSE_SLOT, ()))  # the said universe survives untouched
     items += _value_range_items(effective, diff)
     items += _topic_items(diff)
     items += _polarity_items(diff)

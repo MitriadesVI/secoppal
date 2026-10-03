@@ -187,6 +187,13 @@ def fresh(name, effective, expected, *, base=None, expired=False) -> Case:
     return Case(name, (base, effective, None, record), {"anchor_expired": expired}, expected)
 
 
+def not_ready(name, base, ops, expected, *, expired=False) -> Case:
+    """A DELTA that did not reach READY: its record has a patch and no effective, so it executes nothing (§3.1)."""
+    patch = fa.SemanticPatch(tuple(ops), fa.PatchOriginKind.TEXT)
+    record = make_record(fa.TurnResolution.DELTA, patch=patch, effective=None, base_trace_id="t0")
+    return Case(name, (base, None, patch, record), {"anchor_expired": expired}, expected)
+
+
 def silent(name, resolution, expected, *, base=None, expired=False, pending=None) -> Case:
     record = make_record(resolution, base_trace_id="t0" if resolution is fa.TurnResolution.PROTOCOL_PAGE else None,
                          pending=pending)
@@ -215,6 +222,13 @@ def _cases() -> list[Case]:
               [E("CARRIED", "TOPIC/POSITIVE", "c1"), E("CARRIED", "TOPIC/POSITIVE", "c2"), UNI]),
         delta("carried_dual_anchor", interp(buyer("c1"), dual=True, trace="t0"), [set_(topic("p1", "aseo", trace="t1", n=1))],
               [E("CARRIED", "BUYER/POSITIVE", "c1"), UNI]),
+        delta("carried_provenance_was_announced_by_the_turn_that_produced_it", interp(
+            money("c1", 100, Comparator.GTE, unit_source=fa.UnitSource.PREVIOUS_ACCEPTED_VALUE, inherited_from="t-0"),
+            time("c2", provenance=fa.Provenance(year_source=fa.YearSource.CLOCK_INFERRED)), trace="t0"),
+              [set_(topic("p1", "aseo", trace="t1", n=1))],
+              [E("CARRIED", "TIME/POSITIVE", "c2"), E("CARRIED", "VALUE/lower", "c1"), UNI]),
+        delta("clear_of_a_whole_dimension_covers_its_negative_slot", interp(topic("c1", "obras", excluded=True), trace="t0"),
+              [clear(wide(D.TOPIC))], [UNI]),
         # the provenance of what the turn placed
         delta("unit_inherited", RANGE, [clear(wide(D.VALUE)), set_(money("p1", 100, Comparator.GTE, trace="t1", n=1,
               unit_source=fa.UnitSource.PREVIOUS_ACCEPTED_VALUE, inherited_from="t0"))],
@@ -262,6 +276,8 @@ def _cases() -> list[Case]:
               [UNI, E("TOPIC_REPLACED", "TOPIC/POSITIVE", "c1", "p1")]),
         delta("topic_negative_is_not_a_replacement", TOPIC_BASE, [set_(topic("p1", "obras", excluded=True, trace="t1", n=1))],
               [E("CARRIED", "TOPIC/POSITIVE", "c1"), UNI]),
+        delta("topic_cleared_and_a_negative_set_is_not_a_replacement", TOPIC_BASE,
+              [clear(fa.Slot(D.TOPIC, POS)), set_(topic("p1", "obras", excluded=True, trace="t1", n=1))], [UNI]),
         delta("polarity_inverted", TOPIC_BASE, [set_(topic("p1", "aseo", excluded=True, trace="t1", n=1))],
               [UNI, E("POLARITY_INVERTED", "TOPIC/NEGATIVE", "c1", "p1")]),
         delta("polarity_cited_by_a_clear_is_not_an_inversion", TOPIC_BASE,
@@ -309,9 +325,21 @@ def _cases() -> list[Case]:
         # turns with a patch that are not a text delta: a pending's answer and an event
         delta("pending_answer_is_a_delta", BASE_BT, [set_(topic("p1", "aseo", trace="t1", n=1))], [*CARRY_BT],
               resolution=fa.TurnResolution.PENDING_ANSWER),
-        delta("protocol_event_is_a_delta", ORDERED, [set_order(order("p1", key=OrderKey.DATE, origin=event_origin()))],
-              [E("CARRIED", "CARDINALITY", "c2"), UNI, E("TOPN_CARRIED", "CARDINALITY", "c2")],
+        # a button event is no delta and no answer: no CARRIED line (Gold SF149-SF152), its effects still apply
+        delta("protocol_event_keeps_its_effects", ORDERED, [set_order(order("p1", key=OrderKey.DATE, origin=event_origin()))],
+              [E("TOPN_CARRIED", "CARDINALITY", "c2")], resolution=fa.TurnResolution.PROTOCOL_EVENT,
+              kind=fa.PatchOriginKind.EVENT),
+        delta("protocol_event_order_button_of_sf149", interp(topic("c1", "vigilancia"), buyer("c2"), time("c3"), trace="t0"),
+              [set_order(order("p1", key=OrderKey.VALUE, source=fa.OrderDirectionSource.STATED, origin=event_origin()))], [],
               resolution=fa.TurnResolution.PROTOCOL_EVENT, kind=fa.PatchOriginKind.EVENT),
+        delta("protocol_event_remove_filter_button_of_sf151", interp(topic("c1", "papeleria"), buyer("c2"), time("c3"), trace="t0"),
+              [fa.PatchOp(fa.PatchOpKind.CLEAR, fa.Slot(D.BUYER, POS), None, None, event_origin(fa.OriginKind.VIEW_ACTION))],
+              [], resolution=fa.TurnResolution.PROTOCOL_EVENT, kind=fa.PatchOriginKind.EVENT),
+        delta("protocol_event_universe_button_changes_the_universe", BASE_BT,
+              [fa.PatchOp(fa.PatchOpKind.REPLACE_UNIVERSE, fa.UNIVERSE_SLOT, None,
+                          fa.UniverseTarget(Subject.PROCESSES, fa.UniverseKind.RECORDS), event_origin())],
+              [E("UNIVERSE_CHANGED", "UNIVERSE", "c2")], resolution=fa.TurnResolution.PROTOCOL_EVENT,
+              kind=fa.PatchOriginKind.EVENT),
     ]
     # a NEW_SEARCH: CONTEXT_RESET over a standing anchor, the provenance of its own conditions, nothing by difference
     new_conditions = (topic("n1", "vias", trace="t1", n=1), time("n2", 2026, trace="t1", n=2,
@@ -343,6 +371,9 @@ def _cases() -> list[Case]:
         silent("standing_inform_is_silent", fa.TurnResolution.INFORM, [], base=BASE_BT),
         silent("standing_reask_is_silent", fa.TurnResolution.REASK, [], base=BASE_BT),
         silent("a_page_is_the_same_plan_again", fa.TurnResolution.PROTOCOL_PAGE, [], base=BASE_BT),
+        not_ready("a_delta_that_is_not_ready_executes_nothing", BASE_BT, [set_(topic("p1", "aseo", trace="t1", n=1))], []),
+        not_ready("a_delta_that_is_not_ready_over_an_expired_anchor", BASE_BT, [set_(topic("p1", "aseo", trace="t1", n=1))],
+                  gone, expired=True),
         delta("confirmed_anchor_is_not_expired", BASE_BT, [set_(topic("p1", "aseo", trace="t1", n=1))], [*CARRY_BT], expired=True),
     ]
     return out
@@ -458,86 +489,100 @@ def _delta():
     return delta("d", BASE_BT, [set_(topic("p1", "aseo", trace="t1", n=1))], CARRY_BT)
 
 
-def _refused(args, code, **kwargs):
-    with pytest.raises(ContractError, match=code):
-        fe.echo_items(*args, **kwargs)
-
-
-def test_a_record_is_required_and_is_the_authority():
-    base, effective, patch, record = _delta().args
-    _refused((base, effective, patch, None), "ECHO_NEEDS_A_RECORD")
-    _refused((base, effective, patch, record.to_dict()), "ECHO_NEEDS_A_RECORD")
-    other = fa.SemanticPatch((set_(topic("p9", "vias", trace="t1", n=1)),), fa.PatchOriginKind.TEXT)
-    _refused((base, effective, other, record), "ECHO_ARGUMENTS_OUTSIDE_THE_RECORD")
-    _refused((base, interp(buyer("c1"), trace="t0"), patch, record), "ECHO_ARGUMENTS_OUTSIDE_THE_RECORD")
-    _refused((base, None, patch, record), "ECHO_ARGUMENTS_OUTSIDE_THE_RECORD")
-    _refused((base, effective, None, record), "ECHO_ARGUMENTS_OUTSIDE_THE_RECORD")
-
-
-def test_the_flags_and_the_base_are_typed():
-    base, effective, patch, record = _delta().args
-    for bad in (1, None, "yes"):
-        _refused((base, effective, patch, record), "ECHO_INVALID_ANCHOR_EXPIRED", anchor_expired=bad)
-    _refused((base.to_dict(), effective, patch, record), "ECHO_INVALID_BASE")
-    _refused((None, effective, patch, record), "ECHO_COMPOSITION_WITHOUT_BASE")
-
-
-def test_the_effective_belongs_to_the_base_the_record_names():
-    base, effective, patch, record = _delta().args
-    other = make_record(fa.TurnResolution.DELTA, patch=patch, effective=effective, base_trace_id="t-other")
-    _refused((base, effective, patch, other), "ECHO_EFFECTIVE_OF_ANOTHER_BASE")
-
-
-def test_an_expiry_question_exists_only_over_an_expired_anchor():
-    pending = expiry_pending(BASE_BT, fa.SemanticPatch((set_(topic("p1", "aseo", trace="t1", n=1)),),
-                                                       fa.PatchOriginKind.TEXT))
-    record = make_record(fa.TurnResolution.CLARIFY, pending=pending)
-    _refused((BASE_BT, None, None, record), "ECHO_EXPIRED_PENDING_WITHOUT_EXPIRY")
-    assert [i.echo_class for i in fe.echo_items(BASE_BT, None, None, record, anchor_expired=True)] == [
-        fa.EchoClass.CONTEXT_EXPIRED]
-
-
 def _tampered(change) -> tuple:
     base, effective, patch, _ = _delta().args
     effective = change(effective)
     return base, effective, patch, make_record(fa.TurnResolution.DELTA, patch=patch, effective=effective, base_trace_id="t0")
 
 
-def test_an_effective_that_hides_a_removal_is_refused_not_echoed():
-    """INV-M2A-16: a condition leaves only by a citation or a declared substitution; the echo cannot cover the rest."""
-    dropped = _tampered(lambda e: replace(e, conditions=tuple(c for c in e.conditions if c.condition_id != "c2")))
-    _refused(dropped, "ECHO_UNCITED_REMOVAL")
-
-
-def test_an_effective_whose_carried_condition_changed_is_refused():
-    def change(e):
-        return replace(e, conditions=tuple(replace(c, provenance=fa.Provenance(year_source=fa.YearSource.CLOCK_INFERRED))
-                                           if c.condition_id == "c2" else c for c in e.conditions))
-    _refused(_tampered(change), "ECHO_CARRIED_CONDITION_CHANGED")
-
-
-def test_an_effective_with_a_condition_no_operation_placed_is_refused():
+def _refusals() -> list[tuple]:
+    """``(name, args, kwargs, code)``: a turn the echo must REFUSE with ``ContractError(code)`` (never echo)."""
+    base, effective, patch, record = _delta().args
+    other = fa.SemanticPatch((set_(topic("p9", "vias", trace="t1", n=1)),), fa.PatchOriginKind.TEXT)
+    pending = expiry_pending(BASE_BT, patch)
+    expiry_record = make_record(fa.TurnResolution.CLARIFY, pending=pending)
+    foreign = make_record(fa.TurnResolution.DELTA, patch=patch, effective=effective, base_trace_id="t-other")
     extra = interp(buyer("c1"), time("c2"), topic("p1", "aseo", trace="t1", n=1), topic("zz", "vias", trace="t1", n=5),
                    trace="t0")
-    _refused(_tampered(lambda e: extra), "ECHO_PLACED_WITHOUT_OPERATION")
-
-
-def test_an_effective_that_misses_what_the_patch_placed_is_refused():
-    base, effective, patch, _ = _delta().args
     only_base = replace(effective, conditions=tuple(c for c in effective.conditions if c.condition_id != "p1"))
-    record = make_record(fa.TurnResolution.DELTA, patch=patch, effective=only_base, base_trace_id="t0")
-    _refused((base, only_base, patch, record), "ECHO_PLACED_WITHOUT_OPERATION")
-
-
-def test_a_changed_universe_needs_its_operation_and_must_be_the_requested_one():
-    base, effective, patch, _ = _delta().args
     processes = interp(buyer("c1"), time("c2"), topic("p1", "aseo", trace="t1", n=1), subject=Subject.PROCESSES, trace="t0")
-    record = make_record(fa.TurnResolution.DELTA, patch=patch, effective=processes, base_trace_id="t0")
-    _refused((base, processes, patch, record), "ECHO_REQUESTS_CHANGED_WITHOUT_OPERATION")
     redirect = fa.SemanticPatch((universe(Subject.PROCESSES),), fa.PatchOriginKind.TEXT)
     stays = replace(base, base_trace_id="t0")
-    record = make_record(fa.TurnResolution.DELTA, patch=redirect, effective=stays, base_trace_id="t0")
-    _refused((base, stays, redirect, record), "ECHO_UNIVERSE_NOT_THE_REQUESTED")
+
+    def changed(c):
+        return replace(c, provenance=fa.Provenance(year_source=fa.YearSource.CLOCK_INFERRED))
+
+    def tampered_with(base_, patch_, change):
+        effective_ = change(fd.compose(base_, patch_, base_trace_id="t0").effective)
+        return base_, effective_, patch_, make_record(fa.TurnResolution.DELTA, patch=patch_, effective=effective_,
+                                                      base_trace_id="t0")
+
+    def without(*ids):
+        return lambda e: replace(e, conditions=tuple(c for c in e.conditions if c.condition_id not in ids))
+
+    topic_patch = fa.SemanticPatch((set_(topic("p1", "aseo", trace="t1", n=1)),), fa.PatchOriginKind.TEXT)
+    bounded = interp(buyer("c1"), money("c2", 900, Comparator.LT), trace="t0")
+    negated = interp(topic("c1", "aseo"), trace="t0")
+    other_value = fa.SemanticPatch((set_(topic("p1", "obras", excluded=True, trace="t1", n=1)),), fa.PatchOriginKind.TEXT)
+    return [
+        ("no_record", (base, effective, patch, None), {}, "ECHO_NEEDS_A_RECORD"),
+        ("record_as_a_dict", (base, effective, patch, record.to_dict()), {}, "ECHO_NEEDS_A_RECORD"),
+        ("patch_outside_the_record", (base, effective, other, record), {}, "ECHO_ARGUMENTS_OUTSIDE_THE_RECORD"),
+        ("effective_outside_the_record", (base, interp(buyer("c1"), trace="t0"), patch, record), {},
+         "ECHO_ARGUMENTS_OUTSIDE_THE_RECORD"),
+        ("effective_dropped", (base, None, patch, record), {}, "ECHO_ARGUMENTS_OUTSIDE_THE_RECORD"),
+        ("patch_dropped", (base, effective, None, record), {}, "ECHO_ARGUMENTS_OUTSIDE_THE_RECORD"),
+        *[(f"anchor_expired_{bad!r}", (base, effective, patch, record), {"anchor_expired": bad}, "ECHO_INVALID_ANCHOR_EXPIRED")
+          for bad in (1, None, "yes")],
+        ("base_as_a_dict", (base.to_dict(), effective, patch, record), {}, "ECHO_INVALID_BASE"),
+        ("composition_without_a_base", (None, effective, patch, record), {}, "ECHO_COMPOSITION_WITHOUT_BASE"),
+        ("effective_of_another_base", (base, effective, patch, foreign), {}, "ECHO_EFFECTIVE_OF_ANOTHER_BASE"),
+        ("expiry_question_over_a_standing_anchor", (BASE_BT, None, None, expiry_record), {},
+         "ECHO_EXPIRED_PENDING_WITHOUT_EXPIRY"),
+        ("removal_that_nobody_cited", _tampered(without("c2")), {}, "ECHO_UNCITED_REMOVAL"),
+        ("uncited_value_bound_without_an_op_on_the_opposite_side",
+         tampered_with(bounded, topic_patch, without("c2")), {}, "ECHO_UNCITED_REMOVAL"),
+        ("uncited_positive_while_another_value_is_negated", tampered_with(negated, other_value, without("c1")), {},
+         "ECHO_UNCITED_REMOVAL"),
+        ("carried_condition_changed", _tampered(lambda e: replace(e, conditions=tuple(
+            changed(c) if c.condition_id == "c2" else c for c in e.conditions))), {}, "ECHO_CARRIED_CONDITION_CHANGED"),
+        ("condition_no_operation_placed", _tampered(lambda e: extra), {}, "ECHO_PLACED_WITHOUT_OPERATION"),
+        ("operation_whose_condition_is_missing", (base, only_base, patch, make_record(
+            fa.TurnResolution.DELTA, patch=patch, effective=only_base, base_trace_id="t0")), {},
+         "ECHO_PLACED_WITHOUT_OPERATION"),
+        ("universe_changed_without_an_operation", (base, processes, patch, make_record(
+            fa.TurnResolution.DELTA, patch=patch, effective=processes, base_trace_id="t0")), {},
+         "ECHO_REQUESTS_CHANGED_WITHOUT_OPERATION"),
+        ("universe_not_the_requested_one", (base, stays, redirect, make_record(
+            fa.TurnResolution.DELTA, patch=redirect, effective=stays, base_trace_id="t0")), {},
+         "ECHO_UNIVERSE_NOT_THE_REQUESTED"),
+    ]
+
+
+REFUSALS = _refusals()
+
+
+@pytest.mark.parametrize("refusal", REFUSALS, ids=lambda refusal: refusal[0])
+def test_an_incoherent_turn_is_refused_not_echoed(refusal):
+    _, args, kwargs, code = refusal
+    with pytest.raises(ContractError, match=code):
+        fe.echo_items(*args, **kwargs)
+
+
+def test_every_refusal_has_its_own_name_and_the_codes_are_the_modules():
+    assert len({refusal[0] for refusal in REFUSALS}) == len(REFUSALS)
+    assert {refusal[3] for refusal in REFUSALS} >= {
+        "ECHO_UNCITED_REMOVAL", "ECHO_CARRIED_CONDITION_CHANGED", "ECHO_PLACED_WITHOUT_OPERATION",
+        "ECHO_REQUESTS_CHANGED_WITHOUT_OPERATION", "ECHO_UNIVERSE_NOT_THE_REQUESTED", "ECHO_NEEDS_A_RECORD",
+        "ECHO_INVALID_BASE", "ECHO_INVALID_ANCHOR_EXPIRED", "ECHO_ARGUMENTS_OUTSIDE_THE_RECORD",
+        "ECHO_COMPOSITION_WITHOUT_BASE", "ECHO_EFFECTIVE_OF_ANOTHER_BASE", "ECHO_EXPIRED_PENDING_WITHOUT_EXPIRY"}
+
+
+def test_an_expiry_question_over_an_expired_anchor_is_the_expired_echo():
+    pending = expiry_pending(BASE_BT, _delta().args[2])
+    record = make_record(fa.TurnResolution.CLARIFY, pending=pending)
+    assert [i.echo_class for i in fe.echo_items(BASE_BT, None, None, record, anchor_expired=True)] == [
+        fa.EchoClass.CONTEXT_EXPIRED]
 
 
 def test_the_echo_never_reads_the_records_own_echo():
