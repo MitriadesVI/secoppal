@@ -1,38 +1,31 @@
 # M2A-3 — Fase 2: `compose` y `classify_turn` contra el oráculo congelado
 
 **Fecha:** 2026-10-02. **Rama:** `mission/m2a-3-reducer`. **Contrato:** R3d sellado (`57530a07`, sello `7dd39b4b…`,
-fusionado en `10c0c576`). **Oráculo:** M2A-8a0 congelado (`f7d1b8b8`, artefacto `4aa343c7…`, fusionado en
-`b2ad0a62`; sólo lectura aquí).
+fusionado en `10c0c576`). **Oráculo:** M2A-8a0 congelado, primero `f7d1b8b8` (artefacto `4aa343c7…`, fusionado en
+`b2ad0a62`) y después `f95275b4` (artefacto `a753efad…`, fusionado en `434ab1bd`), más el arreglo de su test de lector
+estricto `9535b41f` (fusionado en `0ef76f97`). Todo de sólo lectura aquí.
 
-**Estado: STOP antes de congelar.** DEV no llega al 100 %. Cinco casos DEV y uno TEST no se pueden ni construir: el
-oráculo tipa una unidad heredada sin `inherited_from` y el contrato lo exige (§1). TEST **no se ha medido**: se mide
-una sola vez, al congelar.
+**Estado: DEV y TEST al 100 % de los APLICABLES, sintético y REAL (§3).** TEST se midió una sola vez.
 
-## 1. BLOCKER: unidad heredada sin origen
+## 1. El BLOCKER de la fase 2, resuelto por el oráculo
 
-| Caso | Partición | Entrada del oráculo | Cláusula |
-|---|---|---|---|
-| SF103, SF104, SF106, SF167, SF183 | DEV | condición VALUE del parche con `unit_source = PREVIOUS_ACCEPTED_VALUE` e `inherited_from = None` | §15.4: «con regla `unit.inherited`, `unit_source = PREVIOUS_ACCEPTED_VALUE`, `inherited_from` y eco `UNIT_INHERITED`»; §11: `UNIT_INHERITED` «valor completo y de dónde sale» |
-| SF101 | TEST | ídem (detectado al comprobar la representabilidad de las entradas; el resultado de TEST no se midió) | ídem |
+En `f7d1b8b8`, SF103, SF104, SF106, SF167 y SF183 (DEV) y SF101 (TEST) llegaban con una unidad heredada
+(`unit_source = PREVIOUS_ACCEPTED_VALUE`) sin `inherited_from`. §15.4 y §11 exigen ese origen, y el tipo lo sigue
+exigiendo. El carril del oráculo lo corrigió en `f95275b4`: el origen es la traza del ancla y ninguna expectativa
+cambió. Los xfail estrictos del enlace pasaron a XPASS y se retiraron en `edce7d69`. El tipo no se relajó para la
+unidad.
 
-El tipo (`Provenance`) sigue exigiendo el origen de una **unidad** heredada (`INHERITANCE_WITHOUT_ORIGIN`). No lo relajo:
-esa exigencia la escribe el contrato. Las salidas posibles las decide el usuario:
+En `95d9e828` se habían corregido en el tipo dos exigencias de 1a sin cláusula:
 
-- (a) el carril del oráculo tipa `inherited_from` con la traza del ancla (el valor previo es el de la base) y re-congela;
-- (b) el usuario declara `inherited_from` opcional para la unidad, lo que enmienda la lectura de §15.4;
-- (c) el oráculo declara esos casos `NO_MEDIBLE` (límite de tipado, como `LG-LECTURA-WITHOUT-TYPED-VALUE`).
+- el acoplamiento `year ⇔ year_source`. §3.2: `year` es la vigencia de una conversión SMMLV; `year_source` es la
+  procedencia de un año, también el de un TIME (§11);
+- el origen obligatorio de un **año** heredado. §11 `YEAR_INHERITED` sólo pide `year_source`.
 
-El arnés los declara rojo con dos xfail estrictos y un pin que exige que el conjunto bloqueado sea exactamente ese
-(`tests/test_m2a3_oracle_link.py`).
-
-Corregidos en el tipo, porque no tenían cláusula y el contrato los contradice (§3.2, §11, §16):
-
-- el acoplamiento `year ⇔ year_source` de 1a. `year` es la vigencia de una conversión SMMLV; `year_source` es la
-  procedencia de un año, también el de un TIME;
-- la exigencia de `inherited_from` para un **año** heredado. §11 `YEAR_INHERITED` sólo pide `year_source`.
-
-Con esas dos correcciones, 23 de los 29 casos aplicables cuyas entradas el tipo rechazaba pasaron a ser construibles. Las cubren una batería y 4 mutantes en
-`tests/test_foundation_accepted_m2a3_canonical.py` §7.
+Con esa corrección, 23 de los 29 casos aplicables cuyas entradas el tipo rechazaba pasaron a construirse. Desde
+`f95275b4` el oráculo entrega además año y fuente juntos y el origen de todo año heredado: sus datos cumplen las dos
+lecturas. En `9535b41f` su test de lector estricto dejó de fijar el código `YEAR_WITHOUT_SOURCE` y está en verde con
+este tipo. **Divergencia declarada:** si se quiere volver a la regla de 1a (más estricta), es una decisión del
+usuario. Las dos lecturas dan el mismo resultado sobre el Gold.
 
 ## 2. Lo implementado (tres módulos de una responsabilidad, registrados en `tests/m2a_steps/m2a_3.py`)
 
@@ -86,28 +79,44 @@ Fuera, declarado:
 - **§8.3, §10 y §17.**
 - **`HostViewDecision`:** el sujeto `unspecified` sigue fallando cerrado en el tipo.
 
-## 3. Oráculo (DEV)
+## 3. Oráculo: DEV y TEST
 
-| Medida | Resultado |
-|---|---|
-| Gold `audit` | 54 aplicables: **49 coinciden** en disposición, código, efectiva y efectos; 0 discrepancias; **5 faltan** (§1) |
-| `audit_transitions` | 0 violaciones: 42 transiciones y 3 rechazos comprobados |
-| `audit_classification` | **52/52**, 0 discrepancias |
-| no verificado por el oráculo | 4 efectivas de búsqueda nueva (`from_acceptance`, M2A-1b, `LG-FRESH-ACCEPTANCE`) |
+Medido con `python -m tests.test_m2a3_oracle_link <DEV|TEST>`, con y sin `M2A_GOLD_REAL_DIR`, sobre `434ab1bd` más el
+enlace de `edce7d69`. La fusión posterior `0ef76f97` sólo toca un test del oráculo; el artefacto sigue en `a753efad`.
 
-Rojos declarados de DEV, con su dueño (`audit` → `declared_red`):
+| Partición | Gold `audit` | `audit_transitions` | `audit_classification` |
+|---|---|---|---|
+| DEV sintético | **54/54**, 0 discrepancias | 0 violaciones (47 + 3 rechazos) | 52/52 |
+| DEV + REAL | **72/72** (54 + 18) | 0 violaciones (64 + 4) | 69/69 |
+| TEST sintético (una vez) | **53/53**, 0 discrepancias | 0 violaciones (46 + 6) | 51/51 |
+| TEST + REAL (una vez) | **71/71** (53 + 18) | 0 violaciones (62 + 8) | 68/68 |
 
-- M2A-4: SF047, SF048, SF050, SF059, SF061, SF189, SF191, SF199;
-- M2A-6: SF145, SF146, SF150, SF151, SF152;
-- E-MODALITY: SF007, SF160;
-- F: SF082, SF126;
-- `FOUNDATION_O1B_EXPLICIT_TIME_PARITY`: SF075.
+TEST no necesitó ninguna corrección. El oráculo no verifica las efectivas de búsqueda nueva: las construye
+`from_acceptance`, de M2A-1b (`LG-FRESH-ACCEPTANCE`).
 
-No medibles de DEV:
+Rojos declarados (DEPENDIENTE, con su dueño):
 
-- `TIME_MONTH_HINT`: SF031, SF033;
-- `OPS_AB_DISAGREE`: SF025, SF163;
-- `HOST_FACT_NOT_IN_GOLD:REGION_CLOSED_LIST`: SF159.
+| Partición | Dueño | Casos |
+|---|---|---|
+| DEV | M2A-4 | SF047, SF048, SF050, SF059, SF061, SF189, SF191, SF199 |
+| DEV | M2A-6 | SF145, SF146, SF150, SF151, SF152 |
+| DEV | E-MODALITY | SF007, SF160 |
+| DEV | F | SF082, SF126, R0106, R0107, R0529 |
+| DEV | `FOUNDATION_O1B_EXPLICIT_TIME_PARITY` | SF075 |
+| TEST | M2A-4 | SF049, SF051, SF052, SF053, SF055, SF056, SF057, SF058, SF060, SF063, SF188, SF190, SF200, SF201 |
+| TEST | M2A-6 | SF149 |
+| TEST | E-MODALITY | SF008, SF080, R0459 |
+| TEST | E-ORDER | SF192 |
+| TEST | F | SF081, SF185, R0531, R0532 |
+| TEST | D-MONEY | R0304 |
+
+No medibles:
+
+- DEV: SF031, SF033 (`TIME_MONTH_HINT`); SF025, SF163, R0281 (`OPS_AB_DISAGREE`); SF159 (`REGION_CLOSED_LIST`); R0094
+  (`STATE_LITERALS_OF_THE_UNIVERSE`); R0282 (`PRIOR_AB_DISAGREE`).
+- TEST: SF026, SF030, SF036, SF161, R0274 (`OPS_AB_DISAGREE`); SF123, SF155 (`CARRIED_BUYER_TERRITORY`); SF078, SF079
+  (`STATE_LITERALS_OF_THE_UNIVERSE`); SF168 (`SMMLV_YEAR_NOT_SINGLE`); SF102 (`VALUE_UNIT_FROM_RESULT`); R0075, R0336
+  (`PRIOR_AB_DISAGREE`).
 
 ## 4. Propiedades y mutantes
 
@@ -131,16 +140,19 @@ No medibles de DEV:
 - **`tests/test_foundation_accepted_m2a3_canonical.py`:** 4 mutantes nuevos de procedencia. Siguen vivos los de las
   fases 1b y 1c.
 
-## 5. Gates (resultado literal)
+## 5. Gates (resultado literal), sobre el árbol final
 
-- `pytest -p no:cacheprovider --hypothesis-seed=0`, 17 archivos: los focales y pines de las fases 1–1c, el barrido, el
-  multi-op, la extracción s19, los tres tests del oráculo y los tres nuevos. Resultado: **1518 passed, 8 skipped, 2
-  xfailed**. Los 8 saltados piden el REAL privado; con `M2A_GOLD_REAL_DIR` pasan (237 passed en
-  `test_m2a_reducer_oracle.py` + `test_m2a_gold_seal.py`). Los 2 xfail son el BLOCKER de §1.
+- `pytest -p no:cacheprovider --hypothesis-seed=0` con `M2A_GOLD_REAL_DIR`, 18 archivos. Incluye:
+  - los focales y pines de las fases 1–1c;
+  - el barrido, el multi-op y la extracción s19;
+  - los cuatro tests del oráculo, incluido `test_m2a_oracle_inputs_strict_reader.py`;
+  - los tres de la fase 2.
+
+  Resultado: **1536 passed**, 0 skipped, 0 xfailed.
 - `ruff` (configuración del repo): limpio.
 - `olympus-semgrep-delta --base fa0b6de8`: `TOTAL=0 BASELINE=0 NEW_DELTA=0`. `semgrep` directo: 0.
 - `m2a_gold_seal.py verify --real-dir`: `seal OK 7dd39b4b…`.
-- `m2a_reducer_oracle.py check --real-dir`: `oracle OK 4aa343c7…`, sin deriva del artefacto.
-- **No ejecutados:** TEST (se mide una vez, al congelar) y `olympus-state candidate freeze` (bloqueado por §1).
+- `m2a_reducer_oracle.py check --real-dir`: `oracle OK a753efad…`.
+- Escáner de privacidad sobre los archivos de cada commit: sin nada bloqueante.
 
 Corrí esos tests, no la suite global.
