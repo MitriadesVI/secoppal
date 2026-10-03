@@ -21,10 +21,17 @@ and never executed, so (§11: «delta o respuesta ejecutados con algo del ancla�
 
 * with an ANCHOR the echo is read against the anchor, once, in the turn that executes, in two steps (anchor to frame by the
   asking turn's operations, frame to effective by the answer): what the frame did stands in the echo (M2A7-D15, D22);
-* WITHOUT an anchor (``base_trace_id = None``: the pending of a first turn, §7.2 c) the «previo» is the frame and the echo is
-  read against the frame: what survives of the frame is ``CARRIED`` (Gold §7 literal: SF056, SF058, SF059, SF060, SF188
-  and SF191 fix it; a frame without an anchor holds only what P resolved, so there is nothing of an anchor to hide in it;
-  M2A7-D22). ``frame_ops`` must then be empty; a missing frame is refused.
+* WITHOUT an anchor (``base_trace_id = None``: the M1 clarification of a first turn, or a new search that asks, §7.2 c,
+  whose previous anchor, if any, is kept but is not what the pending composes over) the «previo» is the frame: what
+  survives of the frame is ``CARRIED`` (Gold §7 literal: SF056, SF058, SF059, SF060, SF188 and SF191 fix it), and the
+  PROVENANCE is P's, not an anchor's: the asking turn echoed nothing (it executed nothing), so every provenance the frame
+  carries (a unit shared in a range, a relative window, a year inferred from the clock…) is announced here, exactly as the
+  new search with those conditions would announce it (M2A7-D22, D24). ``frame_ops`` must be empty, the frame must be an
+  interpretation of a first turn (``frame.base_trace_id is None``: a frame composed over an anchor is read WITH it) and a
+  missing frame is refused.
+* a result of the frame is announced only if it STANDS in what ran: a substitution of the frame whose outcome the answer
+  (or the cancelling delta) undid, say an A8.1 whose bound a ``CLEAR(VALUE)`` then removed, or an inversion whose
+  negation a ``CLEAR`` then removed, is announced by nobody (M2A7-D24).
 
 Which turn echoes what (§11, Gold schema 2.1 §7 «sí y sólo sí», plus the two additions of the contract):
 
@@ -59,6 +66,8 @@ admits ``None`` and a derived view needs ``subject = unspecified``, which the ty
 """
 
 from __future__ import annotations
+
+from dataclasses import replace
 
 from app.core.foundation_accepted import (
     CONDITION_SLOT_ORDER, UNIVERSE_SLOT, AcceptedInterpretation, AcceptedTurnRecord, EchoClass, EchoItem,
@@ -191,13 +200,18 @@ def echo_items_for_answer(anchor: AcceptedInterpretation | None, frame: Accepted
         return _ordered([_item(EchoClass.CONTEXT_EXPIRED, None, ())] if anchor_expired else [])
     if effective.base_trace_id != record.base_trace_id:
         raise ContractError("ECHO_EFFECTIVE_OF_ANOTHER_BASE")
+    provenance = None
     if anchor is None:
         if frame_ops:
             raise ContractError("ECHO_FRAME_OPERATIONS_WITHOUT_AN_ANCHOR")  # nothing for them to be a difference from
+        if type(frame) is AcceptedInterpretation and frame.base_trace_id is not None:
+            raise ContractError("ECHO_FRAME_OF_AN_ANCHORED_PENDING")  # it hides what the asking turn did to an anchor
         diff = composed_diff(frame, effective, record.patch)  # the «previo» is the frame (Gold §7)
+        provenance = replace(diff, placed=effective.conditions)  # the provenance is P's: nobody announced it yet
     else:
         diff = answer_diff(anchor, frame, tuple(frame_ops), effective, record.patch)
-    return _ordered([*_provenance_items(diff), *_plan_items(effective), *_difference_items(effective, diff, carried=True)])
+    return _ordered([*_provenance_items(diff if provenance is None else provenance), *_plan_items(effective),
+                     *_difference_items(effective, diff, carried=True)])
 
 
 # ---- by the provenance of what the turn placed ----------------------------------------------------------------------
@@ -229,6 +243,9 @@ def _plan_items(effective: AcceptedInterpretation) -> list[EchoItem]:
         if (condition.dimension is SemanticDimension.ORDER and RULE_ORDER_DEFAULTED in condition.receipt_rules
                 and condition.provenance.order_direction_source is OrderDirectionSource.STATED):
             raise ContractError("ECHO_RECEIPT_CONTRADICTS_PROVENANCE")  # a default the user's own words contradict
+        if (RULE_RELATIVE_TO_PREVIOUS in condition.receipt_rules
+                and condition.provenance.year_source is not YearSource.PREVIOUS_ACCEPTED_TIME):
+            raise ContractError("ECHO_RECEIPT_CONTRADICTS_PROVENANCE")  # §16.3: the year is the previous TIME's
         if condition.dimension is SemanticDimension.ORDER and defaulted:
             items.append(_item(EchoClass.ORDER_DIRECTION_DEFAULTED, condition.slot, (condition.condition_id,)))
     return items
@@ -263,8 +280,8 @@ def _value_range_items(effective: AcceptedInterpretation, diff: TurnDiff) -> lis
     items = []
     for side in (_LOWER, _UPPER):
         gone = [r for r in diff.removed if r.condition.slot == side]
-        replaced = any(r.departure is Departure.A81_OPPOSITE_BOUND for r in gone) or (
-            diff.wide_value_clear and bool(placed) and bool(gone))
+        replaced = bool(placed) and (any(r.departure is Departure.A81_OPPOSITE_BOUND for r in gone) or (
+            diff.wide_value_clear and bool(gone)))  # the bound that replaced it must still stand in what ran
         if gone and side not in standing and replaced:
             items.append(_item(EchoClass.VALUE_RANGE_REPLACED, side, [r.condition.condition_id for r in gone] + placed))
     return items
@@ -290,6 +307,8 @@ def _polarity_items(diff: TurnDiff) -> list[EchoItem]:
         negative = Slot(old.slot.dimension, Polarity.NEGATIVE)
         taken = [c.condition_id for c in diff.placed
                  if c.slot == negative and canonical_value(c) == canonical_value(old)]
+        if not taken:
+            continue  # the negation that inverted it does not stand in what ran
         items.append(_item(EchoClass.POLARITY_INVERTED, negative, [old.condition_id] + taken))
     return items
 
