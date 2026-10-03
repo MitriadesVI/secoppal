@@ -37,7 +37,7 @@ from app.core.foundation_accepted import (
     MAX_ASKS, OriginKind, PatchOp, PatchOpKind, PatchOriginKind, PendingClarification, PendingControl, SemanticPatch,
     Slot, TurnResolution, TurnScope,
 )
-from app.core.foundation_delta import covered_keys
+from app.core.foundation_delta import SLOT_RANK, covered_keys, dimension_key
 from app.core.foundation_delta_outcome import (
     HOST_CODES, DeltaDisposition, DeltaOutcome, Dependency, delta_outcome,
 )
@@ -99,9 +99,10 @@ class DecisionKind(str, Enum):
     EXPIRED = "EXPIRED"  # the pending expired (cause e): the text turn proceeds without it
 
 
-_RESOLUTION = {DecisionKind.PENDING_ANSWER: TurnResolution.PENDING_ANSWER, DecisionKind.NEW_SEARCH: TurnResolution.NEW_SEARCH,
-               DecisionKind.DELTA: TurnResolution.DELTA, DecisionKind.REASK: TurnResolution.REASK,
-               DecisionKind.INFORM: TurnResolution.INFORM, DecisionKind.CLARIFY: TurnResolution.CLARIFY}
+_RESOLUTION = {DecisionKind.PENDING_ANSWER: TurnResolution.PENDING_ANSWER,
+               DecisionKind.NEW_SEARCH: TurnResolution.NEW_SEARCH, DecisionKind.DELTA: TurnResolution.DELTA,
+               DecisionKind.REASK: TurnResolution.REASK, DecisionKind.INFORM: TurnResolution.INFORM,
+               DecisionKind.CLARIFY: TurnResolution.CLARIFY}
 
 
 @dataclass(frozen=True, slots=True)
@@ -224,7 +225,7 @@ def _cancel_turn(pending: PendingClarification, turn: PendingTurn, facts: TurnFa
     """Row 2: P carries ``CANCEL_PENDING`` (§17.2 a); what is left of P is applied on the frame, or is a new search."""
     frame = fragment_base(pending)
     if frame is None:  # M2A4-D1: no base (CONTEXT_EXPIRED_CONFIRM, or no frame): a new search alone, or NO_ANCHOR
-        if not turn.ops and facts.own_conditions == 0:  # no fragment at all: the cancel alone (§17.3 speaks of the fragment)
+        if not turn.ops and facts.own_conditions == 0:  # no fragment at all: the cancel alone (§17.3: «el fragmento»)
             return _pure_cancel(pending, CancelCause.DIRECTIVE, TurnScope.IN)
         if _starts_a_search_alone(facts):
             reset = facts.anchor is AnchorState.FOUNDATION_SEARCH and not facts.anchor_expired and (
@@ -235,6 +236,10 @@ def _cancel_turn(pending: PendingClarification, turn: PendingTurn, facts: TurnFa
                                cancel_pending(pending, CancelCause.DIRECTIVE), created=created, pending=created.pending)
     if scope is TurnScope.IN_NEW_SEARCH:
         return _new_search(pending, CancelCause.DIRECTIVE, context_reset)
+    if turn.unresolved:  # the rest of P says a value no authority resolved: nothing to compose it as, and no span to ask on
+        slot = min(turn.unresolved, key=lambda s: SLOT_RANK[s.key])
+        return PendingDecision(DecisionKind.INFORM, TurnScope.IN, f"UNRESOLVED_VALUE:{dimension_key(slot)}",
+                               cancel_pending(pending, CancelCause.DIRECTIVE))
     if not turn.ops:
         return _pure_cancel(pending, CancelCause.DIRECTIVE, TurnScope.IN)
     cancellation = cancel_pending(pending, CancelCause.DIRECTIVE)

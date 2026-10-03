@@ -979,6 +979,17 @@ def test_row_2_the_rest_of_p_may_ask_and_its_pending_replaces_the_cancelled_one(
 
 
 @direct
+def test_row_2_the_rest_of_p_may_say_a_value_nobody_resolved_it_is_an_inform_never_dropped():
+    """The cancel stands (the host writes it), and what is left of P, a value no authority resolved, is told with its code:
+    ``INFORM UNRESOLVED_VALUE:<DIM>`` and no pending (there is no span to ask on): the user reformulates."""
+    _, made = r31()
+    d = respond(made.pending, turn(unresolved=frozenset({TIME_POS, BUYER_POS}),
+                                   facts=facts(cancel_directive=True, continuation=True)))
+    assert (d.kind.value, d.code, d.pending, d.outcome) == ("INFORM", "UNRESOLVED_VALUE:BUYER", None, None)
+    assert d.control.value == "CANCEL_PENDING" and d.cancellation.cause.value == "DIRECTIVE"  # §4.2 order: BUYER first
+
+
+@direct
 def test_row_2_a_cancel_with_nothing_to_apply_cancels_and_executes_nothing():
     """«Déjalo como estaba»: ``CANCEL_PENDING``, no operation, no search: INFORM with no code (M2A4-D12); the base stays."""
     _, made = r31()
@@ -1276,6 +1287,9 @@ MUTANTS = {
     "unresolved_value_ignored": {"foundation_pending_answer": [(
         "    touched = covered_keys(ops) | said\n    if not touched & inside:  # step 4",
         "    touched = covered_keys(ops)\n    if not touched & inside:  # step 4")]},
+    "unresolved_rest_of_a_cancel_dropped": {"foundation_pending": [(
+        "    if turn.unresolved:  # the rest of P says a value no authority resolved: nothing to compose it as, and no span to ask on\n",
+        "    if False:  # the rest of P says a value no authority resolved: nothing to compose it as, and no span to ask on\n")]},
     # D2 (P1-2)
     "expired_confirm_selected_in_language": {"foundation_pending_answer": [(
         "    if said or pending.reason == EXPIRED_CONFIRM:  # a value no authority resolved selects nothing (row 7); M2A4-D2:\n"

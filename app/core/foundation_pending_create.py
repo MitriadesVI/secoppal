@@ -35,7 +35,7 @@ from app.core.foundation_accepted import (
     PatchOriginKind, PendingClarification, SemanticPatch, Slot, TurnResolution, digest, reason_code_allowed,
 )
 from app.core.foundation_delta import (
-    LOWER_KEY, SLOT_BY_KEY, UPPER_KEY, Composed, compose_ops, covered_keys, dimension_key,
+    LOWER_KEY, SLOT_BY_KEY, UPPER_KEY, Composed, DeltaRefusal, compose_ops, covered_keys, dimension_key,
 )
 from app.core.foundation_delta_outcome import (
     DeltaDisposition, Dependency, FindingKind, PendingQuestion, frame_obstacle, law_violations,
@@ -55,7 +55,8 @@ AUTHORITY_REASONS = frozenset({
 UNRESOLVED_PREFIX = "UNRESOLVED_VALUE:"
 NO_CANDIDATE_REASONS = frozenset({"REGION_NOT_IN_LIST", "UNIT_AMBIGUOUS", "MONTH_YEAR_AMBIGUOUS",
                                   "VALUE_WITHOUT_COMPARATOR"})  # §8.4 table: «las demás, ninguno»
-H5_SLOTS = frozenset({Slot(SemanticDimension.BUYER, Polarity.POSITIVE), Slot(SemanticDimension.GEOGRAPHY, Polarity.POSITIVE)})
+H5_SLOTS = frozenset({Slot(SemanticDimension.BUYER, Polarity.POSITIVE),
+                      Slot(SemanticDimension.GEOGRAPHY, Polarity.POSITIVE)})
 VALUE_SIDES = frozenset({SLOT_BY_KEY[LOWER_KEY], SLOT_BY_KEY[UPPER_KEY]})  # §8.4 (3), R3c: VALUE_WITHOUT_COMPARATOR
 _DECIDED = (DeltaDisposition.CLARIFY, DeltaDisposition.INFORM, DeltaDisposition.DEPENDENCY)
 
@@ -177,11 +178,17 @@ def _inform_code(reason: str) -> str:
     return reason
 
 
+def _frame_of(base: AcceptedInterpretation, frame_ops: tuple[PatchOp, ...], trace: str) -> Composed | DeltaRefusal:
+    """``base`` with the resolved operations of the asking turn composed (§8.2): the base itself when there are none."""
+    return compose_ops(base, frame_ops, base_trace_id=trace) if frame_ops else Composed(base, frozenset(), frozenset(), False)
+
+
 def _judge(base: AcceptedInterpretation, reason: str, frame_ops: tuple[PatchOp, ...], asked_ops: tuple[PatchOp, ...],
-           candidates, answer_slots, trace: str, origin: ConditionOrigin) -> tuple[AcceptedInterpretation | None, Creation | None]:
+           candidates, answer_slots, trace: str,
+           origin: ConditionOrigin) -> tuple[AcceptedInterpretation | None, Creation | None]:
     """§8.4 over ``base`` + ``frame_ops``: ``(frame, None)`` when the pending is possible, else ``(None, the Creation that
     says why not)``. A frame that raises a §19 COMPOSICION dependency is that dependency (as H1 does, U29)."""
-    composed = compose_ops(base, frame_ops, base_trace_id=trace) if frame_ops else Composed(base, frozenset(), frozenset(), False)
+    composed = _frame_of(base, frame_ops, trace)
     if isinstance(composed, Composed):
         obstacle = frame_obstacle(base, frame_ops, composed)
         if obstacle is not None and obstacle.kind is FindingKind.DEPENDENCY:
@@ -216,7 +223,7 @@ def pending_from_question(question: PendingQuestion, *, base: AcceptedInterpreta
     frame_ops = _checked(base, base_trace_id, asked_trace_id, now, question.frame_ops)
     open_ops = tuple(question.open_ops)
     asked_ops = (*frame_ops, *open_ops)
-    again = compose_ops(base, frame_ops, base_trace_id=base_trace_id) if frame_ops else Composed(base, frozenset(), frozenset(), False)
+    again = _frame_of(base, frame_ops, base_trace_id)
     if not isinstance(again, Composed) or again.effective != question.frame:
         raise ContractError("QUESTION_FRAME_MISMATCH")
     cited = origin if origin is not None else next((op.origin for op in (*open_ops, *frame_ops)), None)
