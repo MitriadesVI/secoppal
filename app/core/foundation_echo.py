@@ -14,12 +14,17 @@ new search. ``anchor_expired`` is the injected fact of §10 (as in ``delta_outco
 expired, sticky expiry included; deciding it is M2A-6's. It has NO default: a caller that forgets it would revalidate an
 expired anchor (§10.1), so omitting it is a ``TypeError``, never an echo.
 
-The answer to a pending question has its own entry, ``echo_items_for_answer(anchor, frame, frame_ops, effective,
-record, *, anchor_expired)``: the frame is what the asking turn composed and never executed, so the answer's echo is read
-against the ANCHOR (§11: «delta o respuesta ejecutados con algo del ancla»; INV-M2A-12), once, in the turn that executes.
-``echo_items`` refuses a ``PENDING_ANSWER`` (a frame-relative echo would call «carried» what the asking turn changed).
-A pending WITHOUT an anchor is refused too, until HERA decides it: the sealed Gold lists ``CARRIED`` for the answers to
-first-turn pendings (SF056, SF058, SF059, SF060, SF188, and SF191), a new search's echo does not (``M2A7_CLOSE.md``).
+A turn that composes over the FRAME of a pending question (the answer, ``PENDING_ANSWER``; and the ``DELTA`` that cancels
+the pending, ``control = CANCEL_PENDING``, §8.3 row 2, §17.3) has its own entry, ``echo_items_for_answer(anchor, frame,
+frame_ops, effective, record, *, anchor_expired)``; ``echo_items`` refuses both. The frame is what the asking turn composed
+and never executed, so (§11: «delta o respuesta ejecutados con algo del ancla»; INV-M2A-12):
+
+* with an ANCHOR the echo is read against the anchor, once, in the turn that executes, in two steps (anchor to frame by the
+  asking turn's operations, frame to effective by the answer): what the frame did stands in the echo (M2A7-D15, D22);
+* WITHOUT an anchor (``base_trace_id = None``: the pending of a first turn, §7.2 c) the «previo» is the frame and the echo is
+  read against the frame: what survives of the frame is ``CARRIED`` (Gold §7 literal: SF056, SF058, SF059, SF060, SF188
+  and SF191 fix it; a frame without an anchor holds only what P resolved, so there is nothing of an anchor to hide in it;
+  M2A7-D22). ``frame_ops`` must then be empty; a missing frame is refused.
 
 Which turn echoes what (§11, Gold schema 2.1 §7 «sí y sólo sí», plus the two additions of the contract):
 
@@ -83,6 +88,13 @@ NOT_REPRESENTABLE = frozenset({EchoClass.VIEW_DERIVED, EchoClass.VIEW_REDERIVED}
 PATCHED = frozenset({TurnResolution.DELTA, TurnResolution.PROTOCOL_EVENT})  # composed over the anchor itself
 ANSWERED = TurnResolution.PENDING_ANSWER  # composed over a frame: ``echo_items_for_answer``
 EXECUTING = PATCHED | {ANSWERED, TurnResolution.NEW_SEARCH, TurnResolution.PROTOCOL_PAGE}
+
+
+def over_a_frame(record: AcceptedTurnRecord) -> bool:
+    """The turn composes over the frame of a pending: an answer, or the ``DELTA`` that cancels the pending (§8.3 row 2: the
+    rest of P is a delta ON THE FRAME; a fresh search is ``NEW_SEARCH``, never a ``DELTA`` with ``CANCEL_PENDING``)."""
+    return record.resolution is ANSWERED or (record.resolution is TurnResolution.DELTA
+                                             and record.control is PendingControl.CANCEL_PENDING)
 CLASS_RANK = {echo_class: rank for rank, echo_class in enumerate(EchoClass)}
 _VALUE, _TOPIC = SemanticDimension.VALUE, SemanticDimension.TOPIC
 _VALUE_WIDE = Slot(_VALUE)
@@ -136,8 +148,8 @@ def echo_items(base: AcceptedInterpretation | None, effective: AcceptedInterpret
     if base is not None and type(base) is not AcceptedInterpretation:
         raise ContractError("ECHO_INVALID_BASE")
     resolution = record.resolution
-    if resolution is ANSWERED:
-        raise ContractError("ECHO_ANSWER_HAS_ITS_OWN_ENTRY")  # echo_items_for_answer: against the anchor, not the frame
+    if over_a_frame(record):
+        raise ContractError("ECHO_ANSWER_HAS_ITS_OWN_ENTRY")  # echo_items_for_answer: the anchor, or the frame without one
     if resolution in PATCHED and effective is not None:
         if base is None:
             raise ContractError("ECHO_COMPOSITION_WITHOUT_BASE")
@@ -162,25 +174,29 @@ def echo_items(base: AcceptedInterpretation | None, effective: AcceptedInterpret
 def echo_items_for_answer(anchor: AcceptedInterpretation | None, frame: AcceptedInterpretation | None,
                           frame_ops: tuple[PatchOp, ...], effective: AcceptedInterpretation | None,
                           record: AcceptedTurnRecord, *, anchor_expired: bool) -> tuple[EchoItem, ...]:
-    """The echo of the answer to a pending question (``PENDING_ANSWER``), read against the ANCHOR (module docstring):
-    ``frame`` is the pending's frame, ``frame_ops`` the operations the asking turn left in it (``PendingQuestion.
-    frame_ops`` of ``delta_outcome``; empty when the frame is the anchor), ``record.patch`` the answer (the chosen
-    candidate or the answer's operations) and ``effective`` what composing it on the frame gave. Everything between the
-    anchor and what ran is announced once, here, whichever of the two turns did it."""
+    """The echo of a turn that composes over the frame of a pending (module docstring): the answer (``PENDING_ANSWER``) or
+    the ``DELTA`` that cancels the pending (``control = CANCEL_PENDING``). ``frame`` is the pending's frame, ``frame_ops`` the
+    operations the asking turn left in it (``PendingQuestion.frame_ops`` of ``delta_outcome``; empty when the frame is the
+    anchor), ``record.patch`` the answer (the chosen candidate, the answer's operations or the rest of P) and ``effective``
+    what composing it on the frame gave. With an anchor everything between the anchor and what ran is announced once, here,
+    whichever of the two turns did it; without one (``anchor = None``) the frame is the «previo»."""
     if type(record) is not AcceptedTurnRecord:
         raise ContractError("ECHO_NEEDS_A_RECORD")
     _check_record(effective, record.patch, record, anchor_expired)
-    if record.resolution is not ANSWERED:
+    if not over_a_frame(record):
         raise ContractError("ECHO_NOT_AN_ANSWER")
-    if anchor is None:
-        raise ContractError("ECHO_ANSWER_WITHOUT_ANCHOR")  # undecided: M2A7_CLOSE.md (F-6)
-    if type(anchor) is not AcceptedInterpretation:
+    if anchor is not None and type(anchor) is not AcceptedInterpretation:
         raise ContractError("ECHO_INVALID_BASE")
     if effective is None:
         return _ordered([_item(EchoClass.CONTEXT_EXPIRED, None, ())] if anchor_expired else [])
     if effective.base_trace_id != record.base_trace_id:
         raise ContractError("ECHO_EFFECTIVE_OF_ANOTHER_BASE")
-    diff = answer_diff(anchor, frame, tuple(frame_ops), effective, record.patch)
+    if anchor is None:
+        if frame_ops:
+            raise ContractError("ECHO_FRAME_OPERATIONS_WITHOUT_AN_ANCHOR")  # nothing for them to be a difference from
+        diff = composed_diff(frame, effective, record.patch)  # the «previo» is the frame (Gold §7)
+    else:
+        diff = answer_diff(anchor, frame, tuple(frame_ops), effective, record.patch)
     return _ordered([*_provenance_items(diff), *_plan_items(effective), *_difference_items(effective, diff, carried=True)])
 
 
